@@ -1799,7 +1799,7 @@ export default function App() {
                 className="amt-content"
                 style={{
                   position: 'fixed',
-                  top: '53%',
+                  top: '48%',
                   right: 'clamp(40px, 4vw, 80px)',
                   transform: 'translateY(-50%)',
                   maxWidth: 'var(--amt-content-max-width, clamp(600px, 50vw, 900px))',
@@ -2876,7 +2876,7 @@ export default function App() {
                 className="antique-content"
                 style={{
                   position: 'fixed',
-                  top: '53%',
+                  top: '48%',
                   right: 'clamp(40px, 4vw, 80px)',
                   transform: 'translateY(-50%)',
                   maxWidth: 'var(--antique-content-max-width, clamp(600px, 50vw, 900px))',
@@ -3441,7 +3441,7 @@ export default function App() {
                 className="central-medicalcare-content"
                 style={{
                   position: 'fixed',
-                  top: '53%',
+                  top: '48%',
                   right: 'clamp(40px, 4vw, 80px)',
                   transform: 'translateY(-50%)',
                   maxWidth: 'var(--central-content-max-width, clamp(600px, 50vw, 900px))',
@@ -4107,7 +4107,7 @@ export default function App() {
                 className="gulf-content"
                 style={{
                   position: 'fixed',
-                  top: '53%',
+                  top: '48%',
                   right: 'clamp(40px, 4vw, 80px)',
                   transform: 'translateY(-50%)',
                   maxWidth: 'var(--gulf-content-max-width, clamp(600px, 50vw, 900px))',
@@ -4683,7 +4683,7 @@ export default function App() {
                 className="dorrah-content"
                 style={{
                   position: 'fixed',
-                  top: '53%',
+                  top: '48%',
                   right: 'clamp(40px, 4vw, 80px)',
                   transform: 'translateY(-50%)',
                   maxWidth: 'var(--dorrah-content-max-width, clamp(600px, 50vw, 900px))',
@@ -5154,15 +5154,22 @@ export default function App() {
                 className="gta-content"
                 style={{
                   position: 'fixed',
-                  top: '65%',
-                  right: 'clamp(40px, 4vw, 80px)',
-                  transform: 'translateY(-30%)',
-                  maxWidth: 'var(--gta-content-max-width, clamp(550px, 45vw, 750px))',
+                  top: 'clamp(55%, 55vh, 60%)',
+                  right: 'clamp(30px, 3vw, 60px)',
+                  transform: 'translateY(-50%)',
+                  maxWidth: 'clamp(400px, 42vw, 550px)',
+                  height: 'auto',
+                  width: 'clamp(400px, 42vw, 550px)',
                   color: '#000000',
                   direction: 'ltr',
                   textAlign: 'left',
                   zIndex: 11,
-                  overflow: 'visible'
+                  overflow: 'visible',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-start',
+                  paddingTop: 'clamp(50px, 6vh, 100px)',
+                  paddingBottom: 'clamp(50px, 6vh, 100px)'
                 }}
               >
                 {/* White Content Box with Red Borders */}
@@ -5170,25 +5177,32 @@ export default function App() {
                   style={{
                     background: 'rgba(255, 255, 255, 0.95)',
                     backdropFilter: 'blur(10px)',
-                    borderRadius: '16px',
-                    padding: 'var(--gta-content-padding, clamp(30px, 3.5vw, 50px))',
-                    borderLeft: '6px solid #dc2626',
-                    borderBottom: '6px solid #dc2626',
+                    borderRadius: '12px',
+                    padding: 'clamp(20px, 2.5vw, 35px)',
+                    borderLeft: '4px solid #dc2626',
+                    borderBottom: '4px solid #dc2626',
                     boxShadow: '0 10px 40px rgba(0, 0, 0, 0.2)',
-                    animation: 'fadeIn 0.8s ease-in-out 0.2s both'
+                    animation: 'fadeIn 0.8s ease-in-out 0.2s both',
+                    minHeight: 'calc(100vh - clamp(100px, 12vh, 200px))',
+                    width: '100%',
+                    maxHeight: 'calc(100vh - clamp(100px, 12vh, 200px))',
+                    overflow: 'auto',
+                    display: 'flex',
+                    flexDirection: 'column'
                   }}
                 >
                   {/* GTA Logo inside the box */}
                   <div style={{
-                    marginBottom: 'clamp(20px, 2.5vh, 30px)',
-                    animation: 'fadeIn 0.8s ease-in-out 0.1s both'
+                    marginBottom: 'clamp(8px, 0.8vh, 12px)',
+                    animation: 'fadeIn 0.8s ease-in-out 0.1s both',
+                    flexShrink: 0
                   }}>
                     <img
                       src={selectedCompany.logo}
                       alt={selectedCompany.name}
                       style={{
-                        maxWidth: 'clamp(200px, 20vw, 280px)',
-                        maxHeight: 'clamp(100px, 10vh, 140px)',
+                        maxWidth: 'clamp(90px, 9vw, 130px)',
+                        maxHeight: 'clamp(45px, 4.5vh, 65px)',
                         width: 'auto',
                         height: 'auto',
                         objectFit: 'contain',
@@ -5199,13 +5213,15 @@ export default function App() {
 
                   <h1
                     style={{
-                      fontSize: 'var(--gta-title-size, clamp(32px, 4vw, 56px))',
+                      fontSize: 'clamp(18px, 1.8vw, 26px)',
                       fontWeight: '900',
-                      marginBottom: 'clamp(16px, 2vh, 24px)',
-                      letterSpacing: '1.6px',
+                      marginBottom: 'clamp(8px, 0.8vh, 12px)',
+                      letterSpacing: '0.8px',
                       color: '#dc2626',
                       textTransform: 'uppercase',
-                      animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 300ms both'
+                      animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 300ms both',
+                      lineHeight: '1.2',
+                      flexShrink: 0
                     }}
                   >
                     GERMAN TECHNOLOGY AUTO
@@ -5213,11 +5229,12 @@ export default function App() {
 
                   <p
                     style={{
-                      fontSize: 'var(--gta-text-size, clamp(14px, 1.6vw, 20px))',
-                      lineHeight: '1.8',
-                      marginBottom: 'clamp(20px, 2.5vh, 30px)',
+                      fontSize: 'clamp(11px, 1.1vw, 15px)',
+                      lineHeight: '1.5',
+                      marginBottom: 'clamp(10px, 1vh, 14px)',
                       color: '#1e293b',
-                      animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 400ms both'
+                      animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 400ms both',
+                      flexShrink: 0
                     }}
                   >
                     German Technology Auto Services Company is one of the leading maintenance companies in the Eastern Region, which includes German car services under one roof. We promise to give you the best service at competitive prices. We warranty all our work. Our company strives on the best customer service we can offer.
@@ -5227,45 +5244,46 @@ export default function App() {
                     style={{
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: 'clamp(12px, 1.5vh, 18px)',
-                      marginBottom: 'clamp(24px, 3vh, 32px)',
-                      animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 500ms both'
+                      gap: 'clamp(6px, 0.6vh, 10px)',
+                      marginBottom: 'clamp(10px, 1vh, 14px)',
+                      animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 500ms both',
+                      flexShrink: 0
                     }}
                   >
                     <div
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '12px',
-                        fontSize: 'var(--gta-info-size, clamp(14px, 1.5vw, 18px))',
+                        gap: '6px',
+                        fontSize: 'clamp(10px, 1vw, 13px)',
                         color: '#1e293b'
                       }}
                     >
-                      <strong style={{ minWidth: '120px', fontWeight: 800, color: '#000000' }}>Managers:</strong>
+                      <strong style={{ minWidth: '65px', fontWeight: 800, color: '#000000' }}>Managers:</strong>
                       <span>Mr. Tamam Hussain.</span>
                     </div>
                     <div
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '12px',
-                        fontSize: 'var(--gta-info-size, clamp(14px, 1.5vw, 18px))',
+                        gap: '6px',
+                        fontSize: 'clamp(10px, 1vw, 13px)',
                         color: '#1e293b'
                       }}
                     >
-                      <strong style={{ minWidth: '120px', fontWeight: 800, color: '#000000' }}>Mobile:</strong>
+                      <strong style={{ minWidth: '65px', fontWeight: 800, color: '#000000' }}>Mobile:</strong>
                       <span>053 240 4666</span>
                     </div>
                     <div
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '12px',
-                        fontSize: 'var(--gta-info-size, clamp(14px, 1.5vw, 18px))',
+                        gap: '6px',
+                        fontSize: 'clamp(10px, 1vw, 13px)',
                         color: '#1e293b'
                       }}
                     >
-                      <strong style={{ minWidth: '120px', fontWeight: 800, color: '#000000' }}>Email:</strong>
+                      <strong style={{ minWidth: '65px', fontWeight: 800, color: '#000000' }}>Email:</strong>
                       <span
                         style={{
                           whiteSpace: 'nowrap',
@@ -5280,13 +5298,13 @@ export default function App() {
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '12px',
-                        fontSize: 'var(--gta-info-size, clamp(14px, 1.5vw, 18px))',
+                        gap: '6px',
+                        fontSize: 'clamp(10px, 1vw, 13px)',
                         color: '#1e293b',
-                        marginBottom: 'clamp(8px, 1vh, 12px)'
+                        marginBottom: 'clamp(4px, 0.4vh, 8px)'
                       }}
                     >
-                      <strong style={{ minWidth: '120px', fontWeight: 800, color: '#000000' }}>Website:</strong>
+                      <strong style={{ minWidth: '65px', fontWeight: 800, color: '#000000' }}>Website:</strong>
                       <span
                         style={{
                           whiteSpace: 'nowrap',
@@ -5302,30 +5320,32 @@ export default function App() {
                   <div
                     style={{
                       display: 'flex',
-                      alignItems: 'flex-start',
+                      alignItems: 'center',
                       justifyContent: 'space-between',
-                      gap: 'clamp(30px, 4vw, 50px)',
-                      animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 600ms both'
+                      gap: 'clamp(12px, 1.5vw, 20px)',
+                      animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 600ms both',
+                      flexShrink: 0,
+                      marginTop: 'clamp(20px, 2vh, 30px)'
                     }}
                   >
                     {/* Learn More Button */}
                     <button
                       onClick={() => setShowGTALearnMore(true)}
                       style={{
-                        padding: 'clamp(14px, 1.8vw, 20px) clamp(28px, 3vw, 40px)',
-                        fontSize: 'var(--gta-button-font, clamp(14px, 1.6vw, 18px))',
+                        padding: 'clamp(8px, 0.9vw, 12px) clamp(16px, 1.8vw, 24px)',
+                        fontSize: 'clamp(11px, 1.1vw, 14px)',
                         fontWeight: '700',
                         color: '#ffffff',
                         background: '#1f2937',
                         border: '2px solid #dc2626',
-                        borderRadius: '8px',
+                        borderRadius: '6px',
                         cursor: 'pointer',
                         boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)',
                         transition: 'all 0.3s ease',
                         letterSpacing: '0.5px',
                         textTransform: 'uppercase',
                         display: 'block',
-                        marginTop: 'var(--gta-button-margin-top, clamp(140px, 12vh, 200px))'
+                        whiteSpace: 'nowrap'
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.transform = 'translateY(-2px)';
@@ -5351,15 +5371,15 @@ export default function App() {
                         padding: '0',
                         borderRadius: '0',
                         boxShadow: 'none',
-                        marginLeft: 'auto'
+                        flexShrink: 0
                       }}
                     >
                       <img
                         src="/gtaqr.jpeg"
                         alt="GTA QR Code"
                         style={{
-                          maxWidth: 'clamp(140px, 16vw, 200px)',
-                          maxHeight: 'clamp(140px, 16vw, 200px)',
+                          maxWidth: 'clamp(60px, 7vw, 90px)',
+                          maxHeight: 'clamp(60px, 7vw, 90px)',
                           width: 'auto',
                           height: 'auto',
                           objectFit: 'contain',
@@ -5526,7 +5546,7 @@ export default function App() {
               <div
                 style={{
                   position: 'fixed',
-                  top: '52%',
+                  top: '48%',
                   right: 'clamp(40px, 6vw, 120px)',
                   transform: 'translateY(-50%)',
                   maxWidth: 'var(--tlco-content-max-width, clamp(520px, 46vw, 760px))',
@@ -5932,14 +5952,14 @@ export default function App() {
             </>
           ) : selectedCompany.id === 11 ? (
             <>
-              {/* Company Logos Grid - Left Side (same as Gulf Consult) */}
+              {/* Company Logos Grid - Left Side */}
               <div
                 style={{
                   position: 'fixed',
-                  top: 'clamp(55%, 55vh, 60%)',
-                  left: 'clamp(80px, 7vw, 140px)',
+                  top: '52%',
+                  left: 'clamp(40px, 4vw, 100px)',
                   transform: 'translateY(-50%)',
-                  zIndex: 12,
+                  zIndex: 10,
                   animation: 'fadeIn 0.8s ease-in-out 0.4s both',
                   opacity: 0.9
                 }}
@@ -5947,9 +5967,9 @@ export default function App() {
                 <div
                   style={{
                     display: 'grid',
-                    gridTemplateColumns: `repeat(5, var(--grid-item-size, clamp(70px, 7vw, 115px)))`,
-                    gridTemplateRows: `repeat(4, var(--grid-item-size, clamp(70px, 7vw, 115px)))`,
-                    gap: 'var(--grid-gap, clamp(12px, 1.2vw, 20px))',
+                    gridTemplateColumns: `repeat(5, var(--grid-item-size, clamp(50px, 5vw, 75px)))`,
+                    gridTemplateRows: `repeat(4, var(--grid-item-size, clamp(50px, 5vw, 75px)))`,
+                    gap: 'var(--grid-gap, clamp(6px, 0.8vw, 12px))',
                     transform: 'rotate(45deg)',
                     position: 'relative'
                   }}
@@ -5986,8 +6006,8 @@ export default function App() {
                                 : 'default',
                             width: '100%',
                             height: '100%',
-                            minWidth: 'var(--grid-item-size, clamp(70px, 7vw, 115px))',
-                            minHeight: 'var(--grid-item-size, clamp(70px, 7vw, 115px))',
+                            minWidth: 'var(--grid-item-size, clamp(50px, 5vw, 75px))',
+                            minHeight: 'var(--grid-item-size, clamp(50px, 5vw, 75px))',
                             background: isGSGLogo ? '#ffffff' : '#E8E8E8',
                             border: isGSGLogo
                               ? '2px solid #00bcd4'
@@ -6081,266 +6101,265 @@ export default function App() {
                 </div>
               </div>
 
-              {/* GSG Logo - Top Left (small badge to avoid overlap with grid) */}
+              {/* GSG Content Container - Right Side - Optimized for 1536x864 */}
               <div
                 style={{
                   position: 'fixed',
-                  top: 'clamp(0px, 0.5vh, 8px)',
-                  left: 'clamp(8px, 1vw, 20px)',
-                  zIndex: 10,
-                  animation: 'logoFlyIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)'
-                }}
-              >
-                <img
-                  src={selectedCompany.modalLogo || selectedCompany.logo}
-                  alt={selectedCompany.name}
-                  style={{
-                    maxWidth: 'var(--gsg-logo-size, clamp(32px, 3vw, 50px))',
-                    maxHeight: 'var(--gsg-logo-size, clamp(32px, 3vw, 50px))',
-                    width: 'auto',
-                    height: 'auto',
-                    objectFit: 'contain',
-                    filter: 'drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25))'
-                  }}
-                />
-              </div>
-
-              {/* GSG Text Content - Right Side */}
-              <div
-                className="gsg-content"
-                style={{
-                  position: 'fixed',
-                  top: '62%',
-                  right: 'clamp(280px, 30vw, 380px)',
+                  top: '50%',
+                  right: 'clamp(40px, 4vw, 80px)',
                   transform: 'translateY(-50%)',
-                  maxWidth: 'var(--gsg-content-max-width, clamp(500px, 45vw, 700px))',
+                  maxWidth: 'clamp(450px, 38vw, 580px)',
+                  maxHeight: '90vh',
                   color: '#07373c',
                   direction: 'ltr',
                   textAlign: 'left',
-                  zIndex: 11
+                  zIndex: 11,
+                  overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-start',
+                  gap: 'clamp(16px, 2vh, 24px)',
+                  padding: 'clamp(20px, 2vw, 30px)'
                 }}
               >
-                <h1
-                  style={{
-                    fontSize: 'var(--gsg-title-size, clamp(26px, 3.5vw, 48px))',
-                    fontWeight: '900',
-                    marginBottom: 'clamp(6px, 1vh, 12px)',
-                    letterSpacing: '1.4px',
-                    color: '#07373c',
-                    textTransform: 'uppercase',
-                    animation: 'fadeInUp 0.8s ease-out 0.2s both',
-                    lineHeight: '1.1'
-                  }}
-                >
-                  GROUND SYSTEMS
-                </h1>
-                <h1
-                  style={{
-                    fontSize: 'var(--gsg-title-size, clamp(26px, 3.5vw, 48px))',
-                    fontWeight: '900',
-                    marginBottom: 'clamp(12px, 2vh, 20px)',
-                    letterSpacing: '1.4px',
-                    color: '#07373c',
-                    textTransform: 'uppercase',
-                    animation: 'fadeInUp 0.8s ease-out 0.3s both',
-                    lineHeight: '1.1'
-                  }}
-                >
-                  GEOPHYSICAL (GSG)
-                </h1>
+                {/* GSG Title */}
+                <div>
+                  <h1
+                    style={{
+                      fontSize: 'clamp(32px, 3.2vw, 42px)',
+                      fontWeight: '900',
+                      marginBottom: 'clamp(4px, 0.8vh, 8px)',
+                      letterSpacing: '1.2px',
+                      color: '#07373c',
+                      textTransform: 'uppercase',
+                      animation: 'fadeInUp 0.8s ease-out 0.2s both',
+                      lineHeight: '1.1'
+                    }}
+                  >
+                    GROUND SYSTEMS
+                  </h1>
+                  <h1
+                    style={{
+                      fontSize: 'clamp(32px, 3.2vw, 42px)',
+                      fontWeight: '900',
+                      marginBottom: 'clamp(10px, 1.5vh, 16px)',
+                      letterSpacing: '1.2px',
+                      color: '#07373c',
+                      textTransform: 'uppercase',
+                      animation: 'fadeInUp 0.8s ease-out 0.3s both',
+                      lineHeight: '1.1'
+                    }}
+                  >
+                    GEOPHYSICAL (GSG)
+                  </h1>
+                </div>
 
-                <p
-                  style={{
-                    fontSize: 'var(--gsg-text-size, clamp(14px, 1.6vw, 22px))',
-                    lineHeight: '1.75',
-                    marginBottom: 'clamp(14px, 2vh, 22px)',
-                    color: '#07373c',
-                    animation: 'fadeInUp 0.8s ease-out 0.4s both'
-                  }}
-                >
-                  Is a leading provider of geophysical, geological, environmental, and engineering solutions across Saudi Arabia and the GCC region. With a dedicated team of scientists, engineers, and experts, we specialize in delivering advanced, reliable, and innovative services that support site assessments, resource exploration, and real-time monitoring across various industries.
-                </p>
-                <p
-                  style={{
-                    fontSize: 'var(--gsg-text-size, clamp(14px, 1.6vw, 22px))',
-                    lineHeight: '1.75',
-                    marginBottom: 'clamp(18px, 2.5vh, 28px)',
-                    color: '#07373c',
-                    fontWeight: '600',
-                    animation: 'fadeInUp 0.8s ease-out 0.5s both'
-                  }}
-                >
-                  Integrated Solutions for Your Projects, Backed by Decades of Expertise
-                </p>
+                {/* GSG Description */}
+                <div>
+                  <p
+                    style={{
+                      fontSize: 'clamp(15px, 1.5vw, 19px)',
+                      lineHeight: '1.7',
+                      marginBottom: 'clamp(12px, 1.5vh, 18px)',
+                      color: '#07373c',
+                      animation: 'fadeInUp 0.8s ease-out 0.4s both'
+                    }}
+                  >
+                    Is a leading provider of geophysical, geological, environmental, and engineering solutions across Saudi Arabia and the GCC region. With a dedicated team of scientists, engineers, and experts, we specialize in delivering advanced, reliable, and innovative services that support site assessments, resource exploration, and real-time monitoring across various industries.
+                  </p>
+                  <p
+                    style={{
+                      fontSize: 'clamp(15px, 1.5vw, 19px)',
+                      lineHeight: '1.7',
+                      marginBottom: 'clamp(14px, 2vh, 20px)',
+                      color: '#07373c',
+                      fontWeight: '600',
+                      animation: 'fadeInUp 0.8s ease-out 0.5s both'
+                    }}
+                  >
+                    Integrated Solutions for Your Projects, Backed by Decades of Expertise
+                  </p>
+                </div>
 
+                {/* GSG Contact Information and Images Container */}
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'flex-start',
+                    gap: 'clamp(24px, 3vw, 36px)',
+                    animation: 'fadeInUp 0.8s ease-out 0.6s both',
+                    marginBottom: 'clamp(8px, 1vh, 12px)',
+                    flexWrap: 'nowrap',
+                    width: '100%'
+                  }}
+                >
+                  {/* Contact Information */}
                   <div
                     style={{
-                      fontSize: 'var(--gsg-info-size, clamp(14px, 1.6vw, 22px))',
-                      lineHeight: '2',
+                      fontSize: 'clamp(15px, 1.5vw, 19px)',
+                      lineHeight: '1.9',
                       color: '#07373c',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 'clamp(10px, 1.5vh, 18px)',
-                    marginTop: 'clamp(20px, 3vh, 36px)',
-                    animation: 'fadeInUp 0.8s ease-out 0.6s both'
-                  }}
-                >
-                  <div style={{ 
-                    display: 'flex', 
-                    alignItems: 'flex-start',
-                    flexWrap: 'wrap',
-                    gap: '4px'
-                  }}>
-                    <strong style={{ fontWeight: '800', flexShrink: 0 }}>Managers:</strong>
-                      <span>Eng. Rabah Yehya.</span>
-                    </div>
-                  <div style={{ 
-                    display: 'flex', 
-                    alignItems: 'flex-start',
-                    flexWrap: 'wrap',
-                    gap: '4px'
-                  }}>
-                    <strong style={{ fontWeight: '800', flexShrink: 0 }}>Mobile:</strong>
-                      <span>055 584 6667</span>
-                    </div>
-                  <div style={{ 
-                    display: 'flex', 
-                    flexDirection: 'column',
-                    gap: 'clamp(4px, 0.5vh, 8px)'
-                  }}>
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 'clamp(8px, 1.2vh, 14px)',
+                      flex: '1',
+                      minWidth: 'clamp(280px, 25vw, 360px)'
+                    }}
+                  >
                     <div style={{ 
                       display: 'flex', 
                       alignItems: 'flex-start',
                       flexWrap: 'wrap',
                       gap: '4px'
                     }}>
-                      <strong style={{ fontWeight: '800', flexShrink: 0 }}>Email:</strong>
-                      <span>faisal@gulfconsult.com</span>
+                      <strong style={{ fontWeight: '800', flexShrink: 0 }}>Managers:</strong>
+                      <span>Eng. Rabah Yehya.</span>
                     </div>
                     <div style={{ 
                       display: 'flex', 
                       alignItems: 'flex-start',
                       flexWrap: 'wrap',
-                      gap: '4px',
-                      marginLeft: 'clamp(80px, 8vw, 120px)'
+                      gap: '4px'
                     }}>
-                      <span>rabah@gulfconsult.com</span>
+                      <strong style={{ fontWeight: '800', flexShrink: 0 }}>Mobile:</strong>
+                      <span>055 584 6667</span>
                     </div>
-                  </div>
-                  <div style={{ 
-                    display: 'flex', 
-                    alignItems: 'flex-start',
-                    flexWrap: 'wrap',
-                    gap: '4px'
-                  }}>
-                    <strong style={{ fontWeight: '800', flexShrink: 0 }}>Website:</strong>
-                    <a
-                      href="https://www.gulfconsult.com"
-                      target="_blank"
-                      rel="noreferrer"
-                    style={{
-                        color: '#07373c', 
-                        textDecoration: 'underline', 
-                        fontWeight: 700
+                    <div style={{ 
+                      display: 'flex', 
+                      flexDirection: 'column',
+                      gap: 'clamp(4px, 0.5vh, 6px)'
+                    }}>
+                      <div style={{ 
+                        display: 'flex', 
+                        alignItems: 'flex-start',
+                        flexWrap: 'wrap',
+                        gap: '4px'
+                      }}>
+                        <strong style={{ fontWeight: '800', flexShrink: 0 }}>Email:</strong>
+                        <span>faisal@gulfconsult.com</span>
+                      </div>
+                      <div style={{ 
+                        display: 'flex', 
+                        alignItems: 'flex-start',
+                        flexWrap: 'wrap',
+                        gap: '4px',
+                        marginLeft: 'clamp(85px, 8.5vw, 110px)'
+                      }}>
+                        <span>rabah@gulfconsult.com</span>
+                      </div>
+                    </div>
+                    <div style={{ 
+                      display: 'flex', 
+                      alignItems: 'flex-start',
+                      flexWrap: 'wrap',
+                      gap: '4px'
+                    }}>
+                      <strong style={{ fontWeight: '800', flexShrink: 0 }}>Website:</strong>
+                      <a
+                        href="https://www.gulfconsult.com"
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{
+                          color: '#07373c', 
+                          textDecoration: 'underline', 
+                          fontWeight: 700
+                        }}
+                      >
+                        www.gulfconsult.com
+                      </a>
+                    </div>
+
+                    {/* Learn More Button - Under Website */}
+                    <button
+                      onClick={() => setShowGSGLearnMore(true)}
+                      style={{
+                        marginTop: 'clamp(8px, 1vh, 12px)',
+                        padding: 'clamp(14px, 1.6vw, 20px) clamp(32px, 3.2vw, 44px)',
+                        fontSize: 'clamp(15px, 1.6vw, 20px)',
+                        fontWeight: '700',
+                        color: '#ffffff',
+                        background: '#00bcd4',
+                        border: 'none',
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 15px rgba(0, 188, 212, 0.4)',
+                        transition: 'all 0.3s ease',
+                        letterSpacing: '0.5px',
+                        textTransform: 'uppercase',
+                        animation: 'fadeInUp 0.8s ease-out 0.8s both',
+                        alignSelf: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 188, 212, 0.5)';
+                        e.currentTarget.style.background = '#00d4e6';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 188, 212, 0.4)';
+                        e.currentTarget.style.background = '#00bcd4';
                       }}
                     >
-                      www.gulfconsult.com
-                    </a>
+                      Learn More
+                    </button>
                   </div>
-                </div>
 
-                {/* Learn More Button */}
-                <button
-                  onClick={() => setShowGSGLearnMore(true)}
-                  style={{
-                    marginTop: 'clamp(16px, 2.2vh, 24px)',
-                    padding: 'var(--gsg-button-padding, clamp(16px, 1.8vw, 24px) clamp(36px, 3.5vw, 48px))',
-                    fontSize: 'var(--gsg-button-font, clamp(16px, 1.8vw, 22px))',
-                    fontWeight: '700',
-                    color: '#ffffff',
-                    background: '#00bcd4',
-                    border: 'none',
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    boxShadow: '0 4px 15px rgba(0, 188, 212, 0.4)',
-                    transition: 'all 0.3s ease',
-                    letterSpacing: '0.5px',
-                    textTransform: 'uppercase',
-                    animation: 'fadeInUp 0.8s ease-out 0.7s both'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 188, 212, 0.5)';
-                    e.currentTarget.style.background = '#00d4e6';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 188, 212, 0.4)';
-                    e.currentTarget.style.background = '#00bcd4';
-                  }}
-                >
-                  Learn More
-                </button>
-              </div>
-
-              {/* GSG image + QR on the right */}
-              <div
-                style={{
-                  position: 'fixed',
-                  right: 'clamp(16px, 2.5vw, 32px)',
-                  top: 'clamp(48%, 48vh, 52%)',
-                  bottom: 'clamp(20px, 3vh, 40px)',
-                  zIndex: 10,
-                  width: 'clamp(160px, 18vw, 240px)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                  gap: 'clamp(10px, 1.8vh, 16px)',
-                  animation: 'fadeInUp 0.8s ease-out 0.5s both',
-                  overflow: 'visible'
-                }}
-              >
-                <img
-                  src="/gsg-internal.png"
-                  alt="GSG Internal"
-                  style={{
-                    width: '100%',
-                    height: 'auto',
-                    maxHeight: 'calc(100vh - clamp(48%, 48vh, 52%) - clamp(140px, 16vh, 210px) - clamp(20px, 3vh, 40px))',
-                    objectFit: 'contain',
-                    display: 'block',
-                    flexShrink: 1
-                  }}
-                />
-
-                {/* GSG QR Code under the image - fully visible */}
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '100%',
-                    overflow: 'visible',
-                    flexShrink: 0
-                  }}
-                >
-                  <img
-                    src="/gsgqr.jpeg"
-                    alt="GSG QR Code"
+                  {/* GSG Images and QR Code Container */}
+                  <div
                     style={{
-                      maxWidth: 'var(--gsg-qr-size, clamp(90px, 11vw, 140px))',
-                      maxHeight: 'var(--gsg-qr-size, clamp(90px, 11vw, 140px))',
-                      width: 'auto',
-                      height: 'auto',
-                      objectFit: 'contain',
-                      borderRadius: '8px',
-                      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
-                      backgroundColor: '#ffffff',
-                      padding: '8px',
-                    display: 'block'
-                  }}
-                />
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'flex-start',
+                      justifyContent: 'flex-start',
+                      gap: 'clamp(16px, 2vw, 24px)',
+                      animation: 'fadeInUp 0.8s ease-out 0.7s both',
+                      flexWrap: 'nowrap',
+                      flexShrink: 0,
+                      marginTop: '0'
+                    }}
+                  >
+                    {/* Circular Images and QR Code Container */}
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'flex-start',
+                        gap: 'clamp(12px, 1.5vw, 18px)'
+                      }}
+                    >
+                      <img
+                        src="/gsg-internal.png"
+                        alt="GSG Internal"
+                        style={{
+                          width: 'clamp(100px, 10vw, 130px)',
+                          height: 'clamp(100px, 10vw, 130px)',
+                          objectFit: 'cover',
+                          borderRadius: '50%',
+                          border: '3px solid #00bcd4',
+                          boxShadow: '0 4px 15px rgba(0, 188, 212, 0.3)',
+                          display: 'block',
+                          flexShrink: 0
+                        }}
+                      />
+                      <img
+                        src="/gsgqr.jpeg"
+                        alt="GSG QR Code"
+                        style={{
+                          width: 'clamp(100px, 10vw, 130px)',
+                          height: 'clamp(100px, 10vw, 130px)',
+                          objectFit: 'contain',
+                          borderRadius: '8px',
+                          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
+                          backgroundColor: '#ffffff',
+                          padding: '8px',
+                          display: 'block',
+                          flexShrink: 0
+                        }}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </>
@@ -6365,8 +6384,8 @@ export default function App() {
               <div
                 style={{
                   position: 'fixed',
-                  top: 'clamp(55%, 55vh, 60%)',
-                  left: 'clamp(80px, 7vw, 200px)',
+                  top: '50%',
+                  left: 'clamp(40px, 4vw, 120px)',
                   transform: 'translateY(-50%)',
                   zIndex: 11,
                   animation: 'fadeIn 0.8s ease-in-out 0.4s both',
@@ -6376,9 +6395,9 @@ export default function App() {
                 <div
                   style={{
                     display: 'grid',
-                    gridTemplateColumns: `repeat(5, var(--grid-item-size, clamp(70px, 7vw, 115px)))`,
-                    gridTemplateRows: `repeat(4, var(--grid-item-size, clamp(70px, 7vw, 115px)))`,
-                    gap: 'var(--grid-gap, clamp(12px, 1.2vw, 20px))',
+                    gridTemplateColumns: `repeat(5, var(--grid-item-size, clamp(55px, 5.5vw, 85px)))`,
+                    gridTemplateRows: `repeat(4, var(--grid-item-size, clamp(55px, 5.5vw, 85px)))`,
+                    gap: 'var(--grid-gap, clamp(8px, 1vw, 14px))',
                     transform: 'rotate(45deg)',
                     position: 'relative'
                   }}
@@ -6513,8 +6532,8 @@ export default function App() {
               {/* RK Logo - Top Left */}
               <div style={{
                 position: 'fixed',
-                top: '40px',
-                left: '60px',
+                top: 'clamp(20px, 2.5vh, 30px)',
+                left: 'clamp(30px, 3vw, 50px)',
                 zIndex: 11,
                 animation: 'logoFlyIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)'
               }}>
@@ -6522,8 +6541,8 @@ export default function App() {
                   src={selectedCompany.logo}
                   alt={selectedCompany.name}
                   style={{
-                    maxWidth: 'clamp(280px, 25vw, 350px)',
-                    maxHeight: 'clamp(140px, 12.5vh, 175px)',
+                    maxWidth: 'clamp(200px, 20vw, 280px)',
+                    maxHeight: 'clamp(100px, 10vh, 140px)',
                     width: 'auto',
                     height: 'auto',
                     objectFit: 'contain',
@@ -6537,26 +6556,31 @@ export default function App() {
                 className="rk-content"
                 style={{
                   position: 'fixed',
-                  top: '58%',
-                  right: 'clamp(40px, 4vw, 80px)',
+                  top: '50%',
+                  right: 'clamp(20px, 2.5vw, 40px)',
                   transform: 'translateY(-50%)',
-                  maxWidth: 'var(--rk-content-max-width, clamp(600px, 50vw, 900px))',
+                  maxWidth: 'clamp(500px, 45vw, 700px)',
+                  maxHeight: '90vh',
                   color: '#ffffff',
                   direction: 'ltr',
                   textAlign: 'left',
                   zIndex: 11,
-                  overflow: 'visible'
+                  overflow: 'visible',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center'
                 }}
               >
                 <h1
                   style={{
-                    fontSize: 'var(--rk-title-size, clamp(28px, 3.8vw, 52px))',
+                    fontSize: 'clamp(22px, 2.8vw, 36px)',
                     fontWeight: '900',
-                    marginBottom: 'clamp(8px, 1.2vh, 16px)',
-                    letterSpacing: '1.6px',
+                    marginBottom: 'clamp(12px, 1.5vh, 18px)',
+                    letterSpacing: '1.2px',
                     color: '#F4A460',
                     textTransform: 'uppercase',
-                    animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both'
+                    animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both',
+                    lineHeight: '1.2'
                   }}
                 >
                   AL RAKAEZ CONSTRUCTION
@@ -6564,11 +6588,12 @@ export default function App() {
 
                 <p
                   style={{
-                    fontSize: 'var(--rk-text-size, clamp(15px, 1.7vw, 24px))',
-                    lineHeight: '1.75',
-                    marginBottom: 'clamp(12px, 1.8vh, 20px)',
+                    fontSize: 'clamp(12px, 1.3vw, 18px)',
+                    lineHeight: '1.6',
+                    marginBottom: 'clamp(16px, 2vh, 24px)',
                     color: '#1e293b',
-                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both'
+                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both',
+                    paddingRight: 'clamp(8px, 1vw, 12px)'
                   }}
                 >
                   Al-Rakaez Technical Co. Ltd. (RK) is a Saudi based company that specializes in Civil, Finishing, Mechanical, Electrical and Plumbing (MEP) building services. RK strives to deliver the highest standards of Civil, Finishing and MEP installation, carefully paying attention to each of its client's requirements and ideas, collaborating in the development of the right scope of work in order to develop a unique approach towards each customer.
@@ -6577,22 +6602,22 @@ export default function App() {
                 <div
                   style={{
                     display: 'flex',
-                    gap: 'clamp(26px, 4.2vw, 60px)',
-                    alignItems: 'center',
-                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 420ms both',
-                    marginBottom: 'clamp(6px, 1vh, 12px)'
+                    gap: 'clamp(20px, 3vw, 35px)',
+                    alignItems: 'flex-start',
+                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 420ms both'
                   }}
                 >
                   {/* Text info (Managers / Mobile / Email / Website) */}
                   <div
                     style={{
-                      fontSize: 'var(--rk-info-size, clamp(13px, 1.4vw, 20px))',
-                      lineHeight: '1.8',
+                      fontSize: 'clamp(11px, 1.1vw, 16px)',
+                      lineHeight: '1.7',
                       color: '#1e293b',
-                      flex: 0.9,
+                      flex: '1 1 auto',
                       padding: '0',
                       background: 'transparent',
-                      boxShadow: 'none'
+                      boxShadow: 'none',
+                      minWidth: 0
                     }}
                   >
                     <div
@@ -6600,10 +6625,10 @@ export default function App() {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '10px',
-                        marginBottom: 'clamp(6px, 1vh, 10px)'
+                        marginBottom: 'clamp(8px, 1vh, 12px)'
                       }}
                     >
-                      <strong style={{ minWidth: '110px', fontWeight: 800 }}>Managers:</strong>
+                      <strong style={{ minWidth: '85px', fontWeight: 800, flexShrink: 0 }}>Managers:</strong>
                       <span>Jaffar Al Sayori.</span>
                     </div>
                     <div
@@ -6611,10 +6636,10 @@ export default function App() {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '10px',
-                        marginBottom: 'clamp(6px, 1vh, 10px)'
+                        marginBottom: 'clamp(8px, 1vh, 12px)'
                       }}
                     >
-                      <strong style={{ minWidth: '110px', fontWeight: 800 }}>Mobile:</strong>
+                      <strong style={{ minWidth: '85px', fontWeight: 800, flexShrink: 0 }}>Mobile:</strong>
                       <span>054 989 5927</span>
                     </div>
                     <div
@@ -6622,10 +6647,10 @@ export default function App() {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '10px',
-                        marginBottom: 'clamp(6px, 1vh, 10px)'
+                        marginBottom: 'clamp(8px, 1vh, 12px)'
                       }}
                     >
-                      <strong style={{ minWidth: '110px', fontWeight: 800 }}>Email:</strong>
+                      <strong style={{ minWidth: '85px', fontWeight: 800, flexShrink: 0 }}>Email:</strong>
                       <span
                         style={{
                           whiteSpace: 'nowrap',
@@ -6641,10 +6666,10 @@ export default function App() {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '10px',
-                        marginBottom: 'clamp(8px, 1.2vh, 14px)'
+                        marginBottom: 'clamp(12px, 1.5vh, 18px)'
                       }}
                     >
-                      <strong style={{ minWidth: '110px', fontWeight: 800 }}>Website:</strong>
+                      <strong style={{ minWidth: '85px', fontWeight: 800, flexShrink: 0 }}>Website:</strong>
                       <span
                         style={{
                           whiteSpace: 'nowrap',
@@ -6659,8 +6684,8 @@ export default function App() {
                     <button
                       onClick={() => setShowRKLearnMore(true)}
                       style={{
-                        padding: 'var(--rk-button-padding, clamp(12px, 1.5vw, 18px) clamp(24px, 2.5vw, 36px))',
-                        fontSize: 'var(--rk-button-font, clamp(14px, 1.5vw, 20px))',
+                        padding: 'clamp(8px, 1vw, 12px) clamp(16px, 2vw, 24px)',
+                        fontSize: 'clamp(11px, 1.1vw, 16px)',
                         fontWeight: '700',
                         color: '#F4A460',
                         background: 'rgba(0, 0, 0, 0.75)',
@@ -6702,15 +6727,16 @@ export default function App() {
                   {/* RK Internal Image */}
                   <div
                     style={{
-                      maxWidth: 'min(230px, 18vw)',
+                      maxWidth: 'clamp(140px, 14vw, 180px)',
                       width: 'fit-content',
-                      flex: 1.15,
+                      flex: '0 0 auto',
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: 'clamp(10px, 1.2vw, 16px)',
-                      marginTop: 'clamp(-20px, -2vh, -10px)',
+                      gap: 'clamp(10px, 1.2vw, 14px)',
+                      marginTop: '0',
                       overflow: 'visible',
-                      alignItems: 'center'
+                      alignItems: 'center',
+                      justifyContent: 'flex-start'
                     }}
                   >
                     <img
@@ -6718,9 +6744,11 @@ export default function App() {
                       alt="RK Internal"
                       style={{
                         width: 'auto',
-                        maxWidth: 'min(220px, 18vw)',
+                        maxWidth: 'clamp(140px, 14vw, 180px)',
                         height: 'auto',
-                        display: 'block'
+                        maxHeight: 'clamp(100px, 12vh, 140px)',
+                        display: 'block',
+                        objectFit: 'contain'
                       }}
                     />
                     {/* QR Code below the image */}
@@ -6740,8 +6768,8 @@ export default function App() {
                         src="/rkqr.jpeg"
                         alt="RK QR Code"
                         style={{
-                          maxWidth: 'clamp(120px, 15vw, 180px)',
-                          maxHeight: 'clamp(120px, 15vw, 180px)',
+                          maxWidth: 'clamp(80px, 10vw, 120px)',
+                          maxHeight: 'clamp(80px, 10vw, 120px)',
                           width: 'auto',
                           height: 'auto',
                           objectFit: 'contain',
@@ -6909,9 +6937,9 @@ export default function App() {
                 className="ah-environmental-content"
                 style={{
                   position: 'fixed',
-                  top: '92%',
+                  top: '50%',
                   right: 'clamp(40px, 4vw, 120px)',
-                  transform: 'translateY(-30%)',
+                  transform: 'translateY(-50%)',
                   maxWidth: 'var(--ah-content-max-width, clamp(520px, 46vw, 1000px))',
                   maxHeight: '80vh',
                   zIndex: 12,
@@ -7292,7 +7320,7 @@ export default function App() {
               {/* Gulf Consult Content - Right Side (like AMT) */}
               <div className="gulf-consult-content" style={{
                 position: 'fixed',
-                top: '62%',
+                top: '50%',
                 right: 'clamp(40px, 4vw, 80px)',
                 transform: 'translateY(-50%)',
                 maxWidth: 'var(--gulf-content-max-width, clamp(600px, 50vw, 900px))',
@@ -11678,6 +11706,7 @@ export default function App() {
             width: '100%',
             minHeight: '100vh',
             padding: '40px',
+            paddingBottom: '20px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
