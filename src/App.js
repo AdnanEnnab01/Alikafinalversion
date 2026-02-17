@@ -2555,7 +2555,7 @@ export default function App() {
                 {idcVideoFullscreen && (
                   <video
                     key={`idc-video-${idcVideoFullscreen}`}
-                    src="https://res.cloudinary.com/dl2rqs0lo/video/upload/idc_egyila.mp4"
+                    src="https://res.cloudinary.com/dl2rqs0lo/video/upload/IDC_Shaping_the_Future_of_Engineering_Industrial_Innovation__نصنع_مستقبل_الهندسة_والابتكار_الصناعي_vprpcf.mp4"
                     autoPlay
                     controls
                     style={{
