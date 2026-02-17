@@ -1082,7 +1082,7 @@ export default function App() {
           }}
           aria-label="Enable background video sound"
         >
-          Enable Sound
+          Vice President's speech
         </button>
       )}
 
