@@ -14,7 +14,7 @@
   position: fixed;
   right: clamp(24px, 3vw, 48px);
   bottom: clamp(24px, 3vh, 40px);
-  z-index: 50;
+  z-index: 100002 !important;
   padding: 14px 22px;
   border-radius: 16px;
   border: 2px solid rgba(255, 255, 255, 0.9);
@@ -28,6 +28,10 @@
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
 }
 
 .home-sound-btn:hover {
@@ -60,9 +64,9 @@
 
 .home-chairman-btn {
   position: fixed;
-  right: calc(clamp(24px, 3vw, 48px) + clamp(120px, 13vw, 160px));
+  right: calc(clamp(24px, 3vw, 48px) + clamp(200px, 20vw, 240px) + clamp(12px, 1.2vw, 16px));
   bottom: clamp(24px, 3vh, 40px);
-  z-index: 50;
+  z-index: 100002 !important;
   padding: 14px 22px;
   border-radius: 16px;
   border: 2px solid rgba(255, 255, 255, 0.9);
@@ -76,6 +80,10 @@
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
 }
 
 .home-chairman-btn:hover {
@@ -92,9 +100,9 @@
 
 .home-about-btn {
   position: fixed;
-  right: calc(clamp(24px, 3vw, 48px) + clamp(120px, 13vw, 160px) + clamp(8px, 1vw, 12px) + clamp(200px, 22vw, 260px) + clamp(2px, 0.3vw, 4px));
+  right: calc(clamp(24px, 3vw, 48px) + clamp(200px, 20vw, 240px) + clamp(12px, 1.2vw, 16px) + clamp(240px, 24vw, 280px) + clamp(12px, 1.2vw, 16px));
   bottom: clamp(24px, 3vh, 40px);
-  z-index: 50;
+  z-index: 100002 !important;
   padding: 14px 22px;
   border-radius: 16px;
   border: 2px solid rgba(255, 255, 255, 0.9);
@@ -108,6 +116,10 @@
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
 }
 
 .home-about-btn:hover {
