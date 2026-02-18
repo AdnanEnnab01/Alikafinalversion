@@ -1012,7 +1012,7 @@ export default function App() {
     // Row 4: 4 squares - RK between Central Care and AMT (at left of AH Environmental)
     { id: 7,  logo: '/dorrah.png', row: 4, col: 2, name: 'Al Dorrah', bgImage: '/dorrah-gif.gif' },
     { id: 4,  logo: '/GTA.png', row: 4, col: 3, name: 'GTA', bgImage: '/GTA-bg.jpeg' },
-    { id: 8,  logo: '/AMT.png', row: 4, col: 4, name: 'AMT', bgImage: '/amt-bg.jpeg', modalLogo: '/amt-internal.jpg' },
+    { id: 8,  logo: '/AMT.png', row: 4, col: 4, name: 'AMT', bgImage: '/amt-bg.png', modalLogo: '/amt-internal.jpg' },
     { id: 6,  logo: '/RK.png', row: 4, col: 5, name: 'RK', bgImage: '/rk1-gif.gif' },
   ];
 
@@ -1537,7 +1537,7 @@ export default function App() {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          backgroundColor: selectedCompany.id === 8 || selectedCompany.id === 6 ? '#0a0a0a' : selectedCompany.id === 9 ? '#f0f4f8' : selectedCompany.id === 7 ? '#061826' : selectedCompany.id === 2 ? '#1a1a1a' : 'transparent',
+          backgroundColor: selectedCompany.id === 8 ? 'transparent' : selectedCompany.id === 6 ? '#0a0a0a' : selectedCompany.id === 9 ? '#f0f4f8' : selectedCompany.id === 7 ? '#061826' : selectedCompany.id === 2 ? '#1a1a1a' : 'transparent',
           zIndex: 1000,
           animation: 'fadeIn 0.6s ease-in-out'
         }}>
@@ -1555,7 +1555,7 @@ export default function App() {
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
-                opacity: 0.3,
+                opacity: 1,
                 zIndex: 1
               }} />
               
@@ -1803,7 +1803,7 @@ export default function App() {
                   right: 'clamp(40px, 4vw, 80px)',
                   transform: 'translateY(-50%)',
                   maxWidth: 'var(--amt-content-max-width, clamp(600px, 50vw, 900px))',
-                  color: '#ffffff',
+                  color: '#1a1a1a',
                   direction: 'ltr',
                   textAlign: 'left',
                   zIndex: 11
@@ -1828,7 +1828,7 @@ export default function App() {
                     fontSize: 'var(--amt-text-size, clamp(15px, 1.7vw, 24px))',
                     lineHeight: '1.75',
                     marginBottom: 'clamp(20px, 3vh, 32px)',
-                    color: '#f9fafb',
+                    color: '#2d2d2d',
                     animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both'
                   }}
                 >
@@ -1849,12 +1849,12 @@ export default function App() {
                     style={{
                       fontSize: 'var(--amt-info-size, clamp(13px, 1.4vw, 20px))',
                       lineHeight: '1.8',
-                    color: '#f9fafb',
+                    color: '#1a1a1a',
                       flex: 0.9,
                       padding: 'clamp(8px, 1.2vh, 12px) clamp(12px, 1.6vw, 16px)',
                       borderRadius: '10px',
-                      background: 'rgba(0, 0, 0, 0.45)',
-                      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.45)'
+                      background: 'rgba(255, 255, 255, 0.85)',
+                      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)'
                     }}
                   >
                     <div
@@ -9071,8 +9071,8 @@ export default function App() {
           bottom: 0,
           width: '100vw',
           height: '100vh',
-          backgroundColor: '#0a0a0a',
-          backgroundImage: 'url(/amt-bg.jpeg)',
+          backgroundColor: 'transparent',
+          backgroundImage: 'url(/amt-bg.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
