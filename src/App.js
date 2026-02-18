@@ -1012,7 +1012,7 @@ export default function App() {
     // Row 4: 4 squares - RK between Central Care and AMT (at left of AH Environmental)
     { id: 7,  logo: '/dorrah.png', row: 4, col: 2, name: 'Al Dorrah', bgImage: '/dorrah-gif.gif' },
     { id: 4,  logo: '/GTA.png', row: 4, col: 3, name: 'GTA', bgImage: '/GTA-bg.jpeg' },
-    { id: 8,  logo: '/AMT.png', row: 4, col: 4, name: 'AMT', bgImage: '/amt-bg.JPEG', modalLogo: '/amt-internal.jpg' },
+    { id: 8,  logo: '/AMT.png', row: 4, col: 4, name: 'AMT', bgImage: '/amt-bg.jpeg', modalLogo: '/amt-internal.jpg' },
     { id: 6,  logo: '/RK.png', row: 4, col: 5, name: 'RK', bgImage: '/rk1-gif.gif' },
   ];
 
