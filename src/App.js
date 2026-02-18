@@ -5956,10 +5956,10 @@ export default function App() {
               <div
                 style={{
                   position: 'fixed',
-                  top: '52%',
-                  left: 'clamp(40px, 4vw, 100px)',
+                  top: 'clamp(55%, 55vh, 60%)',
+                  left: 'clamp(80px, 7vw, 140px)',
                   transform: 'translateY(-50%)',
-                  zIndex: 10,
+                  zIndex: 11,
                   animation: 'fadeIn 0.8s ease-in-out 0.4s both',
                   opacity: 0.9
                 }}
@@ -5967,9 +5967,9 @@ export default function App() {
                 <div
                   style={{
                     display: 'grid',
-                    gridTemplateColumns: `repeat(5, var(--grid-item-size, clamp(50px, 5vw, 75px)))`,
-                    gridTemplateRows: `repeat(4, var(--grid-item-size, clamp(50px, 5vw, 75px)))`,
-                    gap: 'var(--grid-gap, clamp(6px, 0.8vw, 12px))',
+                    gridTemplateColumns: `repeat(5, var(--grid-item-size, clamp(70px, 7vw, 115px)))`,
+                    gridTemplateRows: `repeat(4, var(--grid-item-size, clamp(70px, 7vw, 115px)))`,
+                    gap: 'var(--grid-gap, clamp(12px, 1.2vw, 20px))',
                     transform: 'rotate(45deg)',
                     position: 'relative'
                   }}
@@ -6384,22 +6384,26 @@ export default function App() {
               <div
                 style={{
                   position: 'fixed',
-                  top: '50%',
-                  left: 'clamp(40px, 4vw, 120px)',
-                  transform: 'translateY(-50%)',
+                  top: 'clamp(55%, 55vh, 60%)',
+                  left: 'clamp(80px, 7vw, 140px)',
+                  transform: 'translateY(-50%) translateZ(0)',
                   zIndex: 11,
                   animation: 'fadeIn 0.8s ease-in-out 0.4s both',
-                  opacity: 0.9
+                  opacity: 0.9,
+                  willChange: 'transform',
+                  backfaceVisibility: 'hidden'
                 }}
               >
                 <div
                   style={{
                     display: 'grid',
-                    gridTemplateColumns: `repeat(5, var(--grid-item-size, clamp(55px, 5.5vw, 85px)))`,
-                    gridTemplateRows: `repeat(4, var(--grid-item-size, clamp(55px, 5.5vw, 85px)))`,
-                    gap: 'var(--grid-gap, clamp(8px, 1vw, 14px))',
-                    transform: 'rotate(45deg)',
-                    position: 'relative'
+                    gridTemplateColumns: `repeat(5, var(--grid-item-size, clamp(70px, 7vw, 115px)))`,
+                    gridTemplateRows: `repeat(4, var(--grid-item-size, clamp(70px, 7vw, 115px)))`,
+                    gap: 'var(--grid-gap, clamp(12px, 1.2vw, 20px))',
+                    transform: 'rotate(45deg) translateZ(0)',
+                    position: 'relative',
+                    willChange: 'transform',
+                    backfaceVisibility: 'hidden'
                   }}
                 >
                   {companies.map((company) => {
@@ -6450,7 +6454,9 @@ export default function App() {
                               : '0 2px 10px rgba(0, 0, 0, 0.08)',
                             position: 'relative',
                             zIndex: isRKLogo ? 2 : 1,
-                            transform: isRKLogo ? 'scale(1.12) translateY(-6px)' : 'none'
+                            transform: isRKLogo ? 'scale(1.12) translateY(-6px) translateZ(0)' : 'none',
+                            transformOrigin: 'center center',
+                            willChange: isRKLogo ? 'transform' : 'auto'
                           }}
                           onMouseEnter={(e) => {
                             if (isRKLogo) {
@@ -9066,7 +9072,7 @@ export default function App() {
           width: '100vw',
           height: '100vh',
           backgroundColor: '#0a0a0a',
-          backgroundImage: 'url(/amt-bg.JPEG)',
+          backgroundImage: 'url(/amt-bg.jpeg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
