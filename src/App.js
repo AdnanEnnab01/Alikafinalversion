@@ -460,6 +460,74 @@ export default function App() {
     };
   }, [showGulfConsultArchQRModal]);
 
+  // Auto-close About Us modal after 90 seconds of inactivity
+  useEffect(() => {
+    if (!showAboutUs) return;
+
+    let inactivityTimer;
+
+    const resetTimer = () => {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        setShowAboutUs(false);
+      }, 90000); // 90 seconds
+    };
+
+    const handleActivity = () => {
+      resetTimer();
+    };
+
+    // Start the timer
+    resetTimer();
+
+    // Listen for user activity
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    events.forEach(event => {
+      document.addEventListener(event, handleActivity, true);
+    });
+
+    return () => {
+      clearTimeout(inactivityTimer);
+      events.forEach(event => {
+        document.removeEventListener(event, handleActivity, true);
+      });
+    };
+  }, [showAboutUs]);
+
+  // Auto-close Chairman Message modal after 90 seconds of inactivity
+  useEffect(() => {
+    if (!showChairmanMessage) return;
+
+    let inactivityTimer;
+
+    const resetTimer = () => {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        setShowChairmanMessage(false);
+      }, 90000); // 90 seconds
+    };
+
+    const handleActivity = () => {
+      resetTimer();
+    };
+
+    // Start the timer
+    resetTimer();
+
+    // Listen for user activity
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    events.forEach(event => {
+      document.addEventListener(event, handleActivity, true);
+    });
+
+    return () => {
+      clearTimeout(inactivityTimer);
+      events.forEach(event => {
+        document.removeEventListener(event, handleActivity, true);
+      });
+    };
+  }, [showChairmanMessage]);
+
   // Auto-redirect to homepage after 90 seconds of inactivity on company/Learn More pages
   useEffect(() => {
     // Check if we're on a company page or Learn More page
