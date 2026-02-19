@@ -9151,19 +9151,19 @@ export default function App() {
           <div style={{
             width: '100%',
             minHeight: '100vh',
-            padding: '40px',
+            padding: 'clamp(15px, 2vh, 25px)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'flex-start',
             color: '#ffffff',
-            paddingTop: '80px'
+            paddingTop: 'clamp(20px, 3vh, 35px)'
           }}>
             {/* Tabs Navigation */}
             <div style={{
               display: 'flex',
               gap: '10px',
-              marginBottom: '40px',
+              marginBottom: 'clamp(10px, 1.5vh, 15px)',
               zIndex: 10
             }}>
               <button
@@ -9192,7 +9192,7 @@ export default function App() {
                   }
                 }}
               >
-                OUR PARTNERS
+                OUR CLIENTS
               </button>
               <button
                 onClick={() => setAmtActiveTab('tab2')}
@@ -9248,7 +9248,7 @@ export default function App() {
                   }
                 }}
               >
-                Our PROJECTS
+                Our Partners
               </button>
             </div>
 
@@ -9256,103 +9256,417 @@ export default function App() {
             {amtActiveTab === 'tab1' && (
               <div style={{
                 width: '100%',
-                maxWidth: '1200px',
-                textAlign: 'center',
-                color: '#ffffff',
-                padding: '20px'
+                maxWidth: '1536px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 'clamp(10px, 1.2vh, 15px)',
+                height: '100%',
+                overflow: 'hidden',
+                boxSizing: 'border-box'
               }}>
-                <h1 style={{
-                  fontSize: 'clamp(24px, 2.5vw, 36px)',
-                  fontWeight: '900',
-                  color: '#ff4b4b',
-                  marginBottom: '30px',
-                  letterSpacing: '1.5px',
-                  textTransform: 'uppercase'
+                {/* Partners Logos Grid */}
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(6, 1fr)',
+                  gap: 'clamp(12px, 1.5vw, 16px)',
+                  width: '100%',
+                  maxWidth: '1536px',
+                  padding: 'clamp(8px, 1vh, 12px)',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flex: 1,
+                  overflow: 'hidden',
+                  boxSizing: 'border-box'
                 }}>
-                  Our PROJECTS
-                </h1>
-                <p style={{
-                  fontSize: 'clamp(16px, 1.5vw, 20px)',
-                  lineHeight: '1.8',
-                  color: '#ffffff'
-                }}>
-                  Our projects showcase our expertise in advanced micro technologies and innovative solutions.
-                </p>
+                  {[
+                    'aharthurhoml', 'ahuatechnolgy', 'apc', 'aruba', 'atlasied',
+                    'avaya', 'avigilon', 'biamp', 'chkistie', 'cisco',
+                    'clearone', 'commscope', 'edward', 'estronelectronics', 'fortinet',
+                    'hp', 'huawei', 'jbl', 'juniper', 'lenels2',
+                    'leviton', 'lg', 'nedap', 'orestron', 'pelco',
+                    'samsung', 'sapling', 'shure', 'televic', 'tripleplay'
+                  ].map((logoName, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: 'clamp(10px, 1.2vw, 14px)',
+                        background: 'rgba(255, 255, 255, 0.1)',
+                        borderRadius: '10px',
+                        transition: 'all 0.3s ease',
+                        cursor: 'pointer',
+                        height: 'clamp(130px, calc((100vh - 100px) / 5 - 16px), 140px)',
+                        minHeight: '130px',
+                        maxHeight: '140px',
+                        width: '100%',
+                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        aspectRatio: '1',
+                        boxSizing: 'border-box'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.08)';
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+                        e.currentTarget.style.boxShadow = 'none';
+                      }}
+                    >
+                      <img
+                        src={`/amtpartners/${logoName}.png`}
+                        alt={logoName}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          maxWidth: '100%',
+                          maxHeight: '100%',
+                          objectFit: 'contain',
+                          objectPosition: 'center',
+                          filter: 'brightness(1.1) contrast(1.05)',
+                          imageRendering: 'auto'
+                        }}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 
             {amtActiveTab === 'tab2' && (
               <div style={{
                 width: '100%',
-                maxWidth: '1200px',
+                maxWidth: '1400px',
                 textAlign: 'center',
-                color: '#ffffff',
-                padding: '20px'
+                padding: 'clamp(20px, 2.5vh, 40px) clamp(20px, 2vw, 40px)',
+                minHeight: 'calc(100vh - 200px)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center'
               }}>
                 <h1 style={{
-                  fontSize: 'clamp(24px, 2.5vw, 36px)',
+                  fontSize: 'clamp(28px, 2.8vw, 42px)',
                   fontWeight: '900',
                   color: '#ff4b4b',
-                  marginBottom: '30px',
+                  marginBottom: 'clamp(20px, 2.5vh, 35px)',
                   letterSpacing: '1.5px',
                   textTransform: 'uppercase'
                 }}>
                   Our TEAM
                 </h1>
                 <p style={{
-                  fontSize: 'clamp(16px, 1.5vw, 20px)',
+                  fontSize: 'clamp(16px, 1.6vw, 22px)',
                   lineHeight: '1.8',
-                  color: '#ffffff'
+                  color: '#1a1a1a',
+                  marginBottom: 'clamp(40px, 5vh, 60px)',
+                  maxWidth: '900px',
+                  marginLeft: 'auto',
+                  marginRight: 'auto'
                 }}>
                   Our dedicated team of experts brings years of experience in advanced micro technologies and innovation.
                 </p>
+                
+                {/* Team Members Grid */}
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(6, 1fr)',
+                  gap: 'clamp(12px, 1.5vw, 25px)',
+                  maxWidth: '1400px',
+                  margin: '0 auto',
+                  padding: '0 clamp(10px, 1.5vw, 30px)',
+                  width: '100%',
+                  direction: 'ltr'
+                }}>
+                  {/* CEO */}
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 'clamp(12px, 1.5vh, 18px)'
+                  }}>
+                    <div style={{
+                      width: 'clamp(130px, 12vw, 200px)',
+                      height: 'clamp(130px, 12vw, 200px)',
+                      borderRadius: '50%',
+                      backgroundColor: '#f0f0f0',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      overflow: 'hidden',
+                      border: '3px solid #ff4b4b',
+                      boxShadow: '0 4px 15px rgba(255, 75, 75, 0.3)'
+                    }}>
+                      <img
+                        src="/mreyad.jpeg"
+                        alt="CEO"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.parentElement.innerHTML = '<div style="font-size: 48px; color: #ff4b4b;">👤</div>';
+                        }}
+                      />
+                    </div>
+                    <div style={{
+                      fontSize: 'clamp(16px, 1.5vw, 22px)',
+                      fontWeight: '700',
+                      color: '#1a1a1a',
+                      textAlign: 'center',
+                      lineHeight: '1.4'
+                    }}>
+                      Mr.Eyad Matar<br />
+                      <span style={{ fontSize: 'clamp(13px, 1.2vw, 17px)', fontWeight: '600' }}>CEO</span>
+                    </div>
+                  </div>
+
+                  {/* Sales Manager */}
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 'clamp(12px, 1.5vh, 18px)'
+                  }}>
+                    <div style={{
+                      width: 'clamp(130px, 12vw, 200px)',
+                      height: 'clamp(130px, 12vw, 200px)',
+                      borderRadius: '50%',
+                      backgroundColor: '#ff6b9d',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      border: '3px solid #ff4b4b',
+                      boxShadow: '0 8px 25px rgba(255, 75, 75, 0.35)',
+                      color: '#ffffff',
+                      fontWeight: '800',
+                      fontSize: 'clamp(32px, 3vw, 40px)',
+                      letterSpacing: '1px'
+                    }}>
+                      SM
+                    </div>
+                    <div style={{
+                      fontSize: 'clamp(14px, 1.3vw, 19px)',
+                      fontWeight: '600',
+                      color: '#1a1a1a',
+                      textAlign: 'center',
+                      lineHeight: '1.4'
+                    }}>
+                      Sales Manager
+                    </div>
+                  </div>
+
+                  {/* Finance Manager */}
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 'clamp(12px, 1.5vh, 18px)'
+                  }}>
+                    <div style={{
+                      width: 'clamp(130px, 12vw, 200px)',
+                      height: 'clamp(130px, 12vw, 200px)',
+                      borderRadius: '50%',
+                      backgroundColor: '#ff6b9d',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      border: '3px solid #ff4b4b',
+                      boxShadow: '0 8px 25px rgba(255, 75, 75, 0.35)',
+                      color: '#ffffff',
+                      fontWeight: '800',
+                      fontSize: 'clamp(32px, 3vw, 40px)',
+                      letterSpacing: '1px'
+                    }}>
+                      FM
+                    </div>
+                    <div style={{
+                      fontSize: 'clamp(14px, 1.3vw, 19px)',
+                      fontWeight: '600',
+                      color: '#1a1a1a',
+                      textAlign: 'center',
+                      lineHeight: '1.4'
+                    }}>
+                      Finance Manager
+                    </div>
+                  </div>
+
+                  {/* Implementation Manager */}
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 'clamp(12px, 1.5vh, 18px)'
+                  }}>
+                    <div style={{
+                      width: 'clamp(130px, 12vw, 200px)',
+                      height: 'clamp(130px, 12vw, 200px)',
+                      borderRadius: '50%',
+                      backgroundColor: '#ff6b9d',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      border: '3px solid #ff4b4b',
+                      boxShadow: '0 8px 25px rgba(255, 75, 75, 0.35)',
+                      color: '#ffffff',
+                      fontWeight: '800',
+                      fontSize: 'clamp(30px, 2.6vw, 38px)',
+                      letterSpacing: '1px',
+                      textAlign: 'center',
+                      padding: '0 6px',
+                      boxSizing: 'border-box'
+                    }}>
+                      IM
+                    </div>
+                    <div style={{
+                      fontSize: 'clamp(14px, 1.3vw, 19px)',
+                      fontWeight: '600',
+                      color: '#1a1a1a',
+                      textAlign: 'center',
+                      lineHeight: '1.4'
+                    }}>
+                      Implementation Manager
+                    </div>
+                  </div>
+
+                  {/* Engineering Manager */}
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 'clamp(12px, 1.5vh, 18px)'
+                  }}>
+                    <div style={{
+                      width: 'clamp(130px, 12vw, 200px)',
+                      height: 'clamp(130px, 12vw, 200px)',
+                      borderRadius: '50%',
+                      backgroundColor: '#ff6b9d',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      border: '3px solid #ff4b4b',
+                      boxShadow: '0 8px 25px rgba(255, 75, 75, 0.35)',
+                      color: '#ffffff',
+                      fontWeight: '800',
+                      fontSize: 'clamp(32px, 3vw, 40px)',
+                      letterSpacing: '1px'
+                    }}>
+                      EM
+                    </div>
+                    <div style={{
+                      fontSize: 'clamp(14px, 1.3vw, 19px)',
+                      fontWeight: '600',
+                      color: '#1a1a1a',
+                      textAlign: 'center',
+                      lineHeight: '1.4'
+                    }}>
+                      Engineering Manager
+                    </div>
+                  </div>
+
+                  {/* Store Manager */}
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 'clamp(12px, 1.5vh, 18px)'
+                  }}>
+                    <div style={{
+                      width: 'clamp(130px, 12vw, 200px)',
+                      height: 'clamp(130px, 12vw, 200px)',
+                      borderRadius: '50%',
+                      backgroundColor: '#ff6b9d',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      border: '3px solid #ff4b4b',
+                      boxShadow: '0 8px 25px rgba(255, 75, 75, 0.35)',
+                      color: '#ffffff',
+                      fontWeight: '800',
+                      fontSize: 'clamp(30px, 2.6vw, 38px)',
+                      letterSpacing: '1px',
+                      textAlign: 'center',
+                      padding: '0 6px',
+                      boxSizing: 'border-box'
+                    }}>
+                      StM
+                    </div>
+                    <div style={{
+                      fontSize: 'clamp(14px, 1.3vw, 19px)',
+                      fontWeight: '600',
+                      color: '#1a1a1a',
+                      textAlign: 'center',
+                      lineHeight: '1.4'
+                    }}>
+                      Store Manager
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
 
             {amtActiveTab === 'tab3' && (
               <div style={{
                 width: '100%',
-                maxWidth: '1200px',
+                maxWidth: '1536px',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                padding: '20px'
+                padding: 'clamp(15px, 2vh, 25px)',
+                height: '100%',
+                overflow: 'hidden',
+                boxSizing: 'border-box'
               }}>
                 <h1 style={{
                   fontSize: 'clamp(24px, 2.5vw, 36px)',
                   fontWeight: '900',
                   color: '#ff4b4b',
-                  marginBottom: 'clamp(20px, 3vh, 30px)',
+                  marginBottom: 'clamp(15px, 2vh, 25px)',
                   letterSpacing: '1.5px',
                   textTransform: 'uppercase',
-                  textAlign: 'center'
+                  textAlign: 'center',
+                  flexShrink: 0
                 }}>
-                  OUR PARTNERS
+                  OUR CLIENTS
                 </h1>
                 
                 {/* Partners Grid */}
                 <div style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: 'clamp(15px, 2vh, 20px)',
+                  gap: 'clamp(20px, 2.5vh, 30px)',
                   width: '100%',
-                  maxWidth: '1000px',
+                  maxWidth: '1400px',
                   alignItems: 'center',
-                  marginLeft: 'clamp(20px, 3vw, 40px)'
+                  justifyContent: 'center',
+                  flex: 1,
+                  overflow: 'hidden',
+                  boxSizing: 'border-box'
                 }}>
                   {/* Row 1: 5 logos */}
                   <div style={{
                     display: 'grid',
                     gridTemplateColumns: 'repeat(5, 1fr)',
-                    gap: 'clamp(15px, 2vw, 25px)',
-                    width: '100%'
+                    gap: 'clamp(20px, 2.5vw, 35px)',
+                    width: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center'
                   }}>
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    padding: '10px',
+                    padding: 'clamp(12px, 1.5vw, 18px)',
                     background: 'transparent',
                     transition: 'all 0.3s ease',
                     cursor: 'pointer'
@@ -9368,9 +9682,9 @@ export default function App() {
                       src="/Group 82.png"
                       alt="Kingdom of Saudi Arabia"
                       style={{
-                        width: 'clamp(100px, 12vw, 140px)',
+                        width: 'clamp(150px, 15vw, 200px)',
                         height: 'auto',
-                        maxHeight: 'clamp(100px, 12vw, 140px)',
+                        maxHeight: 'clamp(150px, 15vw, 200px)',
                         objectFit: 'contain'
                       }}
                     />
@@ -9379,7 +9693,7 @@ export default function App() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    padding: '10px',
+                    padding: 'clamp(12px, 1.5vw, 18px)',
                     background: 'transparent',
                     transition: 'all 0.3s ease',
                     cursor: 'pointer'
@@ -9395,9 +9709,9 @@ export default function App() {
                       src="/Group 83.png"
                       alt="Imam Abdulrahman Bin Faisal University"
                       style={{
-                        width: 'clamp(100px, 12vw, 140px)',
+                        width: 'clamp(150px, 15vw, 200px)',
                         height: 'auto',
-                        maxHeight: 'clamp(100px, 12vw, 140px)',
+                        maxHeight: 'clamp(150px, 15vw, 200px)',
                         objectFit: 'contain'
                       }}
                     />
@@ -9406,7 +9720,7 @@ export default function App() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    padding: '10px',
+                    padding: 'clamp(12px, 1.5vw, 18px)',
                     background: 'transparent',
                     transition: 'all 0.3s ease',
                     cursor: 'pointer'
@@ -9422,9 +9736,9 @@ export default function App() {
                       src="/Group 84.png"
                       alt="Ma'aden"
                       style={{
-                        width: 'clamp(100px, 12vw, 140px)',
+                        width: 'clamp(150px, 15vw, 200px)',
                         height: 'auto',
-                        maxHeight: 'clamp(100px, 12vw, 140px)',
+                        maxHeight: 'clamp(150px, 15vw, 200px)',
                         objectFit: 'contain'
                       }}
                     />
@@ -9433,7 +9747,7 @@ export default function App() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    padding: '10px',
+                    padding: 'clamp(12px, 1.5vw, 18px)',
                     background: 'transparent',
                     transition: 'all 0.3s ease',
                     cursor: 'pointer'
@@ -9449,9 +9763,9 @@ export default function App() {
                       src="/Group 85.png"
                       alt="King Faisal University"
                       style={{
-                        width: 'clamp(100px, 12vw, 140px)',
+                        width: 'clamp(150px, 15vw, 200px)',
                         height: 'auto',
-                        maxHeight: 'clamp(100px, 12vw, 140px)',
+                        maxHeight: 'clamp(150px, 15vw, 200px)',
                         objectFit: 'contain'
                       }}
                     />
@@ -9460,7 +9774,7 @@ export default function App() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    padding: '10px',
+                    padding: 'clamp(12px, 1.5vw, 18px)',
                     background: 'transparent',
                     transition: 'all 0.3s ease',
                     cursor: 'pointer'
@@ -9476,9 +9790,9 @@ export default function App() {
                       src="/Group 86.png"
                       alt="Marafiq"
                       style={{
-                        width: 'clamp(100px, 12vw, 140px)',
+                        width: 'clamp(150px, 15vw, 200px)',
                         height: 'auto',
-                        maxHeight: 'clamp(100px, 12vw, 140px)',
+                        maxHeight: 'clamp(150px, 15vw, 200px)',
                         objectFit: 'contain'
                       }}
                     />
@@ -9489,14 +9803,16 @@ export default function App() {
                   <div style={{
                     display: 'grid',
                     gridTemplateColumns: 'repeat(5, 1fr)',
-                    gap: 'clamp(15px, 2vw, 25px)',
-                    width: '100%'
+                    gap: 'clamp(20px, 2.5vw, 35px)',
+                    width: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center'
                   }}>
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    padding: '10px',
+                    padding: 'clamp(12px, 1.5vw, 18px)',
                     background: 'transparent',
                     transition: 'all 0.3s ease',
                     cursor: 'pointer'
@@ -9512,9 +9828,9 @@ export default function App() {
                       src="/Group 87.png"
                       alt="Saudi Arabia"
                       style={{
-                        width: 'clamp(100px, 12vw, 140px)',
+                        width: 'clamp(150px, 15vw, 200px)',
                         height: 'auto',
-                        maxHeight: 'clamp(100px, 12vw, 140px)',
+                        maxHeight: 'clamp(150px, 15vw, 200px)',
                         objectFit: 'contain'
                       }}
                     />
@@ -9523,7 +9839,7 @@ export default function App() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    padding: '10px',
+                    padding: 'clamp(12px, 1.5vw, 18px)',
                     background: 'transparent',
                     transition: 'all 0.3s ease',
                     cursor: 'pointer'
@@ -9539,9 +9855,9 @@ export default function App() {
                       src="/Group 90.png"
                       alt="Ministry of Health"
                       style={{
-                        width: 'clamp(100px, 12vw, 140px)',
+                        width: 'clamp(150px, 15vw, 200px)',
                         height: 'auto',
-                        maxHeight: 'clamp(100px, 12vw, 140px)',
+                        maxHeight: 'clamp(150px, 15vw, 200px)',
                         objectFit: 'contain'
                       }}
                     />
@@ -9550,7 +9866,7 @@ export default function App() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    padding: '10px',
+                    padding: 'clamp(12px, 1.5vw, 18px)',
                     background: 'transparent',
                     transition: 'all 0.3s ease',
                     cursor: 'pointer'
@@ -9566,9 +9882,9 @@ export default function App() {
                       src="/Group 91.png"
                       alt="Ministry of Finance"
                       style={{
-                        width: 'clamp(100px, 12vw, 140px)',
+                        width: 'clamp(150px, 15vw, 200px)',
                         height: 'auto',
-                        maxHeight: 'clamp(100px, 12vw, 140px)',
+                        maxHeight: 'clamp(150px, 15vw, 200px)',
                         objectFit: 'contain'
                       }}
                     />
@@ -9577,7 +9893,7 @@ export default function App() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    padding: '10px',
+                    padding: 'clamp(12px, 1.5vw, 18px)',
                     background: 'transparent',
                     transition: 'all 0.3s ease',
                     cursor: 'pointer'
@@ -9593,9 +9909,9 @@ export default function App() {
                       src="/Group 92.png"
                       alt="King Saud University"
                       style={{
-                        width: 'clamp(100px, 12vw, 140px)',
+                        width: 'clamp(150px, 15vw, 200px)',
                         height: 'auto',
-                        maxHeight: 'clamp(100px, 12vw, 140px)',
+                        maxHeight: 'clamp(150px, 15vw, 200px)',
                         objectFit: 'contain'
                       }}
                     />
@@ -9604,7 +9920,7 @@ export default function App() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    padding: '10px',
+                    padding: 'clamp(12px, 1.5vw, 18px)',
                     background: 'transparent',
                     transition: 'all 0.3s ease',
                     cursor: 'pointer'
@@ -9620,9 +9936,9 @@ export default function App() {
                       src="/Group 95.png"
                       alt="Aramco"
                       style={{
-                        width: 'clamp(100px, 12vw, 140px)',
+                        width: 'clamp(150px, 15vw, 200px)',
                         height: 'auto',
-                        maxHeight: 'clamp(100px, 12vw, 140px)',
+                        maxHeight: 'clamp(150px, 15vw, 200px)',
                         objectFit: 'contain'
                       }}
                     />
