@@ -3053,6 +3053,7 @@ export default function App() {
                       <strong style={{ minWidth: '110px', fontWeight: 800 }}>Website:</strong>
                       <a
                         href="https://acwm-sa.com"
+                        target="_blank"
                         rel="noreferrer"
                         style={{
                           color: '#f9fafb',
@@ -4295,6 +4296,7 @@ export default function App() {
                       <strong style={{ minWidth: '110px', fontWeight: 800 }}>Website:</strong>
                       <a
                         href="https://www.gc-eng.com"
+                        target="_blank"
                         rel="noreferrer"
                         style={{
                           color: '#16348a',
@@ -6324,6 +6326,7 @@ export default function App() {
                       <strong style={{ fontWeight: '800', flexShrink: 0 }}>Website:</strong>
                       <a
                         href="https://www.gulfconsult.com"
+                        target="_blank"
                         rel="noreferrer"
                         style={{
                           color: '#07373c', 
@@ -7485,6 +7488,7 @@ export default function App() {
                     <strong style={{ fontWeight: '800', flexShrink: 0 }}>Website:</strong>
                     <a
                       href="https://www.gulfconsult.com"
+                      target="_blank"
                       rel="noreferrer"
                       style={{ 
                         color: '#ffffff', 
