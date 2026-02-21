@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <base target="_self">
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Alika Kiosk Application - Ali Khudair Al harbi Holding Group"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script>
+      // Force all links to open in same page instead of new window
+      (function() {
+        function forceLinksInSamePage() {
+          document.addEventListener("click", function(e) {
+            const link = e.target.closest("a");
+            if (!link) return;
+
+            const url = link.getAttribute("href");
+            if (!url) return;
+
+            // Only handle external links (http/https)
+            if (url.startsWith("http://") || url.startsWith("https://")) {
+              e.preventDefault();
+              e.stopPropagation();
+              window.location.href = url;
+            }
+          }, true); // Use capture phase to catch early
+        }
+
+        // Run when DOM is ready
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', forceLinksInSamePage);
+        } else {
+          forceLinksInSamePage();
+        }
+      })();
+    </script>
+  </body>
+</html>
