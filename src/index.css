@@ -12,6 +12,25 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
+  touch-action: pan-x pan-y;
+  -ms-touch-action: pan-x pan-y;
+  -webkit-user-zoom: fixed;
+  -moz-user-zoom: fixed;
+  user-zoom: fixed;
+}
+
+html {
+  touch-action: pan-x pan-y;
+  -ms-touch-action: pan-x pan-y;
+  -webkit-user-zoom: fixed;
+  -moz-user-zoom: fixed;
+  user-zoom: fixed;
+  overflow: hidden;
+}
+
+* {
+  touch-action: pan-x pan-y;
+  -ms-touch-action: pan-x pan-y;
 }
 
 code {

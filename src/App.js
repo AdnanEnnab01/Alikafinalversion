@@ -9,32 +9,43 @@ export default function App() {
   const [showGulfConsultArchQRModal, setShowGulfConsultArchQRModal] = useState(false);
   const [gulfConsultActiveTab, setGulfConsultActiveTab] = useState('tab1'); // 'tab1', 'tab2', 'tab3'
   const [showAntiqueLearnMore, setShowAntiqueLearnMore] = useState(false);
+  const [showAntiqueQRModal, setShowAntiqueQRModal] = useState(false);
   const [antiqueActiveTab, setAntiqueActiveTab] = useState('tab3'); // 'tab1', 'tab2', 'tab3'
   const [showAMTLearnMore, setShowAMTLearnMore] = useState(false);
   const [amtActiveTab, setAmtActiveTab] = useState('tab1'); // 'tab1' = Projects, 'tab2' = Team, 'tab3' = Partners
+  const [amtGalleryVideoIndex, setAmtGalleryVideoIndex] = useState(0); // Index for gallery videos
+  const [amtGalleryFullscreenVideo, setAmtGalleryFullscreenVideo] = useState(null); // Fullscreen video URL
   const [showAMTQRModal, setShowAMTQRModal] = useState(false);
   const [showGulfConsult2LearnMore, setShowGulfConsult2LearnMore] = useState(false);
   const [gulfConsult2ActiveTab, setGulfConsult2ActiveTab] = useState('tab1'); // 'tab1' = Projects, 'tab2' = Team, 'tab3' = Partners
   const [showGulfConsultQRModal, setShowGulfConsultQRModal] = useState(false);
   const [showGSGLearnMore, setShowGSGLearnMore] = useState(false);
+  const [showGSGQRModal, setShowGSGQRModal] = useState(false);
   const [gsgActiveTab, setGsgActiveTab] = useState('tab1'); // 'tab1' = Projects, 'tab2' = Team, 'tab3' = Partners
   const [showGulfDorrahLearnMore, setShowGulfDorrahLearnMore] = useState(false);
+  const [showGulfDorrahQRModal, setShowGulfDorrahQRModal] = useState(false);
   const [showCentralMedicalcareLearnMore, setShowCentralMedicalcareLearnMore] = useState(false);
+  const [showCentralMedicalcareQRModal, setShowCentralMedicalcareQRModal] = useState(false);
   const [centralMedicalcareActiveTab, setCentralMedicalcareActiveTab] = useState('tab1'); // 'tab1' = Projects, 'tab2' = Partners, 'tab3' = Team
   const [showRKLearnMore, setShowRKLearnMore] = useState(false);
+  const [showRKQRModal, setShowRKQRModal] = useState(false);
   const [showAHEnvironmentalLearnMore, setShowAHEnvironmentalLearnMore] = useState(false);
+  const [showAHEnvironmentalQRModal, setShowAHEnvironmentalQRModal] = useState(false);
   const [ahEnvironmentalActiveTab, setAhEnvironmentalActiveTab] = useState('tab1'); // 'tab1' = Partners, 'tab2' = Team, 'tab3' = Projects
   const [showIDCLearnMore, setShowIDCLearnMore] = useState(false);
   const [showIDCQRModal, setShowIDCQRModal] = useState(false);
   const [showGTALearnMore, setShowGTALearnMore] = useState(false);
+  const [showGTAQRModal, setShowGTAQRModal] = useState(false);
   const [dorrahVideoPlaying, setDorrahVideoPlaying] = useState(false);
   const [dorrahVideoFullscreen, setDorrahVideoFullscreen] = useState(false);
   const dorrahVideoContainerRef = useRef(null);
   const [amtVideoPlaying, setAmtVideoPlaying] = useState(false);
   const [amtVideoFullscreen, setAmtVideoFullscreen] = useState(false);
   const amtVideoContainerRef = useRef(null);
+  const amtGalleryVideoRefs = useRef([]);
   const [tlcoVideoPlaying, setTlcoVideoPlaying] = useState(false);
   const [tlcoVideoFullscreen, setTlcoVideoFullscreen] = useState(false);
+  const [showTLCOQRModal, setShowTLCOQRModal] = useState(false);
   const tlcoVideoContainerRef = useRef(null);
   const [gulfConsultVideoPlaying, setGulfConsultVideoPlaying] = useState(false);
   const [gulfConsultVideoFullscreen, setGulfConsultVideoFullscreen] = useState(false);
@@ -223,6 +234,41 @@ export default function App() {
     };
   }, []);
 
+  // Reset gallery video index when opening gallery tab
+  useEffect(() => {
+    if (amtActiveTab === 'tab4') {
+      setAmtGalleryVideoIndex(0);
+      setAmtGalleryFullscreenVideo(null);
+    }
+  }, [amtActiveTab]);
+
+  // Listen for video end event from Cloudinary player
+  useEffect(() => {
+    const handleMessage = (event) => {
+      // Cloudinary player sends 'videoend' event
+      if (event.data && typeof event.data === 'object') {
+        if (event.data.event === 'videoend' || event.data.event === 'ended') {
+          if (amtGalleryFullscreenVideo) {
+            // Exit fullscreen
+            if (document.exitFullscreen) {
+              document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+              document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+              document.msExitFullscreen();
+            }
+            setAmtGalleryFullscreenVideo(null);
+          }
+        }
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, [amtGalleryFullscreenVideo]);
+
   // Handle fullscreen change for Central Medicalcare video (id === 3)
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -282,6 +328,20 @@ export default function App() {
     };
   }, [showAMTQRModal]);
 
+  // Handle Escape key to close Gulf Dorrah QR Modal
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && showGulfDorrahQRModal) {
+        setShowGulfDorrahQRModal(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [showGulfDorrahQRModal]);
+
   // Auto-close AMT QR Modal after 90 seconds of inactivity
   useEffect(() => {
     if (!showAMTQRModal) return;
@@ -316,6 +376,138 @@ export default function App() {
     };
   }, [showAMTQRModal]);
 
+  // Auto-close Gulf Dorrah QR Modal after 90 seconds of inactivity
+  useEffect(() => {
+    if (!showGulfDorrahQRModal) return;
+
+    let inactivityTimer;
+
+    const resetTimer = () => {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        setShowGulfDorrahQRModal(false);
+      }, 90000); // 90 seconds (1.5 minutes)
+    };
+
+    const handleActivity = () => {
+      resetTimer();
+    };
+
+    // Start the timer
+    resetTimer();
+
+    // Listen for user activity
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    events.forEach(event => {
+      document.addEventListener(event, handleActivity, true);
+    });
+
+    return () => {
+      clearTimeout(inactivityTimer);
+      events.forEach(event => {
+        document.removeEventListener(event, handleActivity, true);
+      });
+    };
+  }, [showGulfDorrahQRModal]);
+
+  // Handle Escape key to close GTA QR Modal
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && showGTAQRModal) {
+        setShowGTAQRModal(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [showGTAQRModal]);
+
+  // Handle Escape key to close AH Environmental QR Modal
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && showAHEnvironmentalQRModal) {
+        setShowAHEnvironmentalQRModal(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [showAHEnvironmentalQRModal]);
+
+  // Handle Escape key to close Central Medicalcare QR Modal
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && showCentralMedicalcareQRModal) {
+        setShowCentralMedicalcareQRModal(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [showCentralMedicalcareQRModal]);
+
+  // Handle Escape key to close RK QR Modal
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && showRKQRModal) {
+        setShowRKQRModal(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [showRKQRModal]);
+
+  // Handle Escape key to close Antique QR Modal
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && showAntiqueQRModal) {
+        setShowAntiqueQRModal(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [showAntiqueQRModal]);
+
+  // Handle Escape key to close TLCO QR Modal
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && showTLCOQRModal) {
+        setShowTLCOQRModal(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [showTLCOQRModal]);
+
+  // Handle Escape key to close GSG QR Modal
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && showGSGQRModal) {
+        setShowGSGQRModal(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [showGSGQRModal]);
+
   // Handle Escape key to close IDC QR Modal
   useEffect(() => {
     const handleEscape = (e) => {
@@ -329,6 +521,244 @@ export default function App() {
       document.removeEventListener('keydown', handleEscape);
     };
   }, [showIDCQRModal]);
+
+  // Auto-close GTA QR Modal after 90 seconds of inactivity
+  useEffect(() => {
+    if (!showGTAQRModal) return;
+
+    let inactivityTimer;
+
+    const resetTimer = () => {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        setShowGTAQRModal(false);
+      }, 90000); // 90 seconds (1.5 minutes)
+    };
+
+    const handleActivity = () => {
+      resetTimer();
+    };
+
+    // Start the timer
+    resetTimer();
+
+    // Listen for user activity
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    events.forEach(event => {
+      document.addEventListener(event, handleActivity, true);
+    });
+
+    return () => {
+      clearTimeout(inactivityTimer);
+      events.forEach(event => {
+        document.removeEventListener(event, handleActivity, true);
+      });
+    };
+  }, [showGTAQRModal]);
+
+  // Auto-close AH Environmental QR Modal after 90 seconds of inactivity
+  useEffect(() => {
+    if (!showAHEnvironmentalQRModal) return;
+
+    let inactivityTimer;
+
+    const resetTimer = () => {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        setShowAHEnvironmentalQRModal(false);
+      }, 90000); // 90 seconds (1.5 minutes)
+    };
+
+    const handleActivity = () => {
+      resetTimer();
+    };
+
+    // Start the timer
+    resetTimer();
+
+    // Listen for user activity
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    events.forEach(event => {
+      document.addEventListener(event, handleActivity, true);
+    });
+
+    return () => {
+      clearTimeout(inactivityTimer);
+      events.forEach(event => {
+        document.removeEventListener(event, handleActivity, true);
+      });
+    };
+  }, [showAHEnvironmentalQRModal]);
+
+  // Auto-close Central Medicalcare QR Modal after 90 seconds of inactivity
+  useEffect(() => {
+    if (!showCentralMedicalcareQRModal) return;
+
+    let inactivityTimer;
+
+    const resetTimer = () => {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        setShowCentralMedicalcareQRModal(false);
+      }, 90000); // 90 seconds (1.5 minutes)
+    };
+
+    const handleActivity = () => {
+      resetTimer();
+    };
+
+    // Start the timer
+    resetTimer();
+
+    // Listen for user activity
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    events.forEach(event => {
+      document.addEventListener(event, handleActivity, true);
+    });
+
+    return () => {
+      clearTimeout(inactivityTimer);
+      events.forEach(event => {
+        document.removeEventListener(event, handleActivity, true);
+      });
+    };
+  }, [showCentralMedicalcareQRModal]);
+
+  // Auto-close RK QR Modal after 90 seconds of inactivity
+  useEffect(() => {
+    if (!showRKQRModal) return;
+
+    let inactivityTimer;
+
+    const resetTimer = () => {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        setShowRKQRModal(false);
+      }, 90000); // 90 seconds (1.5 minutes)
+    };
+
+    const handleActivity = () => {
+      resetTimer();
+    };
+
+    // Start the timer
+    resetTimer();
+
+    // Listen for user activity
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    events.forEach(event => {
+      document.addEventListener(event, handleActivity, true);
+    });
+
+    return () => {
+      clearTimeout(inactivityTimer);
+      events.forEach(event => {
+        document.removeEventListener(event, handleActivity, true);
+      });
+    };
+  }, [showRKQRModal]);
+
+  // Auto-close Antique QR Modal after 90 seconds of inactivity
+  useEffect(() => {
+    if (!showAntiqueQRModal) return;
+
+    let inactivityTimer;
+
+    const resetTimer = () => {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        setShowAntiqueQRModal(false);
+      }, 90000); // 90 seconds (1.5 minutes)
+    };
+
+    const handleActivity = () => {
+      resetTimer();
+    };
+
+    // Start the timer
+    resetTimer();
+
+    // Listen for user activity
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    events.forEach(event => {
+      document.addEventListener(event, handleActivity, true);
+    });
+
+    return () => {
+      clearTimeout(inactivityTimer);
+      events.forEach(event => {
+        document.removeEventListener(event, handleActivity, true);
+      });
+    };
+  }, [showAntiqueQRModal]);
+
+  // Auto-close TLCO QR Modal after 90 seconds of inactivity
+  useEffect(() => {
+    if (!showTLCOQRModal) return;
+
+    let inactivityTimer;
+
+    const resetTimer = () => {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        setShowTLCOQRModal(false);
+      }, 90000); // 90 seconds (1.5 minutes)
+    };
+
+    const handleActivity = () => {
+      resetTimer();
+    };
+
+    // Start the timer
+    resetTimer();
+
+    // Listen for user activity
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    events.forEach(event => {
+      document.addEventListener(event, handleActivity, true);
+    });
+
+    return () => {
+      clearTimeout(inactivityTimer);
+      events.forEach(event => {
+        document.removeEventListener(event, handleActivity, true);
+      });
+    };
+  }, [showTLCOQRModal]);
+
+  // Auto-close GSG QR Modal after 90 seconds of inactivity
+  useEffect(() => {
+    if (!showGSGQRModal) return;
+
+    let inactivityTimer;
+
+    const resetTimer = () => {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        setShowGSGQRModal(false);
+      }, 90000); // 90 seconds (1.5 minutes)
+    };
+
+    const handleActivity = () => {
+      resetTimer();
+    };
+
+    // Start the timer
+    resetTimer();
+
+    // Listen for user activity
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    events.forEach(event => {
+      document.addEventListener(event, handleActivity, true);
+    });
+
+    return () => {
+      clearTimeout(inactivityTimer);
+      events.forEach(event => {
+        document.removeEventListener(event, handleActivity, true);
+      });
+    };
+  }, [showGSGQRModal]);
 
   // Auto-close IDC QR Modal after 90 seconds of inactivity
   useEffect(() => {
@@ -527,6 +957,107 @@ export default function App() {
       });
     };
   }, [showChairmanMessage]);
+
+  // Prevent zoom in/out - Disable keyboard shortcuts and wheel zoom
+  useEffect(() => {
+    // Prevent keyboard zoom (Ctrl + Plus/Minus/0)
+    const handleKeyDown = (e) => {
+      if (
+        (e.ctrlKey || e.metaKey) &&
+        (e.key === '+' || e.key === '=' || e.key === '-' || e.key === '0' || e.keyCode === 187 || e.keyCode === 189 || e.keyCode === 48)
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+      // Prevent Ctrl + Mouse Wheel zoom
+      if ((e.ctrlKey || e.metaKey) && e.deltaY !== undefined) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    };
+
+    // Prevent wheel zoom
+    const handleWheel = (e) => {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    };
+
+    // Prevent pinch zoom on touch devices (pinch with two fingers)
+    const handleTouchStart = (e) => {
+      if (e.touches.length > 1) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        return false;
+      }
+    };
+
+    const handleTouchMove = (e) => {
+      // Block pinch zoom (two or more fingers)
+      if (e.touches.length > 1 || e.scale !== undefined && e.scale !== 1.0) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        return false;
+      }
+    };
+
+    const handleGestureStart = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    };
+
+    const handleGestureChange = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    };
+
+    const handleGestureEnd = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    };
+
+    // Add event listeners
+    document.addEventListener('keydown', handleKeyDown, { passive: false, capture: true });
+    document.addEventListener('wheel', handleWheel, { passive: false, capture: true });
+    document.addEventListener('touchstart', handleTouchStart, { passive: false, capture: true });
+    document.addEventListener('touchmove', handleTouchMove, { passive: false, capture: true });
+    document.addEventListener('gesturestart', handleGestureStart, { passive: false, capture: true });
+    document.addEventListener('gesturechange', handleGestureChange, { passive: false, capture: true });
+    document.addEventListener('gestureend', handleGestureEnd, { passive: false, capture: true });
+
+    // Prevent zoom via double tap on mobile
+    let lastTouchEnd = 0;
+    const handleTouchEnd = (e) => {
+      const now = Date.now();
+      if (now - lastTouchEnd <= 300) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+      lastTouchEnd = now;
+    };
+    document.addEventListener('touchend', handleTouchEnd, { passive: false, capture: true });
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown, { capture: true });
+      document.removeEventListener('wheel', handleWheel, { capture: true });
+      document.removeEventListener('touchstart', handleTouchStart, { capture: true });
+      document.removeEventListener('touchmove', handleTouchMove, { capture: true });
+      document.removeEventListener('touchend', handleTouchEnd, { capture: true });
+      document.removeEventListener('gesturestart', handleGestureStart, { capture: true });
+      document.removeEventListener('gesturechange', handleGestureChange, { capture: true });
+      document.removeEventListener('gestureend', handleGestureEnd, { capture: true });
+    };
+  }, []);
 
   // Auto-redirect to homepage after 90 seconds of inactivity on company/Learn More pages
   useEffect(() => {
@@ -820,6 +1351,9 @@ export default function App() {
           if (amtVideoFullscreen) {
             closeVideo(setAmtVideoFullscreen, setAmtVideoPlaying);
           }
+          if (amtGalleryFullscreenVideo) {
+            closeVideo(() => setAmtGalleryFullscreenVideo(null), setAmtVideoPlaying);
+          }
           if (idcVideoFullscreen) {
             closeVideo(setIdcVideoFullscreen, setIdcVideoPlaying);
           }
@@ -1079,7 +1613,7 @@ export default function App() {
     { id: 3,  logo: '/cc.png', row: 3, col: 5, name: 'Central Care', bgImage: '/rk-gif.gif' },
     // Row 4: 4 squares - RK between Central Care and AMT (at left of AH Environmental)
     { id: 7,  logo: '/dorrah.png', row: 4, col: 2, name: 'Al Dorrah', bgImage: '/dorrah-gif.gif' },
-    { id: 4,  logo: '/GTA.png', row: 4, col: 3, name: 'GTA', bgImage: '/GTA-bg.jpeg' },
+    { id: 4,  logo: '/GTA.png', row: 4, col: 3, name: 'GTA', bgImage: '/GTA-bg4.png' },
     { id: 8,  logo: '/AMT.png', row: 4, col: 4, name: 'AMT', bgImage: '/amt-bg.png', modalLogo: '/amt-internal.jpg' },
     { id: 6,  logo: '/RK.png', row: 4, col: 5, name: 'RK', bgImage: '/rk1-gif.gif' },
   ];
@@ -3226,6 +3760,7 @@ export default function App() {
                     <img
                       src="/antiqueqr.jpeg"
                       alt="Antique QR Code"
+                      onClick={() => setShowAntiqueQRModal(true)}
                       style={{
                         maxWidth: 'var(--antique-qr-size, clamp(140px, 16vw, 220px))',
                         maxHeight: 'var(--antique-qr-size, clamp(140px, 16vw, 220px))',
@@ -3819,6 +4354,7 @@ export default function App() {
                     <img
                       src="/centralcareqr.jpeg"
                       alt="Central Medicalcare QR Code"
+                      onClick={() => setShowCentralMedicalcareQRModal(true)}
                       style={{
                         maxWidth: 'var(--central-qr-size, clamp(140px, 16vw, 220px))',
                         maxHeight: 'var(--central-qr-size, clamp(140px, 16vw, 220px))',
@@ -3828,7 +4364,17 @@ export default function App() {
                         borderRadius: '8px',
                         boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
                         backgroundColor: '#ffffff',
-                        padding: 'clamp(6px, 0.8vw, 12px)'
+                        padding: 'clamp(6px, 0.8vw, 12px)',
+                        cursor: 'pointer',
+                        transition: 'transform 0.2s ease, boxShadow 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.05)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.4)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';
                       }}
                     />
                   </div>
@@ -5040,6 +5586,7 @@ export default function App() {
                     <img
                       src="/dorrahqr1.jpeg"
                       alt="Gulf Dorrah QR Code"
+                      onClick={() => setShowGulfDorrahQRModal(true)}
                       style={{
                         maxWidth: 'var(--dorrah-qr-size, clamp(140px, 16vw, 220px))',
                         maxHeight: 'var(--dorrah-qr-size, clamp(140px, 16vw, 220px))',
@@ -5445,13 +5992,22 @@ export default function App() {
                       <img
                         src="/gtaqr.jpeg"
                         alt="GTA QR Code"
+                        onClick={() => setShowGTAQRModal(true)}
                         style={{
                           maxWidth: 'clamp(60px, 7vw, 90px)',
                           maxHeight: 'clamp(60px, 7vw, 90px)',
                           width: 'auto',
                           height: 'auto',
                           objectFit: 'contain',
-                          display: 'block'
+                          display: 'block',
+                          cursor: 'pointer',
+                          transition: 'transform 0.2s ease, boxShadow 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'scale(1.05)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'scale(1)';
                         }}
                       />
                     </div>
@@ -5915,6 +6471,7 @@ export default function App() {
                     <img
                       src="/tlcoqr.jpeg"
                       alt="ETLCO QR Code"
+                      onClick={() => setShowTLCOQRModal(true)}
                       style={{
                         maxWidth: 'var(--tlco-qr-size, clamp(120px, 16vw, 190px))',
                         maxHeight: 'var(--tlco-qr-size, clamp(120px, 16vw, 190px))',
@@ -5924,7 +6481,17 @@ export default function App() {
                         borderRadius: '8px',
                         boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
                         backgroundColor: '#ffffff',
-                        padding: 'clamp(6px, 0.8vw, 10px)'
+                        padding: 'clamp(6px, 0.8vw, 10px)',
+                        cursor: 'pointer',
+                        transition: 'transform 0.2s ease, boxShadow 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.05)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.4)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';
                       }}
                     />
                   </div>
@@ -6414,6 +6981,7 @@ export default function App() {
                       <img
                         src="/gsgqr.jpeg"
                         alt="GSG QR Code"
+                        onClick={() => setShowGSGQRModal(true)}
                         style={{
                           width: 'clamp(100px, 10vw, 130px)',
                           height: 'clamp(100px, 10vw, 130px)',
@@ -6423,7 +6991,17 @@ export default function App() {
                           backgroundColor: '#ffffff',
                           padding: '8px',
                           display: 'block',
-                          flexShrink: 0
+                          flexShrink: 0,
+                          cursor: 'pointer',
+                          transition: 'transform 0.2s ease, boxShadow 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'scale(1.05)';
+                          e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.4)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'scale(1)';
+                          e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';
                         }}
                       />
                     </div>
@@ -6841,13 +7419,22 @@ export default function App() {
                       <img
                         src="/rkqr.jpeg"
                         alt="RK QR Code"
+                        onClick={() => setShowRKQRModal(true)}
                         style={{
                           maxWidth: 'clamp(80px, 10vw, 120px)',
                           maxHeight: 'clamp(80px, 10vw, 120px)',
                           width: 'auto',
                           height: 'auto',
                           objectFit: 'contain',
-                          display: 'block'
+                          display: 'block',
+                          cursor: 'pointer',
+                          transition: 'transform 0.2s ease, boxShadow 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'scale(1.05)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'scale(1)';
                         }}
                       />
                     </div>
@@ -7201,6 +7788,7 @@ export default function App() {
                     <img
                       src="/ahqr.jpeg"
                       alt="AH Environmental QR Code"
+                      onClick={() => setShowAHEnvironmentalQRModal(true)}
                       style={{
                         width: '100%',
                         height: 'auto',
@@ -7211,7 +7799,17 @@ export default function App() {
                         boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
                         backgroundColor: '#ffffff',
                         padding: '8px',
-                        display: 'block'
+                        display: 'block',
+                        cursor: 'pointer',
+                        transition: 'transform 0.2s ease, boxShadow 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.05)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.4)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';
                       }}
                     />
                   </div>
@@ -7518,7 +8116,7 @@ export default function App() {
                     letterSpacing: '0.5px',
                     textTransform: 'uppercase',
                     animation: 'fadeInUp 0.8s ease-out 0.7s both',
-                    marginTop: 'clamp(16px, 2.2vh, 24px)'
+                    marginTop: 'clamp(24px, 3.5vh, 40px)'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-2px)';
@@ -7650,7 +8248,7 @@ export default function App() {
                     style={{
                       position: 'fixed',
                       right: 'clamp(16px, 2.5vw, 32px)',
-                      top: 'calc(50% + clamp(80px, 10vh, 120px) + clamp(90px, 7vh, 100px))',
+                      top: 'calc(50% + clamp(80px, 10vh, 120px) + clamp(90px, 7vh, 100px) + clamp(20px, 3vh, 40px))',
                       zIndex: 11,
                       display: 'flex',
                       justifyContent: 'flex-end',
@@ -9167,6 +9765,34 @@ export default function App() {
               zIndex: 10
             }}>
               <button
+                onClick={() => setAmtActiveTab('tab4')}
+                style={{
+                  padding: '12px 30px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: amtActiveTab === 'tab4' ? '#ffffff' : '#ff4b4b',
+                  background: amtActiveTab === 'tab4' ? '#ff4b4b' : 'rgba(255, 255, 255, 0.2)',
+                  border: '2px solid #ff4b4b',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'none',
+                  letterSpacing: '1px'
+                }}
+                onMouseEnter={(e) => {
+                  if (amtActiveTab !== 'tab4') {
+                    e.currentTarget.style.background = 'rgba(255, 75, 75, 0.3)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (amtActiveTab !== 'tab4') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                  }
+                }}
+              >
+                GALLERY
+              </button>
+              <button
                 onClick={() => setAmtActiveTab('tab3')}
                 style={{
                   padding: '12px 30px',
@@ -9192,7 +9818,7 @@ export default function App() {
                   }
                 }}
               >
-                OUR CLIENTS
+                MAJOR CLIENTS
               </button>
               <button
                 onClick={() => setAmtActiveTab('tab2')}
@@ -9220,7 +9846,7 @@ export default function App() {
                   }
                 }}
               >
-                Our TEAM
+                OUR TEAM
               </button>
               <button
                 onClick={() => setAmtActiveTab('tab1')}
@@ -9248,7 +9874,7 @@ export default function App() {
                   }
                 }}
               >
-                Our Partners
+                OUR PARTNERS
               </button>
             </div>
 
@@ -9425,7 +10051,7 @@ export default function App() {
                       textAlign: 'center',
                       lineHeight: '1.4'
                     }}>
-                      Mr.Eyad Matar<br />
+                      Eyad Matar<br />
                       <span style={{ fontSize: 'clamp(13px, 1.2vw, 17px)', fontWeight: '600' }}>CEO</span>
                     </div>
                   </div>
@@ -9637,7 +10263,7 @@ export default function App() {
                   textAlign: 'center',
                   flexShrink: 0
                 }}>
-                  OUR CLIENTS
+                  OUR MAJOR CLIENTS
                 </h1>
                 
                 {/* Partners Grid */}
@@ -9947,6 +10573,231 @@ export default function App() {
                 </div>
               </div>
             )}
+
+            {amtActiveTab === 'tab4' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1536px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 'clamp(15px, 2vh, 25px)',
+                height: '100%',
+                overflow: 'hidden',
+                boxSizing: 'border-box'
+              }}>
+                <h1 style={{
+                  fontSize: 'clamp(24px, 2.5vw, 36px)',
+                  fontWeight: '900',
+                  color: '#ff4b4b',
+                  marginBottom: 'clamp(15px, 2vh, 25px)',
+                  letterSpacing: '1.5px',
+                  textTransform: 'uppercase',
+                  textAlign: 'center',
+                  flexShrink: 0
+                }}>
+                  GALLERY
+                </h1>
+                
+                {/* Gallery Videos Grid */}
+                {(() => {
+                  const galleryVideos = [
+                    'https://res.cloudinary.com/dl2rqs0lo/video/upload/v1/AMT_Company_Profile_Transformation___From_Static_PDF_to_CEO_Video_by_Zuccess_zykzgl.mp4',
+                    'https://res.cloudinary.com/dl2rqs0lo/video/upload/v1/Meet_Karim_Alma___AMT_Brand_Ambassadors_by_Zuccess_qhlkb7.mp4',
+                    'https://res.cloudinary.com/dl2rqs0lo/video/upload/v1/YTDown.com_YouTube_AMT-Professional-Video-Showcasing-Innova_Media_xjcmXF3MkWQ_001_1080p_wjihjd.mp4'
+                  ];
+                  
+                  // Initialize refs array if needed
+                  if (!amtGalleryVideoRefs.current || amtGalleryVideoRefs.current.length !== galleryVideos.length) {
+                    amtGalleryVideoRefs.current = galleryVideos.map(() => ({ current: null }));
+                  }
+                  
+                  return (
+                    <>
+                      {/* Videos Grid */}
+                      <div style={{
+                        width: '100%',
+                        maxWidth: '1400px',
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+                        gap: 'clamp(20px, 3vw, 30px)',
+                        padding: 'clamp(10px, 2vh, 20px)',
+                        flex: 1,
+                        overflowY: 'auto',
+                        boxSizing: 'border-box'
+                      }}>
+                        {galleryVideos.map((videoUrl, index) => (
+                          <div
+                            key={index}
+                            onClick={async () => {
+                              setAmtGalleryFullscreenVideo(videoUrl);
+                              setAmtVideoPlaying(true);
+                              // Request fullscreen after a small delay to ensure container is rendered
+                              setTimeout(async () => {
+                                try {
+                                  const container = amtGalleryVideoRefs.current[index]?.current;
+                                  if (container) {
+                                    let fullscreenPromise;
+                                    if (container.requestFullscreen) {
+                                      fullscreenPromise = container.requestFullscreen();
+                                    } else if (container.webkitRequestFullscreen) {
+                                      fullscreenPromise = container.webkitRequestFullscreen();
+                                    } else if (container.msRequestFullscreen) {
+                                      fullscreenPromise = container.msRequestFullscreen();
+                                    }
+                                    if (fullscreenPromise) {
+                                      await fullscreenPromise;
+                                    }
+                                  }
+                                } catch (error) {
+                                  console.error('Error opening gallery video fullscreen:', error);
+                                }
+                              }, 100);
+                            }}
+                            style={{
+                              width: '100%',
+                              aspectRatio: '16/9',
+                              position: 'relative',
+                              borderRadius: '12px',
+                              overflow: 'hidden',
+                              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+                              background: '#000',
+                              cursor: 'pointer',
+                              transition: 'all 0.3s ease'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.transform = 'scale(1.02)';
+                              e.currentTarget.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.3)';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.transform = 'scale(1)';
+                              e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.2)';
+                            }}
+                          >
+                            <video
+                              src={videoUrl}
+                              style={{
+                                height: 'auto',
+                                width: '100%',
+                                aspectRatio: '16 / 9',
+                                objectFit: 'cover',
+                                pointerEvents: 'none',
+                                display: 'block'
+                              }}
+                              muted
+                              playsInline
+                              preload="metadata"
+                              title={`Gallery Video ${index + 1}`}
+                            />
+                            {/* Play Overlay */}
+                            <div style={{
+                              position: 'absolute',
+                              top: '50%',
+                              left: '50%',
+                              transform: 'translate(-50%, -50%)',
+                              width: '80px',
+                              height: '80px',
+                              borderRadius: '50%',
+                              background: 'rgba(255, 75, 75, 0.9)',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              cursor: 'pointer',
+                              transition: 'all 0.3s ease',
+                              zIndex: 10
+                            }}>
+                              <svg
+                                width="40"
+                                height="40"
+                                viewBox="0 0 24 24"
+                                fill="white"
+                                style={{ marginLeft: '4px' }}
+                              >
+                                <path d="M8 5v14l11-7z" />
+                              </svg>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      
+                      {/* Fullscreen Video Containers - Hidden until activated */}
+                      {galleryVideos.map((videoUrl, index) => (
+                        <div
+                          key={`fullscreen-${index}`}
+                          ref={amtGalleryVideoRefs.current[index]}
+                          style={{
+                            position: 'fixed',
+                            right: amtGalleryFullscreenVideo === videoUrl ? '0' : '-9999px',
+                            top: amtGalleryFullscreenVideo === videoUrl ? '0' : '-9999px',
+                            width: amtGalleryFullscreenVideo === videoUrl ? '100vw' : '0',
+                            height: amtGalleryFullscreenVideo === videoUrl ? '100vh' : '0',
+                            zIndex: amtGalleryFullscreenVideo === videoUrl ? 9999 : -1,
+                            backgroundColor: '#000000',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          {amtGalleryFullscreenVideo === videoUrl && (
+                            <video
+                              key={`gallery-video-${index}-${amtGalleryFullscreenVideo}`}
+                              src={videoUrl}
+                              autoPlay
+                              controls
+                              style={{
+                                height: '100%',
+                                width: '100%',
+                                maxHeight: '100vh',
+                                maxWidth: '100vw',
+                                objectFit: 'contain'
+                              }}
+                              onEnded={() => {
+                                closeVideo(() => setAmtGalleryFullscreenVideo(null), setAmtVideoPlaying);
+                              }}
+                              title={`Gallery Video ${index + 1}`}
+                            />
+                          )}
+                          {amtGalleryFullscreenVideo === videoUrl && (
+                            <button
+                              onClick={() => {
+                                closeVideo(() => setAmtGalleryFullscreenVideo(null), setAmtVideoPlaying);
+                              }}
+                              style={{
+                                position: 'absolute',
+                                top: '20px',
+                                right: '20px',
+                                background: 'rgba(0, 0, 0, 0.7)',
+                                border: 'none',
+                                color: '#fff',
+                                width: '50px',
+                                height: '50px',
+                                borderRadius: '50%',
+                                fontSize: '24px',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                zIndex: 10000,
+                                transition: 'all 0.3s ease'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.background = 'rgba(255, 75, 75, 0.9)';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.background = 'rgba(0, 0, 0, 0.7)';
+                              }}
+                            >
+                              ✕
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                    </>
+                  );
+                })()}
+              </div>
+            )}
           </div>
           <button
             onClick={() => setShowAMTLearnMore(false)}
@@ -10073,6 +10924,678 @@ export default function App() {
                 padding: 0
               }}
               title="AMT QR Link"
+              allow="fullscreen"
+              scrolling="auto"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Gulf Dorrah QR Code Modal */}
+      {showGulfDorrahQRModal && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(0, 0, 0, 0.95)',
+            zIndex: 10000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            animation: 'fadeIn 0.3s ease-in-out'
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowGulfDorrahQRModal(false);
+            }
+          }}
+        >
+          {/* Modal Content - Card Style */}
+          <div
+            style={{
+              position: 'relative',
+              width: '500px',
+              height: '100%',
+              maxHeight: '100vh',
+              backgroundColor: '#ffffff',
+              borderRadius: '12px',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setShowGulfDorrahQRModal(false)}
+              style={{
+                position: 'absolute',
+                top: '12px',
+                right: '12px',
+                background: 'rgba(0, 0, 0, 0.8)',
+                border: 'none',
+                color: '#fff',
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                fontSize: '24px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.3s ease',
+                zIndex: 10001,
+                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                fontWeight: 'bold',
+                lineHeight: '1'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(0, 0, 0, 1)';
+                e.currentTarget.style.transform = 'scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              ×
+            </button>
+
+            {/* Iframe Container */}
+            <iframe
+              src="https://linktrees-s.netlify.app/page6"
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+                display: 'block',
+                flex: 1,
+                margin: 0,
+                padding: 0
+              }}
+              title="Gulf Dorrah QR Link"
+              allow="fullscreen"
+              scrolling="auto"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* GTA QR Code Modal */}
+      {showGTAQRModal && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(0, 0, 0, 0.95)',
+            zIndex: 10000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            animation: 'fadeIn 0.3s ease-in-out'
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowGTAQRModal(false);
+            }
+          }}
+        >
+          {/* Modal Content - Card Style */}
+          <div
+            style={{
+              position: 'relative',
+              width: '500px',
+              height: '100%',
+              maxHeight: '100vh',
+              backgroundColor: '#ffffff',
+              borderRadius: '12px',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setShowGTAQRModal(false)}
+              style={{
+                position: 'absolute',
+                top: '12px',
+                right: '12px',
+                background: 'rgba(0, 0, 0, 0.8)',
+                border: 'none',
+                color: '#fff',
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                fontSize: '24px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.3s ease',
+                zIndex: 10001,
+                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                fontWeight: 'bold',
+                lineHeight: '1'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(0, 0, 0, 1)';
+                e.currentTarget.style.transform = 'scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              ×
+            </button>
+
+            {/* Iframe Container */}
+            <iframe
+              src="https://linktrees-s.netlify.app/page7"
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+                display: 'block',
+                flex: 1,
+                margin: 0,
+                padding: 0
+              }}
+              title="GTA QR Link"
+              allow="fullscreen"
+              scrolling="auto"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* AH Environmental QR Code Modal */}
+      {showAHEnvironmentalQRModal && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(0, 0, 0, 0.95)',
+            zIndex: 10000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            animation: 'fadeIn 0.3s ease-in-out'
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowAHEnvironmentalQRModal(false);
+            }
+          }}
+        >
+          {/* Modal Content - Card Style */}
+          <div
+            style={{
+              position: 'relative',
+              width: '500px',
+              height: '100%',
+              maxHeight: '100vh',
+              backgroundColor: '#ffffff',
+              borderRadius: '12px',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setShowAHEnvironmentalQRModal(false)}
+              style={{
+                position: 'absolute',
+                top: '12px',
+                right: '12px',
+                background: 'rgba(0, 0, 0, 0.8)',
+                border: 'none',
+                color: '#fff',
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                fontSize: '24px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.3s ease',
+                zIndex: 10001,
+                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                fontWeight: 'bold',
+                lineHeight: '1'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(0, 0, 0, 1)';
+                e.currentTarget.style.transform = 'scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              ×
+            </button>
+
+            {/* Iframe Container */}
+            <iframe
+              src="https://linktrees-s.netlify.app/page9"
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+                display: 'block',
+                flex: 1,
+                margin: 0,
+                padding: 0
+              }}
+              title="AH Environmental QR Link"
+              allow="fullscreen"
+              scrolling="auto"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Central Medicalcare QR Code Modal */}
+      {showCentralMedicalcareQRModal && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(0, 0, 0, 0.95)',
+            zIndex: 10000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            animation: 'fadeIn 0.3s ease-in-out'
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowCentralMedicalcareQRModal(false);
+            }
+          }}
+        >
+          {/* Modal Content - Card Style */}
+          <div
+            style={{
+              position: 'relative',
+              width: '500px',
+              height: '100%',
+              maxHeight: '100vh',
+              backgroundColor: '#ffffff',
+              borderRadius: '12px',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setShowCentralMedicalcareQRModal(false)}
+              style={{
+                position: 'absolute',
+                top: '12px',
+                right: '12px',
+                background: 'rgba(0, 0, 0, 0.8)',
+                border: 'none',
+                color: '#fff',
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                fontSize: '24px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.3s ease',
+                zIndex: 10001,
+                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                fontWeight: 'bold',
+                lineHeight: '1'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(0, 0, 0, 1)';
+                e.currentTarget.style.transform = 'scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              ×
+            </button>
+
+            {/* Iframe Container */}
+            <iframe
+              src="https://linktrees-s.netlify.app/page8"
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+                display: 'block',
+                flex: 1,
+                margin: 0,
+                padding: 0
+              }}
+              title="Central Medicalcare QR Link"
+              allow="fullscreen"
+              scrolling="auto"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* RK QR Code Modal */}
+      {showRKQRModal && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(0, 0, 0, 0.95)',
+            zIndex: 10000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            animation: 'fadeIn 0.3s ease-in-out'
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowRKQRModal(false);
+            }
+          }}
+        >
+          {/* Modal Content - Card Style */}
+          <div
+            style={{
+              position: 'relative',
+              width: '500px',
+              height: '100%',
+              maxHeight: '100vh',
+              backgroundColor: '#ffffff',
+              borderRadius: '12px',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setShowRKQRModal(false)}
+              style={{
+                position: 'absolute',
+                top: '12px',
+                right: '12px',
+                background: 'rgba(0, 0, 0, 0.8)',
+                border: 'none',
+                color: '#fff',
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                fontSize: '24px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.3s ease',
+                zIndex: 10001,
+                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                fontWeight: 'bold',
+                lineHeight: '1'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(0, 0, 0, 1)';
+                e.currentTarget.style.transform = 'scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              ×
+            </button>
+
+            {/* Iframe Container */}
+            <iframe
+              src="https://linktrees-s.netlify.app/page10"
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+                display: 'block',
+                flex: 1,
+                margin: 0,
+                padding: 0
+              }}
+              title="RK QR Link"
+              allow="fullscreen"
+              scrolling="auto"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Antique QR Code Modal */}
+      {showAntiqueQRModal && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(0, 0, 0, 0.95)',
+            zIndex: 10000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            animation: 'fadeIn 0.3s ease-in-out'
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowAntiqueQRModal(false);
+            }
+          }}
+        >
+          {/* Modal Content - Card Style */}
+          <div
+            style={{
+              position: 'relative',
+              width: '500px',
+              height: '100%',
+              maxHeight: '100vh',
+              backgroundColor: '#ffffff',
+              borderRadius: '12px',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setShowAntiqueQRModal(false)}
+              style={{
+                position: 'absolute',
+                top: '12px',
+                right: '12px',
+                background: 'rgba(0, 0, 0, 0.8)',
+                border: 'none',
+                color: '#fff',
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                fontSize: '24px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.3s ease',
+                zIndex: 10001,
+                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                fontWeight: 'bold',
+                lineHeight: '1'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(0, 0, 0, 1)';
+                e.currentTarget.style.transform = 'scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              ×
+            </button>
+
+            {/* Iframe Container */}
+            <iframe
+              src="https://linktrees-s.netlify.app/page11"
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+                display: 'block',
+                flex: 1,
+                margin: 0,
+                padding: 0
+              }}
+              title="Antique QR Link"
+              allow="fullscreen"
+              scrolling="auto"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* TLCO QR Code Modal */}
+      {showTLCOQRModal && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(0, 0, 0, 0.95)',
+            zIndex: 10000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            animation: 'fadeIn 0.3s ease-in-out'
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowTLCOQRModal(false);
+            }
+          }}
+        >
+          {/* Modal Content - Card Style */}
+          <div
+            style={{
+              position: 'relative',
+              width: '500px',
+              height: '100%',
+              maxHeight: '100vh',
+              backgroundColor: '#ffffff',
+              borderRadius: '12px',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setShowTLCOQRModal(false)}
+              style={{
+                position: 'absolute',
+                top: '12px',
+                right: '12px',
+                background: 'rgba(0, 0, 0, 0.8)',
+                border: 'none',
+                color: '#fff',
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                fontSize: '24px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.3s ease',
+                zIndex: 10001,
+                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                fontWeight: 'bold',
+                lineHeight: '1'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(0, 0, 0, 1)';
+                e.currentTarget.style.transform = 'scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              ×
+            </button>
+
+            {/* Iframe Container */}
+            <iframe
+              src="https://linktrees-s.netlify.app/page4"
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+                display: 'block',
+                flex: 1,
+                margin: 0,
+                padding: 0
+              }}
+              title="TLCO QR Link"
               allow="fullscreen"
               scrolling="auto"
             />
@@ -10742,7 +12265,7 @@ export default function App() {
 
             {/* Iframe Container */}
             <iframe
-              src="https://linktrees-s.netlify.app/page3"
+              src="https://linktrees-s.netlify.app/page12"
               style={{
                 width: '100%',
                 height: '100%',
@@ -10753,6 +12276,102 @@ export default function App() {
                 padding: 0
               }}
               title="Gulf Consult QR Link"
+              allow="fullscreen"
+              scrolling="auto"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* GSG QR Code Modal */}
+      {showGSGQRModal && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(0, 0, 0, 0.95)',
+            zIndex: 10000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            animation: 'fadeIn 0.3s ease-in-out'
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowGSGQRModal(false);
+            }
+          }}
+        >
+          {/* Modal Content - Card Style */}
+          <div
+            style={{
+              position: 'relative',
+              width: '500px',
+              height: '100%',
+              maxHeight: '100vh',
+              backgroundColor: '#ffffff',
+              borderRadius: '12px',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setShowGSGQRModal(false)}
+              style={{
+                position: 'absolute',
+                top: '12px',
+                right: '12px',
+                background: 'rgba(0, 0, 0, 0.8)',
+                border: 'none',
+                color: '#fff',
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                fontSize: '24px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.3s ease',
+                zIndex: 10001,
+                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                fontWeight: 'bold',
+                lineHeight: '1'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(0, 0, 0, 1)';
+                e.currentTarget.style.transform = 'scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              ×
+            </button>
+
+            {/* Iframe Container */}
+            <iframe
+              src="https://linktrees-s.netlify.app/page5"
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+                display: 'block',
+                flex: 1,
+                margin: 0,
+                padding: 0
+              }}
+              title="GSG QR Link"
               allow="fullscreen"
               scrolling="auto"
             />
@@ -12084,7 +13703,7 @@ export default function App() {
           width: '100vw',
           height: '100vh',
           backgroundColor: '#ffffff',
-          backgroundImage: 'url(/GTA-bg.jpeg)',
+          backgroundImage: 'url(/GTA-bg4.jpeg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
