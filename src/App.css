@@ -2968,6 +2968,25 @@ div[style*="gc-engineer-learnmore-bg"] > * {
   }
 }
 
+/* Specific adjustments for 1786×864 resolution */
+@media (min-width: 1770px) and (max-width: 1800px) and (min-height: 850px) and (max-height: 870px) {
+  /* Move QR code rectangle down more to avoid video */
+  .gulf-consult-qr-container {
+    top: calc(50% + clamp(140px, 15vh, 180px) + clamp(130px, 11vh, 150px)) !important;
+  }
+  
+  /* Move Learn More button container down - increase spacing from text above */
+  .gulf-consult-learn-more-container {
+    margin-top: clamp(50px, 6vh, 70px) !important;
+    padding-bottom: clamp(25px, 4vh, 40px) !important;
+  }
+  
+  /* Increase spacing for Learn More button inside gulf-consult-content */
+  .gulf-consult-learn-more-button {
+    margin-top: clamp(50px, 6vh, 70px) !important;
+  }
+}
+
 @media (max-height: 800px) {
   .gulf-consult-content {
     top: 50% !important;
