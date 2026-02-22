@@ -2892,6 +2892,82 @@ div[style*="gc-engineer-learnmore-bg"] > * {
   }
 }
 
+/* Gulf Consult specific styling for 1536×864 viewport */
+@media (min-width: 1520px) and (max-width: 1550px) and (min-height: 850px) and (max-height: 870px) {
+  /* Move QR code rectangle down */
+  .gulf-consult-qr-container {
+    top: calc(50% + clamp(100px, 12vh, 140px) + clamp(110px, 9vh, 120px)) !important;
+  }
+  
+  /* Move Learn More button container down - increase spacing from text above */
+  .gulf-consult-learn-more-container {
+    margin-top: clamp(40px, 5vh, 60px) !important;
+    padding-bottom: clamp(20px, 3vh, 32px) !important;
+  }
+  
+  /* Increase spacing for Learn More button inside gulf-consult-content */
+  .gulf-consult-learn-more-button {
+    margin-top: clamp(40px, 5vh, 60px) !important;
+  }
+}
+
+/* Specific adjustments for 1286x864 resolution (similar to 1536x864) */
+@media (min-width: 1270px) and (max-width: 1300px) and (min-height: 850px) and (max-height: 870px) {
+  .gulf-consult-content {
+    top: 50%;
+    right: clamp(30px, 3vw, 60px);
+    transform: translateY(-50%);
+    max-width: 650px;
+    left: auto;
+  }
+  
+  /* Ensure paragraph doesn't overlap with logos on the left */
+  .gulf-consult-content p {
+    padding-left: 0;
+    margin-left: 0;
+    max-width: 100%;
+    word-wrap: break-word;
+    padding-right: 0;
+  }
+  
+  /* Move QR code rectangle down */
+  .gulf-consult-qr-container {
+    top: calc(50% + clamp(100px, 12vh, 140px) + clamp(110px, 9vh, 120px)) !important;
+  }
+  
+  /* Move Learn More button container down - increase spacing from text above */
+  .gulf-consult-learn-more-container {
+    margin-top: clamp(40px, 5vh, 60px) !important;
+    padding-bottom: clamp(20px, 3vh, 32px) !important;
+  }
+  
+  /* Increase spacing for Learn More button inside gulf-consult-content */
+  .gulf-consult-learn-more-button {
+    margin-top: clamp(40px, 5vh, 60px) !important;
+  }
+  
+  :root {
+    --gulf-logo-size: 190px;
+    --gulf-logo-top: 18px;
+    --gulf-logo-left: 38px;
+    --gulf-content-bottom: 42px;
+    --gulf-content-left: 38px;
+    --gulf-title-size: 38px;
+    --gulf-subtitle-size: 14.5px;
+    --gulf-text-size: 16px;
+    --gulf-info-size: 17px;
+    --gulf-button-padding: 15px 34px;
+    --gulf-button-font: 16px;
+    --gulf-qr-size: 170px;
+    --gulf-play-button-size: 95px;
+    --gulf-play-text-size: 15px;
+    --gulf-content-gap: 19px;
+    --gulf-content-max-width: 650px;
+    --gulf-video-width: clamp(220px, 22vw, 300px);
+    --gulf-video-height: clamp(160px, 20vh, 220px);
+  }
+}
+
 @media (max-height: 800px) {
   .gulf-consult-content {
     top: 50% !important;
@@ -3110,6 +3186,126 @@ div[style*="gc-engineer-learnmore-bg"] > * {
   }
 }
 
+/* AMT specific styling for 1536×864 viewport */
+@media (min-width: 1520px) and (max-width: 1550px) and (min-height: 850px) and (max-height: 870px) {
+  .amt-content {
+    top: 48% !important;
+    right: clamp(40px, 4vw, 80px) !important;
+    transform: translateY(-50%) !important;
+    max-width: var(--amt-content-max-width, clamp(600px, 50vw, 900px)) !important;
+  }
+  
+  :root {
+    --amt-logo-size: clamp(300px, 25vw, 500px);
+    --amt-logo-height: clamp(150px, 12vw, 250px);
+    --amt-internal-image-size: clamp(450px, 50vw, 700px);
+    --amt-title-size: clamp(28px, 3.8vw, 52px);
+    --amt-text-size: clamp(15px, 1.7vw, 24px);
+    --amt-info-size: clamp(13px, 1.4vw, 20px);
+    --amt-button-padding: clamp(10px, 1.2vw, 16px) clamp(20px, 2.2vw, 32px);
+    --amt-button-font: clamp(12px, 1.3vw, 18px);
+    --amt-qr-size: clamp(160px, 18vw, 240px);
+    --amt-content-max-width: clamp(600px, 50vw, 900px);
+    --grid-item-size: clamp(70px, 7vw, 115px);
+    --grid-gap: clamp(12px, 1.2vw, 20px);
+  }
+  
+  .amt-content h1 {
+    font-size: var(--amt-title-size, clamp(28px, 3.8vw, 52px)) !important;
+    margin-bottom: clamp(12px, 2vh, 24px) !important;
+  }
+  
+  .amt-content p {
+    font-size: var(--amt-text-size, clamp(15px, 1.7vw, 24px)) !important;
+    line-height: 1.75 !important;
+    margin-bottom: clamp(20px, 3vh, 32px) !important;
+  }
+  
+  .amt-content > div {
+    gap: clamp(26px, 4.2vw, 60px) !important;
+  }
+  
+  .amt-content > div > div {
+    font-size: var(--amt-info-size, clamp(13px, 1.4vw, 20px)) !important;
+  }
+  
+  /* Play Video button styling - smaller size */
+  .amt-content > div > div:last-child button {
+    padding: clamp(10px, 1.2vw, 16px) clamp(20px, 2.2vw, 32px) !important;
+    font-size: clamp(12px, 1.3vw, 18px) !important;
+  }
+  
+  .amt-content > div > div:last-child button span:last-child {
+    width: clamp(18px, 2vw, 22px) !important;
+    height: clamp(18px, 2vw, 22px) !important;
+  }
+  
+  .amt-content > div > div:last-child button span:last-child svg {
+    width: clamp(10px, 1.1vw, 14px) !important;
+    height: clamp(10px, 1.1vw, 14px) !important;
+  }
+}
+
+/* AMT specific styling for 1286×864 viewport - same as 1536×864 */
+@media (min-width: 1270px) and (max-width: 1300px) and (min-height: 850px) and (max-height: 870px) {
+  .amt-content {
+    top: 48% !important;
+    right: clamp(40px, 4vw, 80px) !important;
+    transform: translateY(-50%) !important;
+    max-width: var(--amt-content-max-width, clamp(600px, 50vw, 900px)) !important;
+  }
+  
+  :root {
+    --amt-logo-size: clamp(300px, 25vw, 500px);
+    --amt-logo-height: clamp(150px, 12vw, 250px);
+    --amt-internal-image-size: clamp(450px, 50vw, 700px);
+    --amt-title-size: clamp(28px, 3.8vw, 52px);
+    --amt-text-size: clamp(15px, 1.7vw, 24px);
+    --amt-info-size: clamp(13px, 1.4vw, 20px);
+    --amt-button-padding: clamp(10px, 1.2vw, 16px) clamp(20px, 2.2vw, 32px);
+    --amt-button-font: clamp(12px, 1.3vw, 18px);
+    --amt-qr-size: clamp(160px, 18vw, 240px);
+    --amt-content-max-width: clamp(600px, 50vw, 900px);
+    --grid-item-size: clamp(70px, 7vw, 115px);
+    --grid-gap: clamp(12px, 1.2vw, 20px);
+  }
+  
+  .amt-content h1 {
+    font-size: var(--amt-title-size, clamp(28px, 3.8vw, 52px)) !important;
+    margin-bottom: clamp(12px, 2vh, 24px) !important;
+  }
+  
+  .amt-content p {
+    font-size: var(--amt-text-size, clamp(15px, 1.7vw, 24px)) !important;
+    line-height: 1.75 !important;
+    margin-bottom: clamp(20px, 3vh, 32px) !important;
+  }
+  
+  .amt-content > div {
+    gap: clamp(26px, 4.2vw, 60px) !important;
+  }
+  
+  .amt-content > div > div {
+    font-size: var(--amt-info-size, clamp(13px, 1.4vw, 20px)) !important;
+  }
+  
+  /* Play Video button styling - smaller size */
+  .amt-content > div > div:last-child button {
+    padding: clamp(10px, 1.2vw, 16px) clamp(20px, 2.2vw, 32px) !important;
+    font-size: clamp(12px, 1.3vw, 18px) !important;
+  }
+  
+  .amt-content > div > div:last-child button span:last-child {
+    width: clamp(18px, 2vw, 22px) !important;
+    height: clamp(18px, 2vw, 22px) !important;
+  }
+  
+  .amt-content > div > div:last-child button span:last-child svg {
+    width: clamp(10px, 1.1vw, 14px) !important;
+    height: clamp(10px, 1.1vw, 14px) !important;
+  }
+}
+
 /* GSG responsive content spacing */
 .gsg-content {
   position: fixed;
@@ -3161,6 +3357,92 @@ div[style*="gc-engineer-learnmore-bg"] > * {
   /* Adjust right side image/QR position - bring it closer to center */
   .gsg-right-image-container {
     right: 60px !important;
+  }
+  
+  /* GSG content container styling for 1536×864 */
+  .gsg-content-container {
+    top: 50% !important;
+    right: clamp(40px, 4vw, 80px) !important;
+    transform: translateY(-50%) !important;
+    max-width: clamp(450px, 38vw, 580px) !important;
+    max-height: 90vh !important;
+    overflow: visible !important;
+    gap: clamp(16px, 2vh, 24px) !important;
+    padding: clamp(20px, 2vw, 30px) !important;
+  }
+}
+
+/* GSG specific styling for 1286×864 viewport - optimized to fit all content */
+@media (min-width: 1270px) and (max-width: 1300px) and (min-height: 850px) and (max-height: 870px) {
+  /* Apply optimized styling to ensure all content is visible */
+  .gsg-content-container {
+    top: 50% !important;
+    right: clamp(40px, 4vw, 80px) !important;
+    transform: translateY(-50%) !important;
+    max-width: clamp(450px, 38vw, 580px) !important;
+    max-height: 95vh !important;
+    overflow: visible !important;
+    gap: clamp(10px, 1.2vh, 16px) !important;
+    padding: clamp(15px, 1.5vw, 25px) !important;
+  }
+  
+  .gsg-content-container h1 {
+    font-size: clamp(28px, 2.8vw, 38px) !important;
+    margin-bottom: clamp(2px, 0.5vh, 6px) !important;
+    line-height: 1.1 !important;
+  }
+  
+  .gsg-content-container h1:last-of-type {
+    margin-bottom: clamp(6px, 1vh, 12px) !important;
+  }
+  
+  .gsg-content-container p {
+    font-size: clamp(13px, 1.3vw, 17px) !important;
+    line-height: 1.5 !important;
+    margin-bottom: clamp(8px, 1vh, 14px) !important;
+  }
+  
+  /* Description container */
+  .gsg-content-container > div:nth-child(2) {
+    margin-bottom: clamp(4px, 0.6vh, 8px) !important;
+  }
+  
+  /* Contact information container - reduce spacing */
+  .gsg-content-container > div:last-child {
+    gap: clamp(18px, 2.2vw, 28px) !important;
+    margin-bottom: 0 !important;
+    animation: none !important;
+  }
+  
+  /* Contact info text - smaller font and tighter spacing */
+  .gsg-content-container > div:last-child > div:first-child {
+    font-size: clamp(13px, 1.3vw, 17px) !important;
+    line-height: 1.5 !important;
+    gap: clamp(3px, 0.5vh, 6px) !important;
+  }
+  
+  /* Learn More button - smaller */
+  .gsg-content-container button {
+    margin-top: clamp(2px, 0.4vh, 6px) !important;
+    padding: clamp(10px, 1.2vw, 16px) clamp(24px, 2.5vw, 36px) !important;
+    font-size: clamp(13px, 1.4vw, 18px) !important;
+  }
+  
+  /* Images - slightly smaller */
+  .gsg-content-container img[alt="GSG Internal"],
+  .gsg-content-container img[alt="GSG QR Code"] {
+    width: clamp(80px, 8vw, 110px) !important;
+    height: clamp(80px, 8vw, 110px) !important;
+  }
+  
+  /* Images container gap */
+  .gsg-content-container > div:last-child > div:last-child {
+    gap: clamp(8px, 1vw, 12px) !important;
+  }
+  
+  /* Title container - reduce bottom margin */
+  .gsg-content-container > div:first-child {
+    margin-bottom: clamp(2px, 0.4vh, 6px) !important;
   }
 }
 
@@ -3412,6 +3694,98 @@ div[style*="gc-engineer-learnmore-bg"] > * {
   }
 }
 
+/* Dorrah specific styling for 1536×864 viewport */
+@media (min-width: 1520px) and (max-width: 1550px) and (min-height: 850px) and (max-height: 870px) {
+  .dorrah-content {
+    top: 48% !important;
+    right: clamp(40px, 4vw, 80px) !important;
+    transform: translateY(-50%) !important;
+    max-width: var(--dorrah-content-max-width, 680px) !important;
+  }
+  
+  :root {
+    --dorrah-logo-size: 260px;
+    --dorrah-title-size: 30px;
+    --dorrah-text-size: 16px;
+    --dorrah-info-size: 16px;
+    --dorrah-button-padding: 16px 36px;
+    --dorrah-button-font: 17px;
+    --dorrah-play-button-size: 100px;
+    --dorrah-qr-size: 180px;
+    --dorrah-content-max-width: 680px;
+  }
+  
+  .dorrah-content h1 {
+    font-size: var(--dorrah-title-size, 30px) !important;
+    margin-bottom: clamp(6px, 1vh, 12px) !important;
+  }
+  
+  .dorrah-content p {
+    font-size: var(--dorrah-text-size, 16px) !important;
+    line-height: 1.75 !important;
+    margin-bottom: clamp(20px, 3vh, 32px) !important;
+  }
+  
+  .dorrah-content > div {
+    gap: clamp(26px, 4.2vw, 60px) !important;
+  }
+  
+  .dorrah-content > div > div {
+    font-size: var(--dorrah-info-size, 16px) !important;
+  }
+  
+  .dorrah-content button {
+    padding: var(--dorrah-button-padding, 16px 36px) !important;
+    font-size: var(--dorrah-button-font, 17px) !important;
+  }
+}
+
+/* Dorrah specific styling for 1286×864 viewport - same as 1536×864 */
+@media (min-width: 1270px) and (max-width: 1300px) and (min-height: 850px) and (max-height: 870px) {
+  .dorrah-content {
+    top: 48% !important;
+    right: clamp(20px, 2.5vw, 50px) !important;
+    transform: translateY(-50%) !important;
+    max-width: var(--dorrah-content-max-width, 680px) !important;
+  }
+  
+  :root {
+    --dorrah-logo-size: 260px;
+    --dorrah-title-size: 30px;
+    --dorrah-text-size: 16px;
+    --dorrah-info-size: 16px;
+    --dorrah-button-padding: 16px 36px;
+    --dorrah-button-font: 17px;
+    --dorrah-play-button-size: 100px;
+    --dorrah-qr-size: 180px;
+    --dorrah-content-max-width: 680px;
+  }
+  
+  .dorrah-content h1 {
+    font-size: var(--dorrah-title-size, 30px) !important;
+    margin-bottom: clamp(6px, 1vh, 12px) !important;
+  }
+  
+  .dorrah-content p {
+    font-size: var(--dorrah-text-size, 16px) !important;
+    line-height: 1.75 !important;
+    margin-bottom: clamp(20px, 3vh, 32px) !important;
+  }
+  
+  .dorrah-content > div {
+    gap: clamp(26px, 4.2vw, 60px) !important;
+  }
+  
+  .dorrah-content > div > div {
+    font-size: var(--dorrah-info-size, 16px) !important;
+  }
+  
+  .dorrah-content button {
+    padding: var(--dorrah-button-padding, 16px 36px) !important;
+    font-size: var(--dorrah-button-font, 17px) !important;
+  }
+}
+
 /* Central Medicalcare responsive content spacing */
 .central-medicalcare-content {
   position: fixed;
@@ -3631,6 +4005,220 @@ div[style*="gc-engineer-learnmore-bg"] > * {
   }
 }
 
+/* Central Care specific styling for 1536×864 viewport - optimized styling */
+@media (min-width: 1520px) and (max-width: 1550px) and (min-height: 850px) and (max-height: 870px) {
+  .central-medicalcare-content {
+    top: var(--central-content-top, 53%) !important;
+    right: var(--central-content-right, clamp(30px, 3vw, 60px)) !important;
+    transform: translateY(-50%) !important;
+    max-width: 680px !important;
+    padding: clamp(32px, 4vw, 52px) clamp(32px, 4vw, 52px) clamp(40px, 5vw, 64px) !important;
+  }
+  
+  .central-medicalcare-content img[alt="Central Care Logo"] {
+    width: 220px !important;
+    margin-bottom: clamp(16px, 2vh, 24px) !important;
+  }
+  
+  .central-medicalcare-content h1 {
+    font-size: 32px !important;
+    margin-bottom: clamp(12px, 2vh, 24px) !important;
+    letter-spacing: 1.6px !important;
+  }
+  
+  .central-medicalcare-content p {
+    font-size: 16px !important;
+    margin-bottom: clamp(20px, 3vh, 32px) !important;
+    line-height: 1.75 !important;
+  }
+  
+  .central-medicalcare-content > div[style*="display: flex"][style*="gap"] {
+    gap: clamp(18px, 2.5vw, 34px) !important;
+    margin-bottom: clamp(24px, 3vh, 36px) !important;
+  }
+  
+  .central-medicalcare-content > div[style*="fontSize"] {
+    font-size: 16px !important;
+    padding: clamp(12px, 1.6vh, 18px) clamp(16px, 2vw, 24px) !important;
+    min-width: 280px !important;
+  }
+  
+  .central-medicalcare-content > div[style*="fontSize"] strong {
+    min-width: 110px !important;
+    font-size: 16px !important;
+  }
+  
+  .central-medicalcare-content > div[style*="fontSize"] span {
+    font-size: 16px !important;
+  }
+  
+  .central-medicalcare-content > div[style*="position: relative"][style*="flex: 0 0 auto"] {
+    max-width: 350px !important;
+    min-width: 300px !important;
+    width: 350px !important;
+  }
+  
+  .central-medicalcare-content > div[style*="position: relative"][style*="flex: 0 0 auto"] img {
+    min-height: 240px !important;
+    max-height: 240px !important;
+  }
+  
+  .central-medicalcare-content > div[style*="maxWidth: var(--central-internal-image-size"] {
+    max-width: 350px !important;
+    min-width: 300px !important;
+    width: 350px !important;
+  }
+  
+  .central-medicalcare-content button[style*="position: absolute"] {
+    padding: clamp(12px, 1.2vw, 16px) clamp(24px, 2.5vw, 32px) !important;
+    font-size: 16px !important;
+  }
+  
+  .central-medicalcare-content button[style*="position: absolute"] span {
+    font-size: 16px !important;
+  }
+  
+  .central-medicalcare-content > div[style*="display: flex"][style*="justifyContent: space-between"] {
+    gap: clamp(18px, 2.5vw, 34px) !important;
+    margin-top: clamp(12px, 1.5vh, 20px) !important;
+    padding-bottom: clamp(12px, 1.5vh, 20px) !important;
+  }
+  
+  .central-medicalcare-content button[style*="padding"][style*="fontSize"]:not([style*="position: absolute"]) {
+    padding: 16px 36px !important;
+    font-size: 17px !important;
+    letter-spacing: 0.5px !important;
+  }
+  
+  .central-medicalcare-content img[alt="Central Medicalcare QR Code"] {
+    max-width: 180px !important;
+    max-height: 180px !important;
+    padding: clamp(8px, 1vw, 12px) !important;
+  }
+  
+  .central-medicalcare-content > div[style*="fontSize"] > div {
+    margin-bottom: clamp(6px, 1vh, 10px) !important;
+  }
+  
+  :root {
+    --central-logo-size: 220px;
+    --central-title-size: 32px;
+    --central-text-size: 16px;
+    --central-info-size: 16px;
+    --central-button-padding: 16px 36px;
+    --central-button-font: 17px;
+    --central-qr-size: 180px;
+    --central-play-button-size: 100px;
+  }
+}
+
+/* Central Care specific styling for 1286×864 viewport - same as 1536×864 */
+@media (min-width: 1270px) and (max-width: 1300px) and (min-height: 850px) and (max-height: 870px) {
+  .central-medicalcare-content {
+    top: var(--central-content-top, 53%) !important;
+    right: var(--central-content-right, clamp(30px, 3vw, 60px)) !important;
+    transform: translateY(-50%) !important;
+    max-width: 680px !important;
+    padding: clamp(32px, 4vw, 52px) clamp(32px, 4vw, 52px) clamp(40px, 5vw, 64px) !important;
+  }
+  
+  .central-medicalcare-content img[alt="Central Care Logo"] {
+    width: 220px !important;
+    margin-bottom: clamp(16px, 2vh, 24px) !important;
+  }
+  
+  .central-medicalcare-content h1 {
+    font-size: 32px !important;
+    margin-bottom: clamp(12px, 2vh, 24px) !important;
+    letter-spacing: 1.6px !important;
+  }
+  
+  .central-medicalcare-content p {
+    font-size: 16px !important;
+    margin-bottom: clamp(20px, 3vh, 32px) !important;
+    line-height: 1.75 !important;
+  }
+  
+  .central-medicalcare-content > div[style*="display: flex"][style*="gap"] {
+    gap: clamp(18px, 2.5vw, 34px) !important;
+    margin-bottom: clamp(24px, 3vh, 36px) !important;
+  }
+  
+  .central-medicalcare-content > div[style*="fontSize"] {
+    font-size: 16px !important;
+    padding: clamp(12px, 1.6vh, 18px) clamp(16px, 2vw, 24px) !important;
+    min-width: 280px !important;
+  }
+  
+  .central-medicalcare-content > div[style*="fontSize"] strong {
+    min-width: 110px !important;
+    font-size: 16px !important;
+  }
+  
+  .central-medicalcare-content > div[style*="fontSize"] span {
+    font-size: 16px !important;
+  }
+  
+  .central-medicalcare-content > div[style*="position: relative"][style*="flex: 0 0 auto"] {
+    max-width: 350px !important;
+    min-width: 300px !important;
+    width: 350px !important;
+  }
+  
+  .central-medicalcare-content > div[style*="position: relative"][style*="flex: 0 0 auto"] img {
+    min-height: 240px !important;
+    max-height: 240px !important;
+  }
+  
+  .central-medicalcare-content > div[style*="maxWidth: var(--central-internal-image-size"] {
+    max-width: 350px !important;
+    min-width: 300px !important;
+    width: 350px !important;
+  }
+  
+  .central-medicalcare-content button[style*="position: absolute"] {
+    padding: clamp(12px, 1.2vw, 16px) clamp(24px, 2.5vw, 32px) !important;
+    font-size: 16px !important;
+  }
+  
+  .central-medicalcare-content button[style*="position: absolute"] span {
+    font-size: 16px !important;
+  }
+  
+  .central-medicalcare-content > div[style*="display: flex"][style*="justifyContent: space-between"] {
+    gap: clamp(18px, 2.5vw, 34px) !important;
+    margin-top: clamp(12px, 1.5vh, 20px) !important;
+    padding-bottom: clamp(12px, 1.5vh, 20px) !important;
+  }
+  
+  .central-medicalcare-content button[style*="padding"][style*="fontSize"]:not([style*="position: absolute"]) {
+    padding: 16px 36px !important;
+    font-size: 17px !important;
+    letter-spacing: 0.5px !important;
+  }
+  
+  .central-medicalcare-content img[alt="Central Medicalcare QR Code"] {
+    max-width: 180px !important;
+    max-height: 180px !important;
+    padding: clamp(8px, 1vw, 12px) !important;
+  }
+  
+  .central-medicalcare-content > div[style*="fontSize"] > div {
+    margin-bottom: clamp(6px, 1vh, 10px) !important;
+  }
+  
+  :root {
+    --central-logo-size: 220px;
+    --central-title-size: 32px;
+    --central-text-size: 16px;
+    --central-info-size: 16px;
+    --central-button-padding: 16px 36px;
+    --central-button-font: 17px;
+    --central-qr-size: 180px;
+    --central-play-button-size: 100px;
+  }
+}
+
 /* ETLCO (TLCO) responsive content spacing */
 /* 16:9 specific adjustments for ETLCO */
 @media (min-width: 1920px) and (min-height: 1080px) {
@@ -3694,6 +4282,196 @@ div[style*="gc-engineer-learnmore-bg"] > * {
     --tlco-play-button-size: 100px;
     --tlco-internal-image-size: 520px;
     --tlco-content-max-width: 680px;
+  }
+}
+
+/* TLCO specific styling for 1536×864 viewport - optimized to match 1286×864 style */
+@media (min-width: 1520px) and (max-width: 1550px) and (min-height: 850px) and (max-height: 870px) {
+  /* Apply optimized styling to ensure all content is visible - same style as 1286×864 */
+  .tlco-content-container {
+    top: 48% !important;
+    right: clamp(40px, 6vw, 120px) !important;
+    transform: translateY(-50%) !important;
+    max-width: clamp(520px, 46vw, 760px) !important;
+    overflow: visible !important;
+  }
+  
+  /* Logo - slightly smaller */
+  .tlco-content-container > div:first-child {
+    margin-bottom: clamp(8px, 1.2vh, 14px) !important;
+  }
+  
+  .tlco-content-container > div:first-child img {
+    max-width: clamp(160px, 20vw, 240px) !important;
+    max-height: clamp(160px, 20vw, 240px) !important;
+  }
+  
+  /* Title - smaller font and tighter spacing */
+  .tlco-content-container h1 {
+    font-size: clamp(24px, 3.2vw, 40px) !important;
+    margin-bottom: clamp(8px, 1.5vh, 16px) !important;
+    line-height: 1.1 !important;
+  }
+  
+  /* Description paragraph - smaller font and tighter spacing */
+  .tlco-content-container p {
+    font-size: clamp(12px, 1.4vw, 18px) !important;
+    line-height: 1.6 !important;
+    margin-bottom: clamp(10px, 1.5vh, 18px) !important;
+  }
+  
+  /* Contact info container - reduce gap */
+  .tlco-content-container > div:nth-child(3) {
+    gap: clamp(16px, 3vw, 30px) !important;
+  }
+  
+  /* Contact info text - smaller font and tighter spacing */
+  .tlco-content-container > div:nth-child(3) > div:first-child {
+    font-size: clamp(12px, 1.4vw, 18px) !important;
+    line-height: 1.7 !important;
+  }
+  
+  .tlco-content-container > div:nth-child(3) > div:first-child > div {
+    margin-bottom: clamp(4px, 0.8vh, 10px) !important;
+  }
+  
+  /* Internal image container - smaller */
+  .tlco-content-container > div:nth-child(3) > div:last-child {
+    gap: clamp(8px, 1.5vh, 14px) !important;
+  }
+  
+  .tlco-content-container > div:nth-child(3) > div:last-child > div {
+    width: clamp(170px, 19vw, 240px) !important;
+  }
+  
+  /* Play button - smaller */
+  .tlco-content-container > div:nth-child(3) > div:last-child > div button {
+    padding: clamp(8px, 1vw, 14px) clamp(22px, 2.2vw, 36px) !important;
+    font-size: clamp(12px, 1.3vw, 18px) !important;
+  }
+  
+  /* Bottom row - Learn More button and QR */
+  .tlco-content-container > div:last-child {
+    gap: clamp(12px, 1.8vw, 24px) !important;
+    margin-top: clamp(8px, 1.2vh, 16px) !important;
+  }
+  
+  /* Learn More button - smaller */
+  .tlco-content-container > div:last-child > button {
+    padding: clamp(12px, 1.6vw, 20px) clamp(28px, 3.2vw, 44px) !important;
+    font-size: clamp(14px, 1.6vw, 20px) !important;
+  }
+  
+  /* QR code - smaller */
+  .tlco-content-container > div:last-child img {
+    max-width: clamp(100px, 14vw, 170px) !important;
+    max-height: clamp(100px, 14vw, 170px) !important;
+  }
+  
+  :root {
+    --tlco-logo-size: clamp(160px, 20vw, 240px);
+    --tlco-title-size: clamp(24px, 3.2vw, 40px);
+    --tlco-text-size: clamp(12px, 1.4vw, 18px);
+    --tlco-info-size: clamp(12px, 1.4vw, 18px);
+    --tlco-button-padding: clamp(12px, 1.6vw, 20px) clamp(28px, 3.2vw, 44px);
+    --tlco-button-font: clamp(14px, 1.6vw, 20px);
+    --tlco-qr-size: clamp(100px, 14vw, 170px);
+    --tlco-content-max-width: clamp(520px, 46vw, 760px);
+  }
+}
+
+/* TLCO specific styling for 1286×864 viewport - optimized to fit all content */
+@media (min-width: 1270px) and (max-width: 1300px) and (min-height: 850px) and (max-height: 870px) {
+  /* Apply optimized styling to ensure all content is visible */
+  .tlco-content-container {
+    top: 48% !important;
+    right: clamp(40px, 6vw, 120px) !important;
+    transform: translateY(-50%) !important;
+    max-width: clamp(520px, 46vw, 760px) !important;
+    overflow: visible !important;
+  }
+  
+  /* Logo - slightly smaller */
+  .tlco-content-container > div:first-child {
+    margin-bottom: clamp(8px, 1.2vh, 14px) !important;
+  }
+  
+  .tlco-content-container > div:first-child img {
+    max-width: clamp(160px, 20vw, 240px) !important;
+    max-height: clamp(160px, 20vw, 240px) !important;
+  }
+  
+  /* Title - smaller font and tighter spacing */
+  .tlco-content-container h1 {
+    font-size: clamp(24px, 3.2vw, 40px) !important;
+    margin-bottom: clamp(8px, 1.5vh, 16px) !important;
+    line-height: 1.1 !important;
+  }
+  
+  /* Description paragraph - smaller font and tighter spacing */
+  .tlco-content-container p {
+    font-size: clamp(12px, 1.4vw, 18px) !important;
+    line-height: 1.6 !important;
+    margin-bottom: clamp(10px, 1.5vh, 18px) !important;
+  }
+  
+  /* Contact info container - reduce gap */
+  .tlco-content-container > div:nth-child(3) {
+    gap: clamp(16px, 3vw, 30px) !important;
+  }
+  
+  /* Contact info text - smaller font and tighter spacing */
+  .tlco-content-container > div:nth-child(3) > div:first-child {
+    font-size: clamp(12px, 1.4vw, 18px) !important;
+    line-height: 1.7 !important;
+  }
+  
+  .tlco-content-container > div:nth-child(3) > div:first-child > div {
+    margin-bottom: clamp(4px, 0.8vh, 10px) !important;
+  }
+  
+  /* Internal image container - smaller */
+  .tlco-content-container > div:nth-child(3) > div:last-child {
+    gap: clamp(8px, 1.5vh, 14px) !important;
+  }
+  
+  .tlco-content-container > div:nth-child(3) > div:last-child > div {
+    width: clamp(170px, 19vw, 240px) !important;
+  }
+  
+  /* Play button - smaller */
+  .tlco-content-container > div:nth-child(3) > div:last-child > div button {
+    padding: clamp(8px, 1vw, 14px) clamp(22px, 2.2vw, 36px) !important;
+    font-size: clamp(12px, 1.3vw, 18px) !important;
+  }
+  
+  /* Bottom row - Learn More button and QR */
+  .tlco-content-container > div:last-child {
+    gap: clamp(12px, 1.8vw, 24px) !important;
+    margin-top: clamp(8px, 1.2vh, 16px) !important;
+  }
+  
+  /* Learn More button - smaller */
+  .tlco-content-container > div:last-child > button {
+    padding: clamp(12px, 1.6vw, 20px) clamp(28px, 3.2vw, 44px) !important;
+    font-size: clamp(14px, 1.6vw, 20px) !important;
+  }
+  
+  /* QR code - smaller */
+  .tlco-content-container > div:last-child img {
+    max-width: clamp(100px, 14vw, 170px) !important;
+    max-height: clamp(100px, 14vw, 170px) !important;
+  }
+  
+  :root {
+    --tlco-logo-size: clamp(160px, 20vw, 240px);
+    --tlco-title-size: clamp(24px, 3.2vw, 40px);
+    --tlco-text-size: clamp(12px, 1.4vw, 18px);
+    --tlco-info-size: clamp(12px, 1.4vw, 18px);
+    --tlco-button-padding: clamp(12px, 1.6vw, 20px) clamp(28px, 3.2vw, 44px);
+    --tlco-button-font: clamp(14px, 1.6vw, 20px);
+    --tlco-qr-size: clamp(100px, 14vw, 170px);
+    --tlco-content-max-width: clamp(520px, 46vw, 760px);
   }
 }
 
@@ -4089,6 +4867,146 @@ div[style*="gc-engineer-learnmore-bg"] > * {
   }
 }
 
+/* AH Environmental specific styling for 1536×864 viewport */
+@media (min-width: 1520px) and (max-width: 1550px) and (min-height: 850px) and (max-height: 870px) {
+  .ah-environmental-content {
+    top: 50% !important;
+    right: clamp(20px, 2vw, 60px) !important;
+    transform: translateY(-50%) !important;
+    max-width: clamp(600px, 52vw, 1100px) !important;
+    width: clamp(600px, 52vw, 1100px) !important;
+    max-height: 90vh !important;
+    padding: clamp(15px, 2.5vw, 35px) !important;
+    overflow: hidden !important;
+    background: rgba(255, 255, 255, 1) !important;
+  }
+  
+  :root {
+    --ah-logo-size: clamp(180px, 16vw, 260px);
+    --ah-logo-height: clamp(130px, 12vw, 190px);
+    --ah-title-size: clamp(24px, 3.2vw, 40px);
+    --ah-text-size: clamp(12px, 1.4vw, 18px);
+    --ah-info-size: clamp(12px, 1.4vw, 28px);
+    --ah-content-max-width: clamp(520px, 46vw, 1000px);
+    --grid-item-size: clamp(70px, 7vw, 115px);
+    --grid-gap: clamp(12px, 1.2vw, 20px);
+  }
+  
+  .ah-environmental-content > div:first-child {
+    margin-bottom: clamp(6px, 0.8vh, 10px) !important;
+  }
+  
+  .ah-environmental-content > div:first-child > div {
+    margin-bottom: clamp(6px, 0.8vh, 10px) !important;
+  }
+  
+  .ah-environmental-content h1 {
+    font-size: var(--ah-title-size, clamp(24px, 3.2vw, 40px)) !important;
+    margin-bottom: clamp(10px, 1.2vh, 16px) !important;
+    line-height: 1.15 !important;
+  }
+  
+  .ah-environmental-content p {
+    font-size: var(--ah-text-size, clamp(12px, 1.4vw, 18px)) !important;
+    line-height: 1.6 !important;
+    margin-bottom: clamp(16px, 2vh, 22px) !important;
+  }
+  
+  .ah-environmental-content > div:last-of-type {
+    gap: clamp(16px, 3vw, 40px) !important;
+  }
+  
+  .ah-environmental-content > div > div {
+    font-size: var(--ah-info-size, clamp(12px, 1.4vw, 28px)) !important;
+    line-height: 1.6 !important;
+  }
+  
+  .ah-environmental-content > div > div > div {
+    margin-bottom: clamp(10px, 1.2vh, 14px) !important;
+  }
+  
+  .ah-environmental-content button {
+    padding: clamp(6px, 0.8vw, 16px) clamp(12px, 1.6vw, 32px) !important;
+    font-size: clamp(10px, 1.1vw, 20px) !important;
+    margin-top: clamp(2px, 0.3vh, 4px) !important;
+  }
+  
+  .ah-environmental-content > div > div:last-child img {
+    max-width: clamp(100px, 12vw, 220px) !important;
+    max-height: clamp(100px, 12vw, 220px) !important;
+  }
+}
+
+/* AH Environmental specific styling for 1286×864 viewport - same as 1536×864 */
+@media (min-width: 1270px) and (max-width: 1300px) and (min-height: 850px) and (max-height: 870px) {
+  .ah-environmental-content {
+    top: 50% !important;
+    right: clamp(5px, 0.5vw, 25px) !important;
+    transform: translateY(-50%) !important;
+    max-width: clamp(600px, 52vw, 1100px) !important;
+    width: clamp(600px, 52vw, 1100px) !important;
+    max-height: 90vh !important;
+    padding: clamp(15px, 2.5vw, 35px) !important;
+    overflow: hidden !important;
+    background: rgba(255, 255, 255, 1) !important;
+  }
+  
+  :root {
+    --ah-logo-size: clamp(180px, 16vw, 260px);
+    --ah-logo-height: clamp(130px, 12vw, 190px);
+    --ah-title-size: clamp(24px, 3.2vw, 40px);
+    --ah-text-size: clamp(12px, 1.4vw, 18px);
+    --ah-info-size: clamp(12px, 1.4vw, 28px);
+    --ah-content-max-width: clamp(520px, 46vw, 1000px);
+    --grid-item-size: clamp(70px, 7vw, 115px);
+    --grid-gap: clamp(12px, 1.2vw, 20px);
+  }
+  
+  .ah-environmental-content > div:first-child {
+    margin-bottom: clamp(6px, 0.8vh, 10px) !important;
+  }
+  
+  .ah-environmental-content > div:first-child > div {
+    margin-bottom: clamp(6px, 0.8vh, 10px) !important;
+  }
+  
+  .ah-environmental-content h1 {
+    font-size: var(--ah-title-size, clamp(24px, 3.2vw, 40px)) !important;
+    margin-bottom: clamp(10px, 1.2vh, 16px) !important;
+    line-height: 1.15 !important;
+  }
+  
+  .ah-environmental-content p {
+    font-size: var(--ah-text-size, clamp(12px, 1.4vw, 18px)) !important;
+    line-height: 1.6 !important;
+    margin-bottom: clamp(16px, 2vh, 22px) !important;
+  }
+  
+  .ah-environmental-content > div:last-of-type {
+    gap: clamp(16px, 3vw, 40px) !important;
+  }
+  
+  .ah-environmental-content > div > div {
+    font-size: var(--ah-info-size, clamp(12px, 1.4vw, 28px)) !important;
+    line-height: 1.6 !important;
+  }
+  
+  .ah-environmental-content > div > div > div {
+    margin-bottom: clamp(10px, 1.2vh, 14px) !important;
+  }
+  
+  .ah-environmental-content button {
+    padding: clamp(6px, 0.8vw, 16px) clamp(12px, 1.6vw, 32px) !important;
+    font-size: clamp(10px, 1.1vw, 20px) !important;
+    margin-top: clamp(2px, 0.3vh, 4px) !important;
+  }
+  
+  .ah-environmental-content > div > div:last-child img {
+    max-width: clamp(100px, 12vw, 220px) !important;
+    max-height: clamp(100px, 12vw, 220px) !important;
+  }
+}
+
 /* IDC responsive content spacing (mirrors AMT layout on the right side) */
 .idc-content {
   position: fixed;
@@ -4249,6 +5167,56 @@ div[style*="gc-engineer-learnmore-bg"] > * {
     --idc-play-button-size: 90px;
     --idc-play-text-size: 14px;
     --idc-content-gap: 16px;
+  }
+}
+
+/* Specific adjustments for 1286x864 resolution */
+@media (min-width: 1280px) and (max-width: 1295px) and (min-height: 850px) and (max-height: 880px) {
+  .idc-content {
+    max-width: 550px;
+    top: 48%;
+    right: clamp(60px, 6vw, 90px);
+    left: auto;
+    padding-left: 0;
+  }
+  
+  /* Ensure paragraph doesn't overlap with logos on the left */
+  .idc-content p {
+    padding-left: 0;
+    margin-left: 0;
+    max-width: 100%;
+    word-wrap: break-word;
+    padding-right: 0;
+  }
+  
+  :root {
+    --idc-logo-size: 150px;
+    --idc-logo-top: 12px;
+    --idc-logo-left: 38px;
+    --idc-title-size: 32px;
+    --idc-text-size: 14px;
+    --idc-info-size: 14px;
+    --idc-button-padding: 13px 34px;
+    --idc-button-font: 15px;
+    --idc-qr-size: 170px;
+    --idc-play-button-size: 95px;
+    --idc-play-text-size: 15px;
+    --idc-content-gap: 17px;
+    --idc-content-max-width: 550px;
+    --idc-video-width: clamp(240px, 24vw, 340px);
+    --idc-video-height: clamp(170px, 21vh, 230px);
+    --idc-content-right: clamp(60px, 6vw, 90px);
+  }
+  
+  /* Shift QR code to the right */
+  .idc-content img[alt="IDC QR Code"] {
+    margin-left: 250px;
+  }
+  
+  /* Prevent Learn More button from breaking into two lines */
+  .idc-content button {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
   }
 }
 
@@ -4828,8 +5796,116 @@ div[style*="gc-engineer-learnmore-bg"] > * > *::-webkit-scrollbar {
   }
 }
 
+/* ANTIQUE specific styling for 1536×864 viewport */
+@media (min-width: 1520px) and (max-width: 1550px) and (min-height: 850px) and (max-height: 870px) {
+  .antique-content {
+    top: 48% !important;
+    right: clamp(40px, 4vw, 80px) !important;
+    transform: translateY(-50%) !important;
+    max-width: var(--antique-content-max-width, clamp(600px, 50vw, 900px)) !important;
+  }
+  
+  :root {
+    --antique-content-max-width: clamp(600px, 50vw, 900px);
+    --antique-title-size: clamp(28px, 3.8vw, 52px);
+    --antique-text-size: clamp(15px, 1.7vw, 24px);
+    --antique-info-size: clamp(13px, 1.4vw, 20px);
+    --antique-button-padding: clamp(16px, 1.8vw, 24px) clamp(36px, 3.5vw, 48px);
+    --antique-button-font: clamp(16px, 1.8vw, 22px);
+    --antique-internal-image-size: min(1040px, 55vw);
+  }
+  
+  .antique-content h1 {
+    font-size: var(--antique-title-size, clamp(28px, 3.8vw, 52px)) !important;
+    margin-bottom: clamp(12px, 2vh, 24px) !important;
+  }
+  
+  .antique-content p {
+    font-size: var(--antique-text-size, clamp(15px, 1.7vw, 24px)) !important;
+    line-height: 1.75 !important;
+    margin-bottom: clamp(20px, 3vh, 32px) !important;
+  }
+  
+  .antique-content > div {
+    gap: clamp(26px, 4.2vw, 60px) !important;
+  }
+  
+  .antique-content > div > div:first-child {
+    font-size: var(--antique-info-size, clamp(13px, 1.4vw, 20px)) !important;
+  }
+  
+  .antique-content > div > div:last-child {
+    max-width: var(--antique-internal-image-size, min(1040px, 55vw)) !important;
+  }
+  
+  .antique-content button {
+    padding: var(--antique-button-padding, clamp(16px, 1.8vw, 24px) clamp(36px, 3.5vw, 48px)) !important;
+    font-size: var(--antique-button-font, clamp(16px, 1.8vw, 22px)) !important;
+  }
+}
+
+/* ANTIQUE specific styling for 1286×864 viewport - same as 1536×864 */
+@media (min-width: 1270px) and (max-width: 1300px) and (min-height: 850px) and (max-height: 870px) {
+  .antique-content {
+    top: 48% !important;
+    right: clamp(40px, 4vw, 80px) !important;
+    transform: translateY(-50%) !important;
+    max-width: var(--antique-content-max-width, clamp(600px, 50vw, 900px)) !important;
+  }
+  
+  :root {
+    --antique-content-max-width: clamp(600px, 50vw, 900px);
+    --antique-title-size: clamp(28px, 3.8vw, 52px);
+    --antique-text-size: clamp(15px, 1.7vw, 24px);
+    --antique-info-size: clamp(13px, 1.4vw, 20px);
+    --antique-button-padding: clamp(16px, 1.8vw, 24px) clamp(36px, 3.5vw, 48px);
+    --antique-button-font: clamp(16px, 1.8vw, 22px);
+    --antique-internal-image-size: min(1040px, 55vw);
+  }
+  
+  .antique-content h1 {
+    font-size: var(--antique-title-size, clamp(28px, 3.8vw, 52px)) !important;
+    margin-bottom: clamp(12px, 2vh, 24px) !important;
+  }
+  
+  .antique-content p {
+    font-size: var(--antique-text-size, clamp(15px, 1.7vw, 24px)) !important;
+    line-height: 1.75 !important;
+    margin-bottom: clamp(20px, 3vh, 32px) !important;
+  }
+  
+  .antique-content > div {
+    gap: clamp(26px, 4.2vw, 60px) !important;
+  }
+  
+  .antique-content > div > div:first-child {
+    font-size: var(--antique-info-size, clamp(13px, 1.4vw, 20px)) !important;
+  }
+  
+  .antique-content > div > div:last-child {
+    max-width: var(--antique-internal-image-size, min(1040px, 55vw)) !important;
+  }
+  
+  .antique-content button {
+    padding: var(--antique-button-padding, clamp(16px, 1.8vw, 24px) clamp(36px, 3.5vw, 48px)) !important;
+    font-size: var(--antique-button-font, clamp(16px, 1.8vw, 22px)) !important;
+  }
+}
+
 /* GTA specific styling for 1536×864 viewport */
 @media (min-width: 1520px) and (max-width: 1550px) and (min-height: 850px) and (max-height: 880px) {
+  :root {
+    --gta-title-size: clamp(100px, 9.5vw, 150px);
+    --gta-text-size: clamp(56px, 5.5vw, 82px);
+    --gta-info-size: clamp(48px, 5vw, 70px);
+    --gta-button-font: clamp(44px, 4.5vw, 62px);
+    --gta-content-max-width: clamp(750px, 55vw, 950px);
+    --gta-content-padding: clamp(45px, 4.5vw, 65px);
+  }
+}
+
+/* GTA specific styling for 1286×864 viewport - same as 1536×864 */
+@media (min-width: 1270px) and (max-width: 1300px) and (min-height: 850px) and (max-height: 880px) {
   :root {
     --gta-title-size: clamp(100px, 9.5vw, 150px);
     --gta-text-size: clamp(56px, 5.5vw, 82px);

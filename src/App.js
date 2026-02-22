@@ -958,107 +958,6 @@ export default function App() {
     };
   }, [showChairmanMessage]);
 
-  // Prevent zoom in/out - Disable keyboard shortcuts and wheel zoom
-  useEffect(() => {
-    // Prevent keyboard zoom (Ctrl + Plus/Minus/0)
-    const handleKeyDown = (e) => {
-      if (
-        (e.ctrlKey || e.metaKey) &&
-        (e.key === '+' || e.key === '=' || e.key === '-' || e.key === '0' || e.keyCode === 187 || e.keyCode === 189 || e.keyCode === 48)
-      ) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      }
-      // Prevent Ctrl + Mouse Wheel zoom
-      if ((e.ctrlKey || e.metaKey) && e.deltaY !== undefined) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      }
-    };
-
-    // Prevent wheel zoom
-    const handleWheel = (e) => {
-      if (e.ctrlKey || e.metaKey) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      }
-    };
-
-    // Prevent pinch zoom on touch devices (pinch with two fingers)
-    const handleTouchStart = (e) => {
-      if (e.touches.length > 1) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        return false;
-      }
-    };
-
-    const handleTouchMove = (e) => {
-      // Block pinch zoom (two or more fingers)
-      if (e.touches.length > 1 || e.scale !== undefined && e.scale !== 1.0) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        return false;
-      }
-    };
-
-    const handleGestureStart = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
-    };
-
-    const handleGestureChange = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
-    };
-
-    const handleGestureEnd = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
-    };
-
-    // Add event listeners
-    document.addEventListener('keydown', handleKeyDown, { passive: false, capture: true });
-    document.addEventListener('wheel', handleWheel, { passive: false, capture: true });
-    document.addEventListener('touchstart', handleTouchStart, { passive: false, capture: true });
-    document.addEventListener('touchmove', handleTouchMove, { passive: false, capture: true });
-    document.addEventListener('gesturestart', handleGestureStart, { passive: false, capture: true });
-    document.addEventListener('gesturechange', handleGestureChange, { passive: false, capture: true });
-    document.addEventListener('gestureend', handleGestureEnd, { passive: false, capture: true });
-
-    // Prevent zoom via double tap on mobile
-    let lastTouchEnd = 0;
-    const handleTouchEnd = (e) => {
-      const now = Date.now();
-      if (now - lastTouchEnd <= 300) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      }
-      lastTouchEnd = now;
-    };
-    document.addEventListener('touchend', handleTouchEnd, { passive: false, capture: true });
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown, { capture: true });
-      document.removeEventListener('wheel', handleWheel, { capture: true });
-      document.removeEventListener('touchstart', handleTouchStart, { capture: true });
-      document.removeEventListener('touchmove', handleTouchMove, { capture: true });
-      document.removeEventListener('touchend', handleTouchEnd, { capture: true });
-      document.removeEventListener('gesturestart', handleGestureStart, { capture: true });
-      document.removeEventListener('gesturechange', handleGestureChange, { capture: true });
-      document.removeEventListener('gestureend', handleGestureEnd, { capture: true });
-    };
-  }, []);
-
   // Auto-redirect to homepage after 90 seconds of inactivity on company/Learn More pages
   useEffect(() => {
     // Check if we're on a company page or Learn More page
@@ -4964,6 +4863,7 @@ export default function App() {
 
                 {/* Bottom row: Learn More + QR Code */}
                 <div
+                  className="gulf-consult-learn-more-container"
                   style={{
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -6168,6 +6068,7 @@ export default function App() {
 
               {/* TLCO Text Content + Image/QR - Right Side */}
               <div
+                className="tlco-content-container"
                 style={{
                   position: 'fixed',
                   top: '48%',
@@ -6738,6 +6639,7 @@ export default function App() {
 
               {/* GSG Content Container - Right Side - Optimized for 1536x864 */}
               <div
+                className="gsg-content-container"
                 style={{
                   position: 'fixed',
                   top: '50%',
@@ -8101,6 +8003,7 @@ export default function App() {
 
                 {/* Learn More Button - Below Website */}
                 <button
+                  className="gulf-consult-learn-more-button"
                   onClick={() => setShowGulfConsult2LearnMore(true)}
                   style={{
                     padding: 'var(--gulf-button-padding, clamp(14px, 1.6vw, 22px) clamp(32px, 3.2vw, 48px))',
@@ -8116,7 +8019,7 @@ export default function App() {
                     letterSpacing: '0.5px',
                     textTransform: 'uppercase',
                     animation: 'fadeInUp 0.8s ease-out 0.7s both',
-                    marginTop: 'clamp(24px, 3.5vh, 40px)'
+                    marginTop: 'clamp(16px, 2.2vh, 24px)'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-2px)';
@@ -8245,10 +8148,11 @@ export default function App() {
                 {/* QR Code - Below Video */}
                 {!gulfLogoVideoFullscreen && (
                   <div
+                    className="gulf-consult-qr-container"
                     style={{
                       position: 'fixed',
                       right: 'clamp(16px, 2.5vw, 32px)',
-                      top: 'calc(50% + clamp(80px, 10vh, 120px) + clamp(90px, 7vh, 100px) + clamp(20px, 3vh, 40px))',
+                      top: 'calc(50% + clamp(80px, 10vh, 120px) + clamp(90px, 7vh, 100px))',
                       zIndex: 11,
                       display: 'flex',
                       justifyContent: 'flex-end',
