@@ -5613,7 +5613,7 @@ export default function App() {
                 style={{
                   position: 'fixed',
                   top: 'clamp(55%, 55vh, 60%)',
-                  left: 'clamp(80px, 7vw, 200px)',
+                  left: 'clamp(100px, 10vw, 220px)',
                   transform: 'translateY(-50%)',
                   zIndex: 11,
                   animation: 'fadeIn 0.8s ease-in-out 0.4s both',
@@ -5623,9 +5623,9 @@ export default function App() {
                 <div
                   style={{
                     display: 'grid',
-                    gridTemplateColumns: `repeat(5, var(--grid-item-size, clamp(70px, 7vw, 115px)))`,
-                    gridTemplateRows: `repeat(4, var(--grid-item-size, clamp(70px, 7vw, 115px)))`,
-                    gap: 'var(--grid-gap, clamp(12px, 1.2vw, 20px))',
+                    gridTemplateColumns: `repeat(5, var(--grid-item-size, clamp(80px, 8.5vw, 135px)))`,
+                    gridTemplateRows: `repeat(4, var(--grid-item-size, clamp(80px, 8.5vw, 135px)))`,
+                    gap: 'var(--grid-gap, clamp(14px, 1.4vw, 24px))',
                     transform: 'rotate(45deg)',
                     position: 'relative'
                   }}
@@ -5662,8 +5662,8 @@ export default function App() {
                                 : 'default',
                             width: '100%',
                             height: '100%',
-                            minWidth: 'var(--grid-item-size, clamp(70px, 7vw, 115px))',
-                            minHeight: 'var(--grid-item-size, clamp(70px, 7vw, 115px))',
+                            minWidth: 'var(--grid-item-size, clamp(80px, 8.5vw, 135px))',
+                            minHeight: 'var(--grid-item-size, clamp(80px, 8.5vw, 135px))',
                             background: isGTALogo ? '#ffffff' : '#E8E8E8',
                             border: isGTALogo
                               ? '2px solid #dc2626'
@@ -5757,17 +5757,17 @@ export default function App() {
                 </div>
               </div>
 
-              {/* GTA Content - Right Side */}
+              {/* GTA Content - Right Side - Optimized for 1536x864 */}
               <div
                 className="gta-content"
                 style={{
                   position: 'fixed',
                   top: 'clamp(55%, 55vh, 60%)',
-                  right: 'clamp(30px, 3vw, 60px)',
+                  right: 'clamp(12px, 1.2vw, 28px)',
                   transform: 'translateY(-50%)',
-                  maxWidth: 'clamp(400px, 42vw, 550px)',
+                  maxWidth: 'clamp(520px, 54vw, 750px)',
                   height: 'auto',
-                  width: 'clamp(400px, 42vw, 550px)',
+                  width: 'clamp(520px, 54vw, 750px)',
                   color: '#000000',
                   direction: 'ltr',
                   textAlign: 'left',
@@ -5776,8 +5776,8 @@ export default function App() {
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'flex-start',
-                  paddingTop: 'clamp(20px, 2vh, 40px)',
-                  paddingBottom: 'clamp(20px, 2vh, 40px)'
+                  paddingTop: 'clamp(24px, 2.5vh, 48px)',
+                  paddingBottom: 'clamp(24px, 2.5vh, 48px)'
                 }}
               >
                 {/* White Content Box with Red Borders */}
@@ -5786,7 +5786,7 @@ export default function App() {
                     background: 'rgba(255, 255, 255, 0.95)',
                     backdropFilter: 'blur(10px)',
                     borderRadius: '12px',
-                    padding: 'clamp(20px, 2.5vw, 35px)',
+                    padding: 'clamp(24px, 2.8vw, 42px)',
                     borderLeft: '4px solid #dc2626',
                     borderBottom: '4px solid #dc2626',
                     boxShadow: '0 10px 40px rgba(0, 0, 0, 0.2)',
@@ -5798,7 +5798,7 @@ export default function App() {
                 >
                   {/* GTA Logo inside the box */}
                   <div style={{
-                    marginBottom: 'clamp(8px, 0.8vh, 12px)',
+                    marginBottom: 'clamp(10px, 1vh, 16px)',
                     animation: 'fadeIn 0.8s ease-in-out 0.1s both',
                     flexShrink: 0
                   }}>
@@ -5806,8 +5806,8 @@ export default function App() {
                       src={selectedCompany.logo}
                       alt={selectedCompany.name}
                       style={{
-                        maxWidth: 'clamp(90px, 9vw, 130px)',
-                        maxHeight: 'clamp(45px, 4.5vh, 65px)',
+                        maxWidth: 'clamp(110px, 11vw, 160px)',
+                        maxHeight: 'clamp(55px, 5.5vh, 80px)',
                         width: 'auto',
                         height: 'auto',
                         objectFit: 'contain',
@@ -5818,9 +5818,9 @@ export default function App() {
 
                   <h1
                     style={{
-                      fontSize: 'clamp(18px, 1.8vw, 26px)',
+                      fontSize: 'clamp(20px, 2.1vw, 30px)',
                       fontWeight: '900',
-                      marginBottom: 'clamp(8px, 0.8vh, 12px)',
+                      marginBottom: 'clamp(10px, 1vh, 16px)',
                       letterSpacing: '0.8px',
                       color: '#dc2626',
                       textTransform: 'uppercase',
@@ -5834,9 +5834,9 @@ export default function App() {
 
                   <p
                     style={{
-                      fontSize: 'clamp(11px, 1.1vw, 15px)',
+                      fontSize: 'clamp(12px, 1.25vw, 17px)',
                       lineHeight: '1.5',
-                      marginBottom: 'clamp(10px, 1vh, 14px)',
+                      marginBottom: 'clamp(12px, 1.2vh, 18px)',
                       color: '#1e293b',
                       animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 400ms both',
                       flexShrink: 0
@@ -5849,8 +5849,8 @@ export default function App() {
                     style={{
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: 'clamp(6px, 0.6vh, 10px)',
-                      marginBottom: 'clamp(10px, 1vh, 14px)',
+                      gap: 'clamp(8px, 0.8vh, 12px)',
+                      marginBottom: 'clamp(12px, 1.2vh, 18px)',
                       animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 500ms both',
                       flexShrink: 0
                     }}
@@ -5860,7 +5860,7 @@ export default function App() {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '6px',
-                        fontSize: 'clamp(10px, 1vw, 13px)',
+                        fontSize: 'clamp(11px, 1.15vw, 15px)',
                         color: '#1e293b'
                       }}
                     >
@@ -5872,7 +5872,7 @@ export default function App() {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '6px',
-                        fontSize: 'clamp(10px, 1vw, 13px)',
+                        fontSize: 'clamp(11px, 1.15vw, 15px)',
                         color: '#1e293b'
                       }}
                     >
@@ -5884,7 +5884,7 @@ export default function App() {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '6px',
-                        fontSize: 'clamp(10px, 1vw, 13px)',
+                        fontSize: 'clamp(11px, 1.15vw, 15px)',
                         color: '#1e293b'
                       }}
                     >
@@ -5904,7 +5904,7 @@ export default function App() {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '6px',
-                        fontSize: 'clamp(10px, 1vw, 13px)',
+                        fontSize: 'clamp(11px, 1.15vw, 15px)',
                         color: '#1e293b',
                         marginBottom: 'clamp(4px, 0.4vh, 8px)'
                       }}
@@ -5927,18 +5927,18 @@ export default function App() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      gap: 'clamp(12px, 1.5vw, 20px)',
+                      gap: 'clamp(14px, 1.6vw, 24px)',
                       animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 600ms both',
                       flexShrink: 0,
-                      marginTop: 'clamp(20px, 2vh, 30px)'
+                      marginTop: 'clamp(24px, 2.5vh, 36px)'
                     }}
                   >
                     {/* Learn More Button */}
                     <button
                       onClick={() => setShowGTALearnMore(true)}
                       style={{
-                        padding: 'clamp(8px, 0.9vw, 12px) clamp(16px, 1.8vw, 24px)',
-                        fontSize: 'clamp(11px, 1.1vw, 14px)',
+                        padding: 'clamp(10px, 1.1vw, 14px) clamp(18px, 2vw, 28px)',
+                        fontSize: 'clamp(12px, 1.25vw, 16px)',
                         fontWeight: '700',
                         color: '#ffffff',
                         background: '#1f2937',
@@ -5984,8 +5984,8 @@ export default function App() {
                         alt="GTA QR Code"
                         onClick={() => setShowGTAQRModal(true)}
                         style={{
-                          maxWidth: 'clamp(60px, 7vw, 90px)',
-                          maxHeight: 'clamp(60px, 7vw, 90px)',
+                          maxWidth: 'clamp(80px, 9vw, 120px)',
+                          maxHeight: 'clamp(80px, 9vw, 120px)',
                           width: 'auto',
                           height: 'auto',
                           objectFit: 'contain',
@@ -10243,27 +10243,37 @@ export default function App() {
                       width: 'clamp(130px, 12vw, 200px)',
                       height: 'clamp(130px, 12vw, 200px)',
                       borderRadius: '50%',
-                      backgroundColor: '#ff6b9d',
+                      backgroundColor: '#f0f0f0',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      overflow: 'hidden',
                       border: '3px solid #ff4b4b',
-                      boxShadow: '0 8px 25px rgba(255, 75, 75, 0.35)',
-                      color: '#ffffff',
-                      fontWeight: '800',
-                      fontSize: 'clamp(32px, 3vw, 40px)',
-                      letterSpacing: '1px'
+                      boxShadow: '0 4px 15px rgba(255, 75, 75, 0.3)'
                     }}>
-                      FM
+                      <img
+                        src="/financemanager.jpeg"
+                        alt="Finance Manager"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.parentElement.innerHTML = '<div style="font-size: 48px; color: #ff4b4b;">👤</div>';
+                        }}
+                      />
                     </div>
                     <div style={{
-                      fontSize: 'clamp(14px, 1.3vw, 19px)',
-                      fontWeight: '600',
+                      fontSize: 'clamp(16px, 1.5vw, 22px)',
+                      fontWeight: '700',
                       color: '#1a1a1a',
                       textAlign: 'center',
                       lineHeight: '1.4'
                     }}>
-                      Finance Manager
+                      Amr Abu Hashem<br />
+                      <span style={{ fontSize: 'clamp(13px, 1.2vw, 17px)', fontWeight: '600' }}>Finance Manager</span>
                     </div>
                   </div>
 
@@ -10278,30 +10288,37 @@ export default function App() {
                       width: 'clamp(130px, 12vw, 200px)',
                       height: 'clamp(130px, 12vw, 200px)',
                       borderRadius: '50%',
-                      backgroundColor: '#ff6b9d',
+                      backgroundColor: '#f0f0f0',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      overflow: 'hidden',
                       border: '3px solid #ff4b4b',
-                      boxShadow: '0 8px 25px rgba(255, 75, 75, 0.35)',
-                      color: '#ffffff',
-                      fontWeight: '800',
-                      fontSize: 'clamp(30px, 2.6vw, 38px)',
-                      letterSpacing: '1px',
-                      textAlign: 'center',
-                      padding: '0 6px',
-                      boxSizing: 'border-box'
+                      boxShadow: '0 4px 15px rgba(255, 75, 75, 0.3)'
                     }}>
-                      IM
+                      <img
+                        src="/Implementationmanager.jpeg"
+                        alt="Implementation Manager"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.parentElement.innerHTML = '<div style="font-size: 48px; color: #ff4b4b;">👤</div>';
+                        }}
+                      />
                     </div>
                     <div style={{
-                      fontSize: 'clamp(14px, 1.3vw, 19px)',
-                      fontWeight: '600',
+                      fontSize: 'clamp(16px, 1.5vw, 22px)',
+                      fontWeight: '700',
                       color: '#1a1a1a',
                       textAlign: 'center',
                       lineHeight: '1.4'
                     }}>
-                      Implementation Manager
+                      IMRAN KHAN YAR<br />
+                      <span style={{ fontSize: 'clamp(13px, 1.2vw, 17px)', fontWeight: '600' }}>Implementation Manager</span>
                     </div>
                   </div>
 
