@@ -4,37 +4,41 @@ import './App.css';
 export default function App() {
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [showPartners, setShowPartners] = useState(false);
-  const [activeTab, setActiveTab] = useState('partners'); // 'partners', 'team', 'project'
+  const [activeTab, setActiveTab] = useState('partners'); // 'partners', 'team', 'project', 'gallery'
   const [showGulfConsultLearnMore, setShowGulfConsultLearnMore] = useState(false);
   const [showGulfConsultArchQRModal, setShowGulfConsultArchQRModal] = useState(false);
-  const [gulfConsultActiveTab, setGulfConsultActiveTab] = useState('tab1'); // 'tab1', 'tab2', 'tab3'
+  const [gulfConsultActiveTab, setGulfConsultActiveTab] = useState('tab1'); // 'tab1' = Projects, 'tab2' = Team, 'tab3' = Partners, 'tab4' = Gallery
   const [showAntiqueLearnMore, setShowAntiqueLearnMore] = useState(false);
   const [showAntiqueQRModal, setShowAntiqueQRModal] = useState(false);
-  const [antiqueActiveTab, setAntiqueActiveTab] = useState('tab3'); // 'tab1', 'tab2', 'tab3'
+  const [antiqueActiveTab, setAntiqueActiveTab] = useState('tab1'); // 'tab1' = Gallery, 'tab2' = Major Clients, 'tab3' = Our Team, 'tab4' = Our Partners
   const [showAMTLearnMore, setShowAMTLearnMore] = useState(false);
   const [amtActiveTab, setAmtActiveTab] = useState('tab1'); // 'tab1' = Projects, 'tab2' = Team, 'tab3' = Partners
   const [amtGalleryVideoIndex, setAmtGalleryVideoIndex] = useState(0); // Index for gallery videos
   const [amtGalleryFullscreenVideo, setAmtGalleryFullscreenVideo] = useState(null); // Fullscreen video URL
   const [showAMTQRModal, setShowAMTQRModal] = useState(false);
   const [showGulfConsult2LearnMore, setShowGulfConsult2LearnMore] = useState(false);
-  const [gulfConsult2ActiveTab, setGulfConsult2ActiveTab] = useState('tab1'); // 'tab1' = Projects, 'tab2' = Team, 'tab3' = Partners
+  const [gulfConsult2ActiveTab, setGulfConsult2ActiveTab] = useState('tab1'); // 'tab1' = Projects, 'tab2' = Team, 'tab3' = Partners, 'tab4' = Gallery
   const [showGulfConsultQRModal, setShowGulfConsultQRModal] = useState(false);
   const [showGSGLearnMore, setShowGSGLearnMore] = useState(false);
   const [showGSGQRModal, setShowGSGQRModal] = useState(false);
   const [gsgActiveTab, setGsgActiveTab] = useState('tab1'); // 'tab1' = Projects, 'tab2' = Team, 'tab3' = Partners
   const [showGulfDorrahLearnMore, setShowGulfDorrahLearnMore] = useState(false);
+  const [gulfDorrahActiveTab, setGulfDorrahActiveTab] = useState('tab1'); // 'tab1' = Gallery, 'tab2' = Major Clients, 'tab3' = Our Team, 'tab4' = Our Partners
   const [showGulfDorrahQRModal, setShowGulfDorrahQRModal] = useState(false);
   const [showCentralMedicalcareLearnMore, setShowCentralMedicalcareLearnMore] = useState(false);
   const [showCentralMedicalcareQRModal, setShowCentralMedicalcareQRModal] = useState(false);
-  const [centralMedicalcareActiveTab, setCentralMedicalcareActiveTab] = useState('tab1'); // 'tab1' = Projects, 'tab2' = Partners, 'tab3' = Team
+  const [centralMedicalcareActiveTab, setCentralMedicalcareActiveTab] = useState('tab1'); // 'tab1' = Partners, 'tab2' = Major Clients, 'tab3' = Team, 'tab4' = Gallery
   const [showRKLearnMore, setShowRKLearnMore] = useState(false);
+  const [rkActiveTab, setRkActiveTab] = useState('tab1'); // 'tab1' = Gallery, 'tab2' = Major Clients, 'tab3' = Our Team, 'tab4' = Our Partners
   const [showRKQRModal, setShowRKQRModal] = useState(false);
   const [showAHEnvironmentalLearnMore, setShowAHEnvironmentalLearnMore] = useState(false);
   const [showAHEnvironmentalQRModal, setShowAHEnvironmentalQRModal] = useState(false);
-  const [ahEnvironmentalActiveTab, setAhEnvironmentalActiveTab] = useState('tab1'); // 'tab1' = Partners, 'tab2' = Team, 'tab3' = Projects
+  const [ahEnvironmentalActiveTab, setAhEnvironmentalActiveTab] = useState('tab1'); // 'tab1' = Partners, 'tab2' = Team, 'tab3' = Projects, 'tab4' = Gallery
   const [showIDCLearnMore, setShowIDCLearnMore] = useState(false);
+  const [idcActiveTab, setIdcActiveTab] = useState('tab1'); // 'tab1', 'tab2', 'tab3', 'tab4'
   const [showIDCQRModal, setShowIDCQRModal] = useState(false);
   const [showGTALearnMore, setShowGTALearnMore] = useState(false);
+  const [gtaActiveTab, setGtaActiveTab] = useState('tab1'); // 'tab1' = Gallery, 'tab2' = Major Clients, 'tab3' = Our Team, 'tab4' = Our Partners
   const [showGTAQRModal, setShowGTAQRModal] = useState(false);
   const [dorrahVideoPlaying, setDorrahVideoPlaying] = useState(false);
   const [dorrahVideoFullscreen, setDorrahVideoFullscreen] = useState(false);
@@ -7592,7 +7596,7 @@ export default function App() {
                   top: '50%',
                   right: 'clamp(40px, 4vw, 120px)',
                   transform: 'translateY(-50%)',
-                  maxWidth: 'var(--ah-content-max-width, clamp(520px, 46vw, 1000px))',
+                  maxWidth: "var(--ah-content-max-width, clamp(520px, 46vw, 1000px))",
                   maxHeight: '80vh',
                   zIndex: 12,
                   color: '#0f172a',
@@ -8626,13 +8630,13 @@ export default function App() {
               zIndex: 10
             }}>
               <button
-                onClick={() => setActiveTab('partners')}
+                onClick={() => setActiveTab('gallery')}
                 style={{
                   padding: 'clamp(10px, 1.2vw, 14px) clamp(24px, 3vw, 32px)',
                   fontSize: 'clamp(14px, 1.5vw, 18px)',
                   fontWeight: '700',
-                  color: activeTab === 'partners' ? '#ffffff' : '#2d8659',
-                  background: activeTab === 'partners' ? '#2d8659' : 'rgba(255, 255, 255, 0.9)',
+                  color: activeTab === 'gallery' ? '#ffffff' : '#2d8659',
+                  background: activeTab === 'gallery' ? '#2d8659' : 'rgba(255, 255, 255, 0.9)',
                   border: '2px solid #2d8659',
                   borderRadius: '8px',
                   cursor: 'pointer',
@@ -8641,17 +8645,45 @@ export default function App() {
                   letterSpacing: '1px'
                 }}
                 onMouseEnter={(e) => {
-                  if (activeTab !== 'partners') {
+                  if (activeTab !== 'gallery') {
                     e.currentTarget.style.background = 'rgba(45, 134, 89, 0.1)';
                   }
                 }}
                 onMouseLeave={(e) => {
-                  if (activeTab !== 'partners') {
+                  if (activeTab !== 'gallery') {
                     e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
                   }
                 }}
               >
-                Our Partners
+                Gallery
+              </button>
+              <button
+                onClick={() => setActiveTab('project')}
+                style={{
+                  padding: 'clamp(10px, 1.2vw, 14px) clamp(24px, 3vw, 32px)',
+                  fontSize: 'clamp(14px, 1.5vw, 18px)',
+                  fontWeight: '700',
+                  color: activeTab === 'project' ? '#ffffff' : '#2d8659',
+                  background: activeTab === 'project' ? '#2d8659' : 'rgba(255, 255, 255, 0.9)',
+                  border: '2px solid #2d8659',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'uppercase',
+                  letterSpacing: '1px'
+                }}
+                onMouseEnter={(e) => {
+                  if (activeTab !== 'project') {
+                    e.currentTarget.style.background = 'rgba(45, 134, 89, 0.1)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (activeTab !== 'project') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
+                  }
+                }}
+              >
+                MAJOR CLIENTS
               </button>
               <button
                 onClick={() => setActiveTab('team')}
@@ -8682,13 +8714,13 @@ export default function App() {
                 Our Team
               </button>
               <button
-                onClick={() => setActiveTab('project')}
+                onClick={() => setActiveTab('partners')}
                 style={{
                   padding: 'clamp(10px, 1.2vw, 14px) clamp(24px, 3vw, 32px)',
                   fontSize: 'clamp(14px, 1.5vw, 18px)',
                   fontWeight: '700',
-                  color: activeTab === 'project' ? '#ffffff' : '#2d8659',
-                  background: activeTab === 'project' ? '#2d8659' : 'rgba(255, 255, 255, 0.9)',
+                  color: activeTab === 'partners' ? '#ffffff' : '#2d8659',
+                  background: activeTab === 'partners' ? '#2d8659' : 'rgba(255, 255, 255, 0.9)',
                   border: '2px solid #2d8659',
                   borderRadius: '8px',
                   cursor: 'pointer',
@@ -8697,17 +8729,17 @@ export default function App() {
                   letterSpacing: '1px'
                 }}
                 onMouseEnter={(e) => {
-                  if (activeTab !== 'project') {
+                  if (activeTab !== 'partners') {
                     e.currentTarget.style.background = 'rgba(45, 134, 89, 0.1)';
                   }
                 }}
                 onMouseLeave={(e) => {
-                  if (activeTab !== 'project') {
+                  if (activeTab !== 'partners') {
                     e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
                   }
                 }}
               >
-                Our Project
+                Our Partners
               </button>
             </div>
 
@@ -8785,7 +8817,7 @@ export default function App() {
                   letterSpacing: '1.5px',
                   textTransform: 'uppercase'
                 }}>
-                  OUR PROJECT
+                  MAJOR CLIENTS
                 </h1>
                 <p style={{
                   fontSize: 'clamp(16px, 1.8vw, 22px)',
@@ -8794,6 +8826,29 @@ export default function App() {
                 }}>
                   Explore our portfolio of successful environmental projects and initiatives.
                 </p>
+              </div>
+            )}
+
+            {activeTab === 'gallery' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1200px',
+                textAlign: 'center',
+                color: '#2d8659',
+                paddingTop: '20px',
+                paddingBottom: '40px'
+              }}>
+                <h1 style={{
+                  fontSize: 'clamp(28px, 3vw, 42px)',
+                  fontWeight: '900',
+                  color: '#2d8659',
+                  marginBottom: 'clamp(20px, 3vh, 30px)',
+                  letterSpacing: '1.5px',
+                  textTransform: 'uppercase'
+                }}>
+                  Gallery
+                </h1>
+                {/* Empty gallery content */}
               </div>
             )}
           </div>
@@ -8807,22 +8862,31 @@ export default function App() {
               right: 'clamp(20px, 2.5vw, 40px)',
               background: 'transparent',
               border: 'none',
-              color: 'rgba(255, 255, 255, 0.95)',
-              padding: '0',
-              fontSize: 'clamp(14px, 1.5vw, 20px)',
+              color: '#2d8659',
+              padding: 'clamp(10px, 1.2vw, 14px) clamp(24px, 3vw, 32px)',
+              fontSize: 'clamp(14px, 1.5vw, 18px)',
               fontWeight: '700',
               letterSpacing: '0.5px',
               cursor: 'pointer',
               zIndex: 2001,
               whiteSpace: 'nowrap',
               textDecoration: 'none',
-              transition: 'opacity 0.3s ease'
+              borderRadius: '8px',
+              textTransform: 'uppercase',
+              transition: 'all 0.3s ease',
+              boxShadow: 'none'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.opacity = '0.8';
+              e.currentTarget.style.background = '#2d8659';
+              e.currentTarget.style.color = '#ffffff';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(45, 134, 89, 0.3)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.opacity = '1';
+              e.currentTarget.style.background = 'transparent';
+              e.currentTarget.style.color = '#2d8659';
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = 'none';
             }}
           >
             Back
@@ -8878,8 +8942,39 @@ export default function App() {
               gap: 'clamp(8px, 1vw, 10px)',
               marginBottom: 'clamp(8px, 1vh, 10px)',
               zIndex: 10,
-              flexShrink: 0
+              flexShrink: 0,
+              flexWrap: 'wrap',
+              justifyContent: 'center'
             }}>
+              <button
+                onClick={() => setGulfConsultActiveTab('tab4')}
+                style={{
+                  padding: '12px 30px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: gulfConsultActiveTab === 'tab4' ? '#ffffff' : '#6a1b9a',
+                  background: gulfConsultActiveTab === 'tab4' ? '#6a1b9a' : 'rgba(255, 255, 255, 0.9)',
+                  border: '2px solid #6a1b9a',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'none',
+                  letterSpacing: '1px',
+                  whiteSpace: 'nowrap'
+                }}
+                onMouseEnter={(e) => {
+                  if (gulfConsultActiveTab !== 'tab4') {
+                    e.currentTarget.style.background = 'rgba(106, 27, 154, 0.1)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (gulfConsultActiveTab !== 'tab4') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
+                  }
+                }}
+              >
+                GALLERY
+              </button>
               <button
                 onClick={() => setGulfConsultActiveTab('tab3')}
                 style={{
@@ -8893,7 +8988,8 @@ export default function App() {
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
                   textTransform: 'none',
-                  letterSpacing: '1px'
+                  letterSpacing: '1px',
+                  whiteSpace: 'nowrap'
                 }}
                 onMouseEnter={(e) => {
                   if (gulfConsultActiveTab !== 'tab3') {
@@ -8906,7 +9002,7 @@ export default function App() {
                   }
                 }}
               >
-                OUR PARTNERS
+                MAJOR CLIENTS
               </button>
               <button
                 onClick={() => setGulfConsultActiveTab('tab2')}
@@ -8921,7 +9017,8 @@ export default function App() {
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
                   textTransform: 'none',
-                  letterSpacing: '1px'
+                  letterSpacing: '1px',
+                  whiteSpace: 'nowrap'
                 }}
                 onMouseEnter={(e) => {
                   if (gulfConsultActiveTab !== 'tab2') {
@@ -8949,7 +9046,8 @@ export default function App() {
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
                   textTransform: 'none',
-                  letterSpacing: '1px'
+                  letterSpacing: '1px',
+                  whiteSpace: 'nowrap'
                 }}
                 onMouseEnter={(e) => {
                   if (gulfConsultActiveTab !== 'tab1') {
@@ -8962,7 +9060,7 @@ export default function App() {
                   }
                 }}
               >
-                Our PROJECT
+                OUR PARTNERS
               </button>
             </div>
 
@@ -8995,7 +9093,7 @@ export default function App() {
                   textAlign: 'center',
                   flexShrink: 0
                 }}>
-                  OUR PARTNERS
+                  MAJOR CLIENTS
                 </h1>
 
                 {/* Partners Logos Grid */}
@@ -9164,7 +9262,7 @@ export default function App() {
                   textTransform: 'uppercase',
                   textAlign: 'center'
                 }}>
-                  OUR PROJECTS
+                  OUR PARTNERS
                 </h1>
 
                 {/* Projects Grid */}
@@ -9282,6 +9380,47 @@ export default function App() {
                     Ras Al Khair
                   </p>
                 </div>
+              </div>
+            )}
+
+            {gulfConsultActiveTab === 'tab4' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1400px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 'clamp(10px, 1.5vh, 20px)',
+                overflow: 'hidden',
+                overflowY: 'hidden',
+                overflowX: 'hidden',
+                flex: 1,
+                minHeight: 0,
+                maxHeight: 'calc(100vh - 180px)',
+                boxSizing: 'border-box'
+              }}>
+                <h1 style={{
+                  fontSize: 'clamp(20px, 2.2vw, 32px)',
+                  fontWeight: '900',
+                  color: '#6a1b9a',
+                  marginBottom: 'clamp(15px, 2vh, 30px)',
+                  marginTop: '0',
+                  letterSpacing: '1.5px',
+                  textTransform: 'uppercase',
+                  textAlign: 'center',
+                  flexShrink: 0
+                }}>
+                  GALLERY
+                </h1>
+                <p style={{
+                  fontSize: 'clamp(16px, 1.5vw, 20px)',
+                  lineHeight: '1.8',
+                  color: '#6a1b9a',
+                  textAlign: 'center'
+                }}>
+                  Gallery content will be displayed here.
+                </p>
               </div>
             )}
           </div>
@@ -9453,35 +9592,38 @@ export default function App() {
               display: 'flex',
               gap: '10px',
               marginBottom: '10px',
-              zIndex: 10
+              zIndex: 10,
+              flexWrap: 'wrap',
+              justifyContent: 'center'
             }}>
               <button
-                onClick={() => setAntiqueActiveTab('tab3')}
+                onClick={() => setAntiqueActiveTab('tab1')}
                 style={{
                   padding: '12px 30px',
                   fontSize: '16px',
                   fontWeight: '700',
-                  color: antiqueActiveTab === 'tab3' ? '#ffffff' : '#f3c06b',
-                  background: antiqueActiveTab === 'tab3' ? '#f3c06b' : 'rgba(255, 255, 255, 0.9)',
+                  color: antiqueActiveTab === 'tab1' ? '#ffffff' : '#f3c06b',
+                  background: antiqueActiveTab === 'tab1' ? '#f3c06b' : 'rgba(255, 255, 255, 0.9)',
                   border: '2px solid #f3c06b',
                   borderRadius: '8px',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
                   textTransform: 'none',
-                  letterSpacing: '1px'
+                  letterSpacing: '1px',
+                  whiteSpace: 'nowrap'
                 }}
                 onMouseEnter={(e) => {
-                  if (antiqueActiveTab !== 'tab3') {
+                  if (antiqueActiveTab !== 'tab1') {
                     e.currentTarget.style.background = 'rgba(243, 192, 107, 0.1)';
                   }
                 }}
                 onMouseLeave={(e) => {
-                  if (antiqueActiveTab !== 'tab3') {
+                  if (antiqueActiveTab !== 'tab1') {
                     e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
                   }
                 }}
               >
-                OUR PARTNERS
+                GALLERY
               </button>
               <button
                 onClick={() => setAntiqueActiveTab('tab2')}
@@ -9496,7 +9638,8 @@ export default function App() {
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
                   textTransform: 'none',
-                  letterSpacing: '1px'
+                  letterSpacing: '1px',
+                  whiteSpace: 'nowrap'
                 }}
                 onMouseEnter={(e) => {
                   if (antiqueActiveTab !== 'tab2') {
@@ -9509,40 +9652,158 @@ export default function App() {
                   }
                 }}
               >
-                Our TEAM
+                MAJOR CLIENTS
               </button>
               <button
-                onClick={() => setAntiqueActiveTab('tab1')}
+                onClick={() => setAntiqueActiveTab('tab3')}
                 style={{
                   padding: '12px 30px',
                   fontSize: '16px',
                   fontWeight: '700',
-                  color: antiqueActiveTab === 'tab1' ? '#ffffff' : '#f3c06b',
-                  background: antiqueActiveTab === 'tab1' ? '#f3c06b' : 'rgba(255, 255, 255, 0.9)',
+                  color: antiqueActiveTab === 'tab3' ? '#ffffff' : '#f3c06b',
+                  background: antiqueActiveTab === 'tab3' ? '#f3c06b' : 'rgba(255, 255, 255, 0.9)',
                   border: '2px solid #f3c06b',
                   borderRadius: '8px',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
                   textTransform: 'none',
-                  letterSpacing: '1px'
+                  letterSpacing: '1px',
+                  whiteSpace: 'nowrap'
                 }}
                 onMouseEnter={(e) => {
-                  if (antiqueActiveTab !== 'tab1') {
+                  if (antiqueActiveTab !== 'tab3') {
                     e.currentTarget.style.background = 'rgba(243, 192, 107, 0.1)';
                   }
                 }}
                 onMouseLeave={(e) => {
-                  if (antiqueActiveTab !== 'tab1') {
+                  if (antiqueActiveTab !== 'tab3') {
                     e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
                   }
                 }}
               >
-                Our PROJECT
+                OUR TEAM
+              </button>
+              <button
+                onClick={() => setAntiqueActiveTab('tab4')}
+                style={{
+                  padding: '12px 30px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: antiqueActiveTab === 'tab4' ? '#ffffff' : '#f3c06b',
+                  background: antiqueActiveTab === 'tab4' ? '#f3c06b' : 'rgba(255, 255, 255, 0.9)',
+                  border: '2px solid #f3c06b',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'none',
+                  letterSpacing: '1px',
+                  whiteSpace: 'nowrap'
+                }}
+                onMouseEnter={(e) => {
+                  if (antiqueActiveTab !== 'tab4') {
+                    e.currentTarget.style.background = 'rgba(243, 192, 107, 0.1)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (antiqueActiveTab !== 'tab4') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
+                  }
+                }}
+              >
+                OUR PARTNERS
               </button>
             </div>
 
             {/* Tab Content */}
+            {antiqueActiveTab === 'tab1' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1400px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '20px'
+              }}>
+                <h1 style={{
+                  fontSize: 'clamp(24px, 2.5vw, 36px)',
+                  fontWeight: '900',
+                  color: '#f3c06b',
+                  marginBottom: '40px',
+                  letterSpacing: '1.5px',
+                  textTransform: 'uppercase',
+                  textAlign: 'center'
+                }}>
+                  GALLERY
+                </h1>
+                <p style={{
+                  fontSize: 'clamp(16px, 1.5vw, 20px)',
+                  lineHeight: '1.8',
+                  color: '#f3c06b',
+                  textAlign: 'center'
+                }}>
+                  Gallery content will be displayed here.
+                </p>
+              </div>
+            )}
+
+            {antiqueActiveTab === 'tab2' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1200px',
+                textAlign: 'center',
+                color: '#f3c06b',
+                padding: '20px'
+              }}>
+                <h1 style={{
+                  fontSize: 'clamp(24px, 2.5vw, 36px)',
+                  fontWeight: '900',
+                  color: '#f3c06b',
+                  marginBottom: '30px',
+                  letterSpacing: '1.5px',
+                  textTransform: 'uppercase'
+                }}>
+                  MAJOR CLIENTS
+                </h1>
+                <p style={{
+                  fontSize: 'clamp(16px, 1.5vw, 20px)',
+                  lineHeight: '1.8',
+                  color: '#f3c06b'
+                }}>
+                  Major clients information will be displayed here.
+                </p>
+              </div>
+            )}
+
             {antiqueActiveTab === 'tab3' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1200px',
+                textAlign: 'center',
+                color: '#f3c06b',
+                padding: '20px'
+              }}>
+                <h1 style={{
+                  fontSize: 'clamp(24px, 2.5vw, 36px)',
+                  fontWeight: '900',
+                  color: '#f3c06b',
+                  marginBottom: '30px',
+                  letterSpacing: '1.5px',
+                  textTransform: 'uppercase'
+                }}>
+                  OUR TEAM
+                </h1>
+                <p style={{
+                  fontSize: 'clamp(16px, 1.5vw, 20px)',
+                  lineHeight: '1.8',
+                  color: '#f3c06b'
+                }}>
+                  Our dedicated team of professionals is committed to delivering excellence.
+                </p>
+              </div>
+            )}
+
+            {antiqueActiveTab === 'tab4' && (
               <div style={{
                 width: '100%',
                 maxWidth: '1200px',
@@ -9564,126 +9825,6 @@ export default function App() {
                   OUR PARTNERS
                 </h1>
                 {/* Partners content will be added here */}
-              </div>
-            )}
-
-            {antiqueActiveTab === 'tab2' && (
-              <div style={{
-                width: '100%',
-                maxWidth: '1200px',
-                textAlign: 'center',
-                color: '#f3c06b',
-                padding: '20px'
-              }}>
-                <h1 style={{
-                  fontSize: 'clamp(24px, 2.5vw, 36px)',
-                  fontWeight: '900',
-                  color: '#f3c06b',
-                  marginBottom: '30px',
-                  letterSpacing: '1.5px',
-                  textTransform: 'uppercase'
-                }}>
-                  Our TEAM
-                </h1>
-                <p style={{
-                  fontSize: 'clamp(16px, 1.5vw, 20px)',
-                  lineHeight: '1.8',
-                  color: '#f3c06b'
-                }}>
-                  Our dedicated team of professionals is committed to delivering excellence.
-                </p>
-              </div>
-            )}
-
-            {antiqueActiveTab === 'tab1' && (
-              <div style={{
-                width: '100%',
-                maxWidth: '1400px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'flex-start',
-                padding: '5px 20px 20px 20px',
-                color: '#f3c06b',
-                minHeight: 'calc(100vh - 180px)',
-                overflow: 'visible'
-              }}>
-                <h1 style={{
-                  fontSize: 'clamp(20px, 2vw, 28px)',
-                  fontWeight: '900',
-                  color: '#f3c06b',
-                  marginBottom: '5px',
-                  letterSpacing: '1.5px',
-                  textTransform: 'uppercase',
-                  textAlign: 'center'
-                }}>
-                  OUR PROJECTS
-                </h1>
-
-                {/* Projects Grid */}
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  gap: '12px',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flexWrap: 'wrap',
-                  marginTop: '70px'
-                }}>
-                  <img
-                    src="/antique-project1.png"
-                    alt="Project 1"
-                    style={{
-                      width: 'clamp(280px, 28vw, 400px)',
-                      height: 'auto',
-                      maxHeight: '250px',
-                      objectFit: 'cover',
-                      borderRadius: '6px',
-                      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.15)'
-                    }}
-                  />
-                  <img
-                    src="/antique-project2.png"
-                    alt="Project 2"
-                    style={{
-                      width: 'clamp(280px, 28vw, 400px)',
-                      height: 'auto',
-                      maxHeight: '250px',
-                      objectFit: 'cover',
-                      borderRadius: '6px',
-                      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.15)'
-                    }}
-                  />
-                  <img
-                    src="/antique-project3.png"
-                    alt="Project 3"
-                    style={{
-                      width: 'clamp(280px, 28vw, 400px)',
-                      height: 'auto',
-                      maxHeight: '250px',
-                      objectFit: 'cover',
-                      borderRadius: '6px',
-                      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.15)'
-                    }}
-                  />
-                </div>
-
-                {/* Project Info */}
-                <div style={{
-                  marginTop: '12px',
-                  textAlign: 'center',
-                  marginBottom: '0px',
-                  paddingBottom: '10px'
-                }}>
-                  <p style={{
-                    fontSize: 'clamp(16px, 1.5vw, 20px)',
-                    color: '#ffffff',
-                    fontWeight: '400',
-                    margin: '0'
-                  }}>
-                    supply and installation of furniture at dialysis center
-                  </p>
-                </div>
               </div>
             )}
           </div>
@@ -11621,7 +11762,7 @@ export default function App() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'center',
+            justifyContent: 'flex-start',
             color: '#ffffff',
             paddingTop: 'clamp(60px, 8vh, 80px)',
             boxSizing: 'border-box'
@@ -11631,8 +11772,38 @@ export default function App() {
               display: 'flex',
               gap: '10px',
               marginBottom: '40px',
-              zIndex: 10
+              zIndex: 10,
+              flexShrink: 0
             }}>
+              <button
+                onClick={() => setGulfConsult2ActiveTab('tab4')}
+                style={{
+                  padding: '12px 30px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: gulfConsult2ActiveTab === 'tab4' ? '#ffffff' : '#ffffff',
+                  background: gulfConsult2ActiveTab === 'tab4' ? 'rgba(33, 150, 243, 0.9)' : 'rgba(255, 255, 255, 0.2)',
+                  border: '2px solid rgba(33, 150, 243, 0.8)',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'none',
+                  letterSpacing: '1px',
+                  whiteSpace: 'nowrap'
+                }}
+                onMouseEnter={(e) => {
+                  if (gulfConsult2ActiveTab !== 'tab4') {
+                    e.currentTarget.style.background = 'rgba(33, 150, 243, 0.3)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (gulfConsult2ActiveTab !== 'tab4') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                  }
+                }}
+              >
+                GALLERY
+              </button>
               <button
                 onClick={() => setGulfConsult2ActiveTab('tab3')}
                 style={{
@@ -11659,7 +11830,7 @@ export default function App() {
                   }
                 }}
               >
-                OUR PARTNERS
+                MAJOR CLIENTS
               </button>
               <button
                 onClick={() => setGulfConsult2ActiveTab('tab2')}
@@ -11715,7 +11886,7 @@ export default function App() {
                   }
                 }}
               >
-                Our PROJECTS
+                OUR PARTNERS
               </button>
             </div>
 
@@ -11740,7 +11911,7 @@ export default function App() {
                   textTransform: 'uppercase',
                   textAlign: 'center'
                 }}>
-                  OUR PROJECTS
+                  OUR PARTNERS
                 </h1>
                 
                 {/* Project Image */}
@@ -11859,7 +12030,7 @@ export default function App() {
                   textAlign: 'center',
                   flexShrink: 0
                 }}>
-                  OUR PARTNERS
+                  MAJOR CLIENTS
                 </h1>
                 
                 {/* Partners Grid */}
@@ -12145,6 +12316,38 @@ export default function App() {
                 </div>
               </div>
             )}
+
+            {gulfConsult2ActiveTab === 'tab4' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1400px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 'clamp(5px, 1vh, 10px)'
+              }}>
+                <h1 style={{
+                  fontSize: 'clamp(20px, 2.2vw, 32px)',
+                  fontWeight: '900',
+                  color: '#ffffff',
+                  marginBottom: 'clamp(15px, 2vh, 30px)',
+                  letterSpacing: '1.5px',
+                  textTransform: 'uppercase',
+                  textAlign: 'center'
+                }}>
+                  GALLERY
+                </h1>
+                <p style={{
+                  fontSize: 'clamp(16px, 1.5vw, 20px)',
+                  lineHeight: '1.8',
+                  color: '#ffffff',
+                  textAlign: 'center'
+                }}>
+                  Gallery content will be displayed here.
+                </p>
+              </div>
+            )}
           </div>
           <button
             onClick={() => setShowGulfConsult2LearnMore(false)}
@@ -12410,13 +12613,13 @@ export default function App() {
               zIndex: 10
             }}>
               <button
-                onClick={() => setGsgActiveTab('tab1')}
+                onClick={() => setGsgActiveTab('tab4')}
                 style={{
                   padding: '12px 30px',
                   fontSize: '16px',
                   fontWeight: '700',
-                  color: gsgActiveTab === 'tab1' ? '#ffffff' : '#07373c',
-                  background: gsgActiveTab === 'tab1' ? '#07373c' : 'rgba(255, 255, 255, 0.9)',
+                  color: gsgActiveTab === 'tab4' ? '#ffffff' : '#07373c',
+                  background: gsgActiveTab === 'tab4' ? '#07373c' : 'rgba(255, 255, 255, 0.9)',
                   border: '2px solid #07373c',
                   borderRadius: '8px',
                   cursor: 'pointer',
@@ -12425,17 +12628,45 @@ export default function App() {
                   letterSpacing: '1px'
                 }}
                 onMouseEnter={(e) => {
-                  if (gsgActiveTab !== 'tab1') {
+                  if (gsgActiveTab !== 'tab4') {
                     e.currentTarget.style.background = 'rgba(7, 55, 60, 0.1)';
                   }
                 }}
                 onMouseLeave={(e) => {
-                  if (gsgActiveTab !== 'tab1') {
+                  if (gsgActiveTab !== 'tab4') {
                     e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
                   }
                 }}
               >
-                Our PROJECTS
+                GALLERY
+              </button>
+              <button
+                onClick={() => setGsgActiveTab('tab3')}
+                style={{
+                  padding: '12px 30px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: gsgActiveTab === 'tab3' ? '#ffffff' : '#07373c',
+                  background: gsgActiveTab === 'tab3' ? '#07373c' : 'rgba(255, 255, 255, 0.9)',
+                  border: '2px solid #07373c',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'none',
+                  letterSpacing: '1px'
+                }}
+                onMouseEnter={(e) => {
+                  if (gsgActiveTab !== 'tab3') {
+                    e.currentTarget.style.background = 'rgba(7, 55, 60, 0.1)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (gsgActiveTab !== 'tab3') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
+                  }
+                }}
+              >
+                MAJOR CLIENTS
               </button>
               <button
                 onClick={() => setGsgActiveTab('tab2')}
@@ -12466,13 +12697,13 @@ export default function App() {
                 Our TEAM
               </button>
               <button
-                onClick={() => setGsgActiveTab('tab3')}
+                onClick={() => setGsgActiveTab('tab1')}
                 style={{
                   padding: '12px 30px',
                   fontSize: '16px',
                   fontWeight: '700',
-                  color: gsgActiveTab === 'tab3' ? '#ffffff' : '#07373c',
-                  background: gsgActiveTab === 'tab3' ? '#07373c' : 'rgba(255, 255, 255, 0.9)',
+                  color: gsgActiveTab === 'tab1' ? '#ffffff' : '#07373c',
+                  background: gsgActiveTab === 'tab1' ? '#07373c' : 'rgba(255, 255, 255, 0.9)',
                   border: '2px solid #07373c',
                   borderRadius: '8px',
                   cursor: 'pointer',
@@ -12481,12 +12712,12 @@ export default function App() {
                   letterSpacing: '1px'
                 }}
                 onMouseEnter={(e) => {
-                  if (gsgActiveTab !== 'tab3') {
+                  if (gsgActiveTab !== 'tab1') {
                     e.currentTarget.style.background = 'rgba(7, 55, 60, 0.1)';
                   }
                 }}
                 onMouseLeave={(e) => {
-                  if (gsgActiveTab !== 'tab3') {
+                  if (gsgActiveTab !== 'tab1') {
                     e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
                   }
                 }}
@@ -12512,14 +12743,14 @@ export default function App() {
                   letterSpacing: '1.5px',
                   textTransform: 'uppercase'
                 }}>
-                  Our PROJECTS
+                  OUR PARTNERS
                 </h1>
                 <p style={{
                   fontSize: 'clamp(16px, 1.5vw, 20px)',
                   lineHeight: '1.8',
                   color: '#07373c'
                 }}>
-                  Our projects showcase our expertise in geophysical, geological, environmental, and engineering solutions across various industries.
+                  Our partners showcase our expertise in geophysical, geological, environmental, and engineering solutions across various industries.
                 </p>
               </div>
             )}
@@ -12571,7 +12802,7 @@ export default function App() {
                   textTransform: 'uppercase',
                   textAlign: 'center'
                 }}>
-                  OUR PARTNERS
+                  MAJOR CLIENTS
                 </h1>
                 
                 {/* Partner Logos */}
@@ -12619,6 +12850,28 @@ export default function App() {
                     }}
                   />
                 </div>
+              </div>
+            )}
+
+            {gsgActiveTab === 'tab4' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1200px',
+                textAlign: 'center',
+                color: '#07373c',
+                padding: '20px'
+              }}>
+                <h1 style={{
+                  fontSize: 'clamp(24px, 2.5vw, 36px)',
+                  fontWeight: '900',
+                  color: '#07373c',
+                  marginBottom: '30px',
+                  letterSpacing: '1.5px',
+                  textTransform: 'uppercase'
+                }}>
+                  GALLERY
+                </h1>
+                {/* Empty gallery content */}
               </div>
             )}
           </div>
@@ -12680,39 +12933,281 @@ export default function App() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'center',
-            color: '#ffffff'
+            justifyContent: 'flex-start',
+            color: '#ffffff',
+            paddingTop: '20px'
           }}>
-            <h1 style={{
-              fontSize: 'clamp(28px, 3.5vw, 42px)',
-              fontWeight: '900',
-              marginBottom: '30px',
-              color: '#33d18f',
-              textTransform: 'uppercase',
-              letterSpacing: '2px'
-            }}>
-              GULF DORRAH REAL
-            </h1>
-            <h1 style={{
-              fontSize: 'clamp(28px, 3.5vw, 42px)',
-              fontWeight: '900',
-              marginBottom: '30px',
-              color: '#29a4ff',
-              textTransform: 'uppercase',
-              letterSpacing: '2px'
-            }}>
-              ESTATE DEVELOPMENT
-            </h1>
-            <p style={{
-              fontSize: 'clamp(16px, 1.5vw, 20px)',
-              lineHeight: '1.8',
-              maxWidth: '800px',
-              textAlign: 'center',
+            {/* Tabs Navigation */}
+            <div style={{
+              display: 'flex',
+              gap: '10px',
               marginBottom: '40px',
-              color: '#ffffff'
+              zIndex: 10,
+              flexWrap: 'wrap',
+              justifyContent: 'center'
             }}>
-              More information about Gulf Dorrah will be available here.
-            </p>
+              <button
+                onClick={() => setGulfDorrahActiveTab('tab1')}
+                style={{
+                  padding: '12px 30px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: gulfDorrahActiveTab === 'tab1' ? '#ffffff' : '#33d18f',
+                  background: gulfDorrahActiveTab === 'tab1' ? 'rgba(51, 209, 143, 0.9)' : 'rgba(255, 255, 255, 0.2)',
+                  border: '2px solid rgba(51, 209, 143, 0.8)',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'none',
+                  letterSpacing: '1px',
+                  whiteSpace: 'nowrap',
+                  overflow: 'visible',
+                  textOverflow: 'clip'
+                }}
+                onMouseEnter={(e) => {
+                  if (gulfDorrahActiveTab !== 'tab1') {
+                    e.currentTarget.style.background = 'rgba(51, 209, 143, 0.3)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (gulfDorrahActiveTab !== 'tab1') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                  }
+                }}
+              >
+                GALLERY
+              </button>
+              <button
+                onClick={() => setGulfDorrahActiveTab('tab2')}
+                style={{
+                  padding: '12px 30px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: gulfDorrahActiveTab === 'tab2' ? '#ffffff' : '#33d18f',
+                  background: gulfDorrahActiveTab === 'tab2' ? 'rgba(51, 209, 143, 0.9)' : 'rgba(255, 255, 255, 0.2)',
+                  border: '2px solid rgba(51, 209, 143, 0.8)',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'none',
+                  letterSpacing: '1px',
+                  whiteSpace: 'nowrap',
+                  overflow: 'visible',
+                  textOverflow: 'clip'
+                }}
+                onMouseEnter={(e) => {
+                  if (gulfDorrahActiveTab !== 'tab2') {
+                    e.currentTarget.style.background = 'rgba(51, 209, 143, 0.3)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (gulfDorrahActiveTab !== 'tab2') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                  }
+                }}
+              >
+                MAJOR CLIENTS
+              </button>
+              <button
+                onClick={() => setGulfDorrahActiveTab('tab3')}
+                style={{
+                  padding: '12px 30px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: gulfDorrahActiveTab === 'tab3' ? '#ffffff' : '#33d18f',
+                  background: gulfDorrahActiveTab === 'tab3' ? 'rgba(51, 209, 143, 0.9)' : 'rgba(255, 255, 255, 0.2)',
+                  border: '2px solid rgba(51, 209, 143, 0.8)',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'none',
+                  letterSpacing: '1px',
+                  whiteSpace: 'nowrap',
+                  overflow: 'visible',
+                  textOverflow: 'clip'
+                }}
+                onMouseEnter={(e) => {
+                  if (gulfDorrahActiveTab !== 'tab3') {
+                    e.currentTarget.style.background = 'rgba(51, 209, 143, 0.3)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (gulfDorrahActiveTab !== 'tab3') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                  }
+                }}
+              >
+                OUR TEAM
+              </button>
+              <button
+                onClick={() => setGulfDorrahActiveTab('tab4')}
+                style={{
+                  padding: '12px 30px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: gulfDorrahActiveTab === 'tab4' ? '#ffffff' : '#33d18f',
+                  background: gulfDorrahActiveTab === 'tab4' ? 'rgba(51, 209, 143, 0.9)' : 'rgba(255, 255, 255, 0.2)',
+                  border: '2px solid rgba(51, 209, 143, 0.8)',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'none',
+                  letterSpacing: '1px',
+                  whiteSpace: 'nowrap',
+                  overflow: 'visible',
+                  textOverflow: 'clip'
+                }}
+                onMouseEnter={(e) => {
+                  if (gulfDorrahActiveTab !== 'tab4') {
+                    e.currentTarget.style.background = 'rgba(51, 209, 143, 0.3)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (gulfDorrahActiveTab !== 'tab4') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                  }
+                }}
+              >
+                OUR PARTNERS
+              </button>
+            </div>
+
+            {/* Tab Content */}
+            {gulfDorrahActiveTab === 'tab1' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1400px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '40px'
+              }}>
+                <h2 style={{
+                  fontSize: 'clamp(24px, 2.5vw, 36px)',
+                  fontWeight: '900',
+                  color: '#33d18f',
+                  marginBottom: '30px',
+                  letterSpacing: '1.5px',
+                  textTransform: 'uppercase',
+                  textAlign: 'center',
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
+                }}>
+                  GALLERY
+                </h2>
+                <p style={{
+                  fontSize: 'clamp(16px, 1.5vw, 20px)',
+                  lineHeight: '1.8',
+                  color: '#ffffff',
+                  textAlign: 'center',
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
+                }}>
+                  Gallery content will be displayed here.
+                </p>
+              </div>
+            )}
+
+            {gulfDorrahActiveTab === 'tab2' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1400px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '40px'
+              }}>
+                <h2 style={{
+                  fontSize: 'clamp(24px, 2.5vw, 36px)',
+                  fontWeight: '900',
+                  color: '#33d18f',
+                  marginBottom: '30px',
+                  letterSpacing: '1.5px',
+                  textTransform: 'uppercase',
+                  textAlign: 'center',
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
+                }}>
+                  MAJOR CLIENTS
+                </h2>
+                <p style={{
+                  fontSize: 'clamp(16px, 1.5vw, 20px)',
+                  lineHeight: '1.8',
+                  color: '#ffffff',
+                  textAlign: 'center',
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
+                }}>
+                  Major clients information will be displayed here.
+                </p>
+              </div>
+            )}
+
+            {gulfDorrahActiveTab === 'tab3' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1400px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '40px'
+              }}>
+                <h2 style={{
+                  fontSize: 'clamp(24px, 2.5vw, 36px)',
+                  fontWeight: '900',
+                  color: '#33d18f',
+                  marginBottom: '30px',
+                  letterSpacing: '1.5px',
+                  textTransform: 'uppercase',
+                  textAlign: 'center',
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
+                }}>
+                  OUR TEAM
+                </h2>
+                <p style={{
+                  fontSize: 'clamp(16px, 1.5vw, 20px)',
+                  lineHeight: '1.8',
+                  color: '#ffffff',
+                  textAlign: 'center',
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
+                }}>
+                  Our team information will be displayed here.
+                </p>
+              </div>
+            )}
+
+            {gulfDorrahActiveTab === 'tab4' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1400px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '40px'
+              }}>
+                <h2 style={{
+                  fontSize: 'clamp(24px, 2.5vw, 36px)',
+                  fontWeight: '900',
+                  color: '#33d18f',
+                  marginBottom: '30px',
+                  letterSpacing: '1.5px',
+                  textTransform: 'uppercase',
+                  textAlign: 'center',
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
+                }}>
+                  OUR PARTNERS
+                </h2>
+                <p style={{
+                  fontSize: 'clamp(16px, 1.5vw, 20px)',
+                  lineHeight: '1.8',
+                  color: '#ffffff',
+                  textAlign: 'center',
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
+                }}>
+                  Our partners information will be displayed here.
+                </p>
+              </div>
+            )}
           </div>
           <button
             onClick={() => setShowGulfDorrahLearnMore(false)}
@@ -12720,9 +13215,6 @@ export default function App() {
               position: 'fixed',
               top: '40px',
               right: '40px',
-              background: 'rgba(255, 255, 255, 0.9)',
-              border: 'none',
-              color: '#333',
               background: 'transparent',
               border: 'none',
               color: 'rgba(255, 255, 255, 0.95)',
@@ -12788,13 +13280,13 @@ export default function App() {
               zIndex: 10
             }}>
               <button
-                onClick={() => setCentralMedicalcareActiveTab('tab1')}
+                onClick={() => setCentralMedicalcareActiveTab('tab4')}
                 style={{
                   padding: '12px 30px',
                   fontSize: '16px',
                   fontWeight: '700',
-                  color: centralMedicalcareActiveTab === 'tab1' ? '#ffffff' : '#ffffff',
-                  background: centralMedicalcareActiveTab === 'tab1' ? 'rgba(191, 168, 116, 0.9)' : 'rgba(191, 168, 116, 0.6)',
+                  color: centralMedicalcareActiveTab === 'tab4' ? '#ffffff' : '#ffffff',
+                  background: centralMedicalcareActiveTab === 'tab4' ? 'rgba(191, 168, 116, 0.9)' : 'rgba(191, 168, 116, 0.6)',
                   border: '2px solid rgba(191, 168, 116, 0.8)',
                   borderRadius: '8px',
                   cursor: 'pointer',
@@ -12806,17 +13298,17 @@ export default function App() {
                   textOverflow: 'clip'
                 }}
                 onMouseEnter={(e) => {
-                  if (centralMedicalcareActiveTab !== 'tab1') {
+                  if (centralMedicalcareActiveTab !== 'tab4') {
                     e.currentTarget.style.background = 'rgba(191, 168, 116, 0.7)';
                   }
                 }}
                 onMouseLeave={(e) => {
-                  if (centralMedicalcareActiveTab !== 'tab1') {
+                  if (centralMedicalcareActiveTab !== 'tab4') {
                     e.currentTarget.style.background = 'rgba(191, 168, 116, 0.6)';
                   }
                 }}
               >
-                OUR PROJECTS
+                GALLERY
               </button>
               <button
                 onClick={() => setCentralMedicalcareActiveTab('tab2')}
@@ -12847,7 +13339,7 @@ export default function App() {
                   }
                 }}
               >
-                OUR PARTNERS
+                MAJOR CLIENTS
               </button>
               <button
                 onClick={() => setCentralMedicalcareActiveTab('tab3')}
@@ -12880,44 +13372,41 @@ export default function App() {
               >
                 OUR TEAM
               </button>
+              <button
+                onClick={() => setCentralMedicalcareActiveTab('tab1')}
+                style={{
+                  padding: '12px 30px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: centralMedicalcareActiveTab === 'tab1' ? '#ffffff' : '#ffffff',
+                  background: centralMedicalcareActiveTab === 'tab1' ? 'rgba(191, 168, 116, 0.9)' : 'rgba(191, 168, 116, 0.6)',
+                  border: '2px solid rgba(191, 168, 116, 0.8)',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'none',
+                  letterSpacing: '1px',
+                  whiteSpace: 'nowrap',
+                  overflow: 'visible',
+                  textOverflow: 'clip'
+                }}
+                onMouseEnter={(e) => {
+                  if (centralMedicalcareActiveTab !== 'tab1') {
+                    e.currentTarget.style.background = 'rgba(191, 168, 116, 0.7)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (centralMedicalcareActiveTab !== 'tab1') {
+                    e.currentTarget.style.background = 'rgba(191, 168, 116, 0.6)';
+                  }
+                }}
+              >
+                OUR PARTNERS
+              </button>
             </div>
 
             {/* Tab Content */}
             {centralMedicalcareActiveTab === 'tab1' && (
-              <div style={{
-                width: '100%',
-                maxWidth: '1400px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '40px',
-                backgroundColor: 'transparent',
-                minHeight: '600px'
-              }}>
-                <h1 style={{
-                  fontSize: 'clamp(24px, 2.5vw, 36px)',
-                  fontWeight: '900',
-                  marginBottom: '30px',
-                  color: '#ffffff',
-                  textTransform: 'uppercase',
-                  letterSpacing: '2px'
-                }}>
-                  OUR PROJECTS
-                </h1>
-                <p style={{
-                  fontSize: 'clamp(16px, 1.5vw, 20px)',
-                  lineHeight: '1.8',
-                  maxWidth: '800px',
-                  textAlign: 'center',
-                  color: '#ffffff'
-                }}>
-                  Information about Central Medicalcare projects will be available here.
-                </p>
-              </div>
-            )}
-
-            {centralMedicalcareActiveTab === 'tab2' && (
               <div style={{
                 width: '100%',
                 maxWidth: '1400px',
@@ -12947,6 +13436,40 @@ export default function App() {
                   color: '#ffffff'
                 }}>
                   Information about Central Medicalcare partners will be available here.
+                </p>
+              </div>
+            )}
+
+            {centralMedicalcareActiveTab === 'tab2' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1400px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '40px',
+                backgroundColor: 'transparent',
+                minHeight: '600px'
+              }}>
+                <h1 style={{
+                  fontSize: 'clamp(24px, 2.5vw, 36px)',
+                  fontWeight: '900',
+                  marginBottom: '30px',
+                  color: '#ffffff',
+                  textTransform: 'uppercase',
+                  letterSpacing: '2px'
+                }}>
+                  MAJOR CLIENTS
+                </h1>
+                <p style={{
+                  fontSize: 'clamp(16px, 1.5vw, 20px)',
+                  lineHeight: '1.8',
+                  maxWidth: '800px',
+                  textAlign: 'center',
+                  color: '#ffffff'
+                }}>
+                  Information about Central Medicalcare major clients will be available here.
                 </p>
               </div>
             )}
@@ -12984,6 +13507,40 @@ export default function App() {
                 </p>
               </div>
             )}
+
+            {centralMedicalcareActiveTab === 'tab4' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1400px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '40px',
+                backgroundColor: 'transparent',
+                minHeight: '600px'
+              }}>
+                <h1 style={{
+                  fontSize: 'clamp(24px, 2.5vw, 36px)',
+                  fontWeight: '900',
+                  marginBottom: '30px',
+                  color: '#ffffff',
+                  textTransform: 'uppercase',
+                  letterSpacing: '2px'
+                }}>
+                  GALLERY
+                </h1>
+                <p style={{
+                  fontSize: 'clamp(16px, 1.5vw, 20px)',
+                  lineHeight: '1.8',
+                  maxWidth: '800px',
+                  textAlign: 'center',
+                  color: '#ffffff'
+                }}>
+                  Gallery content for Central Medicalcare will be available here.
+                </p>
+              </div>
+            )}
           </div>
           <button
             onClick={() => setShowCentralMedicalcareLearnMore(false)}
@@ -12991,10 +13548,10 @@ export default function App() {
               position: 'fixed',
               top: '40px',
               right: '40px',
-              background: 'rgba(191, 168, 116, 0.9)',
-              border: '2px solid rgba(191, 168, 116, 1)',
+              background: 'transparent',
+              border: 'none',
               borderRadius: '8px',
-              color: '#ffffff',
+              color: '#bfa874',
               padding: '12px 24px',
               fontSize: 'clamp(14px, 1.3vw, 18px)',
               fontWeight: '700',
@@ -13004,21 +13561,21 @@ export default function App() {
               whiteSpace: 'nowrap',
               textDecoration: 'none',
               transition: 'all 0.3s ease',
-              boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)'
+              boxShadow: 'none'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(191, 168, 116, 1)';
+              e.currentTarget.style.background = 'rgba(191, 168, 116, 0.2)';
+              e.currentTarget.style.color = '#bfa874';
               e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(191, 168, 116, 0.9)';
+              e.currentTarget.style.background = 'transparent';
+              e.currentTarget.style.color = '#bfa874';
               e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
             }}
-            aria-label="Back to Alika"
+            aria-label="Back"
           >
-            Back to Alika
+            Back
           </button>
         </div>
       )}
@@ -13049,29 +13606,132 @@ export default function App() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'center',
-            color: '#000000'
+            justifyContent: 'flex-start',
+            color: '#000000',
+            paddingTop: '40px'
           }}>
-            <h1 style={{
-              fontSize: 'clamp(28px, 3.5vw, 42px)',
-              fontWeight: '900',
-              marginBottom: '30px',
-              color: '#F4A460',
-              textTransform: 'uppercase',
-              letterSpacing: '2px'
-            }}>
-              AL RAKAEZ CONSTRUCTION
-            </h1>
-            <p style={{
-              fontSize: 'clamp(16px, 1.5vw, 20px)',
-              lineHeight: '1.8',
-              maxWidth: '800px',
-              textAlign: 'center',
+            {/* Tabs Navigation */}
+            <div style={{
+              display: 'flex',
+              gap: '10px',
               marginBottom: '40px',
-              color: '#000000'
+              zIndex: 10,
+              flexWrap: 'wrap',
+              justifyContent: 'center'
             }}>
-              More information about Al Rakaez Construction will be available here.
-            </p>
+              <button
+                onClick={() => setRkActiveTab('tab1')}
+                style={{
+                  padding: 'clamp(10px, 1.2vw, 14px) clamp(24px, 3vw, 32px)',
+                  fontSize: 'clamp(14px, 1.5vw, 18px)',
+                  fontWeight: '700',
+                  color: rkActiveTab === 'tab1' ? '#ffffff' : '#F4A460',
+                  background: rkActiveTab === 'tab1' ? '#F4A460' : 'rgba(255, 255, 255, 0.9)',
+                  border: '2px solid #F4A460',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'uppercase',
+                  letterSpacing: '1px'
+                }}
+                onMouseEnter={(e) => {
+                  if (rkActiveTab !== 'tab1') {
+                    e.currentTarget.style.background = 'rgba(244, 164, 96, 0.1)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (rkActiveTab !== 'tab1') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
+                  }
+                }}
+              >
+                Gallery
+              </button>
+              <button
+                onClick={() => setRkActiveTab('tab2')}
+                style={{
+                  padding: 'clamp(10px, 1.2vw, 14px) clamp(24px, 3vw, 32px)',
+                  fontSize: 'clamp(14px, 1.5vw, 18px)',
+                  fontWeight: '700',
+                  color: rkActiveTab === 'tab2' ? '#ffffff' : '#F4A460',
+                  background: rkActiveTab === 'tab2' ? '#F4A460' : 'rgba(255, 255, 255, 0.9)',
+                  border: '2px solid #F4A460',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'uppercase',
+                  letterSpacing: '1px'
+                }}
+                onMouseEnter={(e) => {
+                  if (rkActiveTab !== 'tab2') {
+                    e.currentTarget.style.background = 'rgba(244, 164, 96, 0.1)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (rkActiveTab !== 'tab2') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
+                  }
+                }}
+              >
+                Major Clients
+              </button>
+              <button
+                onClick={() => setRkActiveTab('tab3')}
+                style={{
+                  padding: 'clamp(10px, 1.2vw, 14px) clamp(24px, 3vw, 32px)',
+                  fontSize: 'clamp(14px, 1.5vw, 18px)',
+                  fontWeight: '700',
+                  color: rkActiveTab === 'tab3' ? '#ffffff' : '#F4A460',
+                  background: rkActiveTab === 'tab3' ? '#F4A460' : 'rgba(255, 255, 255, 0.9)',
+                  border: '2px solid #F4A460',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'uppercase',
+                  letterSpacing: '1px'
+                }}
+                onMouseEnter={(e) => {
+                  if (rkActiveTab !== 'tab3') {
+                    e.currentTarget.style.background = 'rgba(244, 164, 96, 0.1)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (rkActiveTab !== 'tab3') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
+                  }
+                }}
+              >
+                Our Team
+              </button>
+              <button
+                onClick={() => setRkActiveTab('tab4')}
+                style={{
+                  padding: 'clamp(10px, 1.2vw, 14px) clamp(24px, 3vw, 32px)',
+                  fontSize: 'clamp(14px, 1.5vw, 18px)',
+                  fontWeight: '700',
+                  color: rkActiveTab === 'tab4' ? '#ffffff' : '#F4A460',
+                  background: rkActiveTab === 'tab4' ? '#F4A460' : 'rgba(255, 255, 255, 0.9)',
+                  border: '2px solid #F4A460',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'uppercase',
+                  letterSpacing: '1px'
+                }}
+                onMouseEnter={(e) => {
+                  if (rkActiveTab !== 'tab4') {
+                    e.currentTarget.style.background = 'rgba(244, 164, 96, 0.1)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (rkActiveTab !== 'tab4') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
+                  }
+                }}
+              >
+                Our Partners
+              </button>
+            </div>
           </div>
           <button
             onClick={() => setShowRKLearnMore(false)}
@@ -13121,14 +13781,14 @@ export default function App() {
           height: '100vh',
           margin: 0,
           padding: 0,
-          backgroundColor: ahEnvironmentalActiveTab === 'tab1' ? '#ffffff' : '#283152',
-          backgroundImage: ahEnvironmentalActiveTab === 'tab1' ? 'none' : (ahEnvironmentalActiveTab === 'tab3' ? 'url(/bgourproject.png)' : 'url(/bgforah.png)'),
+          backgroundColor: ahEnvironmentalActiveTab === 'tab2' ? '#ffffff' : '#283152',
+          backgroundImage: ahEnvironmentalActiveTab === 'tab2' ? 'none' : (ahEnvironmentalActiveTab === 'tab4' ? 'url(/bgourproject.png)' : 'url(/bgforah.png)'),
           backgroundSize: '100% 100%',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           zIndex: 2000,
           animation: 'fadeIn 0.6s ease-in-out',
-          overflow: 'auto',
+          overflow: ahEnvironmentalActiveTab === 'tab2' ? 'hidden' : 'auto',
           boxSizing: 'border-box'
         }}>
           <div style={{
@@ -13178,7 +13838,7 @@ export default function App() {
                     }
                 }}
               >
-                OUR PARTNERS
+                GALLERY
               </button>
               <button
                 onClick={() => setAhEnvironmentalActiveTab('tab2')}
@@ -13209,7 +13869,7 @@ export default function App() {
                     }
                 }}
               >
-                Our TEAM
+                MAJOR CLIENTS
               </button>
               <button
                 onClick={() => setAhEnvironmentalActiveTab('tab3')}
@@ -13240,7 +13900,38 @@ export default function App() {
                     }
                 }}
               >
-                Our PROJECTS
+                Our TEAM
+              </button>
+              <button
+                onClick={() => setAhEnvironmentalActiveTab('tab4')}
+                style={{
+                  padding: '12px 30px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: ahEnvironmentalActiveTab === 'tab4' ? '#ffffff' : '#283152',
+                  background: ahEnvironmentalActiveTab === 'tab4' ? 'rgba(40, 60, 100, 0.9)' : 'rgba(255, 255, 255, 0.8)',
+                  border: '2px solid rgba(40, 60, 100, 0.8)',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'none',
+                  letterSpacing: '1px',
+                  whiteSpace: 'nowrap',
+                  overflow: 'visible',
+                  textOverflow: 'clip'
+                }}
+                onMouseEnter={(e) => {
+                  if (ahEnvironmentalActiveTab !== 'tab4') {
+                    e.currentTarget.style.background = 'rgba(40, 60, 100, 0.3)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                    if (ahEnvironmentalActiveTab !== 'tab4') {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
+                    }
+                }}
+              >
+                OUR PARTNERS
               </button>
             </div>
 
@@ -13254,8 +13945,44 @@ export default function App() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 padding: '40px',
+                backgroundColor: 'transparent'
+              }}>
+                <h1 style={{
+                  fontSize: 'clamp(24px, 2.5vw, 36px)',
+                  fontWeight: '900',
+                  color: '#ffffff',
+                  marginBottom: '30px',
+                  letterSpacing: '1.5px',
+                  textTransform: 'uppercase',
+                  textAlign: 'center',
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
+                }}>
+                  GALLERY
+                </h1>
+                <p style={{
+                  fontSize: 'clamp(16px, 1.5vw, 20px)',
+                  lineHeight: '1.8',
+                  color: '#ffffff',
+                  textAlign: 'center',
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
+                }}>
+                  Gallery content will be displayed here.
+                </p>
+              </div>
+            )}
+
+            {ahEnvironmentalActiveTab === 'tab2' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1400px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '40px',
                 backgroundColor: 'transparent',
-                minHeight: '600px'
+                minHeight: '600px',
+                overflow: 'hidden'
               }}>
                 <h1 style={{
                   fontSize: 'clamp(24px, 2.5vw, 36px)',
@@ -13266,7 +13993,7 @@ export default function App() {
                   textTransform: 'uppercase',
                   textAlign: 'center'
                 }}>
-                  OUR PARTNERS
+                  MAJOR CLIENTS
                 </h1>
                 
                 {/* Partners Grid - 12 logos in 2 rows of 6 */}
@@ -13358,7 +14085,7 @@ export default function App() {
               </div>
             )}
 
-            {ahEnvironmentalActiveTab === 'tab2' && (
+            {ahEnvironmentalActiveTab === 'tab3' && (
               <div style={{
                 width: '100%',
                 maxWidth: '1400px',
@@ -13381,22 +14108,10 @@ export default function App() {
                 }}>
                   Our TEAM
                 </h1>
-                <img
-                  src="/ahourteam.png"
-                  alt="Our Team"
-                  style={{
-                    width: '100%',
-                    maxWidth: 'clamp(800px, 80vw, 1000px)',
-                    maxHeight: 'clamp(400px, 50vh, 500px)',
-                    height: 'auto',
-                    objectFit: 'contain',
-                    borderRadius: '12px'
-                  }}
-                />
               </div>
             )}
 
-            {ahEnvironmentalActiveTab === 'tab3' && (
+            {ahEnvironmentalActiveTab === 'tab4' && (
               <div style={{
                 width: '100%',
                 maxWidth: '1400px',
@@ -13419,7 +14134,7 @@ export default function App() {
                    textAlign: 'center',
                    textShadow: '0 2px 8px rgba(123, 31, 162, 0.4)'
                  }}>
-                   Our PROJECTS
+                   OUR PARTNERS
                  </h1>
                 
                 {/* Content Row: Text and Image */}
@@ -13483,7 +14198,7 @@ export default function App() {
               right: 'clamp(20px, 2.5vw, 40px)',
               background: 'transparent',
               border: 'none',
-              color: ahEnvironmentalActiveTab === 'tab1' ? '#283152' : 'rgba(255, 255, 255, 0.95)',
+              color: ahEnvironmentalActiveTab === 'tab2' ? '#283152' : 'rgba(255, 255, 255, 0.95)',
               padding: '0',
               fontSize: 'clamp(14px, 1.3vw, 18px)',
               fontWeight: '800',
@@ -13493,7 +14208,7 @@ export default function App() {
               whiteSpace: 'nowrap',
               textDecoration: 'none',
               transition: 'opacity 0.3s ease',
-              textShadow: ahEnvironmentalActiveTab === 'tab1' ? 'none' : '0 1px 2px rgba(0, 0, 0, 0.2)'
+              textShadow: ahEnvironmentalActiveTab === 'tab2' ? 'none' : '0 1px 2px rgba(0, 0, 0, 0.2)'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.opacity = '0.8';
@@ -13518,7 +14233,7 @@ export default function App() {
           width: '100vw',
           height: '100vh',
           backgroundColor: '#f5f5f5',
-          backgroundImage: 'url(/idc-gif.gif)',
+          backgroundImage: 'url(/idcbg.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -13529,33 +14244,206 @@ export default function App() {
           <div style={{
             width: '100%',
             minHeight: '100vh',
-            padding: '40px',
+            padding: 'clamp(15px, 2vh, 25px)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'center',
-            color: '#0b2239'
+            justifyContent: 'flex-start',
+            color: '#0b2239',
+            paddingTop: 'clamp(20px, 3vh, 35px)'
           }}>
             <h1 style={{
               fontSize: 'clamp(28px, 3.5vw, 42px)',
               fontWeight: '900',
-              marginBottom: '30px',
+              marginBottom: 'clamp(20px, 2vh, 30px)',
               color: '#0b6fbf',
               textTransform: 'uppercase',
               letterSpacing: '2px'
             }}>
               IDC CONTRACTING COMPANY
             </h1>
-            <p style={{
-              fontSize: 'clamp(16px, 1.5vw, 20px)',
-              lineHeight: '1.8',
-              maxWidth: '800px',
-              textAlign: 'center',
-              marginBottom: '40px',
-              color: '#0b2239'
+            
+            {/* Tabs Navigation */}
+            <div style={{
+              display: 'flex',
+              gap: '10px',
+              marginBottom: 'clamp(10px, 1.5vh, 15px)',
+              zIndex: 10
             }}>
-              More information about IDC Contracting Company will be available here.
-            </p>
+              <button
+                onClick={() => setIdcActiveTab('tab1')}
+                style={{
+                  padding: '12px 30px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: idcActiveTab === 'tab1' ? '#ffffff' : '#0b6fbf',
+                  background: idcActiveTab === 'tab1' ? '#0b6fbf' : 'rgba(255, 255, 255, 0.2)',
+                  border: '2px solid #0b6fbf',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'none',
+                  letterSpacing: '1px'
+                }}
+                onMouseEnter={(e) => {
+                  if (idcActiveTab !== 'tab1') {
+                    e.currentTarget.style.background = 'rgba(11, 111, 191, 0.3)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (idcActiveTab !== 'tab1') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                  }
+                }}
+              >
+                GALLERY
+              </button>
+              <button
+                onClick={() => setIdcActiveTab('tab2')}
+                style={{
+                  padding: '12px 30px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: idcActiveTab === 'tab2' ? '#ffffff' : '#0b6fbf',
+                  background: idcActiveTab === 'tab2' ? '#0b6fbf' : 'rgba(255, 255, 255, 0.2)',
+                  border: '2px solid #0b6fbf',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'none',
+                  letterSpacing: '1px'
+                }}
+                onMouseEnter={(e) => {
+                  if (idcActiveTab !== 'tab2') {
+                    e.currentTarget.style.background = 'rgba(11, 111, 191, 0.3)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (idcActiveTab !== 'tab2') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                  }
+                }}
+              >
+                MAJOR CLIENTS
+              </button>
+              <button
+                onClick={() => setIdcActiveTab('tab3')}
+                style={{
+                  padding: '12px 30px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: idcActiveTab === 'tab3' ? '#ffffff' : '#0b6fbf',
+                  background: idcActiveTab === 'tab3' ? '#0b6fbf' : 'rgba(255, 255, 255, 0.2)',
+                  border: '2px solid #0b6fbf',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'none',
+                  letterSpacing: '1px'
+                }}
+                onMouseEnter={(e) => {
+                  if (idcActiveTab !== 'tab3') {
+                    e.currentTarget.style.background = 'rgba(11, 111, 191, 0.3)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (idcActiveTab !== 'tab3') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                  }
+                }}
+              >
+                OUR TEAM
+              </button>
+              <button
+                onClick={() => setIdcActiveTab('tab4')}
+                style={{
+                  padding: '12px 30px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: idcActiveTab === 'tab4' ? '#ffffff' : '#0b6fbf',
+                  background: idcActiveTab === 'tab4' ? '#0b6fbf' : 'rgba(255, 255, 255, 0.2)',
+                  border: '2px solid #0b6fbf',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'none',
+                  letterSpacing: '1px'
+                }}
+                onMouseEnter={(e) => {
+                  if (idcActiveTab !== 'tab4') {
+                    e.currentTarget.style.background = 'rgba(11, 111, 191, 0.3)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (idcActiveTab !== 'tab4') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                  }
+                }}
+              >
+                OUR PARNTERS
+              </button>
+            </div>
+
+            {/* Tab Content */}
+            {idcActiveTab === 'tab1' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1536px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 'clamp(10px, 1.2vh, 15px)',
+                minHeight: '50vh'
+              }}>
+                {/* Empty tab content */}
+              </div>
+            )}
+
+            {idcActiveTab === 'tab2' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1536px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 'clamp(10px, 1.2vh, 15px)',
+                minHeight: '50vh'
+              }}>
+                {/* Empty tab content */}
+              </div>
+            )}
+
+            {idcActiveTab === 'tab3' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1536px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 'clamp(10px, 1.2vh, 15px)',
+                minHeight: '50vh'
+              }}>
+                {/* Empty tab content */}
+              </div>
+            )}
+
+            {idcActiveTab === 'tab4' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1536px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 'clamp(10px, 1.2vh, 15px)',
+                minHeight: '50vh'
+              }}>
+                {/* Empty tab content */}
+              </div>
+            )}
           </div>
           {/* IDC Back button - text only */}
           <button
@@ -13696,7 +14584,7 @@ export default function App() {
           width: '100vw',
           height: '100vh',
           backgroundColor: '#ffffff',
-          backgroundImage: 'url(/GTA-bg4.jpeg)',
+          backgroundImage: 'url(/GTA-bg4.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -13708,33 +14596,276 @@ export default function App() {
             width: '100%',
             minHeight: '100vh',
             padding: '40px',
-            paddingBottom: '20px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'center',
-            color: '#000000'
+            justifyContent: 'flex-start',
+            color: '#000000',
+            paddingTop: '20px'
           }}>
-            <h1 style={{
-              fontSize: 'clamp(28px, 3.5vw, 42px)',
-              fontWeight: '900',
-              marginBottom: '30px',
-              color: '#dc2626',
-              textTransform: 'uppercase',
-              letterSpacing: '2px'
-            }}>
-              GERMAN TECHNOLOGY AUTO
-            </h1>
-            <p style={{
-              fontSize: 'clamp(16px, 1.5vw, 20px)',
-              lineHeight: '1.8',
-              maxWidth: '800px',
-              textAlign: 'center',
+            {/* Tabs Navigation */}
+            <div style={{
+              display: 'flex',
+              gap: '10px',
               marginBottom: '40px',
-              color: '#000000'
+              zIndex: 10,
+              flexWrap: 'wrap',
+              justifyContent: 'center'
             }}>
-              More information about German Technology Auto will be available here.
-            </p>
+              <button
+                onClick={() => setGtaActiveTab('tab1')}
+                style={{
+                  padding: '12px 30px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: gtaActiveTab === 'tab1' ? '#ffffff' : '#dc2626',
+                  background: gtaActiveTab === 'tab1' ? 'rgba(220, 38, 38, 0.9)' : 'rgba(255, 255, 255, 0.8)',
+                  border: '2px solid rgba(220, 38, 38, 0.8)',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'none',
+                  letterSpacing: '1px',
+                  whiteSpace: 'nowrap',
+                  overflow: 'visible',
+                  textOverflow: 'clip'
+                }}
+                onMouseEnter={(e) => {
+                  if (gtaActiveTab !== 'tab1') {
+                    e.currentTarget.style.background = 'rgba(220, 38, 38, 0.3)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (gtaActiveTab !== 'tab1') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
+                  }
+                }}
+              >
+                GALLERY
+              </button>
+              <button
+                onClick={() => setGtaActiveTab('tab2')}
+                style={{
+                  padding: '12px 30px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: gtaActiveTab === 'tab2' ? '#ffffff' : '#dc2626',
+                  background: gtaActiveTab === 'tab2' ? 'rgba(220, 38, 38, 0.9)' : 'rgba(255, 255, 255, 0.8)',
+                  border: '2px solid rgba(220, 38, 38, 0.8)',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'none',
+                  letterSpacing: '1px',
+                  whiteSpace: 'nowrap',
+                  overflow: 'visible',
+                  textOverflow: 'clip'
+                }}
+                onMouseEnter={(e) => {
+                  if (gtaActiveTab !== 'tab2') {
+                    e.currentTarget.style.background = 'rgba(220, 38, 38, 0.3)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (gtaActiveTab !== 'tab2') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
+                  }
+                }}
+              >
+                MAJOR CLIENTS
+              </button>
+              <button
+                onClick={() => setGtaActiveTab('tab3')}
+                style={{
+                  padding: '12px 30px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: gtaActiveTab === 'tab3' ? '#ffffff' : '#dc2626',
+                  background: gtaActiveTab === 'tab3' ? 'rgba(220, 38, 38, 0.9)' : 'rgba(255, 255, 255, 0.8)',
+                  border: '2px solid rgba(220, 38, 38, 0.8)',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'none',
+                  letterSpacing: '1px',
+                  whiteSpace: 'nowrap',
+                  overflow: 'visible',
+                  textOverflow: 'clip'
+                }}
+                onMouseEnter={(e) => {
+                  if (gtaActiveTab !== 'tab3') {
+                    e.currentTarget.style.background = 'rgba(220, 38, 38, 0.3)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (gtaActiveTab !== 'tab3') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
+                  }
+                }}
+              >
+                OUR TEAM
+              </button>
+              <button
+                onClick={() => setGtaActiveTab('tab4')}
+                style={{
+                  padding: '12px 30px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: gtaActiveTab === 'tab4' ? '#ffffff' : '#dc2626',
+                  background: gtaActiveTab === 'tab4' ? 'rgba(220, 38, 38, 0.9)' : 'rgba(255, 255, 255, 0.8)',
+                  border: '2px solid rgba(220, 38, 38, 0.8)',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'none',
+                  letterSpacing: '1px',
+                  whiteSpace: 'nowrap',
+                  overflow: 'visible',
+                  textOverflow: 'clip'
+                }}
+                onMouseEnter={(e) => {
+                  if (gtaActiveTab !== 'tab4') {
+                    e.currentTarget.style.background = 'rgba(220, 38, 38, 0.3)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (gtaActiveTab !== 'tab4') {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
+                  }
+                }}
+              >
+                OUR PARTNERS
+              </button>
+            </div>
+
+            {/* Tab Content */}
+            {gtaActiveTab === 'tab1' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1400px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '40px'
+              }}>
+                <h2 style={{
+                  fontSize: 'clamp(24px, 2.5vw, 36px)',
+                  fontWeight: '900',
+                  color: '#dc2626',
+                  marginBottom: '30px',
+                  letterSpacing: '1.5px',
+                  textTransform: 'uppercase',
+                  textAlign: 'center'
+                }}>
+                  GALLERY
+                </h2>
+                <p style={{
+                  fontSize: 'clamp(16px, 1.5vw, 20px)',
+                  lineHeight: '1.8',
+                  color: '#000000',
+                  textAlign: 'center'
+                }}>
+                  Gallery content will be displayed here.
+                </p>
+              </div>
+            )}
+
+            {gtaActiveTab === 'tab2' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1400px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '40px'
+              }}>
+                <h2 style={{
+                  fontSize: 'clamp(24px, 2.5vw, 36px)',
+                  fontWeight: '900',
+                  color: '#dc2626',
+                  marginBottom: '30px',
+                  letterSpacing: '1.5px',
+                  textTransform: 'uppercase',
+                  textAlign: 'center'
+                }}>
+                  MAJOR CLIENTS
+                </h2>
+                <p style={{
+                  fontSize: 'clamp(16px, 1.5vw, 20px)',
+                  lineHeight: '1.8',
+                  color: '#000000',
+                  textAlign: 'center'
+                }}>
+                  Major clients information will be displayed here.
+                </p>
+              </div>
+            )}
+
+            {gtaActiveTab === 'tab3' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1400px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '40px'
+              }}>
+                <h2 style={{
+                  fontSize: 'clamp(24px, 2.5vw, 36px)',
+                  fontWeight: '900',
+                  color: '#dc2626',
+                  marginBottom: '30px',
+                  letterSpacing: '1.5px',
+                  textTransform: 'uppercase',
+                  textAlign: 'center'
+                }}>
+                  OUR TEAM
+                </h2>
+                <p style={{
+                  fontSize: 'clamp(16px, 1.5vw, 20px)',
+                  lineHeight: '1.8',
+                  color: '#000000',
+                  textAlign: 'center'
+                }}>
+                  Our team information will be displayed here.
+                </p>
+              </div>
+            )}
+
+            {gtaActiveTab === 'tab4' && (
+              <div style={{
+                width: '100%',
+                maxWidth: '1400px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '40px'
+              }}>
+                <h2 style={{
+                  fontSize: 'clamp(24px, 2.5vw, 36px)',
+                  fontWeight: '900',
+                  color: '#dc2626',
+                  marginBottom: '30px',
+                  letterSpacing: '1.5px',
+                  textTransform: 'uppercase',
+                  textAlign: 'center'
+                }}>
+                  OUR PARTNERS
+                </h2>
+                <p style={{
+                  fontSize: 'clamp(16px, 1.5vw, 20px)',
+                  lineHeight: '1.8',
+                  color: '#000000',
+                  textAlign: 'center'
+                }}>
+                  Our partners information will be displayed here.
+                </p>
+              </div>
+            )}
           </div>
           {/* GTA Back button - text only */}
           <button
