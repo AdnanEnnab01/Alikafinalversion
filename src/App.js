@@ -10201,27 +10201,37 @@ export default function App() {
                       width: 'clamp(130px, 12vw, 200px)',
                       height: 'clamp(130px, 12vw, 200px)',
                       borderRadius: '50%',
-                      backgroundColor: '#ff6b9d',
+                      backgroundColor: '#f0f0f0',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      overflow: 'hidden',
                       border: '3px solid #ff4b4b',
-                      boxShadow: '0 8px 25px rgba(255, 75, 75, 0.35)',
-                      color: '#ffffff',
-                      fontWeight: '800',
-                      fontSize: 'clamp(32px, 3vw, 40px)',
-                      letterSpacing: '1px'
+                      boxShadow: '0 4px 15px rgba(255, 75, 75, 0.3)'
                     }}>
-                      SM
+                      <img
+                        src="/mohammadsalesmanager.jpeg"
+                        alt="Sales Manager"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.parentElement.innerHTML = '<div style="font-size: 48px; color: #ff4b4b;">👤</div>';
+                        }}
+                      />
                     </div>
                     <div style={{
-                      fontSize: 'clamp(14px, 1.3vw, 19px)',
-                      fontWeight: '600',
+                      fontSize: 'clamp(16px, 1.5vw, 22px)',
+                      fontWeight: '700',
                       color: '#1a1a1a',
                       textAlign: 'center',
                       lineHeight: '1.4'
                     }}>
-                      Sales Manager
+                      Mohammed Abdul Quddus<br />
+                      <span style={{ fontSize: 'clamp(13px, 1.2vw, 17px)', fontWeight: '600' }}>Sales Manager</span>
                     </div>
                   </div>
 
