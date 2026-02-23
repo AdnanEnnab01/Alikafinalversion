@@ -5776,8 +5776,8 @@ export default function App() {
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'flex-start',
-                  paddingTop: 'clamp(50px, 6vh, 100px)',
-                  paddingBottom: 'clamp(50px, 6vh, 100px)'
+                  paddingTop: 'clamp(20px, 2vh, 40px)',
+                  paddingBottom: 'clamp(20px, 2vh, 40px)'
                 }}
               >
                 {/* White Content Box with Red Borders */}
@@ -5791,10 +5791,7 @@ export default function App() {
                     borderBottom: '4px solid #dc2626',
                     boxShadow: '0 10px 40px rgba(0, 0, 0, 0.2)',
                     animation: 'fadeIn 0.8s ease-in-out 0.2s both',
-                    minHeight: 'calc(100vh - clamp(100px, 12vh, 200px))',
                     width: '100%',
-                    maxHeight: 'calc(100vh - clamp(100px, 12vh, 200px))',
-                    overflow: 'auto',
                     display: 'flex',
                     flexDirection: 'column'
                   }}
@@ -10827,7 +10824,8 @@ export default function App() {
                                 aspectRatio: '16 / 9',
                                 objectFit: 'cover',
                                 pointerEvents: 'none',
-                                display: 'block'
+                                display: 'block',
+                                filter: index === 1 ? 'brightness(0)' : 'none'
                               }}
                               muted
                               playsInline
