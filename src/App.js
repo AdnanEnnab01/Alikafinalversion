@@ -2499,16 +2499,29 @@ export default function App() {
                         gap: '10px'
                       }}
                     >
-                      <strong style={{ minWidth: '110px', fontWeight: 800 }}>Website:</strong>
-                      <span
+                      <strong style={{ minWidth: '110px', fontWeight: 800 }}>Website:</strong>{' '}
+                      <a
+                        href="https://amt-arabia.net/en"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         style={{
+                          color: '#0b6fbf',
+                          textDecoration: 'none',
+                          fontWeight: 700,
+                          cursor: 'pointer',
                           whiteSpace: 'nowrap',
                           overflow: 'hidden',
                           textOverflow: 'ellipsis'
                         }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.textDecoration = 'underline';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.textDecoration = 'none';
+                        }}
                       >
                         www.amt-arabia.net
-                      </span>
+                      </a>
                   </div>
                 </div>
 
@@ -2937,7 +2950,25 @@ export default function App() {
                       <strong style={{ fontWeight: 800 }}>Email:</strong> bassam.almasri@idc-arabia.com
                     </span>
                     <span style={{ whiteSpace: 'nowrap' }}>
-                      <strong style={{ fontWeight: 800 }}>Website:</strong> www.idc-arabia.com
+                      <strong style={{ fontWeight: 800 }}>Website:</strong>{' '}
+                      <a 
+                        href="https://idc-arabia.com/ar/" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        style={{ 
+                          color: '#0b6fbf',
+                          textDecoration: 'none',
+                          cursor: 'pointer'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.textDecoration = 'underline';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.textDecoration = 'none';
+                        }}
+                      >
+                        www.idc-arabia.com
+                      </a>
                     </span>
                   </div>
 
@@ -4168,16 +4199,29 @@ export default function App() {
                       }}
                     >
                       <strong style={{ minWidth: '75px', fontWeight: 800, flexShrink: 0 }}>Website:</strong>
-                      <span
+                      <a
+                        href="https://www.centralmedicalcare.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         style={{
+                          color: '#0b6fbf',
+                          textDecoration: 'none',
+                          fontWeight: 700,
+                          cursor: 'pointer',
                           whiteSpace: 'nowrap',
                           flex: '1 1 auto',
                           minWidth: 0,
                           overflow: 'visible'
                         }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.textDecoration = 'underline';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.textDecoration = 'none';
+                        }}
                       >
                         www.centralmedicalcare.com
-                      </span>
+                      </a>
                     </div>
                   </div>
 
@@ -5909,16 +5953,29 @@ export default function App() {
                         marginBottom: 'clamp(4px, 0.4vh, 8px)'
                       }}
                     >
-                      <strong style={{ minWidth: '65px', fontWeight: 800, color: '#000000' }}>Website:</strong>
-                      <span
+                      <strong style={{ minWidth: '65px', fontWeight: 800, color: '#000000' }}>Website:</strong>{' '}
+                      <a
+                        href="https://gtaksa.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         style={{
+                          color: '#0b6fbf',
+                          textDecoration: 'none',
+                          fontWeight: 700,
+                          cursor: 'pointer',
                           whiteSpace: 'nowrap',
                           overflow: 'hidden',
                           textOverflow: 'ellipsis'
                         }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.textDecoration = 'underline';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.textDecoration = 'none';
+                        }}
                       >
-                        https://www.gtaksa.com
-                      </span>
+                        www.gtaksa.com
+                      </a>
                     </div>
                   </div>
 
@@ -6283,8 +6340,26 @@ export default function App() {
                         }}
                       >
                         Website:
-                      </strong>
-                      <span>https://www.etlco.com.sa</span>
+                      </strong>{' '}
+                      <a
+                        href="https://etlco.com.sa/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          color: '#0b6fbf',
+                          textDecoration: 'none',
+                          fontWeight: 700,
+                          cursor: 'pointer'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.textDecoration = 'underline';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.textDecoration = 'none';
+                        }}
+                      >
+                        www.etlco.com.sa
+                      </a>
                     </div>
                   </div>
 
@@ -6882,18 +6957,25 @@ export default function App() {
                       flexWrap: 'wrap',
                       gap: '4px'
                     }}>
-                      <strong style={{ fontWeight: '800', flexShrink: 0 }}>Website:</strong>
+                      <strong style={{ fontWeight: '800', flexShrink: 0 }}>Website:</strong>{' '}
                       <a
-                        href="https://www.gulfconsult.com"
+                        href="https://gs-geo.com/"
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noopener noreferrer"
                         style={{
-                          color: '#07373c', 
-                          textDecoration: 'underline', 
-                          fontWeight: 700
+                          color: '#0b6fbf',
+                          textDecoration: 'none',
+                          fontWeight: 700,
+                          cursor: 'pointer'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.textDecoration = 'underline';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.textDecoration = 'none';
                         }}
                       >
-                        www.gulfconsult.com
+                        www.gs-geo.com
                       </a>
                     </div>
 
@@ -7313,16 +7395,29 @@ export default function App() {
                         marginBottom: 'clamp(12px, 1.5vh, 18px)'
                       }}
                     >
-                      <strong style={{ minWidth: '85px', fontWeight: 800, flexShrink: 0 }}>Website:</strong>
-                      <span
+                      <strong style={{ minWidth: '85px', fontWeight: 800, flexShrink: 0 }}>Website:</strong>{' '}
+                      <a
+                        href="https://www.rk-arabia.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         style={{
+                          color: '#0b6fbf',
+                          textDecoration: 'none',
+                          fontWeight: 700,
+                          cursor: 'pointer',
                           whiteSpace: 'nowrap',
                           overflow: 'hidden',
                           textOverflow: 'ellipsis'
                         }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.textDecoration = 'underline';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.textDecoration = 'none';
+                        }}
                       >
-                        https://www.rk-arabia.com
-                      </span>
+                        www.rk-arabia.com
+                      </a>
                     </div>
                     {/* Learn More Button */}
                     <button
@@ -7722,8 +7817,26 @@ export default function App() {
                         }}
                       >
                         Website:
-                      </strong>
-                      <span>https://www.ahenviro.com</span>
+                      </strong>{' '}
+                      <a
+                        href="https://ahenviro.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          color: '#0b6fbf',
+                          textDecoration: 'none',
+                          fontWeight: 700,
+                          cursor: 'pointer'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.textDecoration = 'underline';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.textDecoration = 'none';
+                        }}
+                      >
+                        www.ahenviro.com
+                      </a>
                     </div>
                     {/* Learn More Button */}
                     <button
@@ -8075,15 +8188,22 @@ export default function App() {
                     flexWrap: 'wrap',
                     gap: '4px'
                   }}>
-                    <strong style={{ fontWeight: '800', flexShrink: 0 }}>Website:</strong>
+                    <strong style={{ fontWeight: '800', flexShrink: 0 }}>Website:</strong>{' '}
                     <a
                       href="https://www.gulfconsult.com"
                       target="_blank"
                       rel="noreferrer"
                       style={{ 
-                        color: '#ffffff', 
-                        textDecoration: 'underline', 
-                        fontWeight: 700
+                        color: '#0b6fbf',
+                        textDecoration: 'none', 
+                        fontWeight: 700,
+                        cursor: 'pointer'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.textDecoration = 'underline';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.textDecoration = 'none';
                       }}
                     >
                       www.gulfconsult.com
