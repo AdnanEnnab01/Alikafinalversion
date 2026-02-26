@@ -18,6 +18,7 @@ export default function App() {
   const [showAMTQRModal, setShowAMTQRModal] = useState(false);
   const [showGulfConsult2LearnMore, setShowGulfConsult2LearnMore] = useState(false);
   const [gulfConsult2ActiveTab, setGulfConsult2ActiveTab] = useState('tab1'); // 'tab1' = Projects, 'tab2' = Team, 'tab3' = Partners, 'tab4' = Gallery
+  const [gulfConsult2GalleryPlaying, setGulfConsult2GalleryPlaying] = useState(false); // Fullscreen gallery video in Gulf Consult 2 Learn More
   const [showGulfConsultQRModal, setShowGulfConsultQRModal] = useState(false);
   const [showGSGLearnMore, setShowGSGLearnMore] = useState(false);
   const [showGSGQRModal, setShowGSGQRModal] = useState(false);
@@ -8921,10 +8922,13 @@ export default function App() {
               <div style={{
                 width: '100%',
                 maxWidth: '1200px',
-                textAlign: 'center',
-                color: '#2d8659',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
                 paddingTop: '20px',
-                paddingBottom: '40px'
+                paddingBottom: '40px',
+                color: '#2d8659'
               }}>
                 <h1 style={{
                   fontSize: 'clamp(28px, 3vw, 42px)',
@@ -8932,17 +8936,61 @@ export default function App() {
                   color: '#2d8659',
                   marginBottom: 'clamp(20px, 3vh, 30px)',
                   letterSpacing: '1.5px',
-                  textTransform: 'uppercase'
+                  textTransform: 'uppercase',
+                  textAlign: 'center'
                 }}>
                   MAJOR CLIENTS
                 </h1>
-                <p style={{
-                  fontSize: 'clamp(16px, 1.8vw, 22px)',
-                  lineHeight: '1.8',
-                  color: '#2d8659'
+
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
+                  gap: 'clamp(18px, 2vw, 28px)',
+                  width: '100%',
+                  maxWidth: '1100px',
+                  padding: 'clamp(16px, 2vw, 28px)',
+                  justifyItems: 'center'
                 }}>
-                  Explore our portfolio of successful environmental projects and initiatives.
-                </p>
+                  {[
+                    'client-logo-011677925020-removebg-preview.png',
+                    'Screenshot_2026-02-26_113432-removebg-preview.png',
+                    'Screenshot_2026-02-26_113503-removebg-preview.png',
+                    'Screenshot_2026-02-26_113525-removebg-preview.png',
+                    'Screenshot_2026-02-26_113541-removebg-preview.png',
+                    'Screenshot_2026-02-26_113554-removebg-preview.png',
+                    'Screenshot_2026-02-26_113618-removebg-preview.png',
+                    'Screenshot_2026-02-26_113629-removebg-preview.png',
+                    'Screenshot_2026-02-26_113641-removebg-preview.png',
+                    'Screenshot_2026-02-26_113655-removebg-preview.png',
+                    'Screenshot_2026-02-26_113706-removebg-preview.png',
+                    'Screenshot_2026-02-26_114242-removebg-preview.png'
+                  ].map((logoName, index) => (
+                    <div
+                      key={logoName + index}
+                      style={{
+                        width: '100%',
+                        background: 'transparent',
+                        borderRadius: '8px',
+                        padding: 'clamp(14px, 1.6vw, 20px)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: 'none'
+                      }}
+                    >
+                      <img
+                        src={`/tlcomajorclients/${logoName}`}
+                        alt={`TLCO major client ${index + 1}`}
+                        style={{
+                          width: '100%',
+                          height: 'auto',
+                          maxHeight: 'clamp(130px, 18vh, 180px)',
+                          objectFit: 'contain'
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 
@@ -9541,6 +9589,7 @@ export default function App() {
               </div>
             )}
           </div>
+
 
           {/* Back button - text only */}
           <button
@@ -12164,19 +12213,19 @@ export default function App() {
             {gulfConsult2ActiveTab === 'tab3' && (
               <div style={{
                 width: '100%',
-                maxWidth: '1200px',
+                maxWidth: '1400px',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center',
-                padding: 'clamp(5px, 1vh, 10px)',
+                justifyContent: 'flex-start',
+                padding: 'clamp(6px, 1.5vh, 12px)',
                 boxSizing: 'border-box'
               }}>
                 <h1 style={{
-                  fontSize: 'clamp(18px, 2vw, 28px)',
+                  fontSize: 'clamp(16px, 1.8vw, 24px)',
                   fontWeight: '900',
                   color: '#ffffff',
-                  marginBottom: 'clamp(10px, 1.5vh, 15px)',
+                  marginBottom: 'clamp(6px, 1vh, 10px)',
                   letterSpacing: '1.5px',
                   textTransform: 'uppercase',
                   textAlign: 'center',
@@ -12185,286 +12234,84 @@ export default function App() {
                   MAJOR CLIENTS
                 </h1>
                 
-                {/* Partners Grid */}
+                {/* Major Clients Grid */}
                 <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 'clamp(8px, 1vh, 12px)',
-                  width: '100%',
-                  maxWidth: '1000px',
-                  alignItems: 'center',
-                  flex: 1,
-                  justifyContent: 'center'
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))',
+                  gap: 'clamp(12px, 1.2vw, 18px)',
+                  width: 'min(94vw, 1380px)',
+                  marginBottom: 'clamp(8px, 2vh, 16px)',
+                  padding: 'clamp(8px, 1.2vw, 16px)',
+                  justifyItems: 'center',
+                  alignItems: 'center'
                 }}>
-                  {/* Row 1: 3 logos */}
-                  <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(3, 1fr)',
-                    gap: 'clamp(8px, 1.5vw, 15px)',
-                    width: '100%'
-                  }}>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '10px',
-                    background: 'transparent',
-                    transition: 'all 0.3s ease',
-                    cursor: 'pointer'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                  }}
-                  >
-                    <img
-                      src="/Group 61.png"
-                      alt="Al-Watania Poultry"
+                  {[
+                    'client-logo-011677925020-removebg-preview.png',
+                    'client-logo-021677925040-removebg-preview.png',
+                    'client-logo-031677925052-removebg-preview.png',
+                    'client-logo-051677925080-removebg-preview.png',
+                    'client-logo-061677925092-removebg-preview.png',
+                    'client-logo-071677925107-removebg-preview.png',
+                    'client-logo-081677925121-removebg-preview.png',
+                    'client-logo-091677925161-removebg-preview.png',
+                    'client-logo-101677925175-removebg-preview.png',
+                    'client-logo-111677925191-removebg-preview.png',
+                    'client-logo-121677925204-removebg-preview.png',
+                    'client-logo-131677925217-removebg-preview.png',
+                    'client-logo-141677925235-removebg-preview.png',
+                    'client-logo-151677925253-removebg-preview.png',
+                    'client-logo-161677925271-removebg-preview.png',
+                    'client-logo-171677925301-removebg-preview.png',
+                    'client-logo-181677925314-removebg-preview.png',
+                    'client-logo-191677925326-removebg-preview.png',
+                    'client-logo-201677925344-removebg-preview.png',
+                    'client-logo-211677925363-removebg-preview.png',
+                    'client-logo-221677925375-removebg-preview.png',
+                    'client-logo-231677925395-removebg-preview.png',
+                    'client-logo-241677925410-removebg-preview.png',
+                    'client-logo-251677925424-removebg-preview.png',
+                    'client-logo-261677925437-removebg-preview.png',
+                    'client-logo-271677925451-removebg-preview.png'
+                  ].map((logoName, index) => (
+                    <div
+                      key={logoName}
                       style={{
-                        width: 'clamp(100px, 12vw, 140px)',
-                        height: 'auto',
-                        maxHeight: 'clamp(100px, 12vw, 140px)',
-                        objectFit: 'contain'
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: 'clamp(6px, 0.7vw, 10px)',
+                        background: 'rgba(0, 0, 0, 0.15)',
+                        borderRadius: '10px',
+                        transition: 'all 0.3s ease',
+                        cursor: 'pointer',
+                        minHeight: '120px'
                       }}
-                    />
-                  </div>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '10px',
-                    background: 'transparent',
-                    transition: 'all 0.3s ease',
-                    cursor: 'pointer'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                  }}
-                  >
-                    <img
-                      src="/Group 60.png"
-                      alt="United Global Contractors"
-                      style={{
-                        width: 'clamp(100px, 12vw, 140px)',
-                        height: 'auto',
-                        maxHeight: 'clamp(100px, 12vw, 140px)',
-                        objectFit: 'contain'
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.06)';
+                        e.currentTarget.style.background = 'rgba(0, 0, 0, 0.25)';
                       }}
-                    />
-                  </div>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '10px',
-                    background: 'transparent',
-                    transition: 'all 0.3s ease',
-                    cursor: 'pointer'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                  }}
-                  >
-                    <img
-                      src="/Group 59.png"
-                      alt="HUTA HEGERFELD"
-                      style={{
-                        width: 'clamp(100px, 12vw, 140px)',
-                        height: 'auto',
-                        maxHeight: 'clamp(100px, 12vw, 140px)',
-                        objectFit: 'contain'
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.background = 'rgba(0, 0, 0, 0.15)';
                       }}
-                    />
-                  </div>
-                  </div>
-                  
-                  {/* Row 2: 3 logos */}
-                  <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(3, 1fr)',
-                    gap: 'clamp(8px, 1.5vw, 15px)',
-                    width: '100%'
-                  }}>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '10px',
-                    background: 'transparent',
-                    transition: 'all 0.3s ease',
-                    cursor: 'pointer'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                  }}
-                  >
-                    <img
-                      src="/Group 58.png"
-                      alt="Saudi Aramco"
-                      style={{
-                        width: 'clamp(100px, 12vw, 140px)',
-                        height: 'auto',
-                        maxHeight: 'clamp(100px, 12vw, 140px)',
-                        objectFit: 'contain'
-                      }}
-                    />
-                  </div>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '10px',
-                    background: 'transparent',
-                    transition: 'all 0.3s ease',
-                    cursor: 'pointer'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                  }}
-                  >
-                    <img
-                      src="/Group 57.png"
-                      alt="ARCHIRODON"
-                      style={{
-                        width: 'clamp(100px, 12vw, 140px)',
-                        height: 'auto',
-                        maxHeight: 'clamp(100px, 12vw, 140px)',
-                        objectFit: 'contain'
-                      }}
-                    />
-                  </div>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '10px',
-                    background: 'transparent',
-                    transition: 'all 0.3s ease',
-                    cursor: 'pointer'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                  }}
-                  >
-                    <img
-                      src="/Group 56.png"
-                      alt="C.A.T. GROUP"
-                      style={{
-                        width: 'clamp(100px, 12vw, 140px)',
-                        height: 'auto',
-                        maxHeight: 'clamp(100px, 12vw, 140px)',
-                        objectFit: 'contain'
-                      }}
-                    />
-                  </div>
-                  </div>
-                  
-                  {/* Row 3: 3 logos */}
-                  <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(3, 1fr)',
-                    gap: 'clamp(8px, 1.5vw, 15px)',
-                    width: '100%'
-                  }}>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '10px',
-                    background: 'transparent',
-                    transition: 'all 0.3s ease',
-                    cursor: 'pointer'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                  }}
-                  >
-                    <img
-                      src="/Group 55.png"
-                      alt="KBR"
-                      style={{
-                        width: 'clamp(100px, 12vw, 140px)',
-                        height: 'auto',
-                        maxHeight: 'clamp(100px, 12vw, 140px)',
-                        objectFit: 'contain'
-                      }}
-                    />
-                  </div>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '10px',
-                    background: 'transparent',
-                    transition: 'all 0.3s ease',
-                    cursor: 'pointer'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                  }}
-                  >
-                    <img
-                      src="/Group 54.png"
-                      alt="Samsung Engineering"
-                      style={{
-                        width: 'clamp(100px, 12vw, 140px)',
-                        height: 'auto',
-                        maxHeight: 'clamp(100px, 12vw, 140px)',
-                        objectFit: 'contain'
-                      }}
-                    />
-                  </div>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '10px',
-                    background: 'transparent',
-                    transition: 'all 0.3s ease',
-                    cursor: 'pointer'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                  }}
-                  >
-                    <img
-                      src="/Group 53.png"
-                      alt="Saudi Electricity Company"
-                      style={{
-                        width: 'clamp(100px, 12vw, 140px)',
-                        height: 'auto',
-                        maxHeight: 'clamp(100px, 12vw, 140px)',
-                        objectFit: 'contain'
-                      }}
-                    />
-                  </div>
-                  </div>
+                    >
+                      <img
+                        src={`/gulfconsultmajerclients/${logoName}`}
+                        alt={`Major client ${index + 1}`}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          maxWidth: '190px',
+                          maxHeight: '120px',
+                          objectFit: 'contain',
+                          filter: 'brightness(1.05) contrast(1.05)'
+                        }}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
@@ -12490,17 +12337,139 @@ export default function App() {
                 }}>
                   GALLERY
                 </h1>
-                <p style={{
-                  fontSize: 'clamp(16px, 1.5vw, 20px)',
-                  lineHeight: '1.8',
-                  color: '#ffffff',
-                  textAlign: 'center'
-                }}>
-                  Gallery content will be displayed here.
-                </p>
+
+                {/* Gulf Consult 2 Gallery Video (thumbnail that opens fullscreen) */}
+                <div
+                  onClick={() => setGulfConsult2GalleryPlaying(true)}
+                  style={{
+                    width: '100%',
+                    maxWidth: '900px',
+                    aspectRatio: '16/9',
+                    position: 'relative',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.25)',
+                    background: '#000',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.02)';
+                    e.currentTarget.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.35)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.25)';
+                  }}
+                >
+                  <video
+                    src="https://res.cloudinary.com/dl2rqs0lo/video/upload/q_auto,f_auto/Gulf_Consult_luuscu.mp4"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      pointerEvents: 'none',
+                      display: 'block'
+                    }}
+                    muted
+                    playsInline
+                    preload="metadata"
+                    title="Gulf Consult Gallery Video"
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      width: '80px',
+                      height: '80px',
+                      borderRadius: '50%',
+                      background: 'rgba(33, 150, 243, 0.9)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      zIndex: 10
+                    }}
+                  >
+                    <svg
+                      width="40"
+                      height="40"
+                      viewBox="0 0 24 24"
+                      fill="white"
+                      style={{ marginLeft: '4px' }}
+                    >
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                </div>
               </div>
             )}
           </div>
+
+          {/* Gulf Consult 2 Gallery fullscreen video overlay */}
+          {gulfConsult2GalleryPlaying && (
+            <div
+              style={{
+                position: 'fixed',
+                inset: 0,
+                zIndex: 2100,
+                backgroundColor: '#000000',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <video
+                src="https://res.cloudinary.com/dl2rqs0lo/video/upload/q_auto,f_auto/Gulf_Consult_luuscu.mp4"
+                autoPlay
+                controls
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  maxWidth: '100vw',
+                  maxHeight: '100vh',
+                  objectFit: 'contain'
+                }}
+                onEnded={() => {
+                  setGulfConsult2GalleryPlaying(false);
+                  setShowGulfConsult2LearnMore(false);
+                }}
+                title="Gulf Consult Gallery Video"
+              />
+              <button
+                onClick={() => setGulfConsult2GalleryPlaying(false)}
+                style={{
+                  position: 'absolute',
+                  top: '20px',
+                  right: '20px',
+                  width: '50px',
+                  height: '50px',
+                  borderRadius: '50%',
+                  background: 'rgba(0, 0, 0, 0.7)',
+                  border: 'none',
+                  color: '#ffffff',
+                  fontSize: '24px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(33, 150, 243, 0.9)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(0, 0, 0, 0.7)';
+                }}
+              >
+                ✕
+              </button>
+            </div>
+          )}
+
           <button
             onClick={() => setShowGulfConsult2LearnMore(false)}
             style={{
@@ -12883,9 +12852,12 @@ export default function App() {
               <div style={{
                 width: '100%',
                 maxWidth: '1200px',
-                textAlign: 'center',
-                color: '#07373c',
-                padding: '20px'
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '20px',
+                color: '#07373c'
               }}>
                 <h1 style={{
                   fontSize: 'clamp(24px, 2.5vw, 36px)',
@@ -12897,13 +12869,52 @@ export default function App() {
                 }}>
                   OUR PARTNERS
                 </h1>
-                <p style={{
-                  fontSize: 'clamp(16px, 1.5vw, 20px)',
-                  lineHeight: '1.8',
-                  color: '#07373c'
+                
+                {/* Partner Logos (moved from Major Clients) */}
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  gap: 'clamp(30px, 5vw, 60px)',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                  marginTop: '20px',
+                  marginBottom: '40px'
                 }}>
-                  Our partners showcase our expertise in geophysical, geological, environmental, and engineering solutions across various industries.
-                </p>
+                  <img
+                    src="/gcgpartner3 (3).png"
+                    alt="GCG Partner"
+                    style={{
+                      width: 'clamp(200px, 20vw, 280px)',
+                      height: 'auto',
+                      maxHeight: '200px',
+                      objectFit: 'contain',
+                      filter: 'drop-shadow(0 4px 15px rgba(0, 0, 0, 0.2))'
+                    }}
+                  />
+                  <img
+                    src="/gcgpartner3 (2).png"
+                    alt="GeoPRO Partner"
+                    style={{
+                      width: 'clamp(200px, 20vw, 280px)',
+                      height: 'auto',
+                      maxHeight: '200px',
+                      objectFit: 'contain',
+                      filter: 'drop-shadow(0 4px 15px rgba(0, 0, 0, 0.2))'
+                    }}
+                  />
+                  <img
+                    src="/gcgpartner3 (1).png"
+                    alt="DMT Partner"
+                    style={{
+                      width: 'clamp(200px, 20vw, 280px)',
+                      height: 'auto',
+                      maxHeight: '200px',
+                      objectFit: 'contain',
+                      filter: 'drop-shadow(0 4px 15px rgba(0, 0, 0, 0.2))'
+                    }}
+                  />
+                </div>
               </div>
             )}
 
@@ -12949,59 +12960,22 @@ export default function App() {
                   fontSize: 'clamp(24px, 2.5vw, 36px)',
                   fontWeight: '900',
                   color: '#07373c',
-                  marginBottom: '60px',
+                  marginBottom: '30px',
                   letterSpacing: '1.5px',
                   textTransform: 'uppercase',
                   textAlign: 'center'
                 }}>
                   MAJOR CLIENTS
                 </h1>
-                
-                {/* Partner Logos */}
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  gap: 'clamp(30px, 5vw, 60px)',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flexWrap: 'wrap',
-                  marginTop: '20px',
-                  marginBottom: '40px'
+                <p style={{
+                  fontSize: 'clamp(16px, 1.5vw, 20px)',
+                  lineHeight: '1.8',
+                  color: '#07373c',
+                  textAlign: 'center',
+                  maxWidth: '900px'
                 }}>
-                  <img
-                    src="/gcgpartner3 (3).png"
-                    alt="GCG Partner"
-                    style={{
-                      width: 'clamp(200px, 20vw, 280px)',
-                      height: 'auto',
-                      maxHeight: '200px',
-                      objectFit: 'contain',
-                      filter: 'drop-shadow(0 4px 15px rgba(0, 0, 0, 0.2))'
-                    }}
-                  />
-                  <img
-                    src="/gcgpartner3 (2).png"
-                    alt="GeoPRO Partner"
-                    style={{
-                      width: 'clamp(200px, 20vw, 280px)',
-                      height: 'auto',
-                      maxHeight: '200px',
-                      objectFit: 'contain',
-                      filter: 'drop-shadow(0 4px 15px rgba(0, 0, 0, 0.2))'
-                    }}
-                  />
-                  <img
-                    src="/gcgpartner3 (1).png"
-                    alt="DMT Partner"
-                    style={{
-                      width: 'clamp(200px, 20vw, 280px)',
-                      height: 'auto',
-                      maxHeight: '200px',
-                      objectFit: 'contain',
-                      filter: 'drop-shadow(0 4px 15px rgba(0, 0, 0, 0.2))'
-                    }}
-                  />
-                </div>
+                  Our major clients span government agencies, leading industrial companies, and international firms who rely on GSG for precise subsurface investigations and environmental assessments.
+                </p>
               </div>
             )}
 
@@ -14944,14 +14918,56 @@ export default function App() {
                 }}>
                   MAJOR CLIENTS
                 </h2>
-                <p style={{
-                  fontSize: 'clamp(16px, 1.5vw, 20px)',
-                  lineHeight: '1.8',
-                  color: '#000000',
-                  textAlign: 'center'
+
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
+                  gap: 'clamp(18px, 2vw, 28px)',
+                  width: '100%',
+                  maxWidth: '1100px',
+                  padding: 'clamp(16px, 2vw, 28px)',
+                  justifyItems: 'center'
                 }}>
-                  Major clients information will be displayed here.
-                </p>
+                  {[
+                    'Audi-145x75-removebg-preview.png',
+                    'Bentley-145x75-removebg-preview (1).png',
+                    'BMW-145x75-removebg-preview.png',
+                    'Ferrari-145x75-removebg-preview.png',
+                    'Land-Rover-145x75-removebg-preview.png',
+                    'Maserati-145x75-removebg-preview.png',
+                    'Maybach-145x75-removebg-preview.png',
+                    'Mercedes-145x75-removebg-preview.png',
+                    'Mini-145x75__1_-removebg-preview.png',
+                    'Porsche-145x75-removebg-preview.png',
+                    'Rolls-Royce-1-145x75-removebg-preview.png',
+                    'VW-145x75-removebg-preview.png'
+                  ].map((logoName, index) => (
+                    <div
+                      key={logoName + index}
+                      style={{
+                        width: '100%',
+                        background: 'transparent',
+                        borderRadius: '8px',
+                        padding: 'clamp(14px, 1.6vw, 20px)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: 'none'
+                      }}
+                    >
+                      <img
+                        src={`/gtamajorclients/${logoName}`}
+                        alt={`GTA major client ${index + 1}`}
+                        style={{
+                          width: '100%',
+                          height: 'auto',
+                          maxHeight: 'clamp(130px, 18vh, 180px)',
+                          objectFit: 'contain'
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 
