@@ -2493,37 +2493,6 @@ export default function App() {
                         eyad.matar@amt-arabia.net
                       </span>
                     </div>
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px'
-                      }}
-                    >
-                      <strong style={{ minWidth: '110px', fontWeight: 800 }}>Website:</strong>{' '}
-                      <a
-                        href="https://amt-arabia.net/en"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          color: '#0b6fbf',
-                          textDecoration: 'none',
-                          fontWeight: 700,
-                          cursor: 'pointer',
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.textDecoration = 'underline';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.textDecoration = 'none';
-                        }}
-                      >
-                        www.amt-arabia.net
-                      </a>
-                  </div>
                 </div>
 
                   {/* AMT Internal Image with Play Video overlay - aligned to the right of the text */}
@@ -2630,18 +2599,93 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Bottom row: Learn More + QR Code */}
+                {/* Bottom row: Buttons + QR Code */}
                 <div
                   style={{
                     display: 'flex',
                     justifyContent: 'space-between',
-                    alignItems: 'center',
-                    gap: 'clamp(16px, 2vw, 28px)',
+                    alignItems: 'flex-start',
+                    gap: 'clamp(20px, 3vw, 35px)',
                     marginTop: 'clamp(8px, 1.6vh, 16px)',
                     paddingBottom: 'clamp(10px, 2vh, 20px)',
                     animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 540ms both'
                   }}
                 >
+                  {/* Buttons Container - Visit Website, Our Services, and Learn More */}
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 'clamp(12px, 1.5vh, 18px)',
+                    animation: 'fadeInUp 0.8s ease-out 0.7s both'
+                  }}>
+                    {/* Visit Website Button */}
+                    <button
+                      onClick={() => window.open('https://amt-arabia.net/en', '_blank', 'noopener,noreferrer')}
+                      style={{
+                        padding: 'clamp(10px, 1.2vw, 14px) clamp(26px, 2.6vw, 34px)',
+                        fontSize: 'clamp(13px, 1.3vw, 17px)',
+                        fontWeight: 700,
+                        color: '#0b0b0b',
+                        background: '#ffeded',
+                        border: '1px solid #ff4b4b',
+                        borderRadius: '999px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 14px rgba(255, 75, 75, 0.4)',
+                        transition: 'all 0.25s ease',
+                        letterSpacing: '0.6px',
+                        textTransform: 'uppercase',
+                        minWidth: 'clamp(200px, 20vw, 280px)',
+                        width: 'clamp(200px, 20vw, 280px)',
+                        alignSelf: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 18px rgba(255, 75, 75, 0.55)';
+                        e.currentTarget.style.background = '#ffffff';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 14px rgba(255, 75, 75, 0.4)';
+                        e.currentTarget.style.background = '#ffeded';
+                      }}
+                    >
+                      Visit Website
+                    </button>
+                    
+                    {/* Our Services Button */}
+                    <button
+                      onClick={() => window.open('https://amt-arabia.net/en/solution-details', '_blank', 'noopener,noreferrer')}
+                      style={{
+                        padding: 'clamp(10px, 1.2vw, 14px) clamp(26px, 2.6vw, 34px)',
+                        fontSize: 'clamp(13px, 1.3vw, 17px)',
+                        fontWeight: 700,
+                        color: '#0b0b0b',
+                        background: '#ffeded',
+                        border: '1px solid #ff4b4b',
+                        borderRadius: '999px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 14px rgba(255, 75, 75, 0.4)',
+                        transition: 'all 0.25s ease',
+                        letterSpacing: '0.6px',
+                        textTransform: 'uppercase',
+                        minWidth: 'clamp(200px, 20vw, 280px)',
+                        width: 'clamp(200px, 20vw, 280px)',
+                        alignSelf: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 18px rgba(255, 75, 75, 0.55)';
+                        e.currentTarget.style.background = '#ffffff';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 14px rgba(255, 75, 75, 0.4)';
+                        e.currentTarget.style.background = '#ffeded';
+                      }}
+                    >
+                      Our Services
+                    </button>
+                    
                   {/* Learn More Button */}
                   <button
                     onClick={() => setShowAMTLearnMore(true)}
@@ -2657,7 +2701,10 @@ export default function App() {
                       boxShadow: '0 4px 14px rgba(255, 75, 75, 0.4)',
                       transition: 'all 0.25s ease',
                       letterSpacing: '0.6px',
-                      textTransform: 'uppercase'
+                        textTransform: 'uppercase',
+                        minWidth: 'clamp(200px, 20vw, 280px)',
+                        width: 'clamp(200px, 20vw, 280px)',
+                        alignSelf: 'flex-start'
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = 'translateY(-2px)';
@@ -2672,8 +2719,9 @@ export default function App() {
                   >
                     Learn More
                   </button>
+                  </div>
                   
-                  {/* QR Code at bottom, opposite Learn More */}
+                  {/* QR Code at bottom, next to buttons */}
                   <div
                     style={{
                       animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 580ms both',
@@ -2950,27 +2998,6 @@ export default function App() {
                     <span style={{ whiteSpace: 'nowrap' }}>
                       <strong style={{ fontWeight: 800 }}>Email:</strong> bassam.almasri@idc-arabia.com
                     </span>
-                    <span style={{ whiteSpace: 'nowrap' }}>
-                      <strong style={{ fontWeight: 800 }}>Website:</strong>{' '}
-                      <a 
-                        href="https://idc-arabia.com/ar/" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        style={{ 
-                          color: '#0b6fbf',
-                          textDecoration: 'none',
-                          cursor: 'pointer'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.textDecoration = 'underline';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.textDecoration = 'none';
-                        }}
-                      >
-                        www.idc-arabia.com
-                      </a>
-                    </span>
                   </div>
 
                   {/* IDC Internal Image with Play Video overlay (next to info, height matches contact info) */}
@@ -3080,21 +3107,98 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Bottom row: Learn More + QR Code (mirrors AMT layout, video is above) */}
+                {/* Bottom row: All three buttons + QR Code */}
                 <div
                   style={{
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     gap: 'clamp(16px, 2vw, 28px)',
-                    marginTop: 'clamp(16px, 2.2vh, 24px)'
+                    marginTop: 'clamp(24px, 3vh, 36px)',
+                    flexWrap: 'wrap'
                   }}
                 >
+                  {/* Buttons Container - All three buttons */}
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 'clamp(12px, 1.5vh, 18px)',
+                    animation: 'fadeInUp 0.8s ease-out 0.7s both',
+                    flex: 1
+                  }}>
+                    {/* Visit Website Button */}
+                    <button
+                      onClick={() => window.open('https://idc-arabia.com/ar/', '_blank', 'noopener,noreferrer')}
+                      style={{
+                        padding: 'var(--idc-button-padding, clamp(14px, 1.6vw, 22px) clamp(32px, 3.2vw, 48px))',
+                        fontSize: 'var(--idc-button-font, clamp(15px, 1.6vw, 22px))',
+                        fontWeight: 700,
+                        color: '#ffffff',
+                        background: '#0b6fbf',
+                        border: 'none',
+                        borderRadius: '999px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 15px rgba(11, 111, 191, 0.4)',
+                        transition: 'all 0.3s ease',
+                        letterSpacing: '0.5px',
+                        textTransform: 'uppercase',
+                        minWidth: 'clamp(200px, 20vw, 280px)',
+                        width: 'clamp(200px, 20vw, 280px)',
+                        alignSelf: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(11, 111, 191, 0.5)';
+                        e.currentTarget.style.background = '#0d7fd4';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(11, 111, 191, 0.4)';
+                        e.currentTarget.style.background = '#0b6fbf';
+                  }}
+                >
+                      Visit Website
+                    </button>
+                    
+                    {/* Our Services Button */}
+                    <button
+                      onClick={() => window.open('https://idc-arabia.com/ar/%d8%a7%d9%84%d8%b1%d8%a6%d9%8a%d8%b3%d9%8a%d8%a9/#SERVICES', '_blank', 'noopener,noreferrer')}
+                      style={{
+                        padding: 'var(--idc-button-padding, clamp(14px, 1.6vw, 22px) clamp(32px, 3.2vw, 48px))',
+                        fontSize: 'var(--idc-button-font, clamp(15px, 1.6vw, 22px))',
+                        fontWeight: 700,
+                        color: '#ffffff',
+                        background: '#0b6fbf',
+                        border: 'none',
+                        borderRadius: '999px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 15px rgba(11, 111, 191, 0.4)',
+                        transition: 'all 0.3s ease',
+                        letterSpacing: '0.5px',
+                        textTransform: 'uppercase',
+                        minWidth: 'clamp(200px, 20vw, 280px)',
+                        width: 'clamp(200px, 20vw, 280px)',
+                        alignSelf: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(11, 111, 191, 0.5)';
+                        e.currentTarget.style.background = '#0d7fd4';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(11, 111, 191, 0.4)';
+                        e.currentTarget.style.background = '#0b6fbf';
+                      }}
+                    >
+                      Our Services
+                    </button>
+                    
+                    {/* Learn More Button */}
                 <button
                   onClick={() => setShowIDCLearnMore(true)}
                   style={{
-                      padding:
-                        'var(--idc-button-padding, clamp(14px, 1.6vw, 22px) clamp(32px, 3.2vw, 48px))',
+                        padding: 'var(--idc-button-padding, clamp(14px, 1.6vw, 22px) clamp(32px, 3.2vw, 48px))',
                     fontSize: 'var(--idc-button-font, clamp(15px, 1.6vw, 22px))',
                       fontWeight: 700,
                     color: '#ffffff',
@@ -3106,23 +3210,25 @@ export default function App() {
                     transition: 'all 0.3s ease',
                     letterSpacing: '0.5px',
                     textTransform: 'uppercase',
-                    animation: 'fadeInUp 0.8s ease-out 0.8s both'
+                        animation: 'fadeInUp 0.8s ease-out 0.8s both',
+                        minWidth: 'clamp(200px, 20vw, 280px)',
+                        width: 'clamp(200px, 20vw, 280px)',
+                        alignSelf: 'flex-start'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-2px)';
-                      e.currentTarget.style.boxShadow =
-                        '0 6px 20px rgba(11, 111, 191, 0.5)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(11, 111, 191, 0.5)';
                     e.currentTarget.style.background = '#0d7fd4';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow =
-                        '0 4px 15px rgba(11, 111, 191, 0.4)';
+                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(11, 111, 191, 0.4)';
                     e.currentTarget.style.background = '#0b6fbf';
                   }}
                 >
                   Learn More
                 </button>
+                  </div>
 
                 <div
                   style={{
@@ -4869,30 +4975,6 @@ export default function App() {
                         abdullah@gc-eng.com
                       </span>
                     </div>
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px'
-                      }}
-                    >
-                      <strong style={{ minWidth: '110px', fontWeight: 800 }}>Website:</strong>
-                      <a
-                        href="https://www.gc-eng.com"
-                        target="_blank"
-                        rel="noreferrer"
-                        style={{
-                          color: '#16348a',
-                          textDecoration: 'underline',
-                          fontWeight: 700,
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis'
-                        }}
-                      >
-                        gc-eng.com
-                      </a>
-                    </div>
                   </div>
 
                   {/* Gulf Consult Internal Image with Play Video overlay */}
@@ -4999,19 +5081,94 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Bottom row: Learn More + QR Code */}
+                {/* Bottom row: Buttons + QR Code */}
                 <div
                   className="gulf-consult-learn-more-container"
                   style={{
                     display: 'flex',
                     justifyContent: 'space-between',
-                    alignItems: 'center',
-                    gap: 'clamp(16px, 2vw, 28px)',
+                    alignItems: 'flex-start',
+                    gap: 'clamp(20px, 3vw, 35px)',
                     marginTop: 'clamp(8px, 1.6vh, 16px)',
                     paddingBottom: 'clamp(10px, 2vh, 20px)',
                     animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 540ms both'
                   }}
                 >
+                  {/* Buttons Container - Visit Website, Our Services, and Learn More */}
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 'clamp(12px, 1.5vh, 18px)',
+                    animation: 'fadeInUp 0.8s ease-out 0.7s both'
+                  }}>
+                    {/* Visit Website Button */}
+                    <button
+                      onClick={() => window.open('https://www.gc-eng.com', '_blank', 'noopener,noreferrer')}
+                      style={{
+                        padding: 'clamp(10px, 1.2vw, 14px) clamp(26px, 2.6vw, 34px)',
+                        fontSize: 'clamp(13px, 1.3vw, 17px)',
+                        fontWeight: 700,
+                        color: '#ffffff',
+                        background: '#16348a',
+                        border: '1px solid #16348a',
+                        borderRadius: '999px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 14px rgba(22, 52, 138, 0.4)',
+                        transition: 'all 0.25s ease',
+                        letterSpacing: '0.6px',
+                        textTransform: 'uppercase',
+                        minWidth: 'clamp(200px, 20vw, 280px)',
+                        width: 'clamp(200px, 20vw, 280px)',
+                        alignSelf: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 18px rgba(22, 52, 138, 0.55)';
+                        e.currentTarget.style.background = '#1e42a5';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 14px rgba(22, 52, 138, 0.4)';
+                        e.currentTarget.style.background = '#16348a';
+                      }}
+                    >
+                      Visit Website
+                    </button>
+                    
+                    {/* Our Services Button - Opens services page */}
+                    <button
+                      onClick={() => window.open('https://gc-eng.com/civil.aspx', '_blank', 'noopener,noreferrer')}
+                      style={{
+                        padding: 'clamp(10px, 1.2vw, 14px) clamp(26px, 2.6vw, 34px)',
+                        fontSize: 'clamp(13px, 1.3vw, 17px)',
+                        fontWeight: 700,
+                        color: '#ffffff',
+                        background: '#16348a',
+                        border: '1px solid #16348a',
+                        borderRadius: '999px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 14px rgba(22, 52, 138, 0.4)',
+                        transition: 'all 0.25s ease',
+                        letterSpacing: '0.6px',
+                        textTransform: 'uppercase',
+                        minWidth: 'clamp(200px, 20vw, 280px)',
+                        width: 'clamp(200px, 20vw, 280px)',
+                        alignSelf: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 18px rgba(22, 52, 138, 0.55)';
+                        e.currentTarget.style.background = '#1e42a5';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 14px rgba(22, 52, 138, 0.4)';
+                        e.currentTarget.style.background = '#16348a';
+                      }}
+                    >
+                      Our Services
+                    </button>
+                    
                   {/* Learn More Button */}
                   <button
                     onClick={() => setShowGulfConsultLearnMore(true)}
@@ -5027,7 +5184,10 @@ export default function App() {
                       boxShadow: '0 4px 14px rgba(22, 52, 138, 0.4)',
                       transition: 'all 0.25s ease',
                       letterSpacing: '0.6px',
-                      textTransform: 'uppercase'
+                        textTransform: 'uppercase',
+                        minWidth: 'clamp(200px, 20vw, 280px)',
+                        width: 'clamp(200px, 20vw, 280px)',
+                        alignSelf: 'flex-start'
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = 'translateY(-2px)';
@@ -5042,8 +5202,9 @@ export default function App() {
                   >
                     Learn More
                   </button>
+                  </div>
                   
-                  {/* QR Code at bottom, opposite Learn More */}
+                  {/* QR Code at bottom, next to buttons */}
                   <div
                     style={{
                       animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 580ms both',
@@ -5944,53 +6105,98 @@ export default function App() {
                         tammam.hussein@yahoo.com
                       </span>
                     </div>
+                  </div>
+
                     <div
                       style={{
                         display: 'flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        fontSize: 'clamp(11px, 1.15vw, 15px)',
-                        color: '#1e293b',
-                        marginBottom: 'clamp(4px, 0.4vh, 8px)'
-                      }}
-                    >
-                      <strong style={{ minWidth: '65px', fontWeight: 800, color: '#000000' }}>Website:</strong>{' '}
-                      <a
-                        href="https://gtaksa.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          color: '#0b6fbf',
-                          textDecoration: 'none',
-                          fontWeight: 700,
-                          cursor: 'pointer',
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.textDecoration = 'underline';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.textDecoration = 'none';
-                        }}
-                      >
-                        www.gtaksa.com
-                      </a>
-                    </div>
-                  </div>
-
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
+                      alignItems: 'flex-start',
                       justifyContent: 'space-between',
-                      gap: 'clamp(14px, 1.6vw, 24px)',
+                      gap: 'clamp(20px, 3vw, 35px)',
                       animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 600ms both',
                       flexShrink: 0,
                       marginTop: 'clamp(24px, 2.5vh, 36px)'
+                      }}
+                    >
+                    {/* Buttons Container - Visit Website, Our Services, and Learn More */}
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 'clamp(12px, 1.5vh, 18px)',
+                      animation: 'fadeInUp 0.8s ease-out 0.7s both'
+                    }}>
+                      {/* Visit Website Button */}
+                      <button
+                        onClick={() => window.open('https://gtaksa.com/', '_blank', 'noopener,noreferrer')}
+                        style={{
+                          padding: 'clamp(10px, 1.1vw, 14px) clamp(18px, 2vw, 28px)',
+                          fontSize: 'clamp(12px, 1.25vw, 16px)',
+                          fontWeight: '700',
+                          color: '#ffffff',
+                          background: '#1f2937',
+                          border: '2px solid #dc2626',
+                          borderRadius: '6px',
+                          cursor: 'pointer',
+                          boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)',
+                          transition: 'all 0.3s ease',
+                          letterSpacing: '0.5px',
+                          textTransform: 'uppercase',
+                          display: 'block',
+                          whiteSpace: 'nowrap',
+                          minWidth: 'clamp(200px, 20vw, 280px)',
+                          width: 'clamp(200px, 20vw, 280px)',
+                          alignSelf: 'flex-start'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-2px)';
+                          e.currentTarget.style.boxShadow = '0 6px 20px rgba(220, 38, 38, 0.5)';
+                          e.currentTarget.style.background = '#374151';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.style.boxShadow = '0 4px 15px rgba(220, 38, 38, 0.3)';
+                          e.currentTarget.style.background = '#1f2937';
+                        }}
+                      >
+                        Visit Website
+                      </button>
+                      
+                      {/* Our Services Button */}
+                      <button
+                        onClick={() => window.open('https://gtaksa.com/our-services/', '_blank', 'noopener,noreferrer')}
+                    style={{
+                          padding: 'clamp(10px, 1.1vw, 14px) clamp(18px, 2vw, 28px)',
+                          fontSize: 'clamp(12px, 1.25vw, 16px)',
+                          fontWeight: '700',
+                          color: '#ffffff',
+                          background: '#1f2937',
+                          border: '2px solid #dc2626',
+                          borderRadius: '6px',
+                          cursor: 'pointer',
+                          boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)',
+                          transition: 'all 0.3s ease',
+                          letterSpacing: '0.5px',
+                          textTransform: 'uppercase',
+                          display: 'block',
+                          whiteSpace: 'nowrap',
+                          minWidth: 'clamp(200px, 20vw, 280px)',
+                          width: 'clamp(200px, 20vw, 280px)',
+                          alignSelf: 'flex-start'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-2px)';
+                          e.currentTarget.style.boxShadow = '0 6px 20px rgba(220, 38, 38, 0.5)';
+                          e.currentTarget.style.background = '#374151';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.style.boxShadow = '0 4px 15px rgba(220, 38, 38, 0.3)';
+                          e.currentTarget.style.background = '#1f2937';
                     }}
                   >
+                        Our Services
+                      </button>
+                      
                     {/* Learn More Button */}
                     <button
                       onClick={() => setShowGTALearnMore(true)}
@@ -6008,7 +6214,10 @@ export default function App() {
                         letterSpacing: '0.5px',
                         textTransform: 'uppercase',
                         display: 'block',
-                        whiteSpace: 'nowrap'
+                          whiteSpace: 'nowrap',
+                          minWidth: 'clamp(200px, 20vw, 280px)',
+                          width: 'clamp(200px, 20vw, 280px)',
+                          alignSelf: 'flex-start'
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.transform = 'translateY(-2px)';
@@ -6023,6 +6232,7 @@ export default function App() {
                     >
                       Learn More
                     </button>
+                    </div>
 
                     {/* QR Code */}
                     <div
@@ -6332,36 +6542,6 @@ export default function App() {
                       </strong>
                       <span>G.M@etlco.com.sa</span>
                     </div>
-                    <div>
-                      <strong
-                        style={{
-                          display: 'inline-block',
-                          width: 'clamp(110px, 11vw, 150px)',
-                          fontWeight: 800
-                        }}
-                      >
-                        Website:
-                      </strong>{' '}
-                      <a
-                        href="https://etlco.com.sa/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          color: '#0b6fbf',
-                          textDecoration: 'none',
-                          fontWeight: 700,
-                          cursor: 'pointer'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.textDecoration = 'underline';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.textDecoration = 'none';
-                        }}
-                      >
-                        www.etlco.com.sa
-                      </a>
-                    </div>
                   </div>
 
                   {/* TLCO Internal Image + QR (Right Column) */}
@@ -6485,21 +6665,98 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Bottom row: Learn More + QR Code (similar to IDC layout) */}
+                {/* Bottom row: All three buttons + QR Code */}
                 <div
                   style={{
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     gap: 'clamp(16px, 2vw, 28px)',
-                    marginTop: 'clamp(12px, 1.6vh, 20px)'
+                    marginTop: 'clamp(24px, 3vh, 36px)',
+                    flexWrap: 'wrap'
                   }}
                 >
+                  {/* Buttons Container - All three buttons */}
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 'clamp(12px, 1.5vh, 18px)',
+                    flex: 1,
+                    animation: 'fadeInUp 0.8s ease-out 0.7s both'
+                  }}>
+                    {/* Visit Website Button */}
+                    <button
+                      onClick={() => window.open('https://etlco.com.sa/', '_blank', 'noopener,noreferrer')}
+                      style={{
+                        padding: 'var(--tlco-button-padding, clamp(16px, 1.8vw, 24px) clamp(36px, 3.5vw, 48px))',
+                        fontSize: 'var(--tlco-button-font, clamp(16px, 1.8vw, 22px))',
+                        fontWeight: 700,
+                        color: '#ffffff',
+                        background: '#008c4a',
+                        border: 'none',
+                        borderRadius: '999px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 15px rgba(0, 140, 74, 0.3)',
+                        transition: 'all 0.3s ease',
+                        letterSpacing: '0.5px',
+                        textTransform: 'uppercase',
+                        minWidth: 'clamp(200px, 20vw, 280px)',
+                        width: 'clamp(200px, 20vw, 280px)',
+                        alignSelf: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 140, 74, 0.4)';
+                        e.currentTarget.style.background = '#00a055';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 140, 74, 0.3)';
+                        e.currentTarget.style.background = '#008c4a';
+                      }}
+                    >
+                      Visit Website
+                    </button>
+                    
+                    {/* Our Services Button */}
+                    <button
+                      onClick={() => window.open('https://etlco.com.sa/services', '_blank', 'noopener,noreferrer')}
+                      style={{
+                        padding: 'var(--tlco-button-padding, clamp(16px, 1.8vw, 24px) clamp(36px, 3.5vw, 48px))',
+                        fontSize: 'var(--tlco-button-font, clamp(16px, 1.8vw, 22px))',
+                        fontWeight: 700,
+                        color: '#ffffff',
+                        background: '#008c4a',
+                        border: 'none',
+                        borderRadius: '999px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 15px rgba(0, 140, 74, 0.3)',
+                        transition: 'all 0.3s ease',
+                        letterSpacing: '0.5px',
+                        textTransform: 'uppercase',
+                        minWidth: 'clamp(200px, 20vw, 280px)',
+                        width: 'clamp(200px, 20vw, 280px)',
+                        alignSelf: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 140, 74, 0.4)';
+                        e.currentTarget.style.background = '#00a055';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 140, 74, 0.3)';
+                        e.currentTarget.style.background = '#008c4a';
+                      }}
+                    >
+                      Our Services
+                    </button>
+                    
+                    {/* Learn More Button */}
                   <button
                     onClick={() => setShowPartners(true)}
                     style={{
-                      padding:
-                        'var(--tlco-button-padding, clamp(16px, 1.8vw, 24px) clamp(36px, 3.5vw, 48px))',
+                        padding: 'var(--tlco-button-padding, clamp(16px, 1.8vw, 24px) clamp(36px, 3.5vw, 48px))',
                       fontSize: 'var(--tlco-button-font, clamp(16px, 1.8vw, 22px))',
                       fontWeight: 700,
                       color: '#ffffff',
@@ -6511,24 +6768,27 @@ export default function App() {
                       transition: 'all 0.3s ease',
                       letterSpacing: '0.5px',
                       textTransform: 'uppercase',
-                      animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 540ms both'
+                        animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 540ms both',
+                        minWidth: 'clamp(200px, 20vw, 280px)',
+                        width: 'clamp(200px, 20vw, 280px)',
+                        alignSelf: 'flex-start'
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = 'translateY(-2px)';
-                      e.currentTarget.style.boxShadow =
-                        '0 6px 20px rgba(0, 140, 74, 0.4)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 140, 74, 0.4)';
                       e.currentTarget.style.background = '#00a055';
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow =
-                        '0 4px 15px rgba(0, 140, 74, 0.3)';
+                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 140, 74, 0.3)';
                       e.currentTarget.style.background = '#008c4a';
                     }}
                   >
                     Learn More
                   </button>
+                  </div>
 
+                  {/* QR Code - Right Side */}
                   <div
                     style={{
                       animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 580ms both',
@@ -6952,42 +7212,89 @@ export default function App() {
                         <span>rabah@gulfconsult.com</span>
                       </div>
                     </div>
+                    {/* Buttons Container - Visit Website, Our Services, and Learn More */}
                     <div style={{ 
                       display: 'flex', 
-                      alignItems: 'flex-start',
-                      flexWrap: 'wrap',
-                      gap: '4px'
+                      flexDirection: 'column',
+                      gap: 'clamp(12px, 1.5vh, 18px)',
+                      marginTop: 'clamp(16px, 2vh, 24px)',
+                      animation: 'fadeInUp 0.8s ease-out 0.7s both'
                     }}>
-                      <strong style={{ fontWeight: '800', flexShrink: 0 }}>Website:</strong>{' '}
-                      <a
-                        href="https://gs-geo.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      {/* Visit Website Button */}
+                      <button
+                        onClick={() => window.open('https://gs-geo.com/', '_blank', 'noopener,noreferrer')}
                         style={{
-                          color: '#0b6fbf',
-                          textDecoration: 'none',
+                          padding: 'clamp(8px, 0.9vw, 12px) clamp(16px, 1.8vw, 24px)',
+                          fontSize: 'clamp(11px, 1.2vw, 15px)',
                           fontWeight: 700,
-                          cursor: 'pointer'
+                          color: '#ffffff',
+                          background: '#00bcd4',
+                          border: 'none',
+                          borderRadius: '8px',
+                          cursor: 'pointer',
+                          boxShadow: '0 4px 15px rgba(0, 188, 212, 0.4)',
+                          transition: 'all 0.3s ease',
+                          letterSpacing: '0.3px',
+                          textTransform: 'uppercase',
+                          minWidth: 'clamp(140px, 15vw, 200px)',
+                          width: 'clamp(140px, 15vw, 200px)',
+                          alignSelf: 'flex-start'
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.textDecoration = 'underline';
+                          e.currentTarget.style.transform = 'translateY(-2px)';
+                          e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 188, 212, 0.5)';
+                          e.currentTarget.style.background = '#00d4e6';
                         }}
                         onMouseLeave={(e) => {
-                          e.currentTarget.style.textDecoration = 'none';
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 188, 212, 0.4)';
+                          e.currentTarget.style.background = '#00bcd4';
                         }}
                       >
-                        www.gs-geo.com
-                      </a>
-                    </div>
-
-                    {/* Learn More Button - Under Website */}
+                        Visit Website
+                      </button>
+                      
+                      {/* Our Services Button */}
+                      <button
+                        onClick={() => window.open('https://gs-geo.com/services/', '_blank', 'noopener,noreferrer')}
+                        style={{
+                          padding: 'clamp(8px, 0.9vw, 12px) clamp(16px, 1.8vw, 24px)',
+                          fontSize: 'clamp(11px, 1.2vw, 15px)',
+                          fontWeight: 700,
+                          color: '#ffffff',
+                          background: '#00bcd4',
+                          border: 'none',
+                          borderRadius: '8px',
+                          cursor: 'pointer',
+                          boxShadow: '0 4px 15px rgba(0, 188, 212, 0.4)',
+                          transition: 'all 0.3s ease',
+                          letterSpacing: '0.3px',
+                          textTransform: 'uppercase',
+                          minWidth: 'clamp(140px, 15vw, 200px)',
+                          width: 'clamp(140px, 15vw, 200px)',
+                          alignSelf: 'flex-start'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-2px)';
+                          e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 188, 212, 0.5)';
+                          e.currentTarget.style.background = '#00d4e6';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 188, 212, 0.4)';
+                          e.currentTarget.style.background = '#00bcd4';
+                        }}
+                      >
+                        Our Services
+                      </button>
+                      
+                      {/* Learn More Button */}
                     <button
                       onClick={() => setShowGSGLearnMore(true)}
                       style={{
-                        marginTop: 'clamp(8px, 1vh, 12px)',
-                        padding: 'clamp(14px, 1.6vw, 20px) clamp(32px, 3.2vw, 44px)',
-                        fontSize: 'clamp(15px, 1.6vw, 20px)',
-                        fontWeight: '700',
+                          padding: 'clamp(8px, 0.9vw, 12px) clamp(16px, 1.8vw, 24px)',
+                          fontSize: 'clamp(11px, 1.2vw, 15px)',
+                          fontWeight: 700,
                         color: '#ffffff',
                         background: '#00bcd4',
                         border: 'none',
@@ -6995,9 +7302,11 @@ export default function App() {
                         cursor: 'pointer',
                         boxShadow: '0 4px 15px rgba(0, 188, 212, 0.4)',
                         transition: 'all 0.3s ease',
-                        letterSpacing: '0.5px',
+                          letterSpacing: '0.3px',
                         textTransform: 'uppercase',
                         animation: 'fadeInUp 0.8s ease-out 0.8s both',
+                          minWidth: 'clamp(140px, 15vw, 200px)',
+                          width: 'clamp(140px, 15vw, 200px)',
                         alignSelf: 'flex-start'
                       }}
                       onMouseEnter={(e) => {
@@ -7013,6 +7322,7 @@ export default function App() {
                     >
                       Learn More
                     </button>
+                    </div>
                   </div>
 
                   {/* GSG Images and QR Code Container */}
@@ -7388,45 +7698,92 @@ export default function App() {
                         jafar.syouri@rk-arabia.com
                       </span>
                     </div>
-                    <div
-                      style={{
+                    
+                    {/* Buttons Container - Visit Website, Our Services, and Learn More */}
+                    <div style={{
                         display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: 'clamp(12px, 1.5vh, 18px)'
+                      flexDirection: 'column',
+                      gap: 'clamp(12px, 1.5vh, 18px)',
+                      marginTop: 'clamp(16px, 2vh, 24px)',
+                      animation: 'fadeInUp 0.8s ease-out 0.7s both'
+                    }}>
+                    {/* Visit Website Button */}
+                    <button
+                      onClick={() => window.open('https://www.rk-arabia.com/', '_blank', 'noopener,noreferrer')}
+                      style={{
+                        padding: 'clamp(8px, 1vw, 12px) clamp(16px, 2vw, 24px)',
+                        fontSize: 'clamp(11px, 1.1vw, 16px)',
+                        fontWeight: 700,
+                        color: '#F4A460',
+                        background: 'rgba(0, 0, 0, 0.75)',
+                        border: '2px solid #F4A460',
+                        borderRadius: '999px',
+                        cursor: 'pointer',
+                        boxShadow: '0 8px 25px rgba(0, 0, 0, 0.6)',
+                        transition: 'all 0.3s ease',
+                        letterSpacing: '0.5px',
+                        textTransform: 'uppercase',
+                        minWidth: 'clamp(200px, 20vw, 280px)',
+                        width: 'clamp(200px, 20vw, 280px)',
+                        alignSelf: 'flex-start',
+                        backdropFilter: 'blur(6px)'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.8)';
+                        e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.6)';
+                        e.currentTarget.style.background = 'rgba(0, 0, 0, 0.75)';
                       }}
                     >
-                      <strong style={{ minWidth: '85px', fontWeight: 800, flexShrink: 0 }}>Website:</strong>{' '}
-                      <a
-                        href="https://www.rk-arabia.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      Visit Website
+                    </button>
+                    
+                    {/* Our Services Button - Opens website with hash to scroll to services */}
+                    <button
+                      onClick={() => window.open('https://www.rk-arabia.com/#services', '_blank', 'noopener,noreferrer')}
                         style={{
-                          color: '#0b6fbf',
-                          textDecoration: 'none',
+                        padding: 'clamp(8px, 1vw, 12px) clamp(16px, 2vw, 24px)',
+                        fontSize: 'clamp(11px, 1.1vw, 16px)',
                           fontWeight: 700,
+                        color: '#F4A460',
+                        background: 'rgba(0, 0, 0, 0.75)',
+                        border: '2px solid #F4A460',
+                        borderRadius: '999px',
                           cursor: 'pointer',
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis'
+                        boxShadow: '0 8px 25px rgba(0, 0, 0, 0.6)',
+                        transition: 'all 0.3s ease',
+                        letterSpacing: '0.5px',
+                        textTransform: 'uppercase',
+                        minWidth: 'clamp(200px, 20vw, 280px)',
+                        width: 'clamp(200px, 20vw, 280px)',
+                        alignSelf: 'flex-start',
+                        backdropFilter: 'blur(6px)'
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.textDecoration = 'underline';
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.8)';
+                        e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)';
                         }}
                         onMouseLeave={(e) => {
-                          e.currentTarget.style.textDecoration = 'none';
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.6)';
+                        e.currentTarget.style.background = 'rgba(0, 0, 0, 0.75)';
                         }}
                       >
-                        www.rk-arabia.com
-                      </a>
-                    </div>
+                      Our Services
+                    </button>
+                    
                     {/* Learn More Button */}
                     <button
                       onClick={() => setShowRKLearnMore(true)}
                       style={{
                         padding: 'clamp(8px, 1vw, 12px) clamp(16px, 2vw, 24px)',
                         fontSize: 'clamp(11px, 1.1vw, 16px)',
-                        fontWeight: '700',
+                        fontWeight: 700,
                         color: '#F4A460',
                         background: 'rgba(0, 0, 0, 0.75)',
                         border: '2px solid #F4A460',
@@ -7437,17 +7794,10 @@ export default function App() {
                         letterSpacing: '0.5px',
                         textTransform: 'uppercase',
                         animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 540ms both',
-                        display: 'block',
-                        alignItems: 'center',
-                        gap: '10px',
-                        backdropFilter: 'blur(6px)',
-                        marginTop: 'clamp(4px, 0.6vh, 8px)',
-                        position: 'relative',
-                        zIndex: 15,
-                        visibility: 'visible',
-                        opacity: 1,
-                        width: 'auto',
-                        minWidth: 'fit-content'
+                        minWidth: 'clamp(200px, 20vw, 280px)',
+                        width: 'clamp(200px, 20vw, 280px)',
+                        alignSelf: 'flex-start',
+                        backdropFilter: 'blur(6px)'
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.transform = 'translateY(-2px)';
@@ -7462,6 +7812,7 @@ export default function App() {
                     >
                       Learn More
                     </button>
+                  </div>
                   </div>
 
                   {/* RK Internal Image */}
@@ -7690,13 +8041,13 @@ export default function App() {
                   right: 'clamp(40px, 4vw, 120px)',
                   transform: 'translateY(-50%)',
                   maxWidth: "var(--ah-content-max-width, clamp(520px, 46vw, 1000px))",
-                  maxHeight: '80vh',
+                  maxHeight: '95vh',
                   zIndex: 12,
                   color: '#0f172a',
                   direction: 'ltr',
                   textAlign: 'left',
                   padding: 'clamp(20px, 3vw, 48px)',
-                  overflow: 'hidden',
+                  overflow: 'visible',
                   boxSizing: 'border-box',
                   borderRadius: 'clamp(12px, 1.2vw, 20px)',
                   background: 'linear-gradient(to right, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.85) 60%, rgba(255,255,255,0.0) 100%)',
@@ -7729,7 +8080,7 @@ export default function App() {
                   style={{
                     fontSize: 'var(--ah-title-size, clamp(26px, 3.5vw, 44px))',
                     fontWeight: '900',
-                    marginBottom: '24px',
+                    marginBottom: 'clamp(12px, 1.5vh, 20px)',
                     letterSpacing: '1.4px',
                     color: '#0f172a',
                     textTransform: 'uppercase',
@@ -7743,8 +8094,8 @@ export default function App() {
                 <p
                   style={{
                     fontSize: 'var(--ah-text-size, clamp(13px, 1.5vw, 20px))',
-                    lineHeight: '1.8',
-                    marginBottom: '28px',
+                    lineHeight: '1.7',
+                    marginBottom: 'clamp(16px, 2vh, 24px)',
                     color: '#1e293b',
                     animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both'
                   }}
@@ -7755,9 +8106,10 @@ export default function App() {
                 <div
                   style={{
                     display: 'flex',
-                    gap: 'clamp(20px, 4vw, 50px)',
+                    gap: 'clamp(16px, 3vw, 40px)',
                     alignItems: 'flex-start',
-                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 420ms both'
+                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 420ms both',
+                    marginBottom: 'clamp(8px, 1vh, 12px)'
                   }}
                 >
                   {/* Contact Info (Left Column) */}
@@ -7769,7 +8121,7 @@ export default function App() {
                     flex: '1'
                   }}
                   >
-                    <div style={{ marginBottom: '18px' }}>
+                    <div style={{ marginBottom: 'clamp(10px, 1.2vh, 14px)' }}>
                       <strong
                         style={{
                           display: 'inline-block',
@@ -7782,7 +8134,7 @@ export default function App() {
                       </strong>
                       <span>Ennacer Besghaier.</span>
                     </div>
-                    <div style={{ marginBottom: '18px' }}>
+                    <div style={{ marginBottom: 'clamp(10px, 1.2vh, 14px)' }}>
                       <strong
                         style={{
                           display: 'inline-block',
@@ -7795,7 +8147,7 @@ export default function App() {
                       </strong>
                       <span>054 292 9702</span>
                     </div>
-                    <div style={{ marginBottom: '18px' }}>
+                    <div style={{ marginBottom: 'clamp(10px, 1.2vh, 14px)' }}>
                       <strong
                         style={{
                           display: 'inline-block',
@@ -7808,46 +8160,103 @@ export default function App() {
                       </strong>
                       <span>g.m@ahenviro.com</span>
                     </div>
-                    <div style={{ marginBottom: '0px' }}>
-                      <strong
+                  </div>
+                </div>
+
+                {/* Bottom row: All three buttons + QR Code */}
+                <div
                         style={{
-                          display: 'inline-block',
-                          width: 'clamp(110px, 11vw, 150px)',
-                          fontWeight: 800,
-                          color: '#0f172a'
-                        }}
-                      >
-                        Website:
-                      </strong>{' '}
-                      <a
-                        href="https://ahenviro.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    gap: 'clamp(16px, 2vw, 28px)',
+                    marginTop: 'clamp(24px, 3vh, 36px)',
+                    flexWrap: 'wrap'
+                  }}
+                >
+                  {/* Buttons Container - All three buttons */}
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 'clamp(12px, 1.5vh, 18px)',
+                    flex: 1,
+                    animation: 'fadeInUp 0.8s ease-out 0.7s both'
+                  }}>
+                    {/* Visit Website Button */}
+                    <button
+                      onClick={() => window.open('https://ahenviro.com/', '_blank', 'noopener,noreferrer')}
                         style={{
-                          color: '#0b6fbf',
-                          textDecoration: 'none',
-                          fontWeight: 700,
-                          cursor: 'pointer'
+                        padding: 'clamp(8px, 1vw, 20px) clamp(16px, 2vw, 40px)',
+                        fontSize: 'clamp(11px, 1.2vw, 24px)',
+                        fontWeight: 600,
+                        color: '#040075',
+                        background: '#ffffff',
+                        border: 'none',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+                        transition: 'all 0.3s ease',
+                        letterSpacing: '0.3px',
+                        textTransform: 'uppercase',
+                        minWidth: 'clamp(200px, 20vw, 280px)',
+                        width: 'clamp(200px, 20vw, 280px)',
+                        alignSelf: 'flex-start'
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.textDecoration = 'underline';
+                        e.currentTarget.style.transform = 'translateY(-1px)';
+                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
+                        e.currentTarget.style.background = '#f5f5f5';
                         }}
                         onMouseLeave={(e) => {
-                          e.currentTarget.style.textDecoration = 'none';
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.15)';
+                        e.currentTarget.style.background = '#ffffff';
                         }}
                       >
-                        www.ahenviro.com
-                      </a>
-                    </div>
+                      Visit Website
+                    </button>
+                    
+                    {/* Our Services Button */}
+                    <button
+                      onClick={() => window.open('https://ahenviro.com/services/', '_blank', 'noopener,noreferrer')}
+                      style={{
+                        padding: 'clamp(8px, 1vw, 20px) clamp(16px, 2vw, 40px)',
+                        fontSize: 'clamp(11px, 1.2vw, 24px)',
+                        fontWeight: 600,
+                        color: '#040075',
+                        background: '#ffffff',
+                        border: 'none',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+                        transition: 'all 0.3s ease',
+                        letterSpacing: '0.3px',
+                        textTransform: 'uppercase',
+                        minWidth: 'clamp(200px, 20vw, 280px)',
+                        width: 'clamp(200px, 20vw, 280px)',
+                        alignSelf: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-1px)';
+                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
+                        e.currentTarget.style.background = '#f5f5f5';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.15)';
+                        e.currentTarget.style.background = '#ffffff';
+                      }}
+                    >
+                      Our Services
+                    </button>
+                    
                     {/* Learn More Button */}
                     <button
                       onClick={() => setShowAHEnvironmentalLearnMore(true)}
                     style={{
-                      marginTop: '4px',
-                      marginBottom: '0px',
                       padding: 'clamp(8px, 1vw, 20px) clamp(16px, 2vw, 40px)',
                       fontSize: 'clamp(11px, 1.2vw, 24px)',
-                        fontWeight: '600',
+                        fontWeight: 600,
                         color: '#040075',
                         background: '#ffffff',
                         border: 'none',
@@ -7858,10 +8267,9 @@ export default function App() {
                         letterSpacing: '0.3px',
                         textTransform: 'uppercase',
                         animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 540ms both',
-                        position: 'relative',
-                        zIndex: 13,
-                        display: 'inline-block',
-                        boxSizing: 'border-box'
+                        minWidth: 'clamp(200px, 20vw, 280px)',
+                        width: 'clamp(200px, 20vw, 280px)',
+                        alignSelf: 'flex-start'
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.transform = 'translateY(-1px)';
@@ -8183,33 +8591,74 @@ export default function App() {
                       <span>rabah@gulfconsult.com</span>
                     </div>
                   </div>
-                  <div style={{ 
-                    display: 'flex', 
-                    alignItems: 'flex-start',
-                    flexWrap: 'wrap',
-                    gap: '4px'
-                  }}>
-                    <strong style={{ fontWeight: '800', flexShrink: 0 }}>Website:</strong>{' '}
-                    <a
-                      href="https://www.gulfconsult.com"
-                      target="_blank"
-                      rel="noreferrer"
+                  {/* Website Button */}
+                  <button
+                    onClick={() => window.open('https://www.gulfconsult.com', '_blank', 'noopener,noreferrer')}
                       style={{ 
-                        color: '#0b6fbf',
-                        textDecoration: 'none', 
+                      padding: 'var(--gulf-button-padding, clamp(14px, 1.6vw, 22px) clamp(32px, 3.2vw, 48px))',
+                      fontSize: 'var(--gulf-button-font, clamp(15px, 1.6vw, 22px))',
                         fontWeight: 700,
-                        cursor: 'pointer'
+                      color: '#ffffff',
+                      background: '#16348a',
+                      border: 'none',
+                      borderRadius: '999px',
+                      cursor: 'pointer',
+                      boxShadow: '0 4px 15px rgba(22, 52, 138, 0.4)',
+                      transition: 'all 0.3s ease',
+                      letterSpacing: '0.5px',
+                      textTransform: 'uppercase',
+                      marginTop: 'clamp(16px, 2.2vh, 24px)',
+                      alignSelf: 'flex-start',
+                      minWidth: 'clamp(200px, 20vw, 280px)',
+                      width: 'clamp(200px, 20vw, 280px)'
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.textDecoration = 'underline';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = '0 6px 20px rgba(22, 52, 138, 0.5)';
+                      e.currentTarget.style.background = '#1e42a5';
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.textDecoration = 'none';
-                      }}
-                    >
-                      www.gulfconsult.com
-                    </a>
-                  </div>
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 4px 15px rgba(22, 52, 138, 0.4)';
+                      e.currentTarget.style.background = '#16348a';
+                    }}
+                  >
+                    Visit Website
+                  </button>
+                  {/* Our Services Button */}
+                  <button
+                    onClick={() => window.open('https://www.gulfconsult.com/our-services', '_blank', 'noopener,noreferrer')}
+                    style={{
+                      padding: 'var(--gulf-button-padding, clamp(14px, 1.6vw, 22px) clamp(32px, 3.2vw, 48px))',
+                      fontSize: 'var(--gulf-button-font, clamp(15px, 1.6vw, 22px))',
+                      fontWeight: 700,
+                      color: '#ffffff',
+                      background: '#16348a',
+                      border: 'none',
+                      borderRadius: '999px',
+                      cursor: 'pointer',
+                      boxShadow: '0 4px 15px rgba(22, 52, 138, 0.4)',
+                      transition: 'all 0.3s ease',
+                      letterSpacing: '0.5px',
+                      textTransform: 'uppercase',
+                      marginTop: 'clamp(16px, 2.2vh, 24px)',
+                      alignSelf: 'flex-start',
+                      minWidth: 'clamp(200px, 20vw, 280px)',
+                      width: 'clamp(200px, 20vw, 280px)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = '0 6px 20px rgba(22, 52, 138, 0.5)';
+                      e.currentTarget.style.background = '#1e42a5';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 4px 15px rgba(22, 52, 138, 0.4)';
+                      e.currentTarget.style.background = '#16348a';
+                    }}
+                  >
+                    Our Services
+                  </button>
                 </div>
 
                 {/* Learn More Button - Below Website */}
@@ -8230,7 +8679,9 @@ export default function App() {
                     letterSpacing: '0.5px',
                     textTransform: 'uppercase',
                     animation: 'fadeInUp 0.8s ease-out 0.7s both',
-                    marginTop: 'clamp(16px, 2.2vh, 24px)'
+                    marginTop: 'clamp(16px, 2.2vh, 24px)',
+                    minWidth: 'clamp(200px, 20vw, 280px)',
+                    width: 'clamp(200px, 20vw, 280px)'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-2px)';
