@@ -8556,7 +8556,7 @@ export default function App() {
                     gap: '4px'
                   }}>
                     <strong style={{ fontWeight: '800', flexShrink: 0 }}>Managers:</strong>
-                    <span>Eng. Faisal Sir AlHarbi - CEO, and Eng. Rabah Yehya - GM.</span>
+                    <span>Eng. Faisal Ali AlHarbi - CEO, and Eng. Rabah Yehya - GM.</span>
                   </div>
                   <div style={{ 
                     display: 'flex', 
