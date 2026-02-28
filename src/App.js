@@ -9684,146 +9684,128 @@ export default function App() {
             {gulfConsultActiveTab === 'tab3' && (
               <div style={{
                 width: '100%',
-                maxWidth: '1200px',
+                maxWidth: '1536px',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center',
-                padding: 'clamp(10px, 1.5vh, 20px)',
-                overflow: 'hidden',
-                overflowY: 'hidden',
-                overflowX: 'hidden',
+                justifyContent: 'flex-start',
+                padding: 'clamp(3px, 0.5vh, 8px) clamp(8px, 0.8vw, 12px)',
+                overflow: 'visible',
+                overflowY: 'visible',
+                overflowX: 'visible',
                 flex: 1,
                 minHeight: 0,
-                maxHeight: 'calc(100vh - 180px)',
+                height: '100%',
                 boxSizing: 'border-box'
               }}>
                 <h1 style={{
-                  fontSize: 'clamp(20px, 2.2vw, 32px)',
+                  fontSize: 'clamp(16px, 1.6vw, 24px)',
                   fontWeight: '900',
                   color: '#6a1b9a',
-                  marginBottom: 'clamp(15px, 2vh, 30px)',
+                  marginBottom: 'clamp(5px, 0.6vh, 8px)',
                   marginTop: '0',
                   letterSpacing: '1.5px',
                   textTransform: 'uppercase',
                   textAlign: 'center',
-                  flexShrink: 0
+                  flexShrink: 0,
+                  lineHeight: '1.1'
                 }}>
                   MAJOR CLIENTS
                 </h1>
 
                 {/* Partners Logos Grid */}
                 <div style={{
-                  display: 'flex',
-                  gap: 'clamp(8px, 1vw, 10px)',
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(7, minmax(0, 1fr))',
+                  gridTemplateRows: 'repeat(5, minmax(0, 1fr))',
+                  gap: 'clamp(3px, 0.4vw, 6px)',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  flexWrap: 'nowrap',
                   marginTop: '0',
                   overflow: 'hidden',
-                  overflowY: 'hidden',
-                  overflowX: 'hidden',
                   width: '100%',
                   flex: 1,
                   minHeight: 0,
-                  maxHeight: '100%'
+                  height: '100%',
+                  padding: '0',
+                  boxSizing: 'border-box',
+                  alignContent: 'center',
+                  gridAutoFlow: 'row'
                 }}>
-                  <div style={{
-                    width: 'clamp(150px, 18vw, 240px)',
-                    height: 'clamp(150px, 18vw, 240px)',
-                    borderRadius: '50%',
-                    background: 'transparent',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '0',
-                    flexShrink: 0
-                  }}>
-                    <img
-                      src="/gcpartner4.png"
-                      alt="Partner 4"
-                      onError={(e) => {
-                        e.target.src = '/elco-gif.gif';
-                      }}
+                  {(() => {
+                    const logos = [
+                      '/gcpartner4.png',
+                      '/gcpartner3.png',
+                      '/gcpartner2.png',
+                      '/gcpartner1.png',
+                      '/gcmajorclients/Screenshot 2026-02-28 092851.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 092924.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 092942.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 092959.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093016.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093029.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093053.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093107.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093123.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093137.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093151.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093204.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093219.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093233.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093250.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093303.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093332.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093343.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093356.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093411.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093424.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093436.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093447.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093501.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093522.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093533.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093548.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093600.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093614.jpg',
+                      '/gcmajorclients/Screenshot 2026-02-28 093626.jpg'
+                    ];
+                    return logos.map((logoPath, index) => (
+                    <div
+                      key={`logo-${index}`}
                       style={{
                         width: '100%',
                         height: '100%',
-                        objectFit: 'contain'
+                        maxWidth: '100%',
+                        maxHeight: '100%',
+                        borderRadius: '50%',
+                        background: 'transparent',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: 'clamp(3px, 0.4vw, 6px)',
+                        flexShrink: 0,
+                        boxSizing: 'border-box',
+                        minWidth: 0,
+                        minHeight: 0
                       }}
-                    />
-                  </div>
-                  <div style={{
-                    width: 'clamp(150px, 18vw, 240px)',
-                    height: 'clamp(150px, 18vw, 240px)',
-                    borderRadius: '50%',
-                    background: 'transparent',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '0',
-                    flexShrink: 0
-                  }}>
-                    <img
-                      src="/gcpartner3.png"
-                      alt="Partner 3"
-                      onError={(e) => {
-                        e.target.src = '/dorrah-gif.gif';
-                      }}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'contain'
-                      }}
-                    />
-                  </div>
-                  <div style={{
-                    width: 'clamp(150px, 18vw, 240px)',
-                    height: 'clamp(150px, 18vw, 240px)',
-                    borderRadius: '50%',
-                    background: 'transparent',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '0',
-                    flexShrink: 0
-                  }}>
-                    <img
-                      src="/gcpartner2.png"
-                      alt="Partner 2"
-                      onError={(e) => {
-                        e.target.src = '/dorrah.png';
-                      }}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'contain'
-                      }}
-                    />
-                  </div>
-                  <div style={{
-                    width: 'clamp(150px, 18vw, 240px)',
-                    height: 'clamp(150px, 18vw, 240px)',
-                    borderRadius: '50%',
-                    background: 'transparent',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '0',
-                    flexShrink: 0
-                  }}>
-                    <img
-                      src="/gcpartner1.png"
-                      alt="Partner 1"
-                      onError={(e) => {
-                        e.target.src = '/cc.png';
-                      }}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'contain'
-                      }}
-                    />
-                  </div>
+                    >
+                      <img
+                        src={logoPath}
+                        alt={`Client ${index + 1}`}
+                        onError={(e) => {
+                          e.target.src = '/elco-gif.gif';
+                        }}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'contain',
+                          borderRadius: '50%',
+                          display: 'block'
+                        }}
+                      />
+                    </div>
+                    ));
+                  })()}
                 </div>
               </div>
             )}
