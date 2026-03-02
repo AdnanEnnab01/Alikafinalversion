@@ -16,6 +16,7 @@ export default function App() {
   const [amtGalleryVideoIndex, setAmtGalleryVideoIndex] = useState(0); // Index for gallery videos
   const [amtGalleryFullscreenVideo, setAmtGalleryFullscreenVideo] = useState(null); // Fullscreen video URL
   const [showAMTQRModal, setShowAMTQRModal] = useState(false);
+  const [showAlikaQRModal, setShowAlikaQRModal] = useState(false);
   const [showGulfConsult2LearnMore, setShowGulfConsult2LearnMore] = useState(false);
   const [gulfConsult2ActiveTab, setGulfConsult2ActiveTab] = useState('tab1'); // 'tab1' = Projects, 'tab2' = Team, 'tab3' = Partners, 'tab4' = Gallery
   const [gulfConsult2GalleryPlaying, setGulfConsult2GalleryPlaying] = useState(false); // Fullscreen gallery video in Gulf Consult 2 Learn More
@@ -78,6 +79,18 @@ export default function App() {
   const [showChairmanMessage, setShowChairmanMessage] = useState(false);
   const [showAboutUs, setShowAboutUs] = useState(false);
   const [aboutUsTab, setAboutUsTab] = useState('who'); // 'who' | 'values' | 'vision'
+  const [showSubsidiaries, setShowSubsidiaries] = useState(false);
+  
+  // Track viewport size for Dorrah page layout adjustments
+  const [viewportSize, setViewportSize] = useState({ width: window.innerWidth, height: window.innerHeight });
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Prevent zoom in/out (zoom in and zoom out)
   useEffect(() => {
@@ -408,6 +421,31 @@ export default function App() {
     }
   }, [showGulfConsultLearnMore]);
 
+  // Prevent body scroll when Subsidiaries modal is open
+  useEffect(() => {
+    if (showSubsidiaries) {
+      // Save current scroll position
+      const scrollY = window.scrollY;
+      
+      // Prevent scrolling on body and html
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      
+      return () => {
+        // Restore scrolling when modal closes
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [showSubsidiaries]);
+
   // Handle Escape key to close AMT QR Modal
   useEffect(() => {
     const handleEscape = (e) => {
@@ -421,6 +459,20 @@ export default function App() {
       document.removeEventListener('keydown', handleEscape);
     };
   }, [showAMTQRModal]);
+
+  // Handle Escape key to close Alika QR Modal
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && showAlikaQRModal) {
+        setShowAlikaQRModal(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [showAlikaQRModal]);
 
   // Handle Escape key to close Gulf Dorrah QR Modal
   useEffect(() => {
@@ -469,6 +521,40 @@ export default function App() {
       });
     };
   }, [showAMTQRModal]);
+
+  // Auto-close Alika QR Modal after 90 seconds of inactivity
+  useEffect(() => {
+    if (!showAlikaQRModal) return;
+
+    let inactivityTimer;
+
+    const resetTimer = () => {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        setShowAlikaQRModal(false);
+      }, 90000); // 90 seconds (1.5 minutes)
+    };
+
+    const handleActivity = () => {
+      resetTimer();
+    };
+
+    // Start the timer
+    resetTimer();
+
+    // Listen for user activity
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    events.forEach(event => {
+      document.addEventListener(event, handleActivity, true);
+    });
+
+    return () => {
+      clearTimeout(inactivityTimer);
+      events.forEach(event => {
+        document.removeEventListener(event, handleActivity, true);
+      });
+    };
+  }, [showAlikaQRModal]);
 
   // Auto-close Gulf Dorrah QR Modal after 90 seconds of inactivity
   useEffect(() => {
@@ -1665,7 +1751,7 @@ export default function App() {
       </div>
 
       {/* Home action button (enable sound + reveal animation) */}
-      {!homeSoundEnabled && selectedCompany === null && (
+      {!homeSoundEnabled && selectedCompany === null && !showAboutUs && (
         <button
           type="button"
           className="home-sound-btn"
@@ -1674,6 +1760,7 @@ export default function App() {
             setHomeReveal(true);
             setHomeReturning(false);
             setShowChairmanMessage(false);
+            setShowAboutUs(false);
           }}
           aria-label="Enable background video sound"
         >
@@ -1700,7 +1787,7 @@ export default function App() {
       )}
 
       {/* Chairman message button (home only) - always visible when not on sound screen */}
-      {!homeSoundEnabled && selectedCompany === null && (
+      {!homeSoundEnabled && selectedCompany === null && !showAboutUs && (
         <button
           type="button"
           className={`home-chairman-btn ${showChairmanMessage ? 'active' : ''}`}
@@ -1721,18 +1808,14 @@ export default function App() {
       )}
 
       {/* About us button (home only) - always visible when not on sound screen */}
-      {!homeSoundEnabled && selectedCompany === null && (
+      {!homeSoundEnabled && selectedCompany === null && !showAboutUs && (
         <button
           type="button"
-          className={`home-about-btn ${showAboutUs ? 'active' : ''}`}
+          className="home-about-btn"
           onClick={() => {
-            if (showAboutUs) {
-              setShowAboutUs(false);
-            } else {
-              setShowAboutUs(true);
-              setAboutUsTab('who');
-              setShowChairmanMessage(false);
-            }
+            setShowAboutUs(true);
+            setAboutUsTab('who');
+            setShowChairmanMessage(false);
             setHomeReveal(false);
             setHomeReturning(false);
           }}
@@ -1742,110 +1825,451 @@ export default function App() {
         </button>
       )}
 
-      {/* About us overlay */}
+      {/* About us full-screen page */}
       {showAboutUs && (
-        <div
-          className="about-overlay"
-          role="dialog"
-          aria-modal="true"
-          aria-label="About us"
-          onClick={() => setShowAboutUs(false)}
-        >
-          <div className="about-modal" onClick={(e) => e.stopPropagation()}>
-            <button
-              type="button"
-              className="about-close"
-              onClick={() => setShowAboutUs(false)}
-              aria-label="Back to Alika"
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          width: '100vw',
+          height: '100vh',
+          backgroundColor: '#061826',
+          zIndex: 1000,
+          animation: 'fadeIn 0.6s ease-in-out'
+        }}>
+          {/* Back button */}
+          <button
+            type="button"
+            onClick={() => setShowAboutUs(false)}
+            style={{
+              position: 'fixed',
+              top: 'clamp(20px, 2vh, 40px)',
+              right: 'clamp(20px, 2vw, 40px)',
+              zIndex: 1002,
+              padding: 'clamp(10px, 1.2vw, 16px) clamp(20px, 2.5vw, 32px)',
+              fontSize: 'clamp(14px, 1.2vw, 18px)',
+              fontWeight: '600',
+              color: '#ffffff',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              border: '2px solid rgba(255, 255, 255, 0.3)',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            }}
+            aria-label="Back to Alika"
+          >
+            Back to Alika
+          </button>
+
+          {/* Company Logos Grid - Left Side */}
+          <div
+            style={{
+              position: 'fixed',
+              top: 'clamp(55%, 55vh, 60%)',
+              left: 'clamp(80px, 7vw, 140px)',
+              transform: 'translateY(-50%)',
+              zIndex: 1001,
+              animation: 'fadeIn 0.8s ease-in-out 0.4s both',
+              opacity: 0.9
+            }}
+          >
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: `repeat(5, var(--grid-item-size, clamp(70px, 7vw, 115px)))`,
+                gridTemplateRows: `repeat(4, var(--grid-item-size, clamp(70px, 7vw, 115px)))`,
+                gap: 'var(--grid-gap, clamp(12px, 1.2vw, 20px))',
+                transform: 'rotate(45deg)',
+                position: 'relative'
+              }}
             >
-              Back to Alika
-            </button>
+              {companies.map((company) => {
+                const isGulfConsult = company.logo.toLowerCase().includes('gulf-consult');
 
-            <div className="about-header">
-              <div className="about-title">About us</div>
-              <div className="about-tabs" role="tablist" aria-label="About us tabs">
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={aboutUsTab === 'who'}
-                  className={`about-tab${aboutUsTab === 'who' ? ' is-active' : ''}`}
-                  onClick={() => setAboutUsTab('who')}
-                >
-                  Who We Are
-                </button>
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={aboutUsTab === 'values'}
-                  className={`about-tab${aboutUsTab === 'values' ? ' is-active' : ''}`}
-                  onClick={() => setAboutUsTab('values')}
-                >
-                  Our Values
-                </button>
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={aboutUsTab === 'vision'}
-                  className={`about-tab${aboutUsTab === 'vision' ? ' is-active' : ''}`}
-                  onClick={() => setAboutUsTab('vision')}
-                >
-                  Our Vision
-                </button>
-              </div>
+                return (
+                  <div
+                    key={company.id}
+                    style={{
+                      gridColumn: company.col,
+                      gridRow: company.row,
+                      position: 'relative'
+                    }}
+                  >
+                    <div
+                      style={{
+                        cursor:
+                          company.id === 10 ||
+                          company.id === 3 ||
+                          company.id === 11 ||
+                          company.id === 1 ||
+                          company.id === 6 ||
+                          company.id === 5 ||
+                          company.id === 2 ||
+                          company.id === 7 ||
+                          company.id === 9 ||
+                          company.id === 12 ||
+                          company.id === 4 ||
+                          company.id === 8
+                            ? 'pointer'
+                            : 'default',
+                        width: '100%',
+                        height: '100%',
+                        minWidth: 'var(--grid-item-size, clamp(70px, 7vw, 115px))',
+                        minHeight: 'var(--grid-item-size, clamp(70px, 7vw, 115px))',
+                        background: '#E8E8E8',
+                        border: '1px solid rgba(200, 200, 200, 0.5)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        borderRadius: '4px',
+                        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.08)',
+                        position: 'relative',
+                        zIndex: 1
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.08)';
+                        e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.12)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.08)';
+                      }}
+                      onClick={(e) => {
+                        if (
+                          company.id === 10 ||
+                          company.id === 3 ||
+                          company.id === 11 ||
+                          company.id === 1 ||
+                          company.id === 6 ||
+                          company.id === 5 ||
+                          company.id === 2 ||
+                          company.id === 7 ||
+                          company.id === 9 ||
+                          company.id === 12 ||
+                          company.id === 4 ||
+                          company.id === 8
+                        ) {
+                          const rect = e.currentTarget.getBoundingClientRect();
+                          sessionStorage.setItem('logoStartX', rect.left);
+                          sessionStorage.setItem('logoStartY', rect.top);
+                          setShowAboutUs(false);
+                          setSelectedCompany(company);
+                        }
+                      }}
+                    >
+                      <div
+                        style={{
+                          transform: 'rotate(-45deg)',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: '100%',
+                          height: '100%',
+                          padding: '10px'
+                        }}
+                      >
+                        <img
+                          src={company.logo}
+                          alt={isGulfConsult ? 'Gulf Consult' : 'Company logo'}
+                          style={{
+                            maxWidth: isGulfConsult ? '98%' : '90%',
+                            maxHeight: isGulfConsult ? '90%' : '75%',
+                            width: 'auto',
+                            height: 'auto',
+                            objectFit: 'contain',
+                            marginBottom: '0px',
+                            filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))'
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
+          </div>
 
-            <div className="about-body">
-              {aboutUsTab === 'who' && (
-                <div className="about-who">
-                  <div className="about-hero-wrapper">
-                    <img className="about-hero" src="/whoweare.jpg" alt="Who we are" />
-                  </div>
-                  <div className="about-copy">
-                    <div className="about-h1">Who We Are</div>
-                    <div className="about-text">
-                      We at ALIKA Holding Group, a leading Saudi investment group, we manage and grow our assets through a diversified portfolio that spans strategic sectors such as professional services, technology and communications, healthcare, and real estate development. We believe that smart investment is the true driver of sustainable growth; therefore, we rely on our innovative vision to seize promising opportunities and build long-term investments that enhance our operational efficiency and increase the value of our subsidiaries. Through this approach, we continue to strengthen our competitive position and create lasting value for our shareholders and partners.
-                    </div>
-                  </div>
-                </div>
-              )}
+          {/* About us content - Right Side */}
+          <div style={{
+            position: 'fixed',
+            top: '50%',
+            right: 'clamp(100px, 15vw, 200px)',
+            transform: 'translateY(-50%)',
+            zIndex: 1001,
+            width: 'auto',
+            maxHeight: '100vh',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+            gap: '40px',
+            padding: 0,
+            animation: 'fadeIn 0.8s ease-in-out 0.2s both',
+            direction: 'ltr',
+            overflow: 'visible'
+          }}>
+            {/* Left Column - Content */}
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '500px',
+              gap: '14px'
+            }}>
+              {/* Alika Logo - Top Left */}
+              <div style={{
+                marginBottom: '15px',
+                display: 'flex',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+                width: '100%',
+                marginLeft: 0,
+                paddingLeft: 0
+              }}>
+                <img
+                  src="/alikalogo-removebg-preview.png"
+                  alt="Alika Logo"
+                  style={{
+                    maxWidth: '250px',
+                    width: 'auto',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    filter: 'drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3))',
+                    marginLeft: 0
+                  }}
+                />
+              </div>
 
-              {aboutUsTab === 'values' && (
-                <div className="about-who">
-                  <div className="about-hero-wrapper">
-                    <img className="about-hero" src="/ourvalues.jpg" alt="Our values" />
-                  </div>
-                  <div className="about-copy">
-                    <div className="about-h1">Our Values</div>
-                    <div className="about-text">
-                      At ALIKA Holding Group, we believe that our success is built on a solid foundation of values that guide every aspect of our work. Integrity and transparency represent our unwavering commitment in all dealings, while the spirit of teamwork defines our professional and inspiring work environment, fostering performance, quality, and innovation. We place quality and continuous improvement at the heart of our operations, recognizing that development and innovation are the path to sustainable success. Equally, we prioritize sustainability in our environmental and social impact, alongside our commitment to empowering national talent as the true driver of growth and progress.
-                    </div>
-                  </div>
-                </div>
-              )}
+              {/* Company Description */}
+              <p style={{
+                fontSize: '14px',
+                lineHeight: '1.6',
+                color: '#ffffff',
+                textAlign: 'left',
+                margin: 0,
+                marginBottom: '14px',
+                fontWeight: '400',
+                textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+                direction: 'ltr',
+                unicodeBidi: 'embed',
+                padding: 'clamp(12px, 1.5vh, 18px) clamp(16px, 2vw, 24px)',
+                background: 'rgba(0, 0, 0, 0.45)',
+                borderRadius: '12px',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(243, 192, 107, 0.1), -4px 0 16px rgba(243, 192, 107, 0.4)',
+                borderLeft: '5px solid #ffffff',
+                position: 'relative'
+              }}>
+                We at ALIKA Holding Group, a leading Saudi investment group, we manage and grow our assets through a diversified portfolio that spans strategic sectors such as professional services, technology and communications, healthcare, and real estate development. We believe that smart investment is the true driver of sustainable growth; therefore, we rely on our innovative vision to seize promising opportunities and build long-term investments that enhance our operational efficiency and increase the value of our subsidiaries. Through this approach, we continue to strengthen our competitive position and create lasting value for our shareholders and partners.
+              </p>
 
-              {aboutUsTab === 'vision' && (
-                <div className="about-who">
-                  <div className="about-hero-wrapper">
-                    <img
-                      className="about-hero"
-                      src="/ourvission.jpg"
-                      alt="Our vision"
-                    />
-                  </div>
-                  <div className="about-copy">
-                    <div className="about-h1">Our Vision</div>
-                    <div className="about-text vision-heading">
-                      Strategic Investments for Sustainable Growth
-                    </div>
-                    <div className="about-text">
-                      We manage a diversified portfolio of investment assets guided by well-defined strategies
-                      designed to ensure sustainable growth and continuity. Our approach focuses on creating
-                      long-term value that strengthens the interests of our partners and supports their future
-                      ambitions.
-                    </div>
-                  </div>
+              {/* Management */}
+              <div style={{
+                fontSize: '14px',
+                lineHeight: '1.6',
+                color: '#ffffff',
+                textAlign: 'left',
+                textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+                direction: 'ltr',
+                unicodeBidi: 'embed'
+              }}>
+                <div style={{ fontWeight: '600', marginBottom: '6px' }}>
+                  Management:
                 </div>
-              )}
+                <div style={{ marginLeft: '15px' }}>
+                  Chairman Eng. Ali Khudair Al Harbi<br />
+                  Vice President Faisal Ali Alharbi
+                </div>
+              </div>
+
+              {/* Phone Number */}
+              <div style={{
+                fontSize: '14px',
+                lineHeight: '1.6',
+                color: '#ffffff',
+                textAlign: 'left',
+                textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+                direction: 'ltr',
+                unicodeBidi: 'embed'
+              }}>
+                <span style={{ fontWeight: '600' }}>Phone number:</span> 920017259
+              </div>
+
+              {/* Email */}
+              <div style={{
+                fontSize: '14px',
+                lineHeight: '1.6',
+                color: '#ffffff',
+                textAlign: 'left',
+                textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+                direction: 'ltr',
+                unicodeBidi: 'embed',
+                marginBottom: '15px'
+              }}>
+                <span style={{ fontWeight: '600' }}>Email:</span> info@alikaholding.com
+              </div>
+
+              {/* Buttons and QR Code Container */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'flex-start',
+                gap: 'clamp(40px, 5vw, 60px)',
+                width: '100%'
+              }}>
+                {/* Buttons */}
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '10px',
+                  flex: '0 0 auto'
+                }}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowSubsidiaries(true);
+                    }}
+                    style={{
+                      padding: 'clamp(10px, 1.2vw, 16px) clamp(20px, 2.2vw, 32px)',
+                      fontSize: 'clamp(12px, 1.3vw, 18px)',
+                      fontWeight: '600',
+                      color: '#ffffff',
+                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      border: '2px solid rgba(255, 255, 255, 0.3)',
+                      borderRadius: '8px',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      textAlign: 'left',
+                      width: 'fit-content',
+                      maxWidth: 'clamp(200px, 50vw, 350px)',
+                      backdropFilter: 'blur(10px)',
+                      WebkitBackdropFilter: 'blur(10px)',
+                      direction: 'ltr'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                    }}
+                  >
+                    Our Subsidiaries
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => window.open('https://alikaholding.com/', '_blank', 'noopener,noreferrer')}
+                    style={{
+                      padding: 'clamp(10px, 1.2vw, 16px) clamp(20px, 2.2vw, 32px)',
+                      fontSize: 'clamp(12px, 1.3vw, 18px)',
+                      fontWeight: '600',
+                      color: '#ffffff',
+                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      border: '2px solid rgba(255, 255, 255, 0.3)',
+                      borderRadius: '8px',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      textAlign: 'left',
+                      width: 'fit-content',
+                      maxWidth: 'clamp(200px, 50vw, 350px)',
+                      backdropFilter: 'blur(10px)',
+                      WebkitBackdropFilter: 'blur(10px)',
+                      direction: 'ltr'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                    }}
+                  >
+                    Our Website
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => window.open('https://alikaholding.com/investments/', '_blank', 'noopener,noreferrer')}
+                    style={{
+                      padding: 'clamp(10px, 1.2vw, 16px) clamp(20px, 2.2vw, 32px)',
+                      fontSize: 'clamp(12px, 1.3vw, 18px)',
+                      fontWeight: '600',
+                      color: '#ffffff',
+                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      border: '2px solid rgba(255, 255, 255, 0.3)',
+                      borderRadius: '8px',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      textAlign: 'left',
+                      width: 'fit-content',
+                      maxWidth: 'clamp(200px, 50vw, 350px)',
+                      backdropFilter: 'blur(10px)',
+                      WebkitBackdropFilter: 'blur(10px)',
+                      direction: 'ltr'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                    }}
+                  >
+                    Our Investments
+                  </button>
+                </div>
+
+                {/* QR Code - Next to buttons */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                  marginLeft: 'clamp(60px, 7vw, 80px)'
+                }}>
+                  <img
+                    src="/alikaqr.jpeg"
+                    alt="Alika QR Code"
+                    onClick={() => setShowAlikaQRModal(true)}
+                    style={{
+                      maxWidth: 'clamp(140px, 16vw, 220px)',
+                      maxHeight: 'clamp(140px, 16vw, 220px)',
+                      width: 'auto',
+                      height: 'auto',
+                      objectFit: 'contain',
+                      borderRadius: '8px',
+                      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
+                      backgroundColor: '#ffffff',
+                      padding: 'clamp(6px, 0.8vw, 12px)',
+                      cursor: 'pointer',
+                      transition: 'transform 0.2s ease, boxShadow 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.05)';
+                      e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.4)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
+                      e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -2323,7 +2747,7 @@ export default function App() {
                 {amtVideoFullscreen && (
                   <video
                     key={`amt-video-${amtVideoFullscreen}`}
-                    src="https://res.cloudinary.com/dl2rqs0lo/video/upload/amt_ecx4u7.mp4"
+                    src="https://res.cloudinary.com/dl2rqs0lo/video/upload/v1/AMT_Company_Profile_Transformation___From_Static_PDF_to_CEO_Video_by_Zuccess_zykzgl.mp4"
                     autoPlay
                     controls
                     style={{
@@ -2406,28 +2830,43 @@ export default function App() {
               >
                 <h1
                   style={{
-                    fontSize: 'var(--amt-title-size, clamp(28px, 3.8vw, 52px))',
+                    fontSize: 'var(--amt-title-size, clamp(32px, 4.2vw, 58px))',
                     fontWeight: '900',
-                    marginBottom: 'clamp(12px, 2vh, 24px)',
-                    letterSpacing: '1.6px',
-                    color: '#ff4b4b',
+                    marginBottom: 'clamp(16px, 2.5vh, 28px)',
+                    letterSpacing: '2.2px',
+                    background: 'linear-gradient(135deg, #ff4b4b 0%, #ff6b6b 50%, #ff4b4b 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
                     textTransform: 'uppercase',
-                    animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both'
+                    textShadow: '0 0 30px rgba(255, 75, 75, 0.4), 0 4px 20px rgba(255, 75, 75, 0.3)',
+                    animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both',
+                    position: 'relative',
+                    display: 'inline-block',
+                    filter: 'drop-shadow(0 2px 8px rgba(255, 75, 75, 0.5))'
                   }}
                 >
-                  ADVANCED MICRO TECHNOLOGIES
+                  ADVANCED MICRO TECHNOLOGIES (AMT)
                 </h1>
 
                 <p
                   style={{
-                    fontSize: 'var(--amt-text-size, clamp(15px, 1.7vw, 24px))',
-                    lineHeight: '1.75',
-                    marginBottom: 'clamp(20px, 3vh, 32px)',
-                    color: '#2d2d2d',
-                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both'
+                    fontSize: 'var(--amt-text-size, clamp(16px, 1.9vw, 26px))',
+                    lineHeight: '1.85',
+                    marginBottom: 'clamp(24px, 3.5vh, 36px)',
+                    color: '#1a1a1a',
+                    fontWeight: '500',
+                    letterSpacing: '0.3px',
+                    textShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both',
+                    padding: 'clamp(12px, 1.5vh, 18px) clamp(16px, 2vw, 24px)',
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 75, 75, 0.1)',
+                    borderLeft: '4px solid #ff4b4b'
                   }}
                 >
-                  Advanced Micro Technologies (AMT) is a Saudi company providing IT and telecommunications services, including data center design, cybersecurity, and low current systems such as surveillance and alarms.
+                  is a Saudi company providing IT and telecommunications services, including data center design, cybersecurity, and low current systems such as surveillance and alarms.
                 </p>
 
                 <div
@@ -2442,52 +2881,91 @@ export default function App() {
                   {/* Text info (Managers / Mobile / Email / Website) */}
                   <div
                     style={{
-                      fontSize: 'var(--amt-info-size, clamp(13px, 1.4vw, 20px))',
-                      lineHeight: '1.8',
-                    color: '#1a1a1a',
+                      fontSize: 'var(--amt-info-size, clamp(14px, 1.5vw, 21px))',
+                      lineHeight: '1.9',
+                      color: '#1a1a1a',
                       flex: 0.9,
-                      padding: 'clamp(8px, 1.2vh, 12px) clamp(12px, 1.6vw, 16px)',
-                      borderRadius: '10px',
-                      background: 'rgba(255, 255, 255, 0.85)',
-                      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)'
+                      padding: 'clamp(16px, 2vh, 20px) clamp(20px, 2.2vw, 28px)',
+                      borderRadius: '14px',
+                      background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 250, 250, 0.95) 100%)',
+                      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 75, 75, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
+                      border: '1px solid rgba(255, 75, 75, 0.2)',
+                      backdropFilter: 'blur(10px)'
                     }}
                   >
                     <div
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: 'clamp(6px, 1vh, 10px)'
+                        gap: '8px',
+                        marginBottom: 'clamp(10px, 1.4vh, 14px)',
+                        paddingBottom: 'clamp(8px, 1.2vh, 12px)',
+                        borderBottom: '1px solid rgba(255, 75, 75, 0.15)'
                       }}
                     >
-                      <strong style={{ minWidth: '110px', fontWeight: 800 }}>Managers:</strong>
-                    <span>Eyad Matar</span>
-                  </div>
+                      <strong style={{ 
+                        minWidth: 'auto', 
+                        fontWeight: 800, 
+                        color: '#ff4b4b',
+                        fontSize: 'clamp(14px, 1.5vw, 21px)',
+                        letterSpacing: '0.5px',
+                        textShadow: '0 1px 2px rgba(255, 75, 75, 0.2)'
+                      }}>CEO:</strong>
+                      <span style={{ 
+                        fontWeight: 600,
+                        color: '#2d2d2d',
+                        letterSpacing: '0.2px'
+                      }}>Eng. Eyad Matar</span>
+                    </div>
                     <div
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: 'clamp(6px, 1vh, 10px)'
+                        gap: '8px',
+                        marginBottom: 'clamp(10px, 1.4vh, 14px)',
+                        paddingBottom: 'clamp(8px, 1.2vh, 12px)',
+                        borderBottom: '1px solid rgba(255, 75, 75, 0.15)'
                       }}
                     >
-                      <strong style={{ minWidth: '110px', fontWeight: 800 }}>Mobile:</strong>
-                    <span>050 582 7033</span>
-                  </div>
-                  <div
-                    style={{
+                      <strong style={{ 
+                        minWidth: 'auto', 
+                        fontWeight: 800, 
+                        color: '#ff4b4b',
+                        fontSize: 'clamp(14px, 1.5vw, 21px)',
+                        letterSpacing: '0.5px',
+                        textShadow: '0 1px 2px rgba(255, 75, 75, 0.2)'
+                      }}>Mobile:</strong>
+                      <span style={{ 
+                        fontWeight: 600,
+                        color: '#2d2d2d',
+                        letterSpacing: '0.2px',
+                        fontFamily: 'monospace'
+                      }}>050 582 7033</span>
+                    </div>
+                    <div
+                      style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: 'clamp(6px, 1vh, 10px)'
+                        gap: '8px',
+                        marginBottom: '0'
                       }}
                     >
-                      <strong style={{ minWidth: '110px', fontWeight: 800 }}>Email:</strong>
+                      <strong style={{ 
+                        minWidth: 'auto', 
+                        fontWeight: 800, 
+                        color: '#ff4b4b',
+                        fontSize: 'clamp(14px, 1.5vw, 21px)',
+                        letterSpacing: '0.5px',
+                        textShadow: '0 1px 2px rgba(255, 75, 75, 0.2)'
+                      }}>Email:</strong>
                       <span
-                      style={{
+                        style={{
                           whiteSpace: 'nowrap',
                           overflow: 'hidden',
-                          textOverflow: 'ellipsis'
+                          textOverflow: 'ellipsis',
+                          fontWeight: 600,
+                          color: '#2d2d2d',
+                          letterSpacing: '0.2px'
                         }}
                       >
                         eyad.matar@amt-arabia.net
@@ -2504,16 +2982,22 @@ export default function App() {
                       flex: 1.15
                     }}
                   >
-                    <img
-                      src="/amt-internal.jpg"
-                      alt="AMT internal"
-                    style={{
+                    <video
+                      src="https://res.cloudinary.com/dl2rqs0lo/video/upload/amt_ecx4u7.mp4"
+                      style={{
                         width: '100%',
                         height: 'auto',
                         display: 'block',
                         borderRadius: '16px',
-                        boxShadow: '0 10px 35px rgba(0, 0, 0, 0.55)'
+                        boxShadow: '0 10px 35px rgba(0, 0, 0, 0.55)',
+                        aspectRatio: '16 / 9',
+                        objectFit: 'cover',
+                        pointerEvents: 'none'
                       }}
+                      muted
+                      playsInline
+                      preload="auto"
+                      title="AMT Video Thumbnail"
                     />
                     {/* Play Video Button on top of image */}
                   <button
@@ -2701,10 +3185,10 @@ export default function App() {
                       boxShadow: '0 4px 14px rgba(255, 75, 75, 0.4)',
                       transition: 'all 0.25s ease',
                       letterSpacing: '0.6px',
-                        textTransform: 'uppercase',
-                        minWidth: 'clamp(200px, 20vw, 280px)',
-                        width: 'clamp(200px, 20vw, 280px)',
-                        alignSelf: 'flex-start'
+                      textTransform: 'uppercase',
+                      minWidth: 'clamp(200px, 20vw, 280px)',
+                      width: 'clamp(200px, 20vw, 280px)',
+                      alignSelf: 'flex-start'
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = 'translateY(-2px)';
@@ -2942,25 +3426,44 @@ export default function App() {
                 }}
               >
                 <h1 style={{
-                  fontSize: 'var(--idc-title-size, clamp(26px, 3.2vw, 40px))',
+                  fontSize: 'var(--idc-title-size, clamp(30px, 3.8vw, 46px))',
                   fontWeight: '900',
-                  marginBottom: 'clamp(10px, 1.5vh, 18px)',
-                  letterSpacing: '1.5px',
-                  color: '#0b6fbf',
+                  marginBottom: 'clamp(16px, 2.5vh, 28px)',
+                  letterSpacing: '2.2px',
+                  background: 'linear-gradient(135deg, #0b6fbf 0%, #0d7fd4 50%, #0b6fbf 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
                   textTransform: 'uppercase',
                   animation: 'fadeInUp 0.8s ease-out 0.2s both',
-                  whiteSpace: 'nowrap'
+                  whiteSpace: 'nowrap',
+                  textShadow: '0 0 30px rgba(11, 111, 191, 0.4), 0 4px 20px rgba(11, 111, 191, 0.3)',
+                  position: 'relative',
+                  display: 'inline-block',
+                  filter: 'drop-shadow(0 2px 8px rgba(11, 111, 191, 0.5))',
+                  userSelect: 'none',
+                  WebkitUserSelect: 'none',
+                  MozUserSelect: 'none',
+                  msUserSelect: 'none'
                 }}>
                   IDC CONTRACTING COMPANY
                 </h1>
 
                 <p
                   style={{
-                    fontSize: 'var(--idc-text-size, clamp(13px, 1.35vw, 17px))',
-                    lineHeight: '1.9',
-                    marginBottom: 'clamp(12px, 1.8vh, 20px)',
+                    fontSize: 'var(--idc-text-size, clamp(14px, 1.5vw, 20px))',
+                    lineHeight: '1.85',
+                    marginBottom: 'clamp(24px, 3.5vh, 36px)',
                     color: '#0b2239',
-                    animation: 'fadeInUp 0.8s ease-out 0.4s both'
+                    fontWeight: '500',
+                    letterSpacing: '0.3px',
+                    textShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                    animation: 'fadeInUp 0.8s ease-out 0.4s both',
+                    padding: 'clamp(12px, 1.5vh, 18px) clamp(16px, 2vw, 24px)',
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(11, 111, 191, 0.1)',
+                    borderLeft: '4px solid #0b6fbf'
                   }}
                 >
                   IDC Contracting Company is a leading Saudi-based contracting company established in 2016 and proudly part of the Ali Al-Harbi Group (Alika). IDC specializes in engineering, finishing, and comprehensive Mechanical, Electrical, and Plumbing (MEP) building services, holding the highest first-degree classification for contracting in Saudi Arabia.
@@ -2979,32 +3482,91 @@ export default function App() {
                   {/* Info block (Managers / Mobile / Email / Website) - All in one line */}
                   <div
                     style={{
-                      fontSize: 'var(--idc-info-size, clamp(13px, 1.35vw, 17px))',
-                      lineHeight: '1.8',
+                      fontSize: 'var(--idc-info-size, clamp(14px, 1.5vw, 20px))',
+                      lineHeight: '1.9',
                       color: '#0b2239',
                       flex: 1,
+                      padding: 'clamp(16px, 2vh, 20px) clamp(20px, 2.2vw, 28px)',
+                      borderRadius: '14px',
+                      background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 248, 255, 0.95) 100%)',
+                      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(11, 111, 191, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
+                      border: '1px solid rgba(11, 111, 191, 0.2)',
+                      backdropFilter: 'blur(10px)',
                       display: 'flex',
-                      flexWrap: 'wrap',
-                      gap: 'clamp(12px, 2vw, 20px)',
-                      alignItems: 'center'
+                      flexDirection: 'column',
+                      gap: 'clamp(10px, 1.4vh, 14px)'
                     }}
                   >
-                    <span style={{ whiteSpace: 'nowrap' }}>
-                      <strong style={{ fontWeight: 800 }}>Managers:</strong> Bassam Al Masri.
-                    </span>
-                    <span style={{ whiteSpace: 'nowrap' }}>
-                      <strong style={{ fontWeight: 800 }}>Mobile:</strong> 050 833 8830
-                    </span>
-                    <span style={{ whiteSpace: 'nowrap' }}>
-                      <strong style={{ fontWeight: 800 }}>Email:</strong> bassam.almasri@idc-arabia.com
-                    </span>
+                    <div style={{ 
+                      display: 'flex', 
+                      alignItems: 'center',
+                      gap: '8px',
+                      paddingBottom: 'clamp(8px, 1.2vh, 12px)',
+                      borderBottom: '1px solid rgba(11, 111, 191, 0.15)'
+                    }}>
+                      <strong style={{ 
+                        fontWeight: 800, 
+                        color: '#0b6fbf',
+                        fontSize: 'clamp(14px, 1.5vw, 20px)',
+                        letterSpacing: '0.5px',
+                        textShadow: '0 1px 2px rgba(11, 111, 191, 0.2)',
+                        minWidth: 'auto'
+                      }}>Managers:</strong>
+                      <span style={{ 
+                        fontWeight: 600,
+                        letterSpacing: '0.2px'
+                      }}>Bassam Al Masri.</span>
+                    </div>
+                    <div style={{ 
+                      display: 'flex', 
+                      alignItems: 'center',
+                      gap: '8px',
+                      paddingBottom: 'clamp(8px, 1.2vh, 12px)',
+                      borderBottom: '1px solid rgba(11, 111, 191, 0.15)'
+                    }}>
+                      <strong style={{ 
+                        fontWeight: 800, 
+                        color: '#0b6fbf',
+                        fontSize: 'clamp(14px, 1.5vw, 20px)',
+                        letterSpacing: '0.5px',
+                        textShadow: '0 1px 2px rgba(11, 111, 191, 0.2)',
+                        minWidth: 'auto'
+                      }}>Mobile:</strong>
+                      <span style={{ 
+                        fontWeight: 600,
+                        letterSpacing: '0.2px',
+                        fontFamily: 'monospace'
+                      }}>050 833 8830</span>
+                    </div>
+                    <div style={{ 
+                      display: 'flex', 
+                      alignItems: 'center',
+                      gap: '8px',
+                      marginBottom: '0'
+                    }}>
+                      <strong style={{ 
+                        fontWeight: 800, 
+                        color: '#0b6fbf',
+                        fontSize: 'clamp(14px, 1.5vw, 20px)',
+                        letterSpacing: '0.5px',
+                        textShadow: '0 1px 2px rgba(11, 111, 191, 0.2)',
+                        minWidth: 'auto'
+                      }}>Email:</strong>
+                      <span style={{ 
+                        fontWeight: 600,
+                        letterSpacing: '0.2px',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis'
+                      }}>bassam.almasri@idc-arabia.com</span>
+                    </div>
                   </div>
 
                   {/* IDC Internal Image with Play Video overlay (next to info, height matches contact info) */}
                   <div
                     style={{
                       position: 'relative',
-                      flex: '0 0 var(--idc-video-width, clamp(260px, 26vw, 400px))',
+                      flex: '0 0 var(--idc-video-width, clamp(220px, 22vw, 340px))',
                       alignSelf: 'flex-start'
                     }}
                   >
@@ -3130,31 +3692,34 @@ export default function App() {
                     <button
                       onClick={() => window.open('https://idc-arabia.com/ar/', '_blank', 'noopener,noreferrer')}
                       style={{
-                        padding: 'var(--idc-button-padding, clamp(14px, 1.6vw, 22px) clamp(32px, 3.2vw, 48px))',
-                        fontSize: 'var(--idc-button-font, clamp(15px, 1.6vw, 22px))',
+                        padding: 'clamp(12px, 1.4vw, 16px) clamp(28px, 2.8vw, 38px)',
+                        fontSize: 'clamp(14px, 1.4vw, 18px)',
                         fontWeight: 700,
                         color: '#ffffff',
-                        background: '#0b6fbf',
-                        border: 'none',
+                        background: 'linear-gradient(135deg, #0b6fbf 0%, #0d7fd4 50%, #0b6fbf 100%)',
+                        border: '2px solid #0b6fbf',
                         borderRadius: '999px',
                         cursor: 'pointer',
-                        boxShadow: '0 4px 15px rgba(11, 111, 191, 0.4)',
-                        transition: 'all 0.3s ease',
-                        letterSpacing: '0.5px',
+                        boxShadow: '0 6px 20px rgba(11, 111, 191, 0.5), 0 0 0 0 rgba(11, 111, 191, 0.4)',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        letterSpacing: '0.8px',
                         textTransform: 'uppercase',
                         minWidth: 'clamp(200px, 20vw, 280px)',
                         width: 'clamp(200px, 20vw, 280px)',
-                        alignSelf: 'flex-start'
+                        alignSelf: 'flex-start',
+                        textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                        position: 'relative',
+                        overflow: 'hidden'
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(11, 111, 191, 0.5)';
-                        e.currentTarget.style.background = '#0d7fd4';
+                        e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(11, 111, 191, 0.6), 0 0 0 4px rgba(11, 111, 191, 0.2)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #0d7fd4 0%, #0b6fbf 50%, #0d7fd4 100%)';
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(11, 111, 191, 0.4)';
-                        e.currentTarget.style.background = '#0b6fbf';
+                        e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(11, 111, 191, 0.5), 0 0 0 0 rgba(11, 111, 191, 0.4)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #0b6fbf 0%, #0d7fd4 50%, #0b6fbf 100%)';
                   }}
                 >
                       Visit Website
@@ -3164,70 +3729,75 @@ export default function App() {
                     <button
                       onClick={() => window.open('https://idc-arabia.com/ar/%d8%a7%d9%84%d8%b1%d8%a6%d9%8a%d8%b3%d9%8a%d8%a9/#SERVICES', '_blank', 'noopener,noreferrer')}
                       style={{
-                        padding: 'var(--idc-button-padding, clamp(14px, 1.6vw, 22px) clamp(32px, 3.2vw, 48px))',
-                        fontSize: 'var(--idc-button-font, clamp(15px, 1.6vw, 22px))',
+                        padding: 'clamp(12px, 1.4vw, 16px) clamp(28px, 2.8vw, 38px)',
+                        fontSize: 'clamp(14px, 1.4vw, 18px)',
                         fontWeight: 700,
                         color: '#ffffff',
-                        background: '#0b6fbf',
-                        border: 'none',
+                        background: 'linear-gradient(135deg, #0b6fbf 0%, #0d7fd4 50%, #0b6fbf 100%)',
+                        border: '2px solid #0b6fbf',
                         borderRadius: '999px',
                         cursor: 'pointer',
-                        boxShadow: '0 4px 15px rgba(11, 111, 191, 0.4)',
-                        transition: 'all 0.3s ease',
-                        letterSpacing: '0.5px',
+                        boxShadow: '0 6px 20px rgba(11, 111, 191, 0.5), 0 0 0 0 rgba(11, 111, 191, 0.4)',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        letterSpacing: '0.8px',
                         textTransform: 'uppercase',
                         minWidth: 'clamp(200px, 20vw, 280px)',
                         width: 'clamp(200px, 20vw, 280px)',
-                        alignSelf: 'flex-start'
+                        alignSelf: 'flex-start',
+                        textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                        position: 'relative',
+                        overflow: 'hidden'
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(11, 111, 191, 0.5)';
-                        e.currentTarget.style.background = '#0d7fd4';
+                        e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(11, 111, 191, 0.6), 0 0 0 4px rgba(11, 111, 191, 0.2)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #0d7fd4 0%, #0b6fbf 50%, #0d7fd4 100%)';
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(11, 111, 191, 0.4)';
-                        e.currentTarget.style.background = '#0b6fbf';
+                        e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(11, 111, 191, 0.5), 0 0 0 0 rgba(11, 111, 191, 0.4)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #0b6fbf 0%, #0d7fd4 50%, #0b6fbf 100%)';
                       }}
                     >
                       Our Services
                     </button>
                     
-                    {/* Learn More Button */}
-                <button
-                  onClick={() => setShowIDCLearnMore(true)}
-                  style={{
-                        padding: 'var(--idc-button-padding, clamp(14px, 1.6vw, 22px) clamp(32px, 3.2vw, 48px))',
-                    fontSize: 'var(--idc-button-font, clamp(15px, 1.6vw, 22px))',
-                      fontWeight: 700,
-                    color: '#ffffff',
-                    background: '#0b6fbf',
-                    border: 'none',
-                      borderRadius: '999px',
-                    cursor: 'pointer',
-                    boxShadow: '0 4px 15px rgba(11, 111, 191, 0.4)',
-                    transition: 'all 0.3s ease',
-                    letterSpacing: '0.5px',
-                    textTransform: 'uppercase',
-                        animation: 'fadeInUp 0.8s ease-out 0.8s both',
-                        minWidth: 'clamp(200px, 20vw, 280px)',
-                        width: 'clamp(200px, 20vw, 280px)',
-                        alignSelf: 'flex-start'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(11, 111, 191, 0.5)';
-                    e.currentTarget.style.background = '#0d7fd4';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(11, 111, 191, 0.4)';
-                    e.currentTarget.style.background = '#0b6fbf';
-                  }}
-                >
-                  Learn More
-                </button>
+                  {/* Learn More Button */}
+                 <button
+                   onClick={() => setShowIDCLearnMore(true)}
+                   style={{
+                        padding: 'clamp(12px, 1.4vw, 16px) clamp(28px, 2.8vw, 38px)',
+                     fontSize: 'clamp(14px, 1.4vw, 18px)',
+                       fontWeight: 700,
+                     color: '#ffffff',
+                     background: 'linear-gradient(135deg, #0b6fbf 0%, #0d7fd4 50%, #0b6fbf 100%)',
+                     border: '2px solid #0b6fbf',
+                       borderRadius: '999px',
+                     cursor: 'pointer',
+                     boxShadow: '0 6px 20px rgba(11, 111, 191, 0.5), 0 0 0 0 rgba(11, 111, 191, 0.4)',
+                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                     letterSpacing: '0.8px',
+                     textTransform: 'uppercase',
+                         minWidth: 'clamp(200px, 20vw, 280px)',
+                         width: 'clamp(200px, 20vw, 280px)',
+                         alignSelf: 'flex-start',
+                         textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                         position: 'relative',
+                         overflow: 'hidden'
+                   }}
+                   onMouseEnter={(e) => {
+                     e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                         e.currentTarget.style.boxShadow = '0 8px 25px rgba(11, 111, 191, 0.6), 0 0 0 4px rgba(11, 111, 191, 0.2)';
+                     e.currentTarget.style.background = 'linear-gradient(135deg, #0d7fd4 0%, #0b6fbf 50%, #0d7fd4 100%)';
+                   }}
+                   onMouseLeave={(e) => {
+                     e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                         e.currentTarget.style.boxShadow = '0 6px 20px rgba(11, 111, 191, 0.5), 0 0 0 0 rgba(11, 111, 191, 0.4)';
+                     e.currentTarget.style.background = 'linear-gradient(135deg, #0b6fbf 0%, #0d7fd4 50%, #0b6fbf 100%)';
+                   }}
+                 >
+                   Learn More
+                 </button>
                   </div>
 
                 <div
@@ -3622,6 +4192,7 @@ export default function App() {
                   style={{
                     fontSize: 'var(--antique-title-size, clamp(28px, 3.8vw, 52px))',
                     fontWeight: '900',
+                    marginTop: 'clamp(20px, 3vh, 40px)',
                     marginBottom: 'clamp(12px, 2vh, 24px)',
                     letterSpacing: '1.6px',
                     color: '#f3c06b',
@@ -3638,7 +4209,13 @@ export default function App() {
                     lineHeight: '1.75',
                     marginBottom: 'clamp(20px, 3vh, 32px)',
                     color: '#f9fafb',
-                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both'
+                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both',
+                    padding: 'clamp(12px, 1.5vh, 18px) clamp(16px, 2vw, 24px)',
+                    background: 'rgba(0, 0, 0, 0.45)',
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(243, 192, 107, 0.1), -4px 0 16px rgba(243, 192, 107, 0.4)',
+                    borderLeft: '5px solid #f3c06b',
+                    position: 'relative'
                   }}
                 >
                   Antique Creations (ACWM) is a leading Saudi-based contracting company established in 2016 and proudly part of the Ali Al-Harbi Group (Alika). Antique Creations specializes in engineering, finishing, and comprehensive Mechanical, Electrical, and Plumbing (MEP) building services, holding the highest first-degree classification for contracting in Saudi Arabia.
@@ -3714,22 +4291,7 @@ export default function App() {
                         gap: '10px'
                       }}
                     >
-                      <strong style={{ minWidth: '110px', fontWeight: 800 }}>Website:</strong>
-                      <a
-                        href="https://acwm-sa.com"
-                        target="_blank"
-                        rel="noreferrer"
-                        style={{
-                          color: '#f9fafb',
-                          textDecoration: 'underline',
-                          fontWeight: 700,
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis'
-                        }}
-                      >
-                        acwm-sa.com
-                      </a>
+                     
                     </div>
                   </div>
 
@@ -3837,54 +4399,131 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Bottom row: Learn More + QR Code */}
+                {/* Bottom row: Buttons + QR Code */}
                 <div
                   style={{
                     display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    gap: 'clamp(16px, 2vw, 28px)',
+                    alignItems: 'flex-start',
+                    gap: 'clamp(20px, 2.5vw, 40px)',
                     marginTop: 'clamp(8px, 1.6vh, 16px)',
-                    paddingBottom: 'clamp(10px, 2vh, 20px)',
-                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 540ms both'
+                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 500ms both',
+                    flexWrap: 'wrap'
                   }}
                 >
-                  {/* Learn More Button */}
-                  <button
-                    onClick={() => setShowAntiqueLearnMore(true)}
+                  {/* Buttons Container - Visit Website, Our Services, and Learn More */}
+                  <div
                     style={{
-                      padding: 'clamp(10px, 1.2vw, 14px) clamp(26px, 2.6vw, 34px)',
-                      fontSize: 'clamp(13px, 1.3vw, 17px)',
-                      fontWeight: 700,
-                      color: '#000000',
-                      background: '#f3c06b',
-                      border: '1px solid #f3c06b',
-                      borderRadius: '999px',
-                      cursor: 'pointer',
-                      boxShadow: '0 4px 14px rgba(243, 192, 107, 0.4)',
-                      transition: 'all 0.25s ease',
-                      letterSpacing: '0.6px',
-                      textTransform: 'uppercase'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                      e.currentTarget.style.boxShadow = '0 6px 18px rgba(243, 192, 107, 0.55)';
-                      e.currentTarget.style.background = '#f5c97a';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 4px 14px rgba(243, 192, 107, 0.4)';
-                      e.currentTarget.style.background = '#f3c06b';
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: viewportSize.width === 1536 && viewportSize.height === 864 ? '2px' : 'clamp(3px, 0.4vh, 5px)',
+                      flexShrink: 0
                     }}
                   >
-                    Learn More
-                  </button>
-                  
-                  {/* QR Code at bottom, opposite Learn More */}
+                    {/* Visit Website Button */}
+                    <button
+                      onClick={() => window.open('https://acwm-sa.com', '_blank', 'noopener,noreferrer')}
+                      style={{
+                        padding: 'clamp(10px, 1.2vw, 14px) clamp(26px, 2.6vw, 34px)',
+                        fontSize: 'clamp(13px, 1.3vw, 17px)',
+                        fontWeight: 700,
+                        color: '#000000',
+                        background: '#f3c06b',
+                        border: '1px solid #f3c06b',
+                        borderRadius: '999px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 14px rgba(243, 192, 107, 0.4)',
+                        transition: 'all 0.25s ease',
+                        letterSpacing: '0.6px',
+                        textTransform: 'uppercase',
+                        alignSelf: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 18px rgba(243, 192, 107, 0.55)';
+                        e.currentTarget.style.background = '#f5c97a';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 14px rgba(243, 192, 107, 0.4)';
+                        e.currentTarget.style.background = '#f3c06b';
+                      }}
+                    >
+                      Visit Website
+                    </button>
+
+                    {/* Our Services Button */}
+                    <button
+                      onClick={() => window.open('https://acwm-sa.com', '_blank', 'noopener,noreferrer')}
+                      style={{
+                        padding: 'clamp(10px, 1.2vw, 14px) clamp(26px, 2.6vw, 34px)',
+                        fontSize: 'clamp(13px, 1.3vw, 17px)',
+                        fontWeight: 700,
+                        color: '#000000',
+                        background: '#f3c06b',
+                        border: '1px solid #f3c06b',
+                        borderRadius: '999px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 14px rgba(243, 192, 107, 0.4)',
+                        transition: 'all 0.25s ease',
+                        letterSpacing: '0.6px',
+                        textTransform: 'uppercase',
+                        alignSelf: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 18px rgba(243, 192, 107, 0.55)';
+                        e.currentTarget.style.background = '#f5c97a';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 14px rgba(243, 192, 107, 0.4)';
+                        e.currentTarget.style.background = '#f3c06b';
+                      }}
+                    >
+                      Our Services
+                    </button>
+
+                    {/* Learn More Button */}
+                    <button
+                      onClick={() => setShowAntiqueLearnMore(true)}
+                      style={{
+                        padding: 'clamp(10px, 1.2vw, 14px) clamp(26px, 2.6vw, 34px)',
+                        fontSize: 'clamp(13px, 1.3vw, 17px)',
+                        fontWeight: 700,
+                        color: '#000000',
+                        background: '#f3c06b',
+                        border: '1px solid #f3c06b',
+                        borderRadius: '999px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 14px rgba(243, 192, 107, 0.4)',
+                        transition: 'all 0.25s ease',
+                        letterSpacing: '0.6px',
+                        textTransform: 'uppercase',
+                        alignSelf: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 18px rgba(243, 192, 107, 0.55)';
+                        e.currentTarget.style.background = '#f5c97a';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 14px rgba(243, 192, 107, 0.4)';
+                        e.currentTarget.style.background = '#f3c06b';
+                      }}
+                    >
+                      Learn More
+                    </button>
+                  </div>
+
+                  {/* QR Code - Same level as buttons */}
                   <div
                     style={{
                       animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 580ms both',
-                      flexShrink: 0
+                      flexShrink: 0,
+                      alignSelf: 'flex-start',
+                      marginTop: viewportSize.width === 1536 && viewportSize.height === 864 ? '0px' : 'clamp(8px, 1.6vh, 16px)',
+                      marginLeft: viewportSize.width === 1536 && viewportSize.height === 864 ? 'auto' : '0px'
                     }}
                   >
                     <img
@@ -4182,7 +4821,7 @@ export default function App() {
                   direction: 'ltr',
                   textAlign: 'left',
                   zIndex: 11,
-                  padding: 'clamp(32px, 4vw, 52px) clamp(32px, 4vw, 52px) clamp(40px, 5vw, 64px)',
+                  padding: 'clamp(22px, 2.8vw, 40px) clamp(22px, 2.8vw, 40px) clamp(26px, 3.2vw, 44px)',
                   borderRadius: '20px',
                   background: 'rgba(0, 0, 0, 0.55)',
                   backdropFilter: 'blur(12px)',
@@ -4205,13 +4844,19 @@ export default function App() {
                 />
                 <h1
                   style={{
-                    fontSize: 'var(--central-title-size, clamp(28px, 3.8vw, 52px))',
+                    fontSize: 'var(--central-title-size, clamp(30px, 4vw, 56px))',
                     fontWeight: '900',
-                    marginBottom: 'clamp(12px, 2vh, 24px)',
-                    letterSpacing: '1.6px',
-                    color: '#bfa874',
+                    marginBottom: 'clamp(14px, 2.2vh, 26px)',
+                    letterSpacing: '2.2px',
+                    background: 'linear-gradient(135deg, #bfa874 0%, #e3d1a3 50%, #bfa874 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
                     textTransform: 'uppercase',
-                    animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both'
+                    textShadow: '0 0 30px rgba(191, 168, 116, 0.4), 0 4px 20px rgba(191, 168, 116, 0.3)',
+                    animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both',
+                    display: 'inline-block',
+                    filter: 'drop-shadow(0 2px 8px rgba(191, 168, 116, 0.45))'
                   }}
                 >
                   CENTRAL MEDICALCARE
@@ -4219,11 +4864,19 @@ export default function App() {
 
                 <p
                   style={{
-                    fontSize: 'var(--central-text-size, clamp(15px, 1.7vw, 24px))',
-                    lineHeight: '1.75',
-                    marginBottom: 'clamp(20px, 3vh, 32px)',
-                    color: '#f9fafb',
-                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both'
+                    fontSize: 'var(--central-text-size, clamp(14px, 1.6vw, 22px))',
+                    lineHeight: '1.85',
+                    marginBottom: 'clamp(18px, 2.6vh, 28px)',
+                    color: '#111827',
+                    fontWeight: 500,
+                    letterSpacing: '0.25px',
+                    textShadow: '0 1px 3px rgba(0, 0, 0, 0.08)',
+                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both',
+                    padding: 'clamp(12px, 1.5vh, 18px) clamp(16px, 2vw, 24px)',
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.10), 0 0 0 1px rgba(191, 168, 116, 0.14)',
+                    borderLeft: '4px solid #bfa874'
                   }}
                 >
                   CENTRAL MEDICALCARE is a comprehensive medical and aesthetic center located in Al-Khobar, Saudi Arabia. The center provides high-quality medical services including dermatology, laser treatments, and aesthetic care.
@@ -4244,16 +4897,18 @@ export default function App() {
                   {/* Text info (Managers / Mobile / Email / Website) */}
                   <div
                     style={{
-                      fontSize: 'var(--central-info-size, clamp(13px, 1.4vw, 20px))',
-                      lineHeight: '1.8',
-                      color: '#ffffff',
+                      fontSize: 'var(--central-info-size, clamp(14px, 1.5vw, 20px))',
+                      lineHeight: '1.9',
+                      color: '#111827',
                       flex: '1 1 auto',
                       minWidth: '280px',
-                      padding: 'clamp(12px, 1.6vh, 18px) clamp(16px, 2vw, 24px)',
-                      borderRadius: '10px',
-                      background: 'rgba(0, 0, 0, 0.45)',
-                      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.45)',
-                      overflow: 'visible'
+                      padding: 'clamp(16px, 2vh, 20px) clamp(20px, 2.2vw, 28px)',
+                      borderRadius: '14px',
+                      background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 250, 240, 0.95) 100%)',
+                      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(191, 168, 116, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
+                      border: '1px solid rgba(191, 168, 116, 0.22)',
+                      backdropFilter: 'blur(10px)',
+                      overflow: 'hidden'
                     }}
                   >
                     <div
@@ -4261,38 +4916,45 @@ export default function App() {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '10px',
-                        marginBottom: 'clamp(6px, 1vh, 10px)'
+                        marginBottom: 'clamp(10px, 1.4vh, 14px)',
+                        paddingBottom: 'clamp(8px, 1.2vh, 12px)',
+                        borderBottom: '1px solid rgba(191, 168, 116, 0.18)'
                       }}
                     >
-                      <strong style={{ minWidth: '110px', fontWeight: 800 }}>Managers:</strong>
-                      <span>Dr. Atif Idress.</span>
+                      <strong style={{ minWidth: '110px', fontWeight: 800, color: '#bfa874', letterSpacing: '0.5px', textShadow: '0 1px 2px rgba(191, 168, 116, 0.2)' }}>Managers:</strong>
+                      <span style={{ fontWeight: 600, letterSpacing: '0.2px' }}>Dr. Atif Idress.</span>
                     </div>
                     <div
                       style={{
                         display: 'flex',
                         alignItems: 'center',
                         gap: '10px',
-                        marginBottom: 'clamp(6px, 1vh, 10px)'
+                        marginBottom: 'clamp(10px, 1.4vh, 14px)',
+                        paddingBottom: 'clamp(8px, 1.2vh, 12px)',
+                        borderBottom: '1px solid rgba(191, 168, 116, 0.18)'
                       }}
                     >
-                      <strong style={{ minWidth: '110px', fontWeight: 800 }}>Mobile:</strong>
-                      <span>050 471 5053</span>
+                      <strong style={{ minWidth: '110px', fontWeight: 800, color: '#bfa874', letterSpacing: '0.5px', textShadow: '0 1px 2px rgba(191, 168, 116, 0.2)' }}>Mobile:</strong>
+                      <span style={{ fontWeight: 600, letterSpacing: '0.2px', fontFamily: 'monospace' }}>050 471 5053</span>
                     </div>
                     <div
                       style={{
                         display: 'flex',
                         alignItems: 'center',
                         gap: '10px',
-                        marginBottom: 'clamp(6px, 1vh, 10px)'
+                        marginBottom: 'clamp(10px, 1.4vh, 14px)'
                       }}
                     >
-                      <strong style={{ minWidth: '70px', fontWeight: 800, flexShrink: 0 }}>Email:</strong>
+                      <strong style={{ minWidth: '110px', fontWeight: 800, flexShrink: 0, color: '#bfa874', letterSpacing: '0.5px', textShadow: '0 1px 2px rgba(191, 168, 116, 0.2)' }}>Email:</strong>
                       <span
                         style={{
                           whiteSpace: 'nowrap',
                           flex: '1 1 auto',
                           minWidth: 0,
-                          overflow: 'visible'
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          fontWeight: 600,
+                          letterSpacing: '0.2px'
                         }}
                       >
                         hshash@centralmedicalcare.com
@@ -4305,30 +4967,7 @@ export default function App() {
                         gap: '10px'
                       }}
                     >
-                      <strong style={{ minWidth: '75px', fontWeight: 800, flexShrink: 0 }}>Website:</strong>
-                      <a
-                        href="https://www.centralmedicalcare.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          color: '#0b6fbf',
-                          textDecoration: 'none',
-                          fontWeight: 700,
-                          cursor: 'pointer',
-                          whiteSpace: 'nowrap',
-                          flex: '1 1 auto',
-                          minWidth: 0,
-                          overflow: 'visible'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.textDecoration = 'underline';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.textDecoration = 'none';
-                        }}
-                      >
-                        www.centralmedicalcare.com
-                      </a>
+                    
                     </div>
                   </div>
 
@@ -4441,57 +5080,134 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Bottom row: Learn More + QR Code */}
+                {/* Bottom row: Buttons + QR Code */}
                 <div
                   style={{
                     display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    gap: 'clamp(16px, 2vw, 28px)',
+                    alignItems: 'flex-start',
+                    gap: 'clamp(20px, 2.5vw, 40px)',
                     marginTop: 'clamp(8px, 1.6vh, 16px)',
-                    paddingBottom: 'clamp(10px, 2vh, 20px)',
-                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 540ms both'
+                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 500ms both',
+                    flexWrap: 'wrap'
                   }}
                 >
-                  {/* Learn More Button */}
-                  <button
-                    onClick={() => {
-                      setShowCentralMedicalcareLearnMore(true);
-                      setCentralMedicalcareActiveTab('tab1');
-                    }}
+                  {/* Buttons Container - Visit Website, Our Services, and Learn More */}
+                  <div
                     style={{
-                      padding: 'clamp(10px, 1.2vw, 14px) clamp(26px, 2.6vw, 34px)',
-                      fontSize: 'clamp(13px, 1.3vw, 17px)',
-                      fontWeight: 700,
-                      color: '#ffffff',
-                      background: '#bfa874',
-                      border: '1px solid #bfa874',
-                      borderRadius: '999px',
-                      cursor: 'pointer',
-                      boxShadow: '0 4px 14px rgba(191, 168, 116, 0.4)',
-                      transition: 'all 0.25s ease',
-                      letterSpacing: '0.6px',
-                      textTransform: 'uppercase'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                      e.currentTarget.style.boxShadow = '0 6px 18px rgba(191, 168, 116, 0.55)';
-                      e.currentTarget.style.background = '#c9b584';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 4px 14px rgba(191, 168, 116, 0.4)';
-                      e.currentTarget.style.background = '#bfa874';
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: viewportSize.width === 1536 && viewportSize.height === 864 ? '2px' : 'clamp(3px, 0.4vh, 5px)',
+                      flexShrink: 0
                     }}
                   >
-                    Learn More
-                  </button>
-                  
-                  {/* QR Code at bottom, opposite Learn More */}
+                    {/* Visit Website Button */}
+                    <button
+                      onClick={() => window.open('https://www.centralmedicalcare.com/', '_blank', 'noopener,noreferrer')}
+                      style={{
+                        padding: 'clamp(10px, 1.2vw, 14px) clamp(26px, 2.6vw, 34px)',
+                        fontSize: 'clamp(13px, 1.3vw, 17px)',
+                        fontWeight: 700,
+                        color: '#ffffff',
+                        background: '#bfa874',
+                        border: '1px solid #bfa874',
+                        borderRadius: '999px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 14px rgba(191, 168, 116, 0.4)',
+                        transition: 'all 0.25s ease',
+                        letterSpacing: '0.6px',
+                        textTransform: 'uppercase',
+                        alignSelf: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 18px rgba(191, 168, 116, 0.55)';
+                        e.currentTarget.style.background = '#c9b584';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 14px rgba(191, 168, 116, 0.4)';
+                        e.currentTarget.style.background = '#bfa874';
+                      }}
+                    >
+                      Visit Website
+                    </button>
+
+                    {/* Our Services Button */}
+                    <button
+                      onClick={() => window.open('https://www.centralmedicalcare.com/', '_blank', 'noopener,noreferrer')}
+                      style={{
+                        padding: 'clamp(10px, 1.2vw, 14px) clamp(26px, 2.6vw, 34px)',
+                        fontSize: 'clamp(13px, 1.3vw, 17px)',
+                        fontWeight: 700,
+                        color: '#ffffff',
+                        background: '#bfa874',
+                        border: '1px solid #bfa874',
+                        borderRadius: '999px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 14px rgba(191, 168, 116, 0.4)',
+                        transition: 'all 0.25s ease',
+                        letterSpacing: '0.6px',
+                        textTransform: 'uppercase',
+                        alignSelf: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 18px rgba(191, 168, 116, 0.55)';
+                        e.currentTarget.style.background = '#c9b584';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 14px rgba(191, 168, 116, 0.4)';
+                        e.currentTarget.style.background = '#bfa874';
+                      }}
+                    >
+                      Our Services
+                    </button>
+
+                    {/* Learn More Button */}
+                    <button
+                      onClick={() => {
+                        setShowCentralMedicalcareLearnMore(true);
+                        setCentralMedicalcareActiveTab('tab1');
+                      }}
+                      style={{
+                        padding: 'clamp(10px, 1.2vw, 14px) clamp(26px, 2.6vw, 34px)',
+                        fontSize: 'clamp(13px, 1.3vw, 17px)',
+                        fontWeight: 700,
+                        color: '#ffffff',
+                        background: '#bfa874',
+                        border: '1px solid #bfa874',
+                        borderRadius: '999px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 14px rgba(191, 168, 116, 0.4)',
+                        transition: 'all 0.25s ease',
+                        letterSpacing: '0.6px',
+                        textTransform: 'uppercase',
+                        alignSelf: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 18px rgba(191, 168, 116, 0.55)';
+                        e.currentTarget.style.background = '#c9b584';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 14px rgba(191, 168, 116, 0.4)';
+                        e.currentTarget.style.background = '#bfa874';
+                      }}
+                    >
+                      Learn More
+                    </button>
+                  </div>
+
+                  {/* QR Code - Same level as buttons */}
                   <div
                     style={{
                       animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 580ms both',
-                      flexShrink: 0
+                      flexShrink: 0,
+                      alignSelf: 'flex-start',
+                      marginTop: viewportSize.width === 1536 && viewportSize.height === 864 ? '0px' : 'clamp(8px, 1.6vh, 16px)',
+                      marginLeft: viewportSize.width === 1536 && viewportSize.height === 864 ? 'auto' : '0px'
                     }}
                   >
                     <img
@@ -4906,7 +5622,13 @@ export default function App() {
                     lineHeight: '1.75',
                     marginBottom: 'clamp(20px, 3vh, 32px)',
                     color: '#16348a',
-                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both'
+                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both',
+                    padding: 'clamp(12px, 1.5vh, 18px) clamp(16px, 2vw, 24px)',
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(22, 52, 138, 0.1), -4px 0 16px rgba(22, 52, 138, 0.4)',
+                    borderLeft: '5px solid #16348a',
+                    position: 'relative'
                   }}
                 >
                   Gulf Consult (Architects and Engineers) is a leading Saudi-based contracting company established in 2016 and proudly part of the Ali Al-Harbi Group (Alika). Gulf Consult specializes in engineering, finishing, and comprehensive Mechanical, Electrical, and Plumbing (MEP) building services, holding the highest first-degree classification for contracting in Saudi Arabia.
@@ -5098,7 +5820,7 @@ export default function App() {
                   <div style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: 'clamp(12px, 1.5vh, 18px)',
+                    gap: 'clamp(8px, 1vh, 12px)',
                     animation: 'fadeInUp 0.8s ease-out 0.7s both'
                   }}>
                     {/* Visit Website Button */}
@@ -5500,10 +6222,13 @@ export default function App() {
                   right: 'clamp(40px, 4vw, 80px)',
                   transform: 'translateY(-50%)',
                   maxWidth: 'var(--dorrah-content-max-width, clamp(600px, 50vw, 900px))',
+                  maxHeight: 'calc(100vh - clamp(60px, 6vh, 100px))',
                   color: '#ffffff',
                   direction: 'ltr',
                   textAlign: 'left',
-                  zIndex: 11
+                  zIndex: 11,
+                  overflowY: 'visible',
+                  overflowX: 'visible'
                 }}
               >
                 <h1
@@ -5539,7 +6264,13 @@ export default function App() {
                     lineHeight: '1.75',
                     marginBottom: 'clamp(20px, 3vh, 32px)',
                     color: '#e5f8ff',
-                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both'
+                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both',
+                    padding: 'clamp(12px, 1.5vh, 18px) clamp(16px, 2vw, 24px)',
+                    background: 'rgba(0, 0, 0, 0.45)',
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(51, 209, 143, 0.1), -4px 0 16px rgba(51, 209, 143, 0.4)',
+                    borderLeft: '5px solid #33d18f',
+                    position: 'relative'
                   }}
                 >
                   Gulf Dorrah Real Estate Development is a Saudi-based company specializing in luxury residential properties with modern designs and high-quality construction. The company focuses on creating community apartments that offer comfort, privacy, and contemporary design, ensuring long-term value for families and residents. Each project is carefully developed with attention to detail, quality materials, and practical layouts that support a modern lifestyle.
@@ -5615,16 +6346,7 @@ export default function App() {
                         gap: '10px'
                       }}
                     >
-                      <strong style={{ minWidth: '110px', fontWeight: 800 }}>Website:</strong>
-                      <span
-                        style={{
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis'
-                        }}
-                      >
-                        https://dorrah.topacademy.website/#
-                      </span>
+                      
                     </div>
                   </div>
 
@@ -5732,54 +6454,131 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Bottom row: Learn More + QR Code */}
+                {/* Buttons and QR Code Container - Horizontal layout */}
                 <div
                   style={{
                     display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    gap: 'clamp(16px, 2vw, 28px)',
+                    alignItems: 'flex-start',
+                    gap: 'clamp(20px, 2.5vw, 40px)',
                     marginTop: 'clamp(8px, 1.6vh, 16px)',
-                    paddingBottom: 'clamp(10px, 2vh, 20px)',
-                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 540ms both'
+                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 500ms both',
+                    flexWrap: 'wrap'
                   }}
                 >
-                  {/* Learn More Button */}
-                  <button
-                    onClick={() => setShowGulfDorrahLearnMore(true)}
+                  {/* Buttons Container - Visit Website, Our Services, and Learn More */}
+                  <div
                     style={{
-                      padding: 'clamp(10px, 1.2vw, 14px) clamp(26px, 2.6vw, 34px)',
-                      fontSize: 'clamp(13px, 1.3vw, 17px)',
-                      fontWeight: 700,
-                      color: '#ffffff',
-                      background: 'linear-gradient(135deg, #33d18f 0%, #29a4ff 100%)',
-                      border: '1px solid #33d18f',
-                      borderRadius: '999px',
-                      cursor: 'pointer',
-                      boxShadow: '0 4px 14px rgba(51, 209, 143, 0.4)',
-                      transition: 'all 0.25s ease',
-                      letterSpacing: '0.6px',
-                      textTransform: 'uppercase'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                      e.currentTarget.style.boxShadow = '0 6px 18px rgba(51, 209, 143, 0.55)';
-                      e.currentTarget.style.background = 'linear-gradient(135deg, #3de09f 0%, #35b4ff 100%)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 4px 14px rgba(51, 209, 143, 0.4)';
-                      e.currentTarget.style.background = 'linear-gradient(135deg, #33d18f 0%, #29a4ff 100%)';
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: viewportSize.width === 1536 && viewportSize.height === 864 ? '2px' : 'clamp(3px, 0.4vh, 5px)',
+                      flexShrink: 0
                     }}
                   >
-                    Learn More
-                  </button>
-                  
-                  {/* QR Code at bottom, opposite Learn More */}
+                    {/* Visit Website Button */}
+                    <button
+                      onClick={() => window.open('https://dorrah.topacademy.website/#', '_blank', 'noopener,noreferrer')}
+                      style={{
+                        padding: 'clamp(10px, 1.2vw, 14px) clamp(26px, 2.6vw, 34px)',
+                        fontSize: 'clamp(13px, 1.3vw, 17px)',
+                        fontWeight: 700,
+                        color: '#ffffff',
+                        background: 'linear-gradient(135deg, #33d18f 0%, #29a4ff 100%)',
+                        border: '1px solid #33d18f',
+                        borderRadius: '999px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 14px rgba(51, 209, 143, 0.4)',
+                        transition: 'all 0.25s ease',
+                        letterSpacing: '0.6px',
+                        textTransform: 'uppercase',
+                        alignSelf: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 18px rgba(51, 209, 143, 0.55)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #3de09f 0%, #35b4ff 100%)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 14px rgba(51, 209, 143, 0.4)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #33d18f 0%, #29a4ff 100%)';
+                      }}
+                    >
+                      Visit Website
+                    </button>
+
+                    {/* Our Services Button */}
+                    <button
+                      onClick={() => window.open('https://dorrah.topacademy.website/#', '_blank', 'noopener,noreferrer')}
+                      style={{
+                        padding: 'clamp(10px, 1.2vw, 14px) clamp(26px, 2.6vw, 34px)',
+                        fontSize: 'clamp(13px, 1.3vw, 17px)',
+                        fontWeight: 700,
+                        color: '#ffffff',
+                        background: 'linear-gradient(135deg, #33d18f 0%, #29a4ff 100%)',
+                        border: '1px solid #33d18f',
+                        borderRadius: '999px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 14px rgba(51, 209, 143, 0.4)',
+                        transition: 'all 0.25s ease',
+                        letterSpacing: '0.6px',
+                        textTransform: 'uppercase',
+                        alignSelf: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 18px rgba(51, 209, 143, 0.55)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #3de09f 0%, #35b4ff 100%)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 14px rgba(51, 209, 143, 0.4)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #33d18f 0%, #29a4ff 100%)';
+                      }}
+                    >
+                      Our Services
+                    </button>
+
+                    {/* Learn More Button */}
+                    <button
+                      onClick={() => setShowGulfDorrahLearnMore(true)}
+                      style={{
+                        padding: 'clamp(10px, 1.2vw, 14px) clamp(26px, 2.6vw, 34px)',
+                        fontSize: 'clamp(13px, 1.3vw, 17px)',
+                        fontWeight: 700,
+                        color: '#ffffff',
+                        background: 'linear-gradient(135deg, #33d18f 0%, #29a4ff 100%)',
+                        border: '1px solid #33d18f',
+                        borderRadius: '999px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 14px rgba(51, 209, 143, 0.4)',
+                        transition: 'all 0.25s ease',
+                        letterSpacing: '0.6px',
+                        textTransform: 'uppercase',
+                        alignSelf: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 6px 18px rgba(51, 209, 143, 0.55)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #3de09f 0%, #35b4ff 100%)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 4px 14px rgba(51, 209, 143, 0.4)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #33d18f 0%, #29a4ff 100%)';
+                      }}
+                    >
+                      Learn More
+                    </button>
+                  </div>
+
+                  {/* QR Code - Same level as buttons */}
                   <div
                     style={{
                       animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 580ms both',
-                      flexShrink: 0
+                      flexShrink: 0,
+                      alignSelf: 'flex-start',
+                      marginTop: viewportSize.width === 1536 && viewportSize.height === 864 ? '0px' : 'clamp(8px, 1.6vh, 16px)',
+                      marginLeft: viewportSize.width === 1536 && viewportSize.height === 864 ? 'auto' : '0px'
                     }}
                   >
                     <img
@@ -5968,22 +6767,21 @@ export default function App() {
                 className="gta-content"
                 style={{
                   position: 'fixed',
-                  top: 'clamp(55%, 55vh, 60%)',
-                  right: 'clamp(12px, 1.2vw, 28px)',
-                  transform: 'translateY(-50%)',
-                  maxWidth: 'clamp(520px, 54vw, 750px)',
+                  top: 'clamp(80px, 8vh, 120px)',
+                  right: 'clamp(40px, 4vw, 80px)',
+                  maxWidth: 'var(--amt-content-max-width, clamp(600px, 50vw, 900px))',
+                  maxHeight: 'calc(100vh - clamp(60px, 6vh, 100px))',
                   height: 'auto',
-                  width: 'clamp(520px, 54vw, 750px)',
+                  width: 'auto',
                   color: '#000000',
                   direction: 'ltr',
                   textAlign: 'left',
                   zIndex: 11,
-                  overflow: 'visible',
+                  overflowY: 'visible',
+                  overflowX: 'visible',
                   display: 'flex',
                   flexDirection: 'column',
-                  justifyContent: 'flex-start',
-                  paddingTop: 'clamp(24px, 2.5vh, 48px)',
-                  paddingBottom: 'clamp(24px, 2.5vh, 48px)'
+                  justifyContent: 'flex-start'
                 }}
               >
                 {/* White Content Box with Red Borders */}
@@ -5992,19 +6790,20 @@ export default function App() {
                     background: 'rgba(255, 255, 255, 0.95)',
                     backdropFilter: 'blur(10px)',
                     borderRadius: '12px',
-                    padding: 'clamp(24px, 2.8vw, 42px)',
+                    padding: 'clamp(12px, 1.5vw, 20px) clamp(14px, 1.8vw, 24px) clamp(32px, 4vh, 50px)',
                     borderLeft: '4px solid #dc2626',
                     borderBottom: '4px solid #dc2626',
                     boxShadow: '0 10px 40px rgba(0, 0, 0, 0.2)',
                     animation: 'fadeIn 0.8s ease-in-out 0.2s both',
                     width: '100%',
                     display: 'flex',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    boxSizing: 'border-box'
                   }}
                 >
                   {/* GTA Logo inside the box */}
                   <div style={{
-                    marginBottom: 'clamp(10px, 1vh, 16px)',
+                    marginBottom: 'clamp(6px, 0.8vh, 12px)',
                     animation: 'fadeIn 0.8s ease-in-out 0.1s both',
                     flexShrink: 0
                   }}>
@@ -6012,8 +6811,8 @@ export default function App() {
                       src={selectedCompany.logo}
                       alt={selectedCompany.name}
                       style={{
-                        maxWidth: 'clamp(110px, 11vw, 160px)',
-                        maxHeight: 'clamp(55px, 5.5vh, 80px)',
+                        maxWidth: 'clamp(90px, 9vw, 140px)',
+                        maxHeight: 'clamp(45px, 4.5vh, 70px)',
                         width: 'auto',
                         height: 'auto',
                         objectFit: 'contain',
@@ -6024,15 +6823,22 @@ export default function App() {
 
                   <h1
                     style={{
-                      fontSize: 'clamp(20px, 2.1vw, 30px)',
+                      fontSize: 'var(--amt-title-size, clamp(32px, 4.2vw, 58px))',
                       fontWeight: '900',
-                      marginBottom: 'clamp(10px, 1vh, 16px)',
-                      letterSpacing: '0.8px',
-                      color: '#dc2626',
+                      marginBottom: 'clamp(6px, 0.8vh, 12px)',
+                      letterSpacing: '1.8px',
+                      background: 'linear-gradient(135deg, #dc2626 0%, #ef4444 50%, #dc2626 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
                       textTransform: 'uppercase',
-                      animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 300ms both',
-                      lineHeight: '1.2',
-                      flexShrink: 0
+                      textShadow: '0 0 30px rgba(220, 38, 38, 0.4), 0 4px 20px rgba(220, 38, 38, 0.3)',
+                      animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both',
+                      position: 'relative',
+                      display: 'inline-block',
+                      filter: 'drop-shadow(0 2px 8px rgba(220, 38, 38, 0.5))',
+                      flexShrink: 0,
+                      lineHeight: '1.2'
                     }}
                   >
                     GERMAN TECHNOLOGY AUTO
@@ -6040,11 +6846,19 @@ export default function App() {
 
                   <p
                     style={{
-                      fontSize: 'clamp(12px, 1.25vw, 17px)',
+                      fontSize: 'var(--amt-text-size, clamp(16px, 1.9vw, 26px))',
                       lineHeight: '1.5',
-                      marginBottom: 'clamp(12px, 1.2vh, 18px)',
-                      color: '#1e293b',
-                      animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 400ms both',
+                      marginBottom: 'clamp(8px, 1vh, 12px)',
+                      color: '#1a1a1a',
+                      fontWeight: '500',
+                      letterSpacing: '0.2px',
+                      textShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                      animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both',
+                      padding: 'clamp(6px, 0.8vh, 10px) clamp(12px, 1.5vw, 18px)',
+                      background: 'rgba(255, 255, 255, 0.95)',
+                      borderRadius: '12px',
+                      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(220, 38, 38, 0.1)',
+                      borderLeft: '4px solid #dc2626',
                       flexShrink: 0
                     }}
                   >
@@ -6053,11 +6867,18 @@ export default function App() {
 
                   <div
                     style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: 'clamp(8px, 0.8vh, 12px)',
-                      marginBottom: 'clamp(12px, 1.2vh, 18px)',
-                      animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 500ms both',
+                      fontSize: 'var(--amt-info-size, clamp(14px, 1.5vw, 21px))',
+                      lineHeight: '1.5',
+                      color: '#1a1a1a',
+                      flex: '0 0 auto',
+                      padding: 'clamp(8px, 1vh, 12px) clamp(14px, 1.6vw, 20px)',
+                      borderRadius: '14px',
+                      background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 250, 250, 0.95) 100%)',
+                      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(220, 38, 38, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
+                      border: '1px solid rgba(220, 38, 38, 0.2)',
+                      backdropFilter: 'blur(10px)',
+                      animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 420ms both',
+                      marginBottom: 'clamp(4px, 0.6vh, 8px)',
                       flexShrink: 0
                     }}
                   >
@@ -6066,40 +6887,74 @@ export default function App() {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '6px',
-                        fontSize: 'clamp(11px, 1.15vw, 15px)',
-                        color: '#1e293b'
+                        marginBottom: 'clamp(4px, 0.6vh, 8px)',
+                        paddingBottom: 'clamp(4px, 0.6vh, 8px)',
+                        borderBottom: '1px solid rgba(220, 38, 38, 0.15)'
                       }}
                     >
-                      <strong style={{ minWidth: '65px', fontWeight: 800, color: '#000000' }}>Managers:</strong>
-                      <span>Mr. Tamam Hussain.</span>
+                      <strong style={{ 
+                        minWidth: 'auto', 
+                        fontWeight: 800, 
+                        color: '#dc2626',
+                        fontSize: 'clamp(14px, 1.5vw, 21px)',
+                        letterSpacing: '0.5px',
+                        textShadow: '0 1px 2px rgba(220, 38, 38, 0.2)'
+                      }}>Managers:</strong>
+                      <span style={{ 
+                        fontWeight: 600,
+                        color: '#2d2d2d',
+                        letterSpacing: '0.2px'
+                      }}>Mr. Tamam Hussain.</span>
                     </div>
                     <div
                       style={{
                         display: 'flex',
                         alignItems: 'center',
                         gap: '6px',
-                        fontSize: 'clamp(11px, 1.15vw, 15px)',
-                        color: '#1e293b'
+                        marginBottom: 'clamp(4px, 0.6vh, 8px)',
+                        paddingBottom: 'clamp(4px, 0.6vh, 8px)',
+                        borderBottom: '1px solid rgba(220, 38, 38, 0.15)'
                       }}
                     >
-                      <strong style={{ minWidth: '65px', fontWeight: 800, color: '#000000' }}>Mobile:</strong>
-                      <span>053 240 4666</span>
+                      <strong style={{ 
+                        minWidth: 'auto', 
+                        fontWeight: 800, 
+                        color: '#dc2626',
+                        fontSize: 'clamp(14px, 1.5vw, 21px)',
+                        letterSpacing: '0.5px',
+                        textShadow: '0 1px 2px rgba(220, 38, 38, 0.2)'
+                      }}>Mobile:</strong>
+                      <span style={{ 
+                        fontWeight: 600,
+                        color: '#2d2d2d',
+                        letterSpacing: '0.2px',
+                        fontFamily: 'monospace'
+                      }}>053 240 4666</span>
                     </div>
                     <div
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '6px',
-                        fontSize: 'clamp(11px, 1.15vw, 15px)',
-                        color: '#1e293b'
+                        gap: '8px',
+                        marginBottom: '0'
                       }}
                     >
-                      <strong style={{ minWidth: '65px', fontWeight: 800, color: '#000000' }}>Email:</strong>
+                      <strong style={{ 
+                        minWidth: 'auto', 
+                        fontWeight: 800, 
+                        color: '#dc2626',
+                        fontSize: 'clamp(14px, 1.5vw, 21px)',
+                        letterSpacing: '0.5px',
+                        textShadow: '0 1px 2px rgba(220, 38, 38, 0.2)'
+                      }}>Email:</strong>
                       <span
                         style={{
                           whiteSpace: 'nowrap',
                           overflow: 'hidden',
-                          textOverflow: 'ellipsis'
+                          textOverflow: 'ellipsis',
+                          fontWeight: 600,
+                          color: '#2d2d2d',
+                          letterSpacing: '0.2px'
                         }}
                       >
                         tammam.hussein@yahoo.com
@@ -6110,43 +6965,46 @@ export default function App() {
                     <div
                       style={{
                         display: 'flex',
-                      alignItems: 'flex-start',
+                        alignItems: 'flex-start',
                       justifyContent: 'space-between',
-                      gap: 'clamp(20px, 3vw, 35px)',
+                      gap: 'clamp(12px, 2vw, 24px)',
                       animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 600ms both',
                       flexShrink: 0,
-                      marginTop: 'clamp(24px, 2.5vh, 36px)'
+                      marginTop: 'clamp(6px, 0.8vh, 12px)',
+                      paddingBottom: 'clamp(8px, 1vh, 12px)',
+                      marginBottom: 'clamp(12px, 1.5vh, 20px)'
                       }}
                     >
                     {/* Buttons Container - Visit Website, Our Services, and Learn More */}
                     <div style={{
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: 'clamp(12px, 1.5vh, 18px)',
-                      animation: 'fadeInUp 0.8s ease-out 0.7s both'
+                      gap: 'clamp(5px, 0.7vh, 8px)',
+                      animation: 'fadeInUp 0.8s ease-out 0.7s both',
+                      flexShrink: 0
                     }}>
                       {/* Visit Website Button */}
                       <button
                         onClick={() => window.open('https://gtaksa.com/', '_blank', 'noopener,noreferrer')}
-                        style={{
-                          padding: 'clamp(10px, 1.1vw, 14px) clamp(18px, 2vw, 28px)',
-                          fontSize: 'clamp(12px, 1.25vw, 16px)',
-                          fontWeight: '700',
-                          color: '#ffffff',
-                          background: '#1f2937',
-                          border: '2px solid #dc2626',
-                          borderRadius: '6px',
-                          cursor: 'pointer',
-                          boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)',
-                          transition: 'all 0.3s ease',
-                          letterSpacing: '0.5px',
-                          textTransform: 'uppercase',
-                          display: 'block',
-                          whiteSpace: 'nowrap',
-                          minWidth: 'clamp(200px, 20vw, 280px)',
-                          width: 'clamp(200px, 20vw, 280px)',
-                          alignSelf: 'flex-start'
-                        }}
+                      style={{
+                        padding: 'clamp(8px, 1vw, 12px) clamp(16px, 1.8vw, 24px)',
+                        fontSize: 'clamp(11px, 1.15vw, 15px)',
+                        fontWeight: '700',
+                        color: '#ffffff',
+                        background: '#1f2937',
+                        border: '2px solid #dc2626',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)',
+                        transition: 'all 0.3s ease',
+                        letterSpacing: '0.4px',
+                        textTransform: 'uppercase',
+                        display: 'block',
+                        whiteSpace: 'nowrap',
+                        minWidth: 'clamp(180px, 18vw, 260px)',
+                        width: 'clamp(180px, 18vw, 260px)',
+                        alignSelf: 'flex-start'
+                      }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = 'translateY(-2px)';
                           e.currentTarget.style.boxShadow = '0 6px 20px rgba(220, 38, 38, 0.5)';
@@ -6164,25 +7022,25 @@ export default function App() {
                       {/* Our Services Button */}
                       <button
                         onClick={() => window.open('https://gtaksa.com/our-services/', '_blank', 'noopener,noreferrer')}
-                    style={{
-                          padding: 'clamp(10px, 1.1vw, 14px) clamp(18px, 2vw, 28px)',
-                          fontSize: 'clamp(12px, 1.25vw, 16px)',
-                          fontWeight: '700',
-                          color: '#ffffff',
-                          background: '#1f2937',
-                          border: '2px solid #dc2626',
-                          borderRadius: '6px',
-                          cursor: 'pointer',
-                          boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)',
-                          transition: 'all 0.3s ease',
-                          letterSpacing: '0.5px',
-                          textTransform: 'uppercase',
-                          display: 'block',
-                          whiteSpace: 'nowrap',
-                          minWidth: 'clamp(200px, 20vw, 280px)',
-                          width: 'clamp(200px, 20vw, 280px)',
-                          alignSelf: 'flex-start'
-                        }}
+                      style={{
+                        padding: 'clamp(8px, 1vw, 12px) clamp(16px, 1.8vw, 24px)',
+                        fontSize: 'clamp(11px, 1.15vw, 15px)',
+                        fontWeight: '700',
+                        color: '#ffffff',
+                        background: '#1f2937',
+                        border: '2px solid #dc2626',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)',
+                        transition: 'all 0.3s ease',
+                        letterSpacing: '0.4px',
+                        textTransform: 'uppercase',
+                        display: 'block',
+                        whiteSpace: 'nowrap',
+                        minWidth: 'clamp(180px, 18vw, 260px)',
+                        width: 'clamp(180px, 18vw, 260px)',
+                        alignSelf: 'flex-start'
+                      }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = 'translateY(-2px)';
                           e.currentTarget.style.boxShadow = '0 6px 20px rgba(220, 38, 38, 0.5)';
@@ -6201,8 +7059,8 @@ export default function App() {
                     <button
                       onClick={() => setShowGTALearnMore(true)}
                       style={{
-                        padding: 'clamp(10px, 1.1vw, 14px) clamp(18px, 2vw, 28px)',
-                        fontSize: 'clamp(12px, 1.25vw, 16px)',
+                        padding: 'clamp(8px, 1vw, 12px) clamp(16px, 1.8vw, 24px)',
+                        fontSize: 'clamp(11px, 1.15vw, 15px)',
                         fontWeight: '700',
                         color: '#ffffff',
                         background: '#1f2937',
@@ -6211,13 +7069,13 @@ export default function App() {
                         cursor: 'pointer',
                         boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)',
                         transition: 'all 0.3s ease',
-                        letterSpacing: '0.5px',
+                        letterSpacing: '0.4px',
                         textTransform: 'uppercase',
                         display: 'block',
-                          whiteSpace: 'nowrap',
-                          minWidth: 'clamp(200px, 20vw, 280px)',
-                          width: 'clamp(200px, 20vw, 280px)',
-                          alignSelf: 'flex-start'
+                        whiteSpace: 'nowrap',
+                        minWidth: 'clamp(180px, 18vw, 260px)',
+                        width: 'clamp(180px, 18vw, 260px)',
+                        alignSelf: 'flex-start'
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.transform = 'translateY(-2px)';
@@ -6462,13 +7320,20 @@ export default function App() {
 
                 <h1
                   style={{
-                    fontSize: 'var(--tlco-title-size, clamp(26px, 3.5vw, 44px))',
+                    fontSize: 'var(--tlco-title-size, clamp(30px, 4vw, 50px))',
                     fontWeight: '900',
-                    marginBottom: 'clamp(12px, 2vh, 20px)',
-                    letterSpacing: '1.4px',
-                    color: '#008c4a',
+                    marginBottom: 'clamp(16px, 2.5vh, 28px)',
+                    letterSpacing: '2.2px',
+                    background: 'linear-gradient(135deg, #008c4a 0%, #00a055 50%, #008c4a 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
                     textTransform: 'uppercase',
-                    animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both'
+                    animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both',
+                    textShadow: '0 0 30px rgba(0, 140, 74, 0.4), 0 4px 20px rgba(0, 140, 74, 0.3)',
+                    position: 'relative',
+                    display: 'inline-block',
+                    filter: 'drop-shadow(0 2px 8px rgba(0, 140, 74, 0.5))'
                   }}
                 >
                   ENVIRONMENTAL TESTING AND LABORATORIES
@@ -6476,11 +7341,19 @@ export default function App() {
 
                 <p
                   style={{
-                    fontSize: 'var(--tlco-text-size, clamp(13px, 1.5vw, 20px))',
-                    lineHeight: '1.75',
-                    marginBottom: 'clamp(14px, 2vh, 22px)',
+                    fontSize: 'var(--tlco-text-size, clamp(14px, 1.6vw, 22px))',
+                    lineHeight: '1.85',
+                    marginBottom: 'clamp(24px, 3.5vh, 36px)',
                     color: '#0b3b25',
-                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both'
+                    fontWeight: '500',
+                    letterSpacing: '0.3px',
+                    textShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both',
+                    padding: 'clamp(12px, 1.5vh, 18px) clamp(16px, 2vw, 24px)',
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 140, 74, 0.1)',
+                    borderLeft: '4px solid #008c4a'
                   }}
                 >
                   Environmental Testing and Laboratory Company (ETLCO) is a leading provider of comprehensive environmental
@@ -6500,47 +7373,97 @@ export default function App() {
                   {/* Contact Info (Left Column) */}
                   <div
                     style={{
-                      fontSize: 'var(--tlco-info-size, clamp(13px, 1.5vw, 20px))',
-                      lineHeight: '2',
+                      fontSize: 'var(--tlco-info-size, clamp(14px, 1.5vw, 21px))',
+                      lineHeight: '1.9',
                       color: '#0b3b25',
-                      flex: '1'
+                      flex: '1',
+                      padding: 'clamp(16px, 2vh, 20px) clamp(20px, 2.2vw, 28px)',
+                      borderRadius: '14px',
+                      background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 255, 248, 0.95) 100%)',
+                      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 140, 74, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
+                      border: '1px solid rgba(0, 140, 74, 0.2)',
+                      backdropFilter: 'blur(10px)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '0'
                     }}
                   >
-                    <div style={{ marginBottom: 'clamp(8px, 1.2vh, 14px)' }}>
+                    <div style={{ 
+                      display: 'flex', 
+                      alignItems: 'center',
+                      gap: '8px',
+                      marginBottom: 'clamp(10px, 1.4vh, 14px)',
+                      paddingBottom: 'clamp(8px, 1.2vh, 12px)',
+                      borderBottom: '1px solid rgba(0, 140, 74, 0.15)'
+                    }}>
                       <strong
                         style={{
-                          display: 'inline-block',
-                          width: 'clamp(110px, 11vw, 150px)',
-                          fontWeight: 800
+                          fontWeight: 800,
+                          color: '#008c4a',
+                          fontSize: 'clamp(14px, 1.5vw, 21px)',
+                          letterSpacing: '0.5px',
+                          textShadow: '0 1px 2px rgba(0, 140, 74, 0.2)',
+                          minWidth: 'auto'
                         }}
                       >
                         Managers:
                       </strong>
-                      <span>Mr.elyas Othman.</span>
+                      <span style={{ 
+                        fontWeight: 600,
+                        letterSpacing: '0.2px'
+                      }}>Mr.Elyas Othman.</span>
                     </div>
-                    <div style={{ marginBottom: 'clamp(8px, 1.2vh, 14px)' }}>
+                    <div style={{ 
+                      display: 'flex', 
+                      alignItems: 'center',
+                      gap: '8px',
+                      marginBottom: 'clamp(10px, 1.4vh, 14px)',
+                      paddingBottom: 'clamp(8px, 1.2vh, 12px)',
+                      borderBottom: '1px solid rgba(0, 140, 74, 0.15)'
+                    }}>
                       <strong
                         style={{
-                          display: 'inline-block',
-                          width: 'clamp(110px, 11vw, 150px)',
-                          fontWeight: 800
+                          fontWeight: 800,
+                          color: '#008c4a',
+                          fontSize: 'clamp(14px, 1.5vw, 21px)',
+                          letterSpacing: '0.5px',
+                          textShadow: '0 1px 2px rgba(0, 140, 74, 0.2)',
+                          minWidth: 'auto'
                         }}
                       >
                         Mobile:
                       </strong>
-                      <span>053 927 5739</span>
+                      <span style={{ 
+                        fontWeight: 600,
+                        letterSpacing: '0.2px',
+                        fontFamily: 'monospace'
+                      }}>053 927 5739</span>
                     </div>
-                    <div style={{ marginBottom: 'clamp(8px, 1.2vh, 14px)' }}>
+                    <div style={{ 
+                      display: 'flex', 
+                      alignItems: 'center',
+                      gap: '8px',
+                      marginBottom: '0'
+                    }}>
                       <strong
                         style={{
-                          display: 'inline-block',
-                          width: 'clamp(110px, 11vw, 150px)',
-                          fontWeight: 800
+                          fontWeight: 800,
+                          color: '#008c4a',
+                          fontSize: 'clamp(14px, 1.5vw, 21px)',
+                          letterSpacing: '0.5px',
+                          textShadow: '0 1px 2px rgba(0, 140, 74, 0.2)',
+                          minWidth: 'auto'
                         }}
                       >
                         Email:
                       </strong>
-                      <span>G.M@etlco.com.sa</span>
+                      <span style={{ 
+                        fontWeight: 600,
+                        letterSpacing: '0.2px',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis'
+                      }}>G.M@etlco.com.sa</span>
                     </div>
                   </div>
 
@@ -6688,31 +7611,34 @@ export default function App() {
                     <button
                       onClick={() => window.open('https://etlco.com.sa/', '_blank', 'noopener,noreferrer')}
                       style={{
-                        padding: 'var(--tlco-button-padding, clamp(16px, 1.8vw, 24px) clamp(36px, 3.5vw, 48px))',
-                        fontSize: 'var(--tlco-button-font, clamp(16px, 1.8vw, 22px))',
+                        padding: 'clamp(12px, 1.4vw, 16px) clamp(28px, 2.8vw, 38px)',
+                        fontSize: 'clamp(14px, 1.4vw, 18px)',
                         fontWeight: 700,
                         color: '#ffffff',
-                        background: '#008c4a',
-                        border: 'none',
+                        background: 'linear-gradient(135deg, #008c4a 0%, #00a055 50%, #008c4a 100%)',
+                        border: '2px solid #008c4a',
                         borderRadius: '999px',
                         cursor: 'pointer',
-                        boxShadow: '0 4px 15px rgba(0, 140, 74, 0.3)',
-                        transition: 'all 0.3s ease',
-                        letterSpacing: '0.5px',
+                        boxShadow: '0 6px 20px rgba(0, 140, 74, 0.5), 0 0 0 0 rgba(0, 140, 74, 0.4)',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        letterSpacing: '0.8px',
                         textTransform: 'uppercase',
                         minWidth: 'clamp(200px, 20vw, 280px)',
                         width: 'clamp(200px, 20vw, 280px)',
-                        alignSelf: 'flex-start'
+                        alignSelf: 'flex-start',
+                        textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                        position: 'relative',
+                        overflow: 'hidden'
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 140, 74, 0.4)';
-                        e.currentTarget.style.background = '#00a055';
+                        e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 140, 74, 0.6), 0 0 0 4px rgba(0, 140, 74, 0.2)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #00a055 0%, #008c4a 50%, #00a055 100%)';
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 140, 74, 0.3)';
-                        e.currentTarget.style.background = '#008c4a';
+                        e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 140, 74, 0.5), 0 0 0 0 rgba(0, 140, 74, 0.4)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #008c4a 0%, #00a055 50%, #008c4a 100%)';
                       }}
                     >
                       Visit Website
@@ -6722,31 +7648,34 @@ export default function App() {
                     <button
                       onClick={() => window.open('https://etlco.com.sa/services', '_blank', 'noopener,noreferrer')}
                       style={{
-                        padding: 'var(--tlco-button-padding, clamp(16px, 1.8vw, 24px) clamp(36px, 3.5vw, 48px))',
-                        fontSize: 'var(--tlco-button-font, clamp(16px, 1.8vw, 22px))',
+                        padding: 'clamp(12px, 1.4vw, 16px) clamp(28px, 2.8vw, 38px)',
+                        fontSize: 'clamp(14px, 1.4vw, 18px)',
                         fontWeight: 700,
                         color: '#ffffff',
-                        background: '#008c4a',
-                        border: 'none',
+                        background: 'linear-gradient(135deg, #008c4a 0%, #00a055 50%, #008c4a 100%)',
+                        border: '2px solid #008c4a',
                         borderRadius: '999px',
                         cursor: 'pointer',
-                        boxShadow: '0 4px 15px rgba(0, 140, 74, 0.3)',
-                        transition: 'all 0.3s ease',
-                        letterSpacing: '0.5px',
+                        boxShadow: '0 6px 20px rgba(0, 140, 74, 0.5), 0 0 0 0 rgba(0, 140, 74, 0.4)',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        letterSpacing: '0.8px',
                         textTransform: 'uppercase',
                         minWidth: 'clamp(200px, 20vw, 280px)',
                         width: 'clamp(200px, 20vw, 280px)',
-                        alignSelf: 'flex-start'
+                        alignSelf: 'flex-start',
+                        textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                        position: 'relative',
+                        overflow: 'hidden'
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 140, 74, 0.4)';
-                        e.currentTarget.style.background = '#00a055';
+                        e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 140, 74, 0.6), 0 0 0 4px rgba(0, 140, 74, 0.2)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #00a055 0%, #008c4a 50%, #00a055 100%)';
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 140, 74, 0.3)';
-                        e.currentTarget.style.background = '#008c4a';
+                        e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 140, 74, 0.5), 0 0 0 0 rgba(0, 140, 74, 0.4)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #008c4a 0%, #00a055 50%, #008c4a 100%)';
                       }}
                     >
                       Our Services
@@ -6756,32 +7685,34 @@ export default function App() {
                   <button
                     onClick={() => setShowPartners(true)}
                     style={{
-                        padding: 'var(--tlco-button-padding, clamp(16px, 1.8vw, 24px) clamp(36px, 3.5vw, 48px))',
-                      fontSize: 'var(--tlco-button-font, clamp(16px, 1.8vw, 22px))',
+                        padding: 'clamp(12px, 1.4vw, 16px) clamp(28px, 2.8vw, 38px)',
+                      fontSize: 'clamp(14px, 1.4vw, 18px)',
                       fontWeight: 700,
                       color: '#ffffff',
-                      background: '#008c4a',
-                      border: 'none',
+                      background: 'linear-gradient(135deg, #008c4a 0%, #00a055 50%, #008c4a 100%)',
+                      border: '2px solid #008c4a',
                       borderRadius: '999px',
                       cursor: 'pointer',
-                      boxShadow: '0 4px 15px rgba(0, 140, 74, 0.3)',
-                      transition: 'all 0.3s ease',
-                      letterSpacing: '0.5px',
+                      boxShadow: '0 6px 20px rgba(0, 140, 74, 0.5), 0 0 0 0 rgba(0, 140, 74, 0.4)',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      letterSpacing: '0.8px',
                       textTransform: 'uppercase',
-                        animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 540ms both',
                         minWidth: 'clamp(200px, 20vw, 280px)',
                         width: 'clamp(200px, 20vw, 280px)',
-                        alignSelf: 'flex-start'
+                        alignSelf: 'flex-start',
+                        textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                        position: 'relative',
+                        overflow: 'hidden'
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 140, 74, 0.4)';
-                      e.currentTarget.style.background = '#00a055';
+                      e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 140, 74, 0.6), 0 0 0 4px rgba(0, 140, 74, 0.2)';
+                      e.currentTarget.style.background = 'linear-gradient(135deg, #00a055 0%, #008c4a 50%, #00a055 100%)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 140, 74, 0.3)';
-                      e.currentTarget.style.background = '#008c4a';
+                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 140, 74, 0.5), 0 0 0 0 rgba(0, 140, 74, 0.4)';
+                      e.currentTarget.style.background = 'linear-gradient(135deg, #008c4a 0%, #00a055 50%, #008c4a 100%)';
                     }}
                   >
                     Learn More
@@ -7077,7 +8008,8 @@ export default function App() {
                   direction: 'ltr',
                   textAlign: 'left',
                   zIndex: 11,
-                  overflow: 'hidden',
+                  overflowY: 'auto',
+                  overflowX: 'visible',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'flex-start',
@@ -7123,24 +8055,18 @@ export default function App() {
                     style={{
                       fontSize: 'clamp(15px, 1.5vw, 19px)',
                       lineHeight: '1.7',
-                      marginBottom: 'clamp(12px, 1.5vh, 18px)',
-                      color: '#07373c',
-                      animation: 'fadeInUp 0.8s ease-out 0.4s both'
-                    }}
-                  >
-                    Is a leading provider of geophysical, geological, environmental, and engineering solutions across Saudi Arabia and the GCC region. With a dedicated team of scientists, engineers, and experts, we specialize in delivering advanced, reliable, and innovative services that support site assessments, resource exploration, and real-time monitoring across various industries.
-                  </p>
-                  <p
-                    style={{
-                      fontSize: 'clamp(15px, 1.5vw, 19px)',
-                      lineHeight: '1.7',
                       marginBottom: 'clamp(14px, 2vh, 20px)',
                       color: '#07373c',
-                      fontWeight: '600',
-                      animation: 'fadeInUp 0.8s ease-out 0.5s both'
+                      animation: 'fadeInUp 0.8s ease-out 0.4s both',
+                      padding: 'clamp(12px, 1.5vh, 18px) clamp(16px, 2vw, 24px)',
+                      background: 'rgba(255, 255, 255, 0.95)',
+                      borderRadius: '12px',
+                      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(7, 55, 60, 0.1), -4px 0 16px rgba(7, 55, 60, 0.4)',
+                      borderLeft: '5px solid #07373c',
+                      position: 'relative'
                     }}
                   >
-                    Integrated Solutions for Your Projects, Backed by Decades of Expertise
+                    Is a leading provider of geophysical, geological, environmental, and engineering solutions across Saudi Arabia and the GCC region. With a dedicated team of scientists, engineers, and experts, we specialize in delivering advanced, reliable, and innovative services that support site assessments, resource exploration, and real-time monitoring across various industries. Integrated Solutions for Your Projects, Backed by Decades of Expertise
                   </p>
                 </div>
 
@@ -7610,14 +8536,21 @@ export default function App() {
               >
                 <h1
                   style={{
-                    fontSize: 'clamp(22px, 2.8vw, 36px)',
+                    fontSize: 'clamp(28px, 3.5vw, 46px)',
                     fontWeight: '900',
                     marginBottom: 'clamp(12px, 1.5vh, 18px)',
-                    letterSpacing: '1.2px',
-                    color: '#F4A460',
+                    letterSpacing: '2px',
+                    background: 'linear-gradient(135deg, #F4A460 0%, #ffb07a 50%, #F4A460 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
                     textTransform: 'uppercase',
                     animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both',
-                    lineHeight: '1.2'
+                    lineHeight: '1.2',
+                    textShadow: '0 0 30px rgba(244, 164, 96, 0.4), 0 4px 20px rgba(244, 164, 96, 0.3)',
+                    position: 'relative',
+                    display: 'inline-block',
+                    filter: 'drop-shadow(0 2px 8px rgba(244, 164, 96, 0.5))'
                   }}
                 >
                   AL RAKAEZ CONSTRUCTION
@@ -7625,12 +8558,20 @@ export default function App() {
 
                 <p
                   style={{
-                    fontSize: 'clamp(12px, 1.3vw, 18px)',
-                    lineHeight: '1.6',
-                    marginBottom: 'clamp(16px, 2vh, 24px)',
-                    color: '#1e293b',
+                    fontSize: 'clamp(13px, 1.4vw, 19px)',
+                    lineHeight: '1.75',
+                    marginBottom: 'clamp(14px, 2vh, 20px)',
+                    color: '#ffffff',
+                    fontWeight: '500',
+                    letterSpacing: '0.3px',
+                    textShadow: '0 2px 8px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2)',
                     animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both',
-                    paddingRight: 'clamp(8px, 1vw, 12px)'
+                    padding: 'clamp(10px, 1.2vh, 14px) clamp(12px, 1.5vw, 18px)',
+                    background: 'rgba(0, 0, 0, 0.4)',
+                    borderRadius: '10px',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(244, 164, 96, 0.2)',
+                    borderLeft: '3px solid #F4A460',
+                    backdropFilter: 'blur(8px)'
                   }}
                 >
                   Al-Rakaez Technical Co. Ltd. (RK) is a Saudi based company that specializes in Civil, Finishing, Mechanical, Electrical and Plumbing (MEP) building services. RK strives to deliver the highest standards of Civil, Finishing and MEP installation, carefully paying attention to each of its client's requirements and ideas, collaborating in the development of the right scope of work in order to develop a unique approach towards each customer.
@@ -7647,235 +8588,303 @@ export default function App() {
                   {/* Text info (Managers / Mobile / Email / Website) */}
                   <div
                     style={{
-                      fontSize: 'clamp(11px, 1.1vw, 16px)',
-                      lineHeight: '1.7',
-                      color: '#1e293b',
+                      fontSize: 'clamp(13px, 1.3vw, 18px)',
+                      lineHeight: '1.8',
+                      color: '#ffffff',
                       flex: '1 1 auto',
-                      padding: '0',
-                      background: 'transparent',
-                      boxShadow: 'none',
+                      padding: 'clamp(10px, 1.2vh, 14px) clamp(12px, 1.5vw, 18px)',
+                      borderRadius: '12px',
+                      background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.35) 100%)',
+                      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(244, 164, 96, 0.2)',
+                      border: '1px solid rgba(244, 164, 96, 0.25)',
+                      backdropFilter: 'blur(10px)',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      gap: 'clamp(15px, 2vw, 25px)',
                       minWidth: 0
                     }}
                   >
+                    {/* Text content column */}
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '0',
+                      flex: '1 1 auto'
+                    }}>
                     <div
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: 'clamp(8px, 1vh, 12px)'
+                        gap: '8px',
+                        marginBottom: 'clamp(6px, 0.8vh, 10px)',
+                        paddingBottom: 'clamp(5px, 0.6vh, 8px)',
+                        borderBottom: '1px solid rgba(244, 164, 96, 0.2)'
                       }}
                     >
-                      <strong style={{ minWidth: '85px', fontWeight: 800, flexShrink: 0 }}>Managers:</strong>
-                      <span>Jaffar Al Sayori.</span>
+                      <strong style={{ 
+                        minWidth: 'auto', 
+                        fontWeight: 800, 
+                        color: '#F4A460',
+                        fontSize: 'clamp(13px, 1.3vw, 18px)',
+                        letterSpacing: '0.5px',
+                        textShadow: '0 1px 2px rgba(244, 164, 96, 0.3)',
+                        flexShrink: 0
+                      }}>Managers:</strong>
+                      <span style={{ 
+                        fontWeight: 600,
+                        letterSpacing: '0.2px',
+                        textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)'
+                      }}>Jaffar Al Sayori.</span>
                     </div>
                     <div
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: 'clamp(8px, 1vh, 12px)'
+                        gap: '8px',
+                        marginBottom: 'clamp(6px, 0.8vh, 10px)',
+                        paddingBottom: 'clamp(5px, 0.6vh, 8px)',
+                        borderBottom: '1px solid rgba(244, 164, 96, 0.2)'
                       }}
                     >
-                      <strong style={{ minWidth: '85px', fontWeight: 800, flexShrink: 0 }}>Mobile:</strong>
-                      <span>054 989 5927</span>
+                      <strong style={{ 
+                        minWidth: 'auto', 
+                        fontWeight: 800, 
+                        color: '#F4A460',
+                        fontSize: 'clamp(13px, 1.3vw, 18px)',
+                        letterSpacing: '0.5px',
+                        textShadow: '0 1px 2px rgba(244, 164, 96, 0.3)',
+                        flexShrink: 0
+                      }}>Mobile:</strong>
+                      <span style={{ 
+                        fontWeight: 600,
+                        letterSpacing: '0.2px',
+                        fontFamily: 'monospace',
+                        textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)'
+                      }}>054 989 5927</span>
                     </div>
                     <div
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '10px',
-                        marginBottom: 'clamp(8px, 1vh, 12px)'
+                        gap: '8px',
+                        marginBottom: '0'
                       }}
                     >
-                      <strong style={{ minWidth: '85px', fontWeight: 800, flexShrink: 0 }}>Email:</strong>
+                      <strong style={{ 
+                        minWidth: 'auto', 
+                        fontWeight: 800, 
+                        color: '#F4A460',
+                        fontSize: 'clamp(13px, 1.3vw, 18px)',
+                        letterSpacing: '0.5px',
+                        textShadow: '0 1px 2px rgba(244, 164, 96, 0.3)',
+                        flexShrink: 0
+                      }}>Email:</strong>
                       <span
                         style={{
+                          fontWeight: 600,
+                          letterSpacing: '0.2px',
                           whiteSpace: 'nowrap',
                           overflow: 'hidden',
-                          textOverflow: 'ellipsis'
+                          textOverflow: 'ellipsis',
+                          textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)'
                         }}
                       >
                         jafar.syouri@rk-arabia.com
                       </span>
                     </div>
                     
-                    {/* Buttons Container - Visit Website, Our Services, and Learn More */}
+                    {/* Buttons and QR Code Container */}
                     <div style={{
                         display: 'flex',
-                      flexDirection: 'column',
-                      gap: 'clamp(12px, 1.5vh, 18px)',
-                      marginTop: 'clamp(16px, 2vh, 24px)',
-                      animation: 'fadeInUp 0.8s ease-out 0.7s both'
+                      flexDirection: 'row',
+                      gap: 'clamp(15px, 2vw, 25px)',
+                      marginTop: 'clamp(12px, 1.5vh, 18px)',
+                      animation: 'fadeInUp 0.8s ease-out 0.7s both',
+                      alignItems: 'flex-start'
                     }}>
-                    {/* Visit Website Button */}
-                    <button
-                      onClick={() => window.open('https://www.rk-arabia.com/', '_blank', 'noopener,noreferrer')}
-                      style={{
-                        padding: 'clamp(8px, 1vw, 12px) clamp(16px, 2vw, 24px)',
-                        fontSize: 'clamp(11px, 1.1vw, 16px)',
-                        fontWeight: 700,
-                        color: '#F4A460',
-                        background: 'rgba(0, 0, 0, 0.75)',
-                        border: '2px solid #F4A460',
-                        borderRadius: '999px',
-                        cursor: 'pointer',
-                        boxShadow: '0 8px 25px rgba(0, 0, 0, 0.6)',
-                        transition: 'all 0.3s ease',
-                        letterSpacing: '0.5px',
-                        textTransform: 'uppercase',
-                        minWidth: 'clamp(200px, 20vw, 280px)',
-                        width: 'clamp(200px, 20vw, 280px)',
-                        alignSelf: 'flex-start',
-                        backdropFilter: 'blur(6px)'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.8)';
-                        e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.6)';
-                        e.currentTarget.style.background = 'rgba(0, 0, 0, 0.75)';
-                      }}
-                    >
-                      Visit Website
-                    </button>
-                    
-                    {/* Our Services Button - Opens website with hash to scroll to services */}
-                    <button
-                      onClick={() => window.open('https://www.rk-arabia.com/#services', '_blank', 'noopener,noreferrer')}
-                        style={{
-                        padding: 'clamp(8px, 1vw, 12px) clamp(16px, 2vw, 24px)',
-                        fontSize: 'clamp(11px, 1.1vw, 16px)',
-                          fontWeight: 700,
-                        color: '#F4A460',
-                        background: 'rgba(0, 0, 0, 0.75)',
-                        border: '2px solid #F4A460',
-                        borderRadius: '999px',
-                          cursor: 'pointer',
-                        boxShadow: '0 8px 25px rgba(0, 0, 0, 0.6)',
-                        transition: 'all 0.3s ease',
-                        letterSpacing: '0.5px',
-                        textTransform: 'uppercase',
-                        minWidth: 'clamp(200px, 20vw, 280px)',
-                        width: 'clamp(200px, 20vw, 280px)',
-                        alignSelf: 'flex-start',
-                        backdropFilter: 'blur(6px)'
-                        }}
-                        onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.8)';
-                        e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)';
-                        }}
-                        onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.6)';
-                        e.currentTarget.style.background = 'rgba(0, 0, 0, 0.75)';
-                        }}
-                      >
-                      Our Services
-                    </button>
-                    
-                    {/* Learn More Button */}
-                    <button
-                      onClick={() => setShowRKLearnMore(true)}
-                      style={{
-                        padding: 'clamp(8px, 1vw, 12px) clamp(16px, 2vw, 24px)',
-                        fontSize: 'clamp(11px, 1.1vw, 16px)',
-                        fontWeight: 700,
-                        color: '#F4A460',
-                        background: 'rgba(0, 0, 0, 0.75)',
-                        border: '2px solid #F4A460',
-                        borderRadius: '999px',
-                        cursor: 'pointer',
-                        boxShadow: '0 8px 25px rgba(0, 0, 0, 0.6)',
-                        transition: 'all 0.3s ease',
-                        letterSpacing: '0.5px',
-                        textTransform: 'uppercase',
-                        animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 540ms both',
-                        minWidth: 'clamp(200px, 20vw, 280px)',
-                        width: 'clamp(200px, 20vw, 280px)',
-                        alignSelf: 'flex-start',
-                        backdropFilter: 'blur(6px)'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.8)';
-                        e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.6)';
-                        e.currentTarget.style.background = 'rgba(0, 0, 0, 0.75)';
-                      }}
-                    >
-                      Learn More
-                    </button>
-                  </div>
-                  </div>
+                      {/* Buttons Column - Three buttons stacked vertically */}
+                      <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 'clamp(10px, 1.2vh, 14px)'
+                      }}>
+                        {/* Visit Website Button */}
+                        <button
+                          onClick={() => window.open('https://www.rk-arabia.com/', '_blank', 'noopener,noreferrer')}
+                          style={{
+                            padding: 'clamp(10px, 1.2vw, 14px) clamp(24px, 2.4vw, 32px)',
+                            fontSize: 'clamp(12px, 1.2vw, 16px)',
+                            fontWeight: 700,
+                            color: '#ffffff',
+                            background: 'linear-gradient(135deg, #F4A460 0%, #ffb07a 50%, #F4A460 100%)',
+                            border: '2px solid #F4A460',
+                            borderRadius: '999px',
+                            cursor: 'pointer',
+                            boxShadow: '0 6px 20px rgba(244, 164, 96, 0.5), 0 0 0 0 rgba(244, 164, 96, 0.4)',
+                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                            letterSpacing: '0.7px',
+                            textTransform: 'uppercase',
+                            minWidth: 'clamp(180px, 18vw, 260px)',
+                            width: 'clamp(180px, 18vw, 260px)',
+                            alignSelf: 'flex-start',
+                            textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                            position: 'relative',
+                            overflow: 'hidden'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                            e.currentTarget.style.boxShadow = '0 8px 25px rgba(244, 164, 96, 0.6), 0 0 0 4px rgba(244, 164, 96, 0.2)';
+                            e.currentTarget.style.background = 'linear-gradient(135deg, #ffb07a 0%, #F4A460 50%, #ffb07a 100%)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                            e.currentTarget.style.boxShadow = '0 6px 20px rgba(244, 164, 96, 0.5), 0 0 0 0 rgba(244, 164, 96, 0.4)';
+                            e.currentTarget.style.background = 'linear-gradient(135deg, #F4A460 0%, #ffb07a 50%, #F4A460 100%)';
+                          }}
+                        >
+                          Visit Website
+                        </button>
+                        
+                        {/* Our Services Button - Opens website with hash to scroll to services */}
+                        <button
+                          onClick={() => window.open('https://www.rk-arabia.com/#services', '_blank', 'noopener,noreferrer')}
+                          style={{
+                            padding: 'clamp(10px, 1.2vw, 14px) clamp(24px, 2.4vw, 32px)',
+                            fontSize: 'clamp(12px, 1.2vw, 16px)',
+                            fontWeight: 700,
+                            color: '#ffffff',
+                            background: 'linear-gradient(135deg, #F4A460 0%, #ffb07a 50%, #F4A460 100%)',
+                            border: '2px solid #F4A460',
+                            borderRadius: '999px',
+                            cursor: 'pointer',
+                            boxShadow: '0 6px 20px rgba(244, 164, 96, 0.5), 0 0 0 0 rgba(244, 164, 96, 0.4)',
+                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                            letterSpacing: '0.7px',
+                            textTransform: 'uppercase',
+                            minWidth: 'clamp(180px, 18vw, 260px)',
+                            width: 'clamp(180px, 18vw, 260px)',
+                            alignSelf: 'flex-start',
+                            textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                            position: 'relative',
+                            overflow: 'hidden'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                            e.currentTarget.style.boxShadow = '0 8px 25px rgba(244, 164, 96, 0.6), 0 0 0 4px rgba(244, 164, 96, 0.2)';
+                            e.currentTarget.style.background = 'linear-gradient(135deg, #ffb07a 0%, #F4A460 50%, #ffb07a 100%)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                            e.currentTarget.style.boxShadow = '0 6px 20px rgba(244, 164, 96, 0.5), 0 0 0 0 rgba(244, 164, 96, 0.4)';
+                            e.currentTarget.style.background = 'linear-gradient(135deg, #F4A460 0%, #ffb07a 50%, #F4A460 100%)';
+                          }}
+                        >
+                          Our Services
+                        </button>
+                        
+                        {/* Learn More Button */}
+                        <button
+                          onClick={() => setShowRKLearnMore(true)}
+                          style={{
+                            padding: 'clamp(10px, 1.2vw, 14px) clamp(24px, 2.4vw, 32px)',
+                            fontSize: 'clamp(12px, 1.2vw, 16px)',
+                            fontWeight: 700,
+                            color: '#ffffff',
+                            background: 'linear-gradient(135deg, #F4A460 0%, #ffb07a 50%, #F4A460 100%)',
+                            border: '2px solid #F4A460',
+                            borderRadius: '999px',
+                            cursor: 'pointer',
+                            boxShadow: '0 6px 20px rgba(244, 164, 96, 0.5), 0 0 0 0 rgba(244, 164, 96, 0.4)',
+                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                            letterSpacing: '0.7px',
+                            textTransform: 'uppercase',
+                            minWidth: 'clamp(180px, 18vw, 260px)',
+                            width: 'clamp(180px, 18vw, 260px)',
+                            alignSelf: 'flex-start',
+                            textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                            position: 'relative',
+                            overflow: 'hidden'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                            e.currentTarget.style.boxShadow = '0 8px 25px rgba(244, 164, 96, 0.6), 0 0 0 4px rgba(244, 164, 96, 0.2)';
+                            e.currentTarget.style.background = 'linear-gradient(135deg, #ffb07a 0%, #F4A460 50%, #ffb07a 100%)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                            e.currentTarget.style.boxShadow = '0 6px 20px rgba(244, 164, 96, 0.5), 0 0 0 0 rgba(244, 164, 96, 0.4)';
+                            e.currentTarget.style.background = 'linear-gradient(135deg, #F4A460 0%, #ffb07a 50%, #F4A460 100%)';
+                          }}
+                        >
+                          Learn More
+                        </button>
+                      </div>
+                    </div>
+                    </div>
 
-                  {/* RK Internal Image */}
-                  <div
-                    style={{
-                      maxWidth: 'clamp(140px, 14vw, 180px)',
-                      width: 'fit-content',
-                      flex: '0 0 auto',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: 'clamp(10px, 1.2vw, 14px)',
-                      marginTop: '0',
-                      overflow: 'visible',
-                      alignItems: 'center',
-                      justifyContent: 'flex-start'
-                    }}
-                  >
-                    <img
-                      src="/rk-internal.png"
-                      alt="RK Internal"
-                      style={{
-                        width: 'auto',
-                        maxWidth: 'clamp(140px, 14vw, 180px)',
-                        height: 'auto',
-                        maxHeight: 'clamp(100px, 12vh, 140px)',
-                        display: 'block',
-                        objectFit: 'contain'
-                      }}
-                    />
-                    {/* QR Code below the image */}
+                    {/* RK Internal Image - Inside dark box, next to text */}
                     <div
                       style={{
+                        maxWidth: 'clamp(140px, 14vw, 180px)',
+                        width: 'fit-content',
+                        flex: '0 0 auto',
                         display: 'flex',
-                        justifyContent: 'center',
+                        flexDirection: 'column',
+                        gap: 'clamp(10px, 1.2vw, 14px)',
+                        marginTop: '0',
+                        overflow: 'visible',
                         alignItems: 'center',
-                        background: 'transparent',
-                        padding: '0',
-                        borderRadius: '0',
-                        boxShadow: 'none',
-                        alignSelf: 'center'
+                        justifyContent: 'flex-start'
                       }}
                     >
                       <img
-                        src="/rkqr.jpeg"
-                        alt="RK QR Code"
-                        onClick={() => setShowRKQRModal(true)}
+                        src="/rk-internal.png"
+                        alt="RK Internal"
                         style={{
-                          maxWidth: 'clamp(80px, 10vw, 120px)',
-                          maxHeight: 'clamp(80px, 10vw, 120px)',
                           width: 'auto',
+                          maxWidth: 'clamp(140px, 14vw, 180px)',
                           height: 'auto',
-                          objectFit: 'contain',
+                          maxHeight: 'clamp(100px, 12vh, 140px)',
                           display: 'block',
-                          cursor: 'pointer',
-                          transition: 'transform 0.2s ease, boxShadow 0.2s ease'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.transform = 'scale(1.05)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.transform = 'scale(1)';
+                          objectFit: 'contain'
                         }}
                       />
+                      {/* QR Code - Below the image */}
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          background: 'transparent',
+                          padding: '0',
+                          borderRadius: '0',
+                          boxShadow: 'none',
+                          alignSelf: 'center',
+                          marginTop: 'clamp(30px, 4vh, 60px)'
+                        }}
+                      >
+                        <img
+                          src="/rkqr.jpeg"
+                          alt="RK QR Code"
+                          onClick={() => setShowRKQRModal(true)}
+                          style={{
+                            maxWidth: 'clamp(80px, 10vw, 120px)',
+                            maxHeight: 'clamp(80px, 10vw, 120px)',
+                            width: 'auto',
+                            height: 'auto',
+                            objectFit: 'contain',
+                            display: 'block',
+                            cursor: 'pointer',
+                            transition: 'transform 0.2s ease, boxShadow 0.2s ease'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = 'scale(1.05)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'scale(1)';
+                          }}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -8078,14 +9087,21 @@ export default function App() {
 
                 <h1
                   style={{
-                    fontSize: 'var(--ah-title-size, clamp(26px, 3.5vw, 44px))',
+                    fontSize: 'var(--ah-title-size, clamp(30px, 4vw, 50px))',
                     fontWeight: '900',
-                    marginBottom: 'clamp(12px, 1.5vh, 20px)',
-                    letterSpacing: '1.4px',
-                    color: '#0f172a',
+                    marginBottom: 'clamp(16px, 2.5vh, 28px)',
+                    letterSpacing: '2.2px',
+                    background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
                     textTransform: 'uppercase',
                     animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both',
-                    lineHeight: '1.2'
+                    lineHeight: '1.2',
+                    textShadow: '0 0 30px rgba(15, 23, 42, 0.4), 0 4px 20px rgba(15, 23, 42, 0.3)',
+                    position: 'relative',
+                    display: 'inline-block',
+                    filter: 'drop-shadow(0 2px 8px rgba(15, 23, 42, 0.5))'
                   }}
                 >
                   AH ENVIRONMENTAL CONSULTING
@@ -8093,11 +9109,19 @@ export default function App() {
 
                 <p
                   style={{
-                    fontSize: 'var(--ah-text-size, clamp(13px, 1.5vw, 20px))',
-                    lineHeight: '1.7',
-                    marginBottom: 'clamp(16px, 2vh, 24px)',
+                    fontSize: 'var(--ah-text-size, clamp(14px, 1.6vw, 22px))',
+                    lineHeight: '1.85',
+                    marginBottom: 'clamp(24px, 3.5vh, 36px)',
                     color: '#1e293b',
-                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both'
+                    fontWeight: '500',
+                    letterSpacing: '0.3px',
+                    textShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                    animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both',
+                    padding: 'clamp(12px, 1.5vh, 18px) clamp(16px, 2vw, 24px)',
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(15, 23, 42, 0.1)',
+                    borderLeft: '4px solid #0f172a'
                   }}
                 >
                   AHEC is a leading environmental engineering and consulting firm established in 2010, providing sustainable and compliant solutions across multiple industries Certified Category A by NCEC and accredited by the Royal Commission for Jubail and Yanbu, AHEC delivers integrated environmental services to government and industrial clients, supporting sustainability, safety, and regulatory compliance
@@ -8115,50 +9139,97 @@ export default function App() {
                   {/* Contact Info (Left Column) */}
                   <div
                     style={{
-                      fontSize: 'var(--ah-info-size, clamp(13px, 1.5vw, 32px))',
-                    lineHeight: '1.8',
-                    color: '#1e293b',
-                    flex: '1'
-                  }}
+                      fontSize: 'var(--ah-info-size, clamp(14px, 1.5vw, 21px))',
+                      lineHeight: '1.9',
+                      color: '#1e293b',
+                      flex: '1',
+                      padding: 'clamp(16px, 2vh, 20px) clamp(20px, 2.2vw, 28px)',
+                      borderRadius: '14px',
+                      background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%)',
+                      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(15, 23, 42, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
+                      border: '1px solid rgba(15, 23, 42, 0.2)',
+                      backdropFilter: 'blur(10px)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '0'
+                    }}
                   >
-                    <div style={{ marginBottom: 'clamp(10px, 1.2vh, 14px)' }}>
+                    <div style={{ 
+                      display: 'flex', 
+                      alignItems: 'center',
+                      gap: '8px',
+                      marginBottom: 'clamp(10px, 1.4vh, 14px)',
+                      paddingBottom: 'clamp(8px, 1.2vh, 12px)',
+                      borderBottom: '1px solid rgba(15, 23, 42, 0.15)'
+                    }}>
                       <strong
                         style={{
-                          display: 'inline-block',
-                          width: 'clamp(110px, 11vw, 150px)',
                           fontWeight: 800,
-                          color: '#0f172a'
+                          color: '#0f172a',
+                          fontSize: 'clamp(14px, 1.5vw, 21px)',
+                          letterSpacing: '0.5px',
+                          textShadow: '0 1px 2px rgba(15, 23, 42, 0.2)',
+                          minWidth: 'auto'
                         }}
                       >
                         Managers:
                       </strong>
-                      <span>Ennacer Besghaier.</span>
+                      <span style={{ 
+                        fontWeight: 600,
+                        letterSpacing: '0.2px'
+                      }}>Ennacer Besghaier.</span>
                     </div>
-                    <div style={{ marginBottom: 'clamp(10px, 1.2vh, 14px)' }}>
+                    <div style={{ 
+                      display: 'flex', 
+                      alignItems: 'center',
+                      gap: '8px',
+                      marginBottom: 'clamp(10px, 1.4vh, 14px)',
+                      paddingBottom: 'clamp(8px, 1.2vh, 12px)',
+                      borderBottom: '1px solid rgba(15, 23, 42, 0.15)'
+                    }}>
                       <strong
                         style={{
-                          display: 'inline-block',
-                          width: 'clamp(110px, 11vw, 150px)',
                           fontWeight: 800,
-                          color: '#0f172a'
+                          color: '#0f172a',
+                          fontSize: 'clamp(14px, 1.5vw, 21px)',
+                          letterSpacing: '0.5px',
+                          textShadow: '0 1px 2px rgba(15, 23, 42, 0.2)',
+                          minWidth: 'auto'
                         }}
                       >
                         Mobile:
                       </strong>
-                      <span>054 292 9702</span>
+                      <span style={{ 
+                        fontWeight: 600,
+                        letterSpacing: '0.2px',
+                        fontFamily: 'monospace'
+                      }}>054 292 9702</span>
                     </div>
-                    <div style={{ marginBottom: 'clamp(10px, 1.2vh, 14px)' }}>
+                    <div style={{ 
+                      display: 'flex', 
+                      alignItems: 'center',
+                      gap: '8px',
+                      marginBottom: '0'
+                    }}>
                       <strong
                         style={{
-                          display: 'inline-block',
-                          width: 'clamp(110px, 11vw, 150px)',
                           fontWeight: 800,
-                          color: '#0f172a'
+                          color: '#0f172a',
+                          fontSize: 'clamp(14px, 1.5vw, 21px)',
+                          letterSpacing: '0.5px',
+                          textShadow: '0 1px 2px rgba(15, 23, 42, 0.2)',
+                          minWidth: 'auto'
                         }}
                       >
                         Email:
                       </strong>
-                      <span>g.m@ahenviro.com</span>
+                      <span style={{ 
+                        fontWeight: 600,
+                        letterSpacing: '0.2px',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis'
+                      }}>g.m@ahenviro.com</span>
                     </div>
                   </div>
                 </div>
@@ -8186,31 +9257,34 @@ export default function App() {
                     <button
                       onClick={() => window.open('https://ahenviro.com/', '_blank', 'noopener,noreferrer')}
                         style={{
-                        padding: 'clamp(8px, 1vw, 20px) clamp(16px, 2vw, 40px)',
-                        fontSize: 'clamp(11px, 1.2vw, 24px)',
-                        fontWeight: 600,
-                        color: '#040075',
-                        background: '#ffffff',
-                        border: 'none',
-                        borderRadius: '6px',
+                        padding: 'clamp(12px, 1.4vw, 16px) clamp(28px, 2.8vw, 38px)',
+                        fontSize: 'clamp(14px, 1.4vw, 18px)',
+                        fontWeight: 700,
+                        color: '#ffffff',
+                        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
+                        border: '2px solid #0f172a',
+                        borderRadius: '999px',
                         cursor: 'pointer',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
-                        transition: 'all 0.3s ease',
-                        letterSpacing: '0.3px',
+                        boxShadow: '0 6px 20px rgba(15, 23, 42, 0.5), 0 0 0 0 rgba(15, 23, 42, 0.4)',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        letterSpacing: '0.8px',
                         textTransform: 'uppercase',
                         minWidth: 'clamp(200px, 20vw, 280px)',
                         width: 'clamp(200px, 20vw, 280px)',
-                        alignSelf: 'flex-start'
+                        alignSelf: 'flex-start',
+                        textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                        position: 'relative',
+                        overflow: 'hidden'
                         }}
                         onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-1px)';
-                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
-                        e.currentTarget.style.background = '#f5f5f5';
+                        e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(15, 23, 42, 0.6), 0 0 0 4px rgba(15, 23, 42, 0.2)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e293b 100%)';
                         }}
                         onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.15)';
-                        e.currentTarget.style.background = '#ffffff';
+                        e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(15, 23, 42, 0.5), 0 0 0 0 rgba(15, 23, 42, 0.4)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)';
                         }}
                       >
                       Visit Website
@@ -8220,31 +9294,34 @@ export default function App() {
                     <button
                       onClick={() => window.open('https://ahenviro.com/services/', '_blank', 'noopener,noreferrer')}
                       style={{
-                        padding: 'clamp(8px, 1vw, 20px) clamp(16px, 2vw, 40px)',
-                        fontSize: 'clamp(11px, 1.2vw, 24px)',
-                        fontWeight: 600,
-                        color: '#040075',
-                        background: '#ffffff',
-                        border: 'none',
-                        borderRadius: '6px',
+                        padding: 'clamp(12px, 1.4vw, 16px) clamp(28px, 2.8vw, 38px)',
+                        fontSize: 'clamp(14px, 1.4vw, 18px)',
+                        fontWeight: 700,
+                        color: '#ffffff',
+                        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
+                        border: '2px solid #0f172a',
+                        borderRadius: '999px',
                         cursor: 'pointer',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
-                        transition: 'all 0.3s ease',
-                        letterSpacing: '0.3px',
+                        boxShadow: '0 6px 20px rgba(15, 23, 42, 0.5), 0 0 0 0 rgba(15, 23, 42, 0.4)',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        letterSpacing: '0.8px',
                         textTransform: 'uppercase',
                         minWidth: 'clamp(200px, 20vw, 280px)',
                         width: 'clamp(200px, 20vw, 280px)',
-                        alignSelf: 'flex-start'
+                        alignSelf: 'flex-start',
+                        textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                        position: 'relative',
+                        overflow: 'hidden'
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-1px)';
-                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
-                        e.currentTarget.style.background = '#f5f5f5';
+                        e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(15, 23, 42, 0.6), 0 0 0 4px rgba(15, 23, 42, 0.2)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e293b 100%)';
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.15)';
-                        e.currentTarget.style.background = '#ffffff';
+                        e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(15, 23, 42, 0.5), 0 0 0 0 rgba(15, 23, 42, 0.4)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)';
                       }}
                     >
                       Our Services
@@ -8254,32 +9331,34 @@ export default function App() {
                     <button
                       onClick={() => setShowAHEnvironmentalLearnMore(true)}
                     style={{
-                      padding: 'clamp(8px, 1vw, 20px) clamp(16px, 2vw, 40px)',
-                      fontSize: 'clamp(11px, 1.2vw, 24px)',
-                        fontWeight: 600,
-                        color: '#040075',
-                        background: '#ffffff',
-                        border: 'none',
-                        borderRadius: '6px',
+                      padding: 'clamp(12px, 1.4vw, 16px) clamp(28px, 2.8vw, 38px)',
+                      fontSize: 'clamp(14px, 1.4vw, 18px)',
+                        fontWeight: 700,
+                        color: '#ffffff',
+                        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
+                        border: '2px solid #0f172a',
+                        borderRadius: '999px',
                         cursor: 'pointer',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
-                        transition: 'all 0.3s ease',
-                        letterSpacing: '0.3px',
+                        boxShadow: '0 6px 20px rgba(15, 23, 42, 0.5), 0 0 0 0 rgba(15, 23, 42, 0.4)',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        letterSpacing: '0.8px',
                         textTransform: 'uppercase',
-                        animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 540ms both',
                         minWidth: 'clamp(200px, 20vw, 280px)',
                         width: 'clamp(200px, 20vw, 280px)',
-                        alignSelf: 'flex-start'
+                        alignSelf: 'flex-start',
+                        textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                        position: 'relative',
+                        overflow: 'hidden'
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-1px)';
-                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
-                        e.currentTarget.style.background = '#f5f5f5';
+                        e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(15, 23, 42, 0.6), 0 0 0 4px rgba(15, 23, 42, 0.2)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e293b 100%)';
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.15)';
-                        e.currentTarget.style.background = '#ffffff';
+                        e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(15, 23, 42, 0.5), 0 0 0 0 rgba(15, 23, 42, 0.4)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)';
                       }}
                     >
                       Learn More
@@ -8516,24 +9595,40 @@ export default function App() {
                 zIndex: 11
               }}>
                 <h1 style={{
-                  fontSize: 'var(--gulf-title-size, clamp(32px, 4vw, 56px))',
+                  fontSize: 'var(--gulf-title-size, clamp(36px, 4.5vw, 62px))',
                   fontWeight: '900',
-                  marginBottom: 'clamp(12px, 2vh, 24px)',
-                  letterSpacing: '1.5px',
-                  color: '#ffffff',
+                  marginBottom: 'clamp(16px, 2.5vh, 28px)',
+                  letterSpacing: '2.2px',
+                  background: 'linear-gradient(135deg, #ffffff 0%, #e8f0ff 50%, #ffffff 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
                   textTransform: 'uppercase',
                   animation: 'fadeInUp 0.8s ease-out 0.2s both',
-                  whiteSpace: 'nowrap'
+                  whiteSpace: 'nowrap',
+                  textShadow: '0 0 30px rgba(255, 255, 255, 0.4), 0 4px 20px rgba(255, 255, 255, 0.3)',
+                  position: 'relative',
+                  display: 'inline-block',
+                  filter: 'drop-shadow(0 2px 8px rgba(255, 255, 255, 0.5))'
                 }}>
                   GULF CONSULT
                 </h1>
 
                 <p style={{
-                  fontSize: 'var(--gulf-text-size, clamp(14px, 1.6vw, 22px))',
-                  lineHeight: '1.75',
-                  marginBottom: 'clamp(20px, 3vh, 36px)',
+                  fontSize: 'var(--gulf-text-size, clamp(15px, 1.7vw, 24px))',
+                  lineHeight: '1.85',
+                  marginBottom: 'clamp(24px, 3.5vh, 36px)',
                   color: '#ffffff',
-                  animation: 'fadeInUp 0.8s ease-out 0.4s both'
+                  fontWeight: '500',
+                  letterSpacing: '0.3px',
+                  textShadow: '0 2px 8px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2)',
+                  animation: 'fadeInUp 0.8s ease-out 0.4s both',
+                  padding: 'clamp(12px, 1.5vh, 18px) clamp(16px, 2vw, 24px)',
+                  background: 'rgba(255, 255, 255, 0.12)',
+                  borderRadius: '12px',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.15)',
+                  borderLeft: '4px solid #16348a',
+                  backdropFilter: 'blur(10px)'
                 }}>
                   is an independent multidisciplinary consultancy firm established in 1981 with over 42 years of experience providing high-quality engineering and environmental services across the Gulf region, particularly in the Kingdom of Saudi Arabia.
                 </p>
@@ -8541,86 +9636,145 @@ export default function App() {
                 {/* Contact Information - Lowered down */}
                 <div style={{
                   fontSize: 'var(--gulf-info-size, clamp(15px, 1.7vw, 24px))',
-                  lineHeight: '2',
+                  lineHeight: '1.9',
                   color: '#ffffff',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: 'clamp(10px, 1.5vh, 18px)',
+                  gap: '0',
                   marginTop: 'clamp(40px, 5vh, 60px)',
-                  animation: 'fadeInUp 0.8s ease-out 0.6s both'
+                  animation: 'fadeInUp 0.8s ease-out 0.6s both',
+                  padding: 'clamp(16px, 2vh, 20px) clamp(20px, 2.2vw, 28px)',
+                  borderRadius: '14px',
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%)',
+                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.2)',
+                  border: '1px solid rgba(255, 255, 255, 0.25)',
+                  backdropFilter: 'blur(10px)'
                 }}>
                   <div style={{ 
                     display: 'flex', 
-                    alignItems: 'flex-start',
-                    flexWrap: 'wrap',
-                    gap: '4px'
+                    alignItems: 'center',
+                    gap: '8px',
+                    marginBottom: 'clamp(10px, 1.4vh, 14px)',
+                    paddingBottom: 'clamp(8px, 1.2vh, 12px)',
+                    borderBottom: '1px solid rgba(255, 255, 255, 0.2)'
                   }}>
-                    <strong style={{ fontWeight: '800', flexShrink: 0 }}>Managers:</strong>
-                    <span>Eng. Faisal Ali AlHarbi - CEO, and Eng. Rabah Yehya - GM.</span>
+                    <strong style={{ 
+                      fontWeight: '800', 
+                      flexShrink: 0,
+                      color: '#e8f0ff',
+                      fontSize: 'clamp(15px, 1.7vw, 24px)',
+                      letterSpacing: '0.5px',
+                      textShadow: '0 1px 2px rgba(22, 52, 138, 0.3)'
+                    }}>Management:</strong>
+                    <span style={{ 
+                      fontWeight: 600,
+                      letterSpacing: '0.2px',
+                      textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)'
+                    }}>CEO: Eng. Faisal Ali AlHarbi, GM: Eng. Rabah Yehya.</span>
                   </div>
                   <div style={{ 
                     display: 'flex', 
-                    alignItems: 'flex-start',
-                    flexWrap: 'wrap',
-                    gap: '4px'
+                    alignItems: 'center',
+                    gap: '8px',
+                    marginBottom: 'clamp(10px, 1.4vh, 14px)',
+                    paddingBottom: 'clamp(8px, 1.2vh, 12px)',
+                    borderBottom: '1px solid rgba(255, 255, 255, 0.2)'
                   }}>
-                    <strong style={{ fontWeight: '800', flexShrink: 0 }}>Mobile:</strong>
-                    <span>055 584 6667</span>
+                    <strong style={{ 
+                      fontWeight: '800', 
+                      flexShrink: 0,
+                      color: '#e8f0ff',
+                      fontSize: 'clamp(15px, 1.7vw, 24px)',
+                      letterSpacing: '0.5px',
+                      textShadow: '0 1px 2px rgba(22, 52, 138, 0.3)'
+                    }}>Mobile:</strong>
+                    <span style={{ 
+                      fontWeight: 600,
+                      letterSpacing: '0.2px',
+                      fontFamily: 'monospace',
+                      textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)'
+                    }}>055 584 6667</span>
                   </div>
                   <div style={{ 
                     display: 'flex', 
                     flexDirection: 'column',
-                    gap: 'clamp(4px, 0.5vh, 8px)'
+                    gap: 'clamp(6px, 0.8vh, 10px)',
+                    marginBottom: '0'
                   }}>
                     <div style={{ 
                       display: 'flex', 
-                      alignItems: 'flex-start',
-                      flexWrap: 'wrap',
-                      gap: '4px'
+                      alignItems: 'center',
+                      gap: '8px'
                     }}>
-                      <strong style={{ fontWeight: '800', flexShrink: 0 }}>Email:</strong>
-                      <span>faisal@gulfconsult.com</span>
+                      <strong style={{ 
+                        fontWeight: '800', 
+                        flexShrink: 0,
+                        color: '#e8f0ff',
+                        fontSize: 'clamp(15px, 1.7vw, 24px)',
+                        letterSpacing: '0.5px',
+                        textShadow: '0 1px 2px rgba(22, 52, 138, 0.3)'
+                      }}>Email:</strong>
+                      <span style={{ 
+                        fontWeight: 600,
+                        letterSpacing: '0.2px',
+                        textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)'
+                      }}>faisal@gulfconsult.com</span>
                     </div>
                     <div style={{ 
                       display: 'flex', 
-                      alignItems: 'flex-start',
-                      flexWrap: 'wrap',
-                      gap: '4px',
+                      alignItems: 'center',
+                      gap: '8px',
                       marginLeft: 'clamp(80px, 8vw, 120px)'
                     }}>
-                      <span>rabah@gulfconsult.com</span>
+                      <span style={{ 
+                        fontWeight: 600,
+                        letterSpacing: '0.2px',
+                        textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)'
+                      }}>rabah@gulfconsult.com</span>
                     </div>
                   </div>
+                </div>
+
+                {/* Buttons Container */}
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 'clamp(6px, 0.8vh, 10px)',
+                  animation: 'fadeInUp 0.8s ease-out 0.7s both',
+                  marginTop: 'clamp(28px, 3.5vh, 40px)'
+                }}>
                   {/* Website Button */}
                   <button
                     onClick={() => window.open('https://www.gulfconsult.com', '_blank', 'noopener,noreferrer')}
                       style={{ 
-                      padding: 'var(--gulf-button-padding, clamp(14px, 1.6vw, 22px) clamp(32px, 3.2vw, 48px))',
-                      fontSize: 'var(--gulf-button-font, clamp(15px, 1.6vw, 22px))',
+                      padding: 'clamp(12px, 1.4vw, 16px) clamp(28px, 2.8vw, 38px)',
+                      fontSize: 'clamp(14px, 1.4vw, 18px)',
                         fontWeight: 700,
                       color: '#ffffff',
-                      background: '#16348a',
-                      border: 'none',
+                      background: 'linear-gradient(135deg, #16348a 0%, #1e42a5 50%, #16348a 100%)',
+                      border: '2px solid #16348a',
                       borderRadius: '999px',
                       cursor: 'pointer',
-                      boxShadow: '0 4px 15px rgba(22, 52, 138, 0.4)',
-                      transition: 'all 0.3s ease',
-                      letterSpacing: '0.5px',
+                      boxShadow: '0 6px 20px rgba(22, 52, 138, 0.5), 0 0 0 0 rgba(22, 52, 138, 0.4)',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      letterSpacing: '0.8px',
                       textTransform: 'uppercase',
-                      marginTop: 'clamp(16px, 2.2vh, 24px)',
                       alignSelf: 'flex-start',
                       minWidth: 'clamp(200px, 20vw, 280px)',
-                      width: 'clamp(200px, 20vw, 280px)'
+                      width: 'clamp(200px, 20vw, 280px)',
+                      textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                      position: 'relative',
+                      overflow: 'hidden'
                       }}
                       onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                      e.currentTarget.style.boxShadow = '0 6px 20px rgba(22, 52, 138, 0.5)';
-                      e.currentTarget.style.background = '#1e42a5';
+                      e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(22, 52, 138, 0.6), 0 0 0 4px rgba(22, 52, 138, 0.2)';
+                      e.currentTarget.style.background = 'linear-gradient(135deg, #1e42a5 0%, #16348a 50%, #1e42a5 100%)';
                       }}
                       onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 4px 15px rgba(22, 52, 138, 0.4)';
-                      e.currentTarget.style.background = '#16348a';
+                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                      e.currentTarget.style.boxShadow = '0 6px 20px rgba(22, 52, 138, 0.5), 0 0 0 0 rgba(22, 52, 138, 0.4)';
+                      e.currentTarget.style.background = 'linear-gradient(135deg, #16348a 0%, #1e42a5 50%, #16348a 100%)';
                     }}
                   >
                     Visit Website
@@ -8629,73 +9783,77 @@ export default function App() {
                   <button
                     onClick={() => window.open('https://www.gulfconsult.com/our-services', '_blank', 'noopener,noreferrer')}
                     style={{
-                      padding: 'var(--gulf-button-padding, clamp(14px, 1.6vw, 22px) clamp(32px, 3.2vw, 48px))',
-                      fontSize: 'var(--gulf-button-font, clamp(15px, 1.6vw, 22px))',
+                      padding: 'clamp(12px, 1.4vw, 16px) clamp(28px, 2.8vw, 38px)',
+                      fontSize: 'clamp(14px, 1.4vw, 18px)',
                       fontWeight: 700,
                       color: '#ffffff',
-                      background: '#16348a',
-                      border: 'none',
+                      background: 'linear-gradient(135deg, #16348a 0%, #1e42a5 50%, #16348a 100%)',
+                      border: '2px solid #16348a',
                       borderRadius: '999px',
                       cursor: 'pointer',
-                      boxShadow: '0 4px 15px rgba(22, 52, 138, 0.4)',
-                      transition: 'all 0.3s ease',
-                      letterSpacing: '0.5px',
+                      boxShadow: '0 6px 20px rgba(22, 52, 138, 0.5), 0 0 0 0 rgba(22, 52, 138, 0.4)',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      letterSpacing: '0.8px',
                       textTransform: 'uppercase',
-                      marginTop: 'clamp(16px, 2.2vh, 24px)',
                       alignSelf: 'flex-start',
                       minWidth: 'clamp(200px, 20vw, 280px)',
-                      width: 'clamp(200px, 20vw, 280px)'
+                      width: 'clamp(200px, 20vw, 280px)',
+                      textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                      position: 'relative',
+                      overflow: 'hidden'
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                      e.currentTarget.style.boxShadow = '0 6px 20px rgba(22, 52, 138, 0.5)';
-                      e.currentTarget.style.background = '#1e42a5';
+                      e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(22, 52, 138, 0.6), 0 0 0 4px rgba(22, 52, 138, 0.2)';
+                      e.currentTarget.style.background = 'linear-gradient(135deg, #1e42a5 0%, #16348a 50%, #1e42a5 100%)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 4px 15px rgba(22, 52, 138, 0.4)';
-                      e.currentTarget.style.background = '#16348a';
+                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                      e.currentTarget.style.boxShadow = '0 6px 20px rgba(22, 52, 138, 0.5), 0 0 0 0 rgba(22, 52, 138, 0.4)';
+                      e.currentTarget.style.background = 'linear-gradient(135deg, #16348a 0%, #1e42a5 50%, #16348a 100%)';
                     }}
                   >
                     Our Services
                   </button>
-                </div>
-
-                {/* Learn More Button - Below Website */}
-                <button
+                  
+                  {/* Learn More Button */}
+                  <button
                   className="gulf-consult-learn-more-button"
                   onClick={() => setShowGulfConsult2LearnMore(true)}
                   style={{
-                    padding: 'var(--gulf-button-padding, clamp(14px, 1.6vw, 22px) clamp(32px, 3.2vw, 48px))',
-                    fontSize: 'var(--gulf-button-font, clamp(15px, 1.6vw, 22px))',
+                    padding: 'clamp(12px, 1.4vw, 16px) clamp(28px, 2.8vw, 38px)',
+                    fontSize: 'clamp(14px, 1.4vw, 18px)',
                     fontWeight: 700,
                     color: '#ffffff',
-                    background: '#16348a',
-                    border: 'none',
+                    background: 'linear-gradient(135deg, #16348a 0%, #1e42a5 50%, #16348a 100%)',
+                    border: '2px solid #16348a',
                     borderRadius: '999px',
                     cursor: 'pointer',
-                    boxShadow: '0 4px 15px rgba(22, 52, 138, 0.4)',
-                    transition: 'all 0.3s ease',
-                    letterSpacing: '0.5px',
+                    boxShadow: '0 6px 20px rgba(22, 52, 138, 0.5), 0 0 0 0 rgba(22, 52, 138, 0.4)',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    letterSpacing: '0.8px',
                     textTransform: 'uppercase',
-                    animation: 'fadeInUp 0.8s ease-out 0.7s both',
-                    marginTop: 'clamp(16px, 2.2vh, 24px)',
                     minWidth: 'clamp(200px, 20vw, 280px)',
-                    width: 'clamp(200px, 20vw, 280px)'
+                    width: 'clamp(200px, 20vw, 280px)',
+                    textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    marginTop: 'clamp(-4px, -0.5vh, -2px)'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(22, 52, 138, 0.5)';
-                    e.currentTarget.style.background = '#1e42a5';
+                    e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                    e.currentTarget.style.boxShadow = '0 8px 25px rgba(22, 52, 138, 0.6), 0 0 0 4px rgba(22, 52, 138, 0.2)';
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #1e42a5 0%, #16348a 50%, #1e42a5 100%)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(22, 52, 138, 0.4)';
-                    e.currentTarget.style.background = '#16348a';
+                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(22, 52, 138, 0.5), 0 0 0 0 rgba(22, 52, 138, 0.4)';
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #16348a 0%, #1e42a5 50%, #16348a 100%)';
                   }}
                 >
                   Learn More
                 </button>
+                </div>
 
                 {/* Gulf Video Image with Play Video overlay - Far Right */}
                 {!gulfLogoVideoFullscreen && (
@@ -8703,7 +9861,7 @@ export default function App() {
                     style={{
                       position: 'fixed',
                       right: 'clamp(16px, 2.5vw, 32px)',
-                      top: 'clamp(45%, 45vh, 50%)',
+                      top: 'clamp(38%, 38vh, 42%)',
                       transform: 'translateY(-50%)',
                       zIndex: 11,
                       width: 'clamp(220px, 22vw, 320px)',
@@ -8814,7 +9972,7 @@ export default function App() {
                     style={{
                       position: 'fixed',
                       right: 'clamp(16px, 2.5vw, 32px)',
-                      top: 'calc(50% + clamp(80px, 10vh, 120px) + clamp(90px, 7vh, 100px))',
+                      top: 'calc(38% + clamp(100px, 12vh, 140px))',
                       zIndex: 11,
                       display: 'flex',
                       justifyContent: 'flex-end',
@@ -9355,7 +10513,8 @@ export default function App() {
                   color: '#2d8659',
                   marginBottom: 'clamp(20px, 3vh, 30px)',
                   letterSpacing: '1.5px',
-                  textTransform: 'uppercase'
+                  textTransform: 'uppercase',
+                  textAlign: 'center'
                 }}>
                   OUR TEAM
                 </h1>
@@ -9472,6 +10631,724 @@ export default function App() {
           {/* Back button */}
           <button
             onClick={() => setShowPartners(false)}
+            style={{
+              position: 'fixed',
+              top: 'clamp(20px, 2.5vw, 40px)',
+              right: 'clamp(20px, 2.5vw, 40px)',
+              background: 'transparent',
+              border: 'none',
+              color: '#2d8659',
+              padding: 'clamp(10px, 1.2vw, 14px) clamp(24px, 3vw, 32px)',
+              fontSize: 'clamp(14px, 1.5vw, 18px)',
+              fontWeight: '700',
+              letterSpacing: '0.5px',
+              cursor: 'pointer',
+              zIndex: 2001,
+              whiteSpace: 'nowrap',
+              textDecoration: 'none',
+              borderRadius: '8px',
+              textTransform: 'uppercase',
+              transition: 'all 0.3s ease',
+              boxShadow: 'none'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = '#2d8659';
+              e.currentTarget.style.color = '#ffffff';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(45, 134, 89, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent';
+              e.currentTarget.style.color = '#2d8659';
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            Back
+          </button>
+        </div>
+      )}
+
+      {/* Our Subsidiaries Modal */}
+      {showSubsidiaries && (
+        <div 
+          className="subsidiaries-modal"
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh',
+            maxWidth: '100vw',
+            maxHeight: '100vh',
+            backgroundImage: 'url(/bg.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            zIndex: 2000,
+            overflow: 'hidden',
+            margin: 0,
+            padding: 0,
+            boxSizing: 'border-box'
+          }}>
+          {/* Content Container */}
+          <div style={{
+            width: '100%',
+            height: '100vh',
+            padding: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '15px 25px' : 'clamp(40px, 4vw, 60px) clamp(20px, 3vw, 40px)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxSizing: 'border-box',
+            position: 'relative',
+            overflow: 'hidden'
+          }}>
+            {/* Title */}
+            <h1 style={{
+              fontSize: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '26px' : 'clamp(32px, 4vw, 48px)',
+              fontWeight: '900',
+              color: '#2d8659',
+              marginBottom: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '12px' : 'clamp(30px, 4vh, 50px)',
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              textAlign: 'center',
+              marginTop: '0'
+            }}>
+              Our Subsidiaries
+            </h1>
+
+            {/* Companies Grid */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: viewportSize.width >= 1536 && viewportSize.height >= 864 ? 'repeat(4, 1fr)' : 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '12px' : 'clamp(25px, 3vw, 40px)',
+              width: '100%',
+              maxWidth: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '100%' : '1400px',
+              padding: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '0 15px' : '0 clamp(20px, 3vw, 40px)',
+              justifyContent: 'center',
+              flex: '1',
+              alignContent: 'center'
+            }}>
+              {/* AH Environmental */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '8px' : '20px',
+                padding: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '12px' : 'clamp(20px, 2.5vw, 30px)',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '16px',
+                boxShadow: '0 8px 24px rgba(45, 134, 89, 0.15)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                minHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? 'auto' : '280px',
+                justifyContent: 'flex-start',
+                height: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '100%' : 'auto'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = '0 12px 32px rgba(45, 134, 89, 0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(45, 134, 89, 0.15)';
+              }}
+              >
+                <img 
+                  src="/AH-ENVIRONMENTAL.png" 
+                  alt="AH Environmental" 
+                  style={{
+                    width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    maxHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '60px' : '100px'
+                  }}
+                />
+                <div style={{
+                  textAlign: 'center',
+                  color: '#2d8659',
+                  fontSize: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '11px' : 'clamp(14px, 1.5vw, 18px)',
+                  lineHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '1.4' : '1.6',
+                  fontWeight: '500',
+                  direction: 'ltr'
+                }}>
+                  <p style={{ margin: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '0 0 6px 0' : '0 0 10px 0' }}>
+                    AH Environmental is committed to protecting and preserving our natural environment through sustainable practices.
+                  </p>
+                  <p style={{ margin: '0' }}>
+                    We provide comprehensive environmental solutions and consulting services to ensure a greener future.
+                  </p>
+                </div>
+              </div>
+
+              {/* Gulf Consult */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '8px' : '20px',
+                padding: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '12px' : 'clamp(20px, 2.5vw, 30px)',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '16px',
+                boxShadow: '0 8px 24px rgba(45, 134, 89, 0.15)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                minHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? 'auto' : '280px',
+                justifyContent: 'flex-start',
+                height: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '100%' : 'auto'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = '0 12px 32px rgba(45, 134, 89, 0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(45, 134, 89, 0.15)';
+              }}
+              >
+                <img 
+                  src="/GULF-CONSULT.png" 
+                  alt="Gulf Consult" 
+                  style={{
+                    width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    maxHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '60px' : '100px'
+                  }}
+                />
+                <div style={{
+                  textAlign: 'center',
+                  color: '#2d8659',
+                  fontSize: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '11px' : 'clamp(14px, 1.5vw, 18px)',
+                  lineHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '1.4' : '1.6',
+                  fontWeight: '500',
+                  direction: 'ltr'
+                }}>
+                  <p style={{ margin: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '0 0 6px 0' : '0 0 10px 0' }}>
+                    Gulf Consult is a premier consulting firm offering strategic advisory and professional services.
+                  </p>
+                  <p style={{ margin: '0' }}>
+                    We deliver expert guidance and innovative solutions to help businesses achieve their strategic objectives.
+                  </p>
+                </div>
+              </div>
+
+              {/* Antique */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '8px' : '20px',
+                padding: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '12px' : 'clamp(20px, 2.5vw, 30px)',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '16px',
+                boxShadow: '0 8px 24px rgba(45, 134, 89, 0.15)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                minHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? 'auto' : '280px',
+                justifyContent: 'flex-start',
+                height: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '100%' : 'auto'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = '0 12px 32px rgba(45, 134, 89, 0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(45, 134, 89, 0.15)';
+              }}
+              >
+                <img 
+                  src="/antique.png" 
+                  alt="Antique" 
+                  style={{
+                    width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    maxHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '60px' : '100px'
+                  }}
+                />
+                <div style={{
+                  textAlign: 'center',
+                  color: '#2d8659',
+                  fontSize: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '11px' : 'clamp(14px, 1.5vw, 18px)',
+                  lineHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '1.4' : '1.6',
+                  fontWeight: '500',
+                  direction: 'ltr'
+                }}>
+                  <p style={{ margin: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '0 0 6px 0' : '0 0 10px 0' }}>
+                    Antique is a distinguished company known for its excellence in heritage preservation and cultural services.
+                  </p>
+                  <p style={{ margin: '0' }}>
+                    We combine traditional craftsmanship with modern expertise to deliver exceptional quality and timeless value.
+                  </p>
+                </div>
+              </div>
+
+              {/* AMT */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '8px' : '20px',
+                padding: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '12px' : 'clamp(20px, 2.5vw, 30px)',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '16px',
+                boxShadow: '0 8px 24px rgba(45, 134, 89, 0.15)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                minHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? 'auto' : '280px',
+                justifyContent: 'flex-start',
+                height: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '100%' : 'auto'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = '0 12px 32px rgba(45, 134, 89, 0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(45, 134, 89, 0.15)';
+              }}
+              >
+                <img 
+                  src="/AMT.png" 
+                  alt="AMT" 
+                  style={{
+                    width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    maxHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '60px' : '100px'
+                  }}
+                />
+                <div style={{
+                  textAlign: 'center',
+                  color: '#2d8659',
+                  fontSize: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '11px' : 'clamp(14px, 1.5vw, 18px)',
+                  lineHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '1.4' : '1.6',
+                  fontWeight: '500',
+                  direction: 'ltr'
+                }}>
+                  <p style={{ margin: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '0 0 6px 0' : '0 0 10px 0' }}>
+                    AMT is a leading company specializing in advanced technology solutions and innovative services.
+                  </p>
+                  <p style={{ margin: '0' }}>
+                    We provide cutting-edge technological expertise to drive business growth and digital transformation.
+                  </p>
+                </div>
+              </div>
+
+              {/* Central Care */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '8px' : '20px',
+                padding: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '12px' : 'clamp(20px, 2.5vw, 30px)',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '16px',
+                boxShadow: '0 8px 24px rgba(45, 134, 89, 0.15)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                minHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? 'auto' : '280px',
+                justifyContent: 'flex-start',
+                height: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '100%' : 'auto'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = '0 12px 32px rgba(45, 134, 89, 0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(45, 134, 89, 0.15)';
+              }}
+              >
+                <img 
+                  src="/cc.png" 
+                  alt="Central Care" 
+                  style={{
+                    width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    maxHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '60px' : '100px'
+                  }}
+                />
+                <div style={{
+                  textAlign: 'center',
+                  color: '#2d8659',
+                  fontSize: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '11px' : 'clamp(14px, 1.5vw, 18px)',
+                  lineHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '1.4' : '1.6',
+                  fontWeight: '500',
+                  direction: 'ltr'
+                }}>
+                  <p style={{ margin: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '0 0 6px 0' : '0 0 10px 0' }}>
+                    Central Care is a leading healthcare provider dedicated to delivering exceptional medical services.
+                  </p>
+                  <p style={{ margin: '0' }}>
+                    We offer comprehensive healthcare solutions with a focus on patient care, innovation, and medical excellence.
+                  </p>
+                </div>
+              </div>
+
+              {/* Al Dorrah */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '8px' : '20px',
+                padding: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '12px' : 'clamp(20px, 2.5vw, 30px)',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '16px',
+                boxShadow: '0 8px 24px rgba(45, 134, 89, 0.15)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                minHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? 'auto' : '280px',
+                justifyContent: 'flex-start',
+                height: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '100%' : 'auto'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = '0 12px 32px rgba(45, 134, 89, 0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(45, 134, 89, 0.15)';
+              }}
+              >
+                <img 
+                  src="/dorrah.png" 
+                  alt="Al Dorrah" 
+                  style={{
+                    width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    maxHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '60px' : '100px'
+                  }}
+                />
+                <div style={{
+                  textAlign: 'center',
+                  color: '#2d8659',
+                  fontSize: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '11px' : 'clamp(14px, 1.5vw, 18px)',
+                  lineHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '1.4' : '1.6',
+                  fontWeight: '500',
+                  direction: 'ltr'
+                }}>
+                  <p style={{ margin: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '0 0 6px 0' : '0 0 10px 0' }}>
+                    Al Dorrah is a prominent company specializing in premium services and innovative business solutions.
+                  </p>
+                  <p style={{ margin: '0' }}>
+                    We excel in delivering high-quality services that meet the diverse needs of our clients and partners.
+                  </p>
+                </div>
+              </div>
+
+              {/* GTA */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '8px' : '20px',
+                padding: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '12px' : 'clamp(20px, 2.5vw, 30px)',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '16px',
+                boxShadow: '0 8px 24px rgba(45, 134, 89, 0.15)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                minHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? 'auto' : '280px',
+                justifyContent: 'flex-start',
+                height: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '100%' : 'auto'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = '0 12px 32px rgba(45, 134, 89, 0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(45, 134, 89, 0.15)';
+              }}
+              >
+                <img 
+                  src="/GTA.png" 
+                  alt="GTA" 
+                  style={{
+                    width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    maxHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '60px' : '100px'
+                  }}
+                />
+                <div style={{
+                  textAlign: 'center',
+                  color: '#2d8659',
+                  fontSize: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '11px' : 'clamp(14px, 1.5vw, 18px)',
+                  lineHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '1.4' : '1.6',
+                  fontWeight: '500',
+                  direction: 'ltr'
+                }}>
+                  <p style={{ margin: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '0 0 6px 0' : '0 0 10px 0' }}>
+                    GTA is a dynamic company focused on providing advanced technology and automation solutions.
+                  </p>
+                  <p style={{ margin: '0' }}>
+                    We leverage cutting-edge technology to optimize operations and drive efficiency across various industries.
+                  </p>
+                </div>
+              </div>
+
+              {/* RK */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '8px' : '20px',
+                padding: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '12px' : 'clamp(20px, 2.5vw, 30px)',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '16px',
+                boxShadow: '0 8px 24px rgba(45, 134, 89, 0.15)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                minHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? 'auto' : '280px',
+                justifyContent: 'flex-start',
+                height: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '100%' : 'auto'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = '0 12px 32px rgba(45, 134, 89, 0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(45, 134, 89, 0.15)';
+              }}
+              >
+                <img 
+                  src="/RK.png" 
+                  alt="RK" 
+                  style={{
+                    width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    maxHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '60px' : '100px'
+                  }}
+                />
+                <div style={{
+                  textAlign: 'center',
+                  color: '#2d8659',
+                  fontSize: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '11px' : 'clamp(14px, 1.5vw, 18px)',
+                  lineHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '1.4' : '1.6',
+                  fontWeight: '500',
+                  direction: 'ltr'
+                }}>
+                  <p style={{ margin: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '0 0 6px 0' : '0 0 10px 0' }}>
+                    RK is a trusted company delivering reliable services and innovative solutions across multiple sectors.
+                  </p>
+                  <p style={{ margin: '0' }}>
+                    We are committed to excellence and building long-term partnerships with our clients and stakeholders.
+                  </p>
+                </div>
+              </div>
+
+              {/* IDC */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '8px' : '20px',
+                padding: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '12px' : 'clamp(20px, 2.5vw, 30px)',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '16px',
+                boxShadow: '0 8px 24px rgba(45, 134, 89, 0.15)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                minHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? 'auto' : '280px',
+                justifyContent: 'flex-start',
+                height: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '100%' : 'auto'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = '0 12px 32px rgba(45, 134, 89, 0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(45, 134, 89, 0.15)';
+              }}
+              >
+                <img 
+                  src="/IDC.png" 
+                  alt="IDC" 
+                  style={{
+                    width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    maxHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '60px' : '100px'
+                  }}
+                />
+                <div style={{
+                  textAlign: 'center',
+                  color: '#2d8659',
+                  fontSize: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '11px' : 'clamp(14px, 1.5vw, 18px)',
+                  lineHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '1.4' : '1.6',
+                  fontWeight: '500',
+                  direction: 'ltr'
+                }}>
+                  <p style={{ margin: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '0 0 6px 0' : '0 0 10px 0' }}>
+                    IDC is a leading company in infrastructure development and construction management services.
+                  </p>
+                  <p style={{ margin: '0' }}>
+                    We deliver world-class infrastructure projects with a focus on quality, safety, and sustainable development.
+                  </p>
+                </div>
+              </div>
+
+              {/* Gulf Logo */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '8px' : '20px',
+                padding: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '12px' : 'clamp(20px, 2.5vw, 30px)',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '16px',
+                boxShadow: '0 8px 24px rgba(45, 134, 89, 0.15)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                minHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? 'auto' : '280px',
+                justifyContent: 'flex-start',
+                height: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '100%' : 'auto'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = '0 12px 32px rgba(45, 134, 89, 0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(45, 134, 89, 0.15)';
+              }}
+              >
+                <img 
+                  src="/gulf-logo.png" 
+                  alt="Gulf Logo" 
+                  style={{
+                    width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    maxHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '60px' : '100px'
+                  }}
+                />
+                <div style={{
+                  textAlign: 'center',
+                  color: '#2d8659',
+                  fontSize: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '11px' : 'clamp(14px, 1.5vw, 18px)',
+                  lineHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '1.4' : '1.6',
+                  fontWeight: '500',
+                  direction: 'ltr'
+                }}>
+                  <p style={{ margin: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '0 0 6px 0' : '0 0 10px 0' }}>
+                    Gulf Logo represents our commitment to excellence and innovation in the Gulf region.
+                  </p>
+                  <p style={{ margin: '0' }}>
+                    We provide strategic services and solutions that contribute to regional growth and development.
+                  </p>
+                </div>
+              </div>
+
+              {/* TLCO */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '8px' : '20px',
+                padding: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '12px' : 'clamp(20px, 2.5vw, 30px)',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '16px',
+                boxShadow: '0 8px 24px rgba(45, 134, 89, 0.15)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                minHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? 'auto' : '280px',
+                justifyContent: 'flex-start',
+                height: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '100%' : 'auto'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = '0 12px 32px rgba(45, 134, 89, 0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(45, 134, 89, 0.15)';
+              }}
+              >
+                <img 
+                  src="/tico.png" 
+                  alt="TLCO" 
+                  style={{
+                    width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    maxHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '60px' : '100px'
+                  }}
+                />
+                <div style={{
+                  textAlign: 'center',
+                  color: '#2d8659',
+                  fontSize: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '11px' : 'clamp(14px, 1.5vw, 18px)',
+                  lineHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '1.4' : '1.6',
+                  fontWeight: '500',
+                  direction: 'ltr'
+                }}>
+                  <p style={{ margin: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '0 0 6px 0' : '0 0 10px 0' }}>
+                    TLCO is a specialized company offering comprehensive solutions in transportation and logistics.
+                  </p>
+                  <p style={{ margin: '0' }}>
+                    We provide efficient and reliable transportation services to support business operations and connectivity.
+                  </p>
+                </div>
+              </div>
+
+              {/* GSG */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '8px' : '20px',
+                padding: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '12px' : 'clamp(20px, 2.5vw, 30px)',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '16px',
+                boxShadow: '0 8px 24px rgba(45, 134, 89, 0.15)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                minHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? 'auto' : '280px',
+                justifyContent: 'flex-start',
+                height: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '100%' : 'auto'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = '0 12px 32px rgba(45, 134, 89, 0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(45, 134, 89, 0.15)';
+              }}
+              >
+                <img 
+                  src="/gsg.png" 
+                  alt="GSG" 
+                  style={{
+                    width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    maxHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '60px' : '100px'
+                  }}
+                />
+                <div style={{
+                  textAlign: 'center',
+                  color: '#2d8659',
+                  fontSize: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '11px' : 'clamp(14px, 1.5vw, 18px)',
+                  lineHeight: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '1.4' : '1.6',
+                  fontWeight: '500',
+                  direction: 'ltr'
+                }}>
+                  <p style={{ margin: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '0 0 6px 0' : '0 0 10px 0' }}>
+                    GSG is a forward-thinking company dedicated to providing innovative solutions and strategic services.
+                  </p>
+                  <p style={{ margin: '0' }}>
+                    We combine expertise and innovation to deliver exceptional value and drive sustainable business growth.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Back button */}
+          <button
+            onClick={() => setShowSubsidiaries(false)}
             style={{
               position: 'fixed',
               top: 'clamp(20px, 2.5vw, 40px)',
@@ -10500,26 +12377,37 @@ export default function App() {
               <button
                 onClick={() => setAmtActiveTab('tab4')}
                 style={{
-                  padding: '12px 30px',
-                  fontSize: '16px',
+                  padding: 'clamp(12px, 1.2vh, 14px) clamp(24px, 2.5vw, 32px)',
+                  fontSize: 'clamp(15px, 1.5vw, 18px)',
                   fontWeight: '700',
                   color: amtActiveTab === 'tab4' ? '#ffffff' : '#ff4b4b',
-                  background: amtActiveTab === 'tab4' ? '#ff4b4b' : 'rgba(255, 255, 255, 0.2)',
+                  background: amtActiveTab === 'tab4' 
+                    ? 'linear-gradient(135deg, #ff4b4b 0%, #ff6b6b 50%, #ff4b4b 100%)' 
+                    : 'rgba(255, 255, 255, 0.15)',
                   border: '2px solid #ff4b4b',
-                  borderRadius: '8px',
+                  borderRadius: '10px',
                   cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  textTransform: 'none',
-                  letterSpacing: '1px'
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '1.2px',
+                  textShadow: amtActiveTab === 'tab4' ? '0 1px 3px rgba(0, 0, 0, 0.3)' : 'none',
+                  boxShadow: amtActiveTab === 'tab4' 
+                    ? '0 4px 15px rgba(255, 75, 75, 0.5), 0 0 0 0 rgba(255, 75, 75, 0.4)' 
+                    : '0 2px 8px rgba(0, 0, 0, 0.2)',
+                  backdropFilter: 'blur(10px)'
                 }}
                 onMouseEnter={(e) => {
                   if (amtActiveTab !== 'tab4') {
-                    e.currentTarget.style.background = 'rgba(255, 75, 75, 0.3)';
+                    e.currentTarget.style.background = 'rgba(255, 75, 75, 0.25)';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 75, 75, 0.4)';
                   }
                 }}
                 onMouseLeave={(e) => {
                   if (amtActiveTab !== 'tab4') {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
                   }
                 }}
               >
@@ -10528,26 +12416,37 @@ export default function App() {
               <button
                 onClick={() => setAmtActiveTab('tab3')}
                 style={{
-                  padding: '12px 30px',
-                  fontSize: '16px',
+                  padding: 'clamp(12px, 1.2vh, 14px) clamp(24px, 2.5vw, 32px)',
+                  fontSize: 'clamp(15px, 1.5vw, 18px)',
                   fontWeight: '700',
                   color: amtActiveTab === 'tab3' ? '#ffffff' : '#ff4b4b',
-                  background: amtActiveTab === 'tab3' ? '#ff4b4b' : 'rgba(255, 255, 255, 0.2)',
+                  background: amtActiveTab === 'tab3' 
+                    ? 'linear-gradient(135deg, #ff4b4b 0%, #ff6b6b 50%, #ff4b4b 100%)' 
+                    : 'rgba(255, 255, 255, 0.15)',
                   border: '2px solid #ff4b4b',
-                  borderRadius: '8px',
+                  borderRadius: '10px',
                   cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  textTransform: 'none',
-                  letterSpacing: '1px'
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '1.2px',
+                  textShadow: amtActiveTab === 'tab3' ? '0 1px 3px rgba(0, 0, 0, 0.3)' : 'none',
+                  boxShadow: amtActiveTab === 'tab3' 
+                    ? '0 4px 15px rgba(255, 75, 75, 0.5), 0 0 0 0 rgba(255, 75, 75, 0.4)' 
+                    : '0 2px 8px rgba(0, 0, 0, 0.2)',
+                  backdropFilter: 'blur(10px)'
                 }}
                 onMouseEnter={(e) => {
                   if (amtActiveTab !== 'tab3') {
-                    e.currentTarget.style.background = 'rgba(255, 75, 75, 0.3)';
+                    e.currentTarget.style.background = 'rgba(255, 75, 75, 0.25)';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 75, 75, 0.4)';
                   }
                 }}
                 onMouseLeave={(e) => {
                   if (amtActiveTab !== 'tab3') {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
                   }
                 }}
               >
@@ -10556,26 +12455,37 @@ export default function App() {
               <button
                 onClick={() => setAmtActiveTab('tab2')}
                 style={{
-                  padding: '12px 30px',
-                  fontSize: '16px',
+                  padding: 'clamp(12px, 1.2vh, 14px) clamp(24px, 2.5vw, 32px)',
+                  fontSize: 'clamp(15px, 1.5vw, 18px)',
                   fontWeight: '700',
                   color: amtActiveTab === 'tab2' ? '#ffffff' : '#ff4b4b',
-                  background: amtActiveTab === 'tab2' ? '#ff4b4b' : 'rgba(255, 255, 255, 0.2)',
+                  background: amtActiveTab === 'tab2' 
+                    ? 'linear-gradient(135deg, #ff4b4b 0%, #ff6b6b 50%, #ff4b4b 100%)' 
+                    : 'rgba(255, 255, 255, 0.15)',
                   border: '2px solid #ff4b4b',
-                  borderRadius: '8px',
+                  borderRadius: '10px',
                   cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  textTransform: 'none',
-                  letterSpacing: '1px'
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '1.2px',
+                  textShadow: amtActiveTab === 'tab2' ? '0 1px 3px rgba(0, 0, 0, 0.3)' : 'none',
+                  boxShadow: amtActiveTab === 'tab2' 
+                    ? '0 4px 15px rgba(255, 75, 75, 0.5), 0 0 0 0 rgba(255, 75, 75, 0.4)' 
+                    : '0 2px 8px rgba(0, 0, 0, 0.2)',
+                  backdropFilter: 'blur(10px)'
                 }}
                 onMouseEnter={(e) => {
                   if (amtActiveTab !== 'tab2') {
-                    e.currentTarget.style.background = 'rgba(255, 75, 75, 0.3)';
+                    e.currentTarget.style.background = 'rgba(255, 75, 75, 0.25)';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 75, 75, 0.4)';
                   }
                 }}
                 onMouseLeave={(e) => {
                   if (amtActiveTab !== 'tab2') {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
                   }
                 }}
               >
@@ -10584,26 +12494,37 @@ export default function App() {
               <button
                 onClick={() => setAmtActiveTab('tab1')}
                 style={{
-                  padding: '12px 30px',
-                  fontSize: '16px',
+                  padding: 'clamp(12px, 1.2vh, 14px) clamp(24px, 2.5vw, 32px)',
+                  fontSize: 'clamp(15px, 1.5vw, 18px)',
                   fontWeight: '700',
                   color: amtActiveTab === 'tab1' ? '#ffffff' : '#ff4b4b',
-                  background: amtActiveTab === 'tab1' ? '#ff4b4b' : 'rgba(255, 255, 255, 0.2)',
+                  background: amtActiveTab === 'tab1' 
+                    ? 'linear-gradient(135deg, #ff4b4b 0%, #ff6b6b 50%, #ff4b4b 100%)' 
+                    : 'rgba(255, 255, 255, 0.15)',
                   border: '2px solid #ff4b4b',
-                  borderRadius: '8px',
+                  borderRadius: '10px',
                   cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  textTransform: 'none',
-                  letterSpacing: '1px'
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '1.2px',
+                  textShadow: amtActiveTab === 'tab1' ? '0 1px 3px rgba(0, 0, 0, 0.3)' : 'none',
+                  boxShadow: amtActiveTab === 'tab1' 
+                    ? '0 4px 15px rgba(255, 75, 75, 0.5), 0 0 0 0 rgba(255, 75, 75, 0.4)' 
+                    : '0 2px 8px rgba(0, 0, 0, 0.2)',
+                  backdropFilter: 'blur(10px)'
                 }}
                 onMouseEnter={(e) => {
                   if (amtActiveTab !== 'tab1') {
-                    e.currentTarget.style.background = 'rgba(255, 75, 75, 0.3)';
+                    e.currentTarget.style.background = 'rgba(255, 75, 75, 0.25)';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 75, 75, 0.4)';
                   }
                 }}
                 onMouseLeave={(e) => {
                   if (amtActiveTab !== 'tab1') {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
                   }
                 }}
               >
@@ -10712,23 +12633,37 @@ export default function App() {
                 justifyContent: 'center'
               }}>
                 <h1 style={{
-                  fontSize: 'clamp(28px, 2.8vw, 42px)',
+                  fontSize: 'clamp(32px, 3.2vw, 48px)',
                   fontWeight: '900',
-                  color: '#ff4b4b',
-                  marginBottom: 'clamp(20px, 2.5vh, 35px)',
-                  letterSpacing: '1.5px',
-                  textTransform: 'uppercase'
+                  background: 'linear-gradient(135deg, #ff4b4b 0%, #ff6b6b 50%, #ff4b4b 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  marginBottom: 'clamp(24px, 3vh, 40px)',
+                  letterSpacing: '2px',
+                  textTransform: 'uppercase',
+                  textShadow: '0 0 30px rgba(255, 75, 75, 0.4), 0 4px 20px rgba(255, 75, 75, 0.3)',
+                  filter: 'drop-shadow(0 2px 8px rgba(255, 75, 75, 0.5))'
                 }}>
                   Our TEAM
                 </h1>
                 <p style={{
-                  fontSize: 'clamp(16px, 1.6vw, 22px)',
-                  lineHeight: '1.8',
-                  color: '#1a1a1a',
+                  fontSize: 'clamp(17px, 1.7vw, 24px)',
+                  lineHeight: '1.9',
+                  color: '#ffffff',
                   marginBottom: 'clamp(40px, 5vh, 60px)',
                   maxWidth: '900px',
                   marginLeft: 'auto',
-                  marginRight: 'auto'
+                  marginRight: 'auto',
+                  fontWeight: '500',
+                  letterSpacing: '0.4px',
+                  textShadow: '0 2px 8px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2)',
+                  padding: 'clamp(16px, 2vh, 24px) clamp(20px, 2.5vw, 32px)',
+                  background: 'rgba(255, 255, 255, 0.15)',
+                  borderRadius: '14px',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 75, 75, 0.2)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255, 75, 75, 0.25)'
                 }}>
                   Our dedicated team of experts brings years of experience in advanced micro technologies and innovation.
                 </p>
@@ -10778,14 +12713,22 @@ export default function App() {
                       />
                     </div>
                     <div style={{
-                      fontSize: 'clamp(16px, 1.5vw, 22px)',
-                      fontWeight: '700',
-                      color: '#1a1a1a',
+                      fontSize: 'clamp(17px, 1.6vw, 24px)',
+                      fontWeight: '800',
+                      color: '#ffffff',
                       textAlign: 'center',
-                      lineHeight: '1.4'
+                      lineHeight: '1.5',
+                      textShadow: '0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3)',
+                      letterSpacing: '0.5px'
                     }}>
                       Eyad Matar<br />
-                      <span style={{ fontSize: 'clamp(13px, 1.2vw, 17px)', fontWeight: '600' }}>CEO</span>
+                      <span style={{ 
+                        fontSize: 'clamp(14px, 1.3vw, 18px)', 
+                        fontWeight: '700',
+                        color: '#ff4b4b',
+                        textShadow: '0 0 15px rgba(255, 75, 75, 0.6), 0 1px 3px rgba(0, 0, 0, 0.3)',
+                        letterSpacing: '0.8px'
+                      }}>CEO</span>
                     </div>
                   </div>
 
@@ -10823,14 +12766,22 @@ export default function App() {
                       />
                     </div>
                     <div style={{
-                      fontSize: 'clamp(16px, 1.5vw, 22px)',
-                      fontWeight: '700',
-                      color: '#1a1a1a',
+                      fontSize: 'clamp(17px, 1.6vw, 24px)',
+                      fontWeight: '800',
+                      color: '#ffffff',
                       textAlign: 'center',
-                      lineHeight: '1.4'
+                      lineHeight: '1.5',
+                      textShadow: '0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3)',
+                      letterSpacing: '0.5px'
                     }}>
                       Mohammed Abdul Quddus<br />
-                      <span style={{ fontSize: 'clamp(13px, 1.2vw, 17px)', fontWeight: '600' }}>Sales Manager</span>
+                      <span style={{ 
+                        fontSize: 'clamp(14px, 1.3vw, 18px)', 
+                        fontWeight: '700',
+                        color: '#ff4b4b',
+                        textShadow: '0 0 15px rgba(255, 75, 75, 0.6), 0 1px 3px rgba(0, 0, 0, 0.3)',
+                        letterSpacing: '0.8px'
+                      }}>Sales Manager</span>
                     </div>
                   </div>
 
@@ -10868,14 +12819,22 @@ export default function App() {
                       />
                     </div>
                     <div style={{
-                      fontSize: 'clamp(16px, 1.5vw, 22px)',
-                      fontWeight: '700',
-                      color: '#1a1a1a',
+                      fontSize: 'clamp(17px, 1.6vw, 24px)',
+                      fontWeight: '800',
+                      color: '#ffffff',
                       textAlign: 'center',
-                      lineHeight: '1.4'
+                      lineHeight: '1.5',
+                      textShadow: '0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3)',
+                      letterSpacing: '0.5px'
                     }}>
                       Amr Abu Hashem<br />
-                      <span style={{ fontSize: 'clamp(13px, 1.2vw, 17px)', fontWeight: '600' }}>Finance Manager</span>
+                      <span style={{ 
+                        fontSize: 'clamp(14px, 1.3vw, 18px)', 
+                        fontWeight: '700',
+                        color: '#ff4b4b',
+                        textShadow: '0 0 15px rgba(255, 75, 75, 0.6), 0 1px 3px rgba(0, 0, 0, 0.3)',
+                        letterSpacing: '0.8px'
+                      }}>Finance Manager</span>
                     </div>
                   </div>
 
@@ -10913,14 +12872,22 @@ export default function App() {
                       />
                     </div>
                     <div style={{
-                      fontSize: 'clamp(16px, 1.5vw, 22px)',
-                      fontWeight: '700',
-                      color: '#1a1a1a',
+                      fontSize: 'clamp(17px, 1.6vw, 24px)',
+                      fontWeight: '800',
+                      color: '#ffffff',
                       textAlign: 'center',
-                      lineHeight: '1.4'
+                      lineHeight: '1.5',
+                      textShadow: '0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3)',
+                      letterSpacing: '0.5px'
                     }}>
                       IMRAN KHAN YAR<br />
-                      <span style={{ fontSize: 'clamp(13px, 1.2vw, 17px)', fontWeight: '600' }}>Implementation Manager</span>
+                      <span style={{ 
+                        fontSize: 'clamp(14px, 1.3vw, 18px)', 
+                        fontWeight: '700',
+                        color: '#ff4b4b',
+                        textShadow: '0 0 15px rgba(255, 75, 75, 0.6), 0 1px 3px rgba(0, 0, 0, 0.3)',
+                        letterSpacing: '0.8px'
+                      }}>Implementation Manager</span>
                     </div>
                   </div>
 
@@ -10949,13 +12916,21 @@ export default function App() {
                       EM
                     </div>
                     <div style={{
-                      fontSize: 'clamp(14px, 1.3vw, 19px)',
-                      fontWeight: '600',
-                      color: '#1a1a1a',
+                      fontSize: 'clamp(17px, 1.6vw, 24px)',
+                      fontWeight: '800',
+                      color: '#ffffff',
                       textAlign: 'center',
-                      lineHeight: '1.4'
+                      lineHeight: '1.5',
+                      textShadow: '0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3)',
+                      letterSpacing: '0.5px'
                     }}>
-                      Engineering Manager
+                      <span style={{ 
+                        fontSize: 'clamp(14px, 1.3vw, 18px)', 
+                        fontWeight: '700',
+                        color: '#ff4b4b',
+                        textShadow: '0 0 15px rgba(255, 75, 75, 0.6), 0 1px 3px rgba(0, 0, 0, 0.3)',
+                        letterSpacing: '0.8px'
+                      }}>Engineering Manager</span>
                     </div>
                   </div>
 
@@ -10993,14 +12968,22 @@ export default function App() {
                       />
                     </div>
                     <div style={{
-                      fontSize: 'clamp(16px, 1.5vw, 22px)',
-                      fontWeight: '700',
-                      color: '#1a1a1a',
+                      fontSize: 'clamp(17px, 1.6vw, 24px)',
+                      fontWeight: '800',
+                      color: '#ffffff',
                       textAlign: 'center',
-                      lineHeight: '1.4'
+                      lineHeight: '1.5',
+                      textShadow: '0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3)',
+                      letterSpacing: '0.5px'
                     }}>
                       Mohammad Al Dossary<br />
-                      <span style={{ fontSize: 'clamp(13px, 1.2vw, 17px)', fontWeight: '600' }}>Store Manager</span>
+                      <span style={{ 
+                        fontSize: 'clamp(14px, 1.3vw, 18px)', 
+                        fontWeight: '700',
+                        color: '#ff4b4b',
+                        textShadow: '0 0 15px rgba(255, 75, 75, 0.6), 0 1px 3px rgba(0, 0, 0, 0.3)',
+                        letterSpacing: '0.8px'
+                      }}>Store Manager</span>
                     </div>
                   </div>
                 </div>
@@ -11370,7 +13353,7 @@ export default function App() {
                 {/* Gallery Videos Grid */}
                 {(() => {
                   const galleryVideos = [
-                    'https://res.cloudinary.com/dl2rqs0lo/video/upload/v1/AMT_Company_Profile_Transformation___From_Static_PDF_to_CEO_Video_by_Zuccess_zykzgl.mp4',
+                    'https://res.cloudinary.com/dl2rqs0lo/video/upload/amt_ecx4u7.mp4',
                     'https://res.cloudinary.com/dl2rqs0lo/video/upload/v1/Meet_Karim_Alma___AMT_Brand_Ambassadors_by_Zuccess_qhlkb7.mp4',
                     'https://res.cloudinary.com/dl2rqs0lo/video/upload/v1/YTDown.com_YouTube_AMT-Professional-Video-Showcasing-Innova_Media_xjcmXF3MkWQ_001_1080p_wjihjd.mp4'
                   ];
@@ -11692,6 +13675,102 @@ export default function App() {
                 padding: 0
               }}
               title="AMT QR Link"
+              allow="fullscreen"
+              scrolling="auto"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Alika QR Code Modal */}
+      {showAlikaQRModal && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(0, 0, 0, 0.95)',
+            zIndex: 10000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            animation: 'fadeIn 0.3s ease-in-out'
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowAlikaQRModal(false);
+            }
+          }}
+        >
+          {/* Modal Content - Card Style */}
+          <div
+            style={{
+              position: 'relative',
+              width: '500px',
+              height: '100%',
+              maxHeight: '100vh',
+              backgroundColor: '#ffffff',
+              borderRadius: '12px',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setShowAlikaQRModal(false)}
+              style={{
+                position: 'absolute',
+                top: '12px',
+                right: '12px',
+                background: 'rgba(0, 0, 0, 0.8)',
+                border: 'none',
+                color: '#fff',
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                fontSize: '24px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.3s ease',
+                zIndex: 10001,
+                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                fontWeight: 'bold',
+                lineHeight: '1'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(0, 0, 0, 1)';
+                e.currentTarget.style.transform = 'scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              ×
+            </button>
+
+            {/* Iframe Container */}
+            <iframe
+              src="https://linktrees-s.netlify.app/page13"
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+                display: 'block',
+                flex: 1,
+                margin: 0,
+                padding: 0
+              }}
+              title="Alika QR Link"
               allow="fullscreen"
               scrolling="auto"
             />

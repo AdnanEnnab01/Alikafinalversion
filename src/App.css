@@ -2907,7 +2907,7 @@ div[style*="gc-engineer-learnmore-bg"] > * {
   
   /* Increase spacing for Learn More button inside gulf-consult-content */
   .gulf-consult-learn-more-button {
-    margin-top: clamp(40px, 5vh, 60px) !important;
+    margin-top: clamp(6px, 0.8vh, 10px) !important;
   }
 }
 
@@ -3786,6 +3786,9 @@ div[style*="gc-engineer-learnmore-bg"] > * {
     right: clamp(40px, 4vw, 80px) !important;
     transform: translateY(-50%) !important;
     max-width: var(--dorrah-content-max-width, 680px) !important;
+    max-height: 95vh !important;
+    overflow-y: visible !important;
+    overflow-x: visible !important;
   }
   
   :root {
@@ -3822,6 +3825,15 @@ div[style*="gc-engineer-learnmore-bg"] > * {
   .dorrah-content button {
     padding: var(--dorrah-button-padding, 16px 36px) !important;
     font-size: var(--dorrah-button-font, 17px) !important;
+  }
+  
+  .dorrah-content > div:last-child {
+    padding-bottom: clamp(20px, 3vh, 40px) !important;
+    margin-top: clamp(-10px, -1vh, -5px) !important;
+  }
+  
+  .dorrah-content > div[style*="flexDirection: 'column'"] {
+    gap: clamp(3px, 0.4vh, 5px) !important;
   }
 }
 
@@ -3832,6 +3844,9 @@ div[style*="gc-engineer-learnmore-bg"] > * {
     right: clamp(20px, 2.5vw, 50px) !important;
     transform: translateY(-50%) !important;
     max-width: var(--dorrah-content-max-width, 680px) !important;
+    max-height: 95vh !important;
+    overflow-y: visible !important;
+    overflow-x: visible !important;
   }
   
   :root {
@@ -3868,6 +3883,15 @@ div[style*="gc-engineer-learnmore-bg"] > * {
   .dorrah-content button {
     padding: var(--dorrah-button-padding, 16px 36px) !important;
     font-size: var(--dorrah-button-font, 17px) !important;
+  }
+  
+  .dorrah-content > div:last-child {
+    padding-bottom: clamp(20px, 3vh, 40px) !important;
+    margin-top: clamp(-10px, -1vh, -5px) !important;
+  }
+  
+  .dorrah-content > div[style*="flexDirection: 'column'"] {
+    gap: clamp(3px, 0.4vh, 5px) !important;
   }
 }
 
@@ -5115,6 +5139,12 @@ div[style*="gc-engineer-learnmore-bg"] > * {
   overflow: visible;
 }
 
+.idc-content h1::selection,
+.idc-content h1::-moz-selection {
+  background: transparent;
+  color: transparent;
+}
+
 @media (min-width: 1920px) and (max-width: 2559px) and (min-height: 1080px) and (max-height: 1439px) {
   .idc-content {
     max-width: 800px;
@@ -5322,6 +5352,10 @@ div[style*="gc-engineer-learnmore-bg"] > * {
   .idc-content h1 {
     margin-bottom: 12px !important;
     font-size: clamp(22px, 2.8vw, 36px) !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
   }
   
   .idc-content p {
@@ -5987,24 +6021,197 @@ div[style*="gc-engineer-learnmore-bg"] > * > *::-webkit-scrollbar {
 
 /* GTA specific styling for 1536×864 viewport */
 @media (min-width: 1520px) and (max-width: 1550px) and (min-height: 850px) and (max-height: 880px) {
+  .gta-content {
+    top: 48% !important;
+    right: clamp(40px, 4vw, 80px) !important;
+    transform: translateY(-50%) !important;
+    max-width: var(--amt-content-max-width, clamp(600px, 50vw, 900px)) !important;
+    max-height: 95vh !important;
+    overflow-y: visible !important;
+    overflow-x: visible !important;
+  }
+  
   :root {
-    --gta-title-size: clamp(100px, 9.5vw, 150px);
-    --gta-text-size: clamp(56px, 5.5vw, 82px);
-    --gta-info-size: clamp(48px, 5vw, 70px);
-    --gta-button-font: clamp(44px, 4.5vw, 62px);
-    --gta-content-max-width: clamp(750px, 55vw, 950px);
-    --gta-content-padding: clamp(45px, 4.5vw, 65px);
+    --amt-title-size: clamp(28px, 3.8vw, 52px);
+    --amt-text-size: clamp(15px, 1.7vw, 24px);
+    --amt-info-size: clamp(13px, 1.4vw, 20px);
+    --amt-content-max-width: clamp(600px, 50vw, 900px);
+    --grid-item-size: clamp(70px, 7vw, 115px);
+    --grid-gap: clamp(12px, 1.2vw, 20px);
+  }
+  
+  .gta-content > div > div:first-child {
+    margin-bottom: clamp(6px, 0.8vh, 12px) !important;
+  }
+  
+  .gta-content > div > div:first-child img {
+    max-width: clamp(90px, 9vw, 140px) !important;
+    max-height: clamp(45px, 4.5vh, 70px) !important;
+  }
+  
+  .gta-content h1 {
+    font-size: var(--amt-title-size, clamp(28px, 3.8vw, 52px)) !important;
+    margin-bottom: clamp(6px, 0.8vh, 12px) !important;
+    line-height: 1.2 !important;
+    letter-spacing: 1.8px !important;
+  }
+  
+  .gta-content p {
+    font-size: var(--amt-text-size, clamp(15px, 1.7vw, 24px)) !important;
+    line-height: 1.65 !important;
+    margin-bottom: clamp(10px, 1.4vh, 16px) !important;
+    padding: clamp(8px, 1vh, 12px) clamp(12px, 1.5vw, 18px) !important;
+  }
+  
+  .gta-content > div > div:nth-child(4) {
+    font-size: var(--amt-info-size, clamp(13px, 1.4vw, 20px)) !important;
+    line-height: 1.65 !important;
+    margin-bottom: clamp(6px, 0.8vh, 12px) !important;
+    padding: clamp(10px, 1.2vh, 14px) clamp(14px, 1.6vw, 20px) !important;
+  }
+  
+  .gta-content > div > div:nth-child(4) > div {
+    margin-bottom: clamp(4px, 0.6vh, 8px) !important;
+    padding-bottom: clamp(4px, 0.6vh, 8px) !important;
+    gap: 6px !important;
+  }
+  
+  .gta-content > div > div:nth-child(4) > div:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  .gta-content > div > div:last-child {
+    margin-top: clamp(8px, 1.2vh, 16px) !important;
+    gap: clamp(12px, 2vw, 24px) !important;
+    padding-bottom: clamp(4px, 0.5vh, 8px) !important;
+  }
+  
+  .gta-content > div > div:last-child > div:first-child {
+    gap: clamp(6px, 0.8vh, 10px) !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .gta-content button {
+    padding: clamp(8px, 1vw, 12px) clamp(16px, 1.8vw, 24px) !important;
+    font-size: clamp(11px, 1.15vw, 15px) !important;
+    letter-spacing: 0.4px !important;
+    min-width: clamp(180px, 18vw, 260px) !important;
+    width: clamp(180px, 18vw, 260px) !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .gta-content > div > div:last-child {
+    margin-bottom: clamp(12px, 1.5vh, 20px) !important;
+  }
+  
+  .gta-content > div > div:last-child > div:last-child {
+    flex-shrink: 0 !important;
+  }
+  
+  .gta-content > div > div:last-child > div:last-child img {
+    max-width: clamp(80px, 9vw, 120px) !important;
+    max-height: clamp(80px, 9vw, 120px) !important;
+  }
+  
+  .gta-content > div {
+    padding: clamp(14px, 1.8vw, 24px) clamp(14px, 1.8vw, 24px) clamp(32px, 4vh, 50px) !important;
+    box-sizing: border-box !important;
   }
 }
 
 /* GTA specific styling for 1286×864 viewport - same as 1536×864 */
 @media (min-width: 1270px) and (max-width: 1300px) and (min-height: 850px) and (max-height: 880px) {
+  .gta-content {
+    top: 48% !important;
+    right: clamp(40px, 4vw, 80px) !important;
+    transform: translateY(-50%) !important;
+    max-width: var(--amt-content-max-width, clamp(600px, 50vw, 900px)) !important;
+    max-height: 95vh !important;
+    overflow-y: visible !important;
+    overflow-x: visible !important;
+  }
+  
   :root {
-    --gta-title-size: clamp(100px, 9.5vw, 150px);
-    --gta-text-size: clamp(56px, 5.5vw, 82px);
-    --gta-info-size: clamp(48px, 5vw, 70px);
-    --gta-button-font: clamp(44px, 4.5vw, 62px);
-    --gta-content-max-width: clamp(750px, 55vw, 950px);
-    --gta-content-padding: clamp(45px, 4.5vw, 65px);
+    --amt-title-size: clamp(28px, 3.8vw, 52px);
+    --amt-text-size: clamp(15px, 1.7vw, 24px);
+    --amt-info-size: clamp(13px, 1.4vw, 20px);
+    --amt-content-max-width: clamp(600px, 50vw, 900px);
+    --grid-item-size: clamp(70px, 7vw, 115px);
+    --grid-gap: clamp(12px, 1.2vw, 20px);
+  }
+  
+  .gta-content > div > div:first-child {
+    margin-bottom: clamp(6px, 0.8vh, 12px) !important;
+  }
+  
+  .gta-content > div > div:first-child img {
+    max-width: clamp(90px, 9vw, 140px) !important;
+    max-height: clamp(45px, 4.5vh, 70px) !important;
+  }
+  
+  .gta-content h1 {
+    font-size: var(--amt-title-size, clamp(28px, 3.8vw, 52px)) !important;
+    margin-bottom: clamp(6px, 0.8vh, 12px) !important;
+    line-height: 1.2 !important;
+    letter-spacing: 1.8px !important;
+  }
+  
+  .gta-content p {
+    font-size: var(--amt-text-size, clamp(15px, 1.7vw, 24px)) !important;
+    line-height: 1.65 !important;
+    margin-bottom: clamp(10px, 1.4vh, 16px) !important;
+    padding: clamp(8px, 1vh, 12px) clamp(12px, 1.5vw, 18px) !important;
+  }
+  
+  .gta-content > div > div:nth-child(4) {
+    font-size: var(--amt-info-size, clamp(13px, 1.4vw, 20px)) !important;
+    line-height: 1.65 !important;
+    margin-bottom: clamp(6px, 0.8vh, 12px) !important;
+    padding: clamp(10px, 1.2vh, 14px) clamp(14px, 1.6vw, 20px) !important;
+  }
+  
+  .gta-content > div > div:nth-child(4) > div {
+    margin-bottom: clamp(4px, 0.6vh, 8px) !important;
+    padding-bottom: clamp(4px, 0.6vh, 8px) !important;
+    gap: 6px !important;
+  }
+  
+  .gta-content > div > div:nth-child(4) > div:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  .gta-content > div > div:last-child {
+    margin-top: clamp(8px, 1.2vh, 16px) !important;
+    gap: clamp(12px, 2vw, 24px) !important;
+    padding-bottom: clamp(8px, 1vh, 12px) !important;
+    margin-bottom: clamp(12px, 1.5vh, 20px) !important;
+  }
+  
+  .gta-content > div > div:last-child > div:first-child {
+    gap: clamp(6px, 0.8vh, 10px) !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .gta-content button {
+    padding: clamp(8px, 1vw, 12px) clamp(16px, 1.8vw, 24px) !important;
+    font-size: clamp(11px, 1.15vw, 15px) !important;
+    letter-spacing: 0.4px !important;
+    min-width: clamp(180px, 18vw, 260px) !important;
+    width: clamp(180px, 18vw, 260px) !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .gta-content > div > div:last-child > div:last-child {
+    flex-shrink: 0 !important;
+  }
+  
+  .gta-content > div > div:last-child > div:last-child img {
+    max-width: clamp(80px, 9vw, 120px) !important;
+    max-height: clamp(80px, 9vw, 120px) !important;
+  }
+  
+  .gta-content > div {
+    padding: clamp(14px, 1.8vw, 24px) clamp(14px, 1.8vw, 24px) clamp(32px, 4vh, 50px) !important;
+    box-sizing: border-box !important;
   }
 }
