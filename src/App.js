@@ -12624,13 +12624,14 @@ export default function App() {
             {amtActiveTab === 'tab2' && (
               <div style={{
                 width: '100%',
-                maxWidth: '1400px',
+                maxWidth: '100%',
                 textAlign: 'center',
                 padding: 'clamp(20px, 2.5vh, 40px) clamp(20px, 2vw, 40px)',
                 minHeight: 'calc(100vh - 200px)',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                alignItems: 'center'
               }}>
                 <h1 style={{
                   fontSize: 'clamp(32px, 3.2vw, 48px)',
@@ -12647,37 +12648,19 @@ export default function App() {
                 }}>
                   Our TEAM
                 </h1>
-                <p style={{
-                  fontSize: 'clamp(17px, 1.7vw, 24px)',
-                  lineHeight: '1.9',
-                  color: '#ffffff',
-                  marginBottom: 'clamp(40px, 5vh, 60px)',
-                  maxWidth: '900px',
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-                  fontWeight: '500',
-                  letterSpacing: '0.4px',
-                  textShadow: '0 2px 8px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2)',
-                  padding: 'clamp(16px, 2vh, 24px) clamp(20px, 2.5vw, 32px)',
-                  background: 'rgba(255, 255, 255, 0.15)',
-                  borderRadius: '14px',
-                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 75, 75, 0.2)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 75, 75, 0.25)'
-                }}>
-                  Our dedicated team of experts brings years of experience in advanced micro technologies and innovation.
-                </p>
                 
                 {/* Team Members Grid */}
                 <div style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(6, 1fr)',
+                  gridTemplateColumns: 'repeat(7, 1fr)',
                   gap: 'clamp(12px, 1.5vw, 25px)',
                   maxWidth: '1400px',
                   margin: '0 auto',
                   padding: '0 clamp(10px, 1.5vw, 30px)',
                   width: '100%',
-                  direction: 'ltr'
+                  direction: 'ltr',
+                  justifyItems: 'center',
+                  placeItems: 'center'
                 }}>
                   {/* CEO */}
                   <div style={{
@@ -12715,10 +12698,10 @@ export default function App() {
                     <div style={{
                       fontSize: 'clamp(17px, 1.6vw, 24px)',
                       fontWeight: '800',
-                      color: '#ffffff',
+                      color: '#1a1a1a',
                       textAlign: 'center',
                       lineHeight: '1.5',
-                      textShadow: '0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3)',
+                      textShadow: '0 2px 8px rgba(255, 255, 255, 0.8), 0 1px 3px rgba(255, 255, 255, 0.6)',
                       letterSpacing: '0.5px'
                     }}>
                       Eyad Matar<br />
@@ -12768,10 +12751,10 @@ export default function App() {
                     <div style={{
                       fontSize: 'clamp(17px, 1.6vw, 24px)',
                       fontWeight: '800',
-                      color: '#ffffff',
+                      color: '#1a1a1a',
                       textAlign: 'center',
                       lineHeight: '1.5',
-                      textShadow: '0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3)',
+                      textShadow: '0 2px 8px rgba(255, 255, 255, 0.8), 0 1px 3px rgba(255, 255, 255, 0.6)',
                       letterSpacing: '0.5px'
                     }}>
                       Mohammed Abdul Quddus<br />
@@ -12821,10 +12804,10 @@ export default function App() {
                     <div style={{
                       fontSize: 'clamp(17px, 1.6vw, 24px)',
                       fontWeight: '800',
-                      color: '#ffffff',
+                      color: '#1a1a1a',
                       textAlign: 'center',
                       lineHeight: '1.5',
-                      textShadow: '0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3)',
+                      textShadow: '0 2px 8px rgba(255, 255, 255, 0.8), 0 1px 3px rgba(255, 255, 255, 0.6)',
                       letterSpacing: '0.5px'
                     }}>
                       Amr Abu Hashem<br />
@@ -12874,10 +12857,10 @@ export default function App() {
                     <div style={{
                       fontSize: 'clamp(17px, 1.6vw, 24px)',
                       fontWeight: '800',
-                      color: '#ffffff',
+                      color: '#1a1a1a',
                       textAlign: 'center',
                       lineHeight: '1.5',
-                      textShadow: '0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3)',
+                      textShadow: '0 2px 8px rgba(255, 255, 255, 0.8), 0 1px 3px rgba(255, 255, 255, 0.6)',
                       letterSpacing: '0.5px'
                     }}>
                       IMRAN KHAN YAR<br />
@@ -12902,28 +12885,38 @@ export default function App() {
                       width: 'clamp(130px, 12vw, 200px)',
                       height: 'clamp(130px, 12vw, 200px)',
                       borderRadius: '50%',
-                      backgroundColor: '#ff6b9d',
+                      backgroundColor: '#f0f0f0',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      overflow: 'hidden',
                       border: '3px solid #ff4b4b',
-                      boxShadow: '0 8px 25px rgba(255, 75, 75, 0.35)',
-                      color: '#ffffff',
-                      fontWeight: '800',
-                      fontSize: 'clamp(32px, 3vw, 40px)',
-                      letterSpacing: '1px'
+                      boxShadow: '0 4px 15px rgba(255, 75, 75, 0.3)'
                     }}>
-                      EM
+                      <img
+                        src="/engineeringmanager.jpeg"
+                        alt="Engineering Manager"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.parentElement.innerHTML = '<div style="font-size: 48px; color: #ff4b4b;">MC</div>';
+                        }}
+                      />
                     </div>
                     <div style={{
                       fontSize: 'clamp(17px, 1.6vw, 24px)',
                       fontWeight: '800',
-                      color: '#ffffff',
+                      color: '#1a1a1a',
                       textAlign: 'center',
                       lineHeight: '1.5',
-                      textShadow: '0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3)',
+                      textShadow: '0 2px 8px rgba(255, 255, 255, 0.8), 0 1px 3px rgba(255, 255, 255, 0.6)',
                       letterSpacing: '0.5px'
                     }}>
+                      Mike Campbell<br />
                       <span style={{ 
                         fontSize: 'clamp(14px, 1.3vw, 18px)', 
                         fontWeight: '700',
@@ -12931,6 +12924,59 @@ export default function App() {
                         textShadow: '0 0 15px rgba(255, 75, 75, 0.6), 0 1px 3px rgba(0, 0, 0, 0.3)',
                         letterSpacing: '0.8px'
                       }}>Engineering Manager</span>
+                    </div>
+                  </div>
+
+                  {/* IT Manager */}
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 'clamp(12px, 1.5vh, 18px)'
+                  }}>
+                    <div style={{
+                      width: 'clamp(130px, 12vw, 200px)',
+                      height: 'clamp(130px, 12vw, 200px)',
+                      borderRadius: '50%',
+                      backgroundColor: '#f0f0f0',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      overflow: 'hidden',
+                      border: '3px solid #ff4b4b',
+                      boxShadow: '0 4px 15px rgba(255, 75, 75, 0.3)'
+                    }}>
+                      <img
+                        src="/itmanager.jpeg"
+                        alt="IT Manager"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.parentElement.innerHTML = '<div style="font-size: 48px; color: #ff4b4b;">SJ</div>';
+                        }}
+                      />
+                    </div>
+                    <div style={{
+                      fontSize: 'clamp(17px, 1.6vw, 24px)',
+                      fontWeight: '800',
+                      color: '#1a1a1a',
+                      textAlign: 'center',
+                      lineHeight: '1.5',
+                      textShadow: '0 2px 8px rgba(255, 255, 255, 0.8), 0 1px 3px rgba(255, 255, 255, 0.6)',
+                      letterSpacing: '0.5px'
+                    }}>
+                      Shadi Jayousi<br />
+                      <span style={{ 
+                        fontSize: 'clamp(14px, 1.3vw, 18px)', 
+                        fontWeight: '700',
+                        color: '#ff4b4b',
+                        textShadow: '0 0 15px rgba(255, 75, 75, 0.6), 0 1px 3px rgba(0, 0, 0, 0.3)',
+                        letterSpacing: '0.8px'
+                      }}>IT Manager</span>
                     </div>
                   </div>
 
@@ -12970,10 +13016,10 @@ export default function App() {
                     <div style={{
                       fontSize: 'clamp(17px, 1.6vw, 24px)',
                       fontWeight: '800',
-                      color: '#ffffff',
+                      color: '#1a1a1a',
                       textAlign: 'center',
                       lineHeight: '1.5',
-                      textShadow: '0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3)',
+                      textShadow: '0 2px 8px rgba(255, 255, 255, 0.8), 0 1px 3px rgba(255, 255, 255, 0.6)',
                       letterSpacing: '0.5px'
                     }}>
                       Mohammad Al Dossary<br />
