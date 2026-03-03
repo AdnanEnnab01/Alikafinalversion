@@ -12358,21 +12358,24 @@ export default function App() {
         }}>
           <div style={{
             width: '100%',
-            minHeight: '100vh',
+            height: '100vh',
             padding: 'clamp(15px, 2vh, 25px)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'flex-start',
             color: '#ffffff',
-            paddingTop: 'clamp(20px, 3vh, 35px)'
+            paddingTop: 'clamp(20px, 3vh, 35px)',
+            boxSizing: 'border-box',
+            overflow: 'hidden'
           }}>
             {/* Tabs Navigation */}
             <div style={{
               display: 'flex',
               gap: '10px',
               marginBottom: 'clamp(10px, 1.5vh, 15px)',
-              zIndex: 10
+              zIndex: 10,
+              flexShrink: 0
             }}>
               <button
                 onClick={() => setAmtActiveTab('tab4')}
@@ -13377,21 +13380,24 @@ export default function App() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center',
-                padding: 'clamp(15px, 2vh, 25px)',
-                height: '100%',
+                justifyContent: 'flex-start',
+                padding: 'clamp(8px, 1vh, 12px)',
+                flex: '1 1 0',
+                minHeight: 0,
                 overflow: 'hidden',
                 boxSizing: 'border-box'
               }}>
                 <h1 style={{
-                  fontSize: 'clamp(24px, 2.5vw, 36px)',
+                  fontSize: 'clamp(18px, 1.8vw, 24px)',
                   fontWeight: '900',
                   color: '#ff4b4b',
-                  marginBottom: 'clamp(15px, 2vh, 25px)',
+                  marginBottom: 'clamp(5px, 0.8vh, 10px)',
+                  marginTop: '0',
                   letterSpacing: '1.5px',
                   textTransform: 'uppercase',
                   textAlign: 'center',
-                  flexShrink: 0
+                  flexShrink: 0,
+                  lineHeight: '1.2'
                 }}>
                   GALLERY
                 </h1>
@@ -13401,7 +13407,13 @@ export default function App() {
                   const galleryVideos = [
                     'https://res.cloudinary.com/dl2rqs0lo/video/upload/amt_ecx4u7.mp4',
                     'https://res.cloudinary.com/dl2rqs0lo/video/upload/v1/Meet_Karim_Alma___AMT_Brand_Ambassadors_by_Zuccess_qhlkb7.mp4',
-                    'https://res.cloudinary.com/dl2rqs0lo/video/upload/v1/YTDown.com_YouTube_AMT-Professional-Video-Showcasing-Innova_Media_xjcmXF3MkWQ_001_1080p_wjihjd.mp4'
+                    'https://res.cloudinary.com/dl2rqs0lo/video/upload/v1/YTDown.com_YouTube_AMT-Professional-Video-Showcasing-Innova_Media_xjcmXF3MkWQ_001_1080p_wjihjd.mp4',
+                    'https://res.cloudinary.com/dl2rqs0lo/video/upload/AMT_1_ydbfwn.mp4',
+                    'https://res.cloudinary.com/dl2rqs0lo/video/upload/AMT_2_hsdy7c.mp4',
+                    'https://res.cloudinary.com/dl2rqs0lo/video/upload/AMT_3_ythysq.mp4',
+                    'https://res.cloudinary.com/dl2rqs0lo/video/upload/amt_access_control_frnjfd.mp4',
+                    'https://res.cloudinary.com/dl2rqs0lo/video/upload/amt_ictv_s6njml.mp4',
+                    'https://res.cloudinary.com/dl2rqs0lo/video/upload/amt_fire_alarm_2_fmcgfm.mp4'
                   ];
                   
                   // Initialize refs array if needed
@@ -13414,14 +13426,16 @@ export default function App() {
                       {/* Videos Grid */}
                       <div style={{
                         width: '100%',
-                        maxWidth: '1400px',
+                        flex: '1 1 0',
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-                        gap: 'clamp(20px, 3vw, 30px)',
-                        padding: 'clamp(10px, 2vh, 20px)',
-                        flex: 1,
-                        overflowY: 'auto',
-                        boxSizing: 'border-box'
+                        gridTemplateColumns: 'repeat(3, 1fr)',
+                        gridTemplateRows: 'repeat(3, 1fr)',
+                        gap: 'clamp(8px, 1vw, 15px)',
+                        padding: 'clamp(3px, 0.3vh, 6px)',
+                        overflow: 'hidden',
+                        boxSizing: 'border-box',
+                        minHeight: 0,
+                        height: '100%'
                       }}>
                         {galleryVideos.map((videoUrl, index) => (
                           <div
@@ -13453,14 +13467,19 @@ export default function App() {
                             }}
                             style={{
                               width: '100%',
-                              aspectRatio: '16/9',
+                              height: '100%',
                               position: 'relative',
                               borderRadius: '12px',
                               overflow: 'hidden',
                               boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
                               background: '#000',
                               cursor: 'pointer',
-                              transition: 'all 0.3s ease'
+                              transition: 'all 0.3s ease',
+                              minHeight: 0,
+                              minWidth: 0,
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center'
                             }}
                             onMouseEnter={(e) => {
                               e.currentTarget.style.transform = 'scale(1.02)';
@@ -13474,9 +13493,8 @@ export default function App() {
                             <video
                               src={videoUrl}
                               style={{
-                                height: 'auto',
                                 width: '100%',
-                                aspectRatio: '16 / 9',
+                                height: '100%',
                                 objectFit: 'cover',
                                 pointerEvents: 'none',
                                 display: 'block',
