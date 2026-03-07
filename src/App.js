@@ -10589,7 +10589,7 @@ export default function App() {
                       }}
                     >
                       <img
-                        src={`/tlcomajorclients/${logoName}`}
+                        src={`${process.env.PUBLIC_URL}/tlcomajorclients/${logoName}`}
                         alt={`TLCO major client ${index + 1}`}
                         style={{
                           width: '100%',
@@ -11611,40 +11611,40 @@ export default function App() {
                 }}>
                   {(() => {
                     const logos = [
-                      '/gcpartner4.png',
-                      '/gcpartner3.png',
-                      '/gcpartner2.png',
-                      '/gcpartner1.png',
-                      '/gcmajorclients/Screenshot 2026-02-28 092851.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 092924.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 092942.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 092959.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093016.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093029.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093053.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093107.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093123.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093137.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093151.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093204.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093219.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093233.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093250.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093303.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093332.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093343.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093356.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093411.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093424.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093436.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093447.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093501.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093522.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093533.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093548.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093600.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093614.jpg',
-                      '/gcmajorclients/Screenshot 2026-02-28 093626.jpg'
+                      process.env.PUBLIC_URL + '/gcpartner4.png',
+                      process.env.PUBLIC_URL + '/gcpartner3.png',
+                      process.env.PUBLIC_URL + '/gcpartner2.png',
+                      process.env.PUBLIC_URL + '/gcpartner1.png',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 092851.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 092924.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 092942.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 092959.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093016.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093029.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093053.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093107.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093123.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093137.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093151.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093204.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093219.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093233.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093250.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093303.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093332.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093343.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093356.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093411.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093424.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093436.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093447.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093501.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093522.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093533.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093548.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093600.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093614.jpg',
+                      process.env.PUBLIC_URL + '/gcmajorclients/Screenshot 2026-02-28 093626.jpg'
                     ];
                     return logos.map((logoPath, index) => (
                     <div
@@ -11670,7 +11670,7 @@ export default function App() {
                         src={logoPath}
                         alt={`Client ${index + 1}`}
                         onError={(e) => {
-                          e.target.src = '/elco-gif.gif';
+                          e.target.src = process.env.PUBLIC_URL + '/elco-gif.gif';
                         }}
                         style={{
                           width: '100%',
@@ -12602,7 +12602,7 @@ export default function App() {
                       }}
                     >
                       <img
-                        src={`/amtpartners/${logoName}.png`}
+                        src={`${process.env.PUBLIC_URL}/amtpartners/${logoName}.png`}
                         alt={logoName}
                         style={{
                           width: '100%',
@@ -14872,7 +14872,7 @@ export default function App() {
                       }}
                     >
                       <img
-                        src={`/gulfconsultmajerclients/${logoName}`}
+                        src={`${process.env.PUBLIC_URL}/gulfconsultmajerclients/${logoName}`}
                         alt={`Major client ${index + 1}`}
                         style={{
                           width: '100%',
@@ -16732,7 +16732,7 @@ export default function App() {
                     }}
                     >
                       <img
-                        src={`/Group ${num}.png`}
+                        src={`${process.env.PUBLIC_URL}/Group ${num}.png`}
                         alt={`Partner ${num}`}
                         style={{
                           width: 'clamp(100px, 12vw, 150px)',
@@ -16771,7 +16771,7 @@ export default function App() {
                     }}
                     >
                       <img
-                        src={`/Group ${num}.png`}
+                        src={`${process.env.PUBLIC_URL}/Group ${num}.png`}
                         alt={`Partner ${num}`}
                         style={{
                           width: 'clamp(100px, 12vw, 150px)',
@@ -17532,7 +17532,7 @@ export default function App() {
                       }}
                     >
                       <img
-                        src={`/gtamajorclients/${logoName}`}
+                        src={`${process.env.PUBLIC_URL}/gtamajorclients/${logoName}`}
                         alt={`GTA major client ${index + 1}`}
                         style={{
                           width: '100%',
