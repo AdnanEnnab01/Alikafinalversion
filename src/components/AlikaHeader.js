@@ -15,7 +15,7 @@ const AlikaHeader = () => {
       <div className="left-section">
         <div className="alika-logo-container">
           <div className="alika-logo">
-            <img src="/alika.png" alt="Alika Logo" className="logo-image" />
+            <img src={process.env.PUBLIC_URL + "/alika.png"} alt="Alika Logo" className="logo-image" />
           </div>
           <div className="company-name-english">
             Ali Khudair Al harbi Holding Group

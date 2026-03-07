@@ -3,17 +3,17 @@ import './CompanyGrid.css';
 
 const CompanyGrid = () => {
   const companies = [
-    { name: 'AMT', logo: '/AMT.jpg' },
-    { name: 'AL-DORRAH', logo: '/AL-DORRAH.jpg' },
-    { name: 'CentralCare', logo: '/centralcare.png' },
-    { name: 'IDC', logo: '/IDC.jpg' },
-    { name: 'GC', logo: '/GC.png' },
-    { name: 'RK', logo: '/RK.jpg' },
-    { name: 'GTA', logo: '/GTA.png' },
-    { name: 'Antique', logo: '/antique.png' },
-    { name: 'Environmental', logo: '/ENVIRONMENTAL.jpg' },
-    { name: 'Gulf Consult', logo: '/GULF-CONSULT.jpg' },
-    { name: 'AH Environmental', logo: '/AH-ENVIRONMENTAL.jpg' },
+    { name: 'AMT', logo: process.env.PUBLIC_URL + '/AMT.jpg' },
+    { name: 'AL-DORRAH', logo: process.env.PUBLIC_URL + '/AL-DORRAH.jpg' },
+    { name: 'CentralCare', logo: process.env.PUBLIC_URL + '/centralcare.png' },
+    { name: 'IDC', logo: process.env.PUBLIC_URL + '/IDC.jpg' },
+    { name: 'GC', logo: process.env.PUBLIC_URL + '/GC.png' },
+    { name: 'RK', logo: process.env.PUBLIC_URL + '/RK.jpg' },
+    { name: 'GTA', logo: process.env.PUBLIC_URL + '/GTA.png' },
+    { name: 'Antique', logo: process.env.PUBLIC_URL + '/antique.png' },
+    { name: 'Environmental', logo: process.env.PUBLIC_URL + '/ENVIRONMENTAL.jpg' },
+    { name: 'Gulf Consult', logo: process.env.PUBLIC_URL + '/GULF-CONSULT.jpg' },
+    { name: 'AH Environmental', logo: process.env.PUBLIC_URL + '/AH-ENVIRONMENTAL.jpg' },
   ];
 
   // ترتيب هرمي مقلوب متناسق - يبدأ من 1 في الأعلى ويزيد تدريجياً

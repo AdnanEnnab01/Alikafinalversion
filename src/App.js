@@ -1680,21 +1680,21 @@ export default function App() {
   const companies = [
     // Right side - pattern (1-2-2-1) moving southeast
     // Row 1: 2 squares - Gulf Logo between IDC and GSG (at top of TLCO)
-    { id: 1, logo: '/IDC.png', row: 1, col: 4, name: 'IDC', bgImage: '/idcbg.png' },
-    { id: 12, logo: '/gulf-logo.png', row: 1, col: 5, name: 'Gulf Logo', bgImage: '/gulfconsultbg.png', modalLogo: '/Gulf-white.png' },
+    { id: 1, logo: process.env.PUBLIC_URL + '/IDC.png', row: 1, col: 4, name: 'IDC', bgImage: process.env.PUBLIC_URL + '/idcbg.png' },
+    { id: 12, logo: process.env.PUBLIC_URL + '/gulf-logo.png', row: 1, col: 5, name: 'Gulf Logo', bgImage: process.env.PUBLIC_URL + '/gulfconsultbg.png', modalLogo: process.env.PUBLIC_URL + '/Gulf-white.png' },
     // Row 2: 2 squares
-    { id: 10, logo: '/tico.png', row: 2, col: 4, name: 'TLCO', bgImage: '/elco-gif.gif' },
-    { id: 11, logo: '/gsg.png', row: 2, col: 5, name: 'GSG', bgImage: '/gcg-gif.gif' },
+    { id: 10, logo: process.env.PUBLIC_URL + '/tico.png', row: 2, col: 4, name: 'TLCO', bgImage: process.env.PUBLIC_URL + '/elco-gif.gif' },
+    { id: 11, logo: process.env.PUBLIC_URL + '/gsg.png', row: 2, col: 5, name: 'GSG', bgImage: process.env.PUBLIC_URL + '/gcg-gif.gif' },
     // Row 3: 4 squares - Gulf Consult next to Antique
-    { id: 9,  logo: '/GULF-CONSULT.png', row: 3, col: 2, name: 'Gulf Consult', bgImage: '/GC-bg.jpeg', modalLogo: '/GULF-CONSULT.png' },
-    { id: 2, logo: '/antique.png', row: 3, col: 3, name: 'Antique', bgImage: '/ant-git.gif', modalLogo: '/antiqqe.png' },
-    { id: 5,  logo: '/AH-ENVIRONMENTAL.png', row: 3, col: 4, name: 'AH Environmental', bgImage: '/ah-gif.gif', modalLogo: '/ah-white.png' },
-    { id: 3,  logo: '/cc.png', row: 3, col: 5, name: 'Central Care', bgImage: '/rk-gif.gif' },
+    { id: 9,  logo: process.env.PUBLIC_URL + '/GULF-CONSULT.png', row: 3, col: 2, name: 'Gulf Consult', bgImage: process.env.PUBLIC_URL + '/GC-bg.jpeg', modalLogo: process.env.PUBLIC_URL + '/GULF-CONSULT.png' },
+    { id: 2, logo: process.env.PUBLIC_URL + '/antique.png', row: 3, col: 3, name: 'Antique', bgImage: process.env.PUBLIC_URL + '/ant-git.gif', modalLogo: process.env.PUBLIC_URL + '/antiqqe.png' },
+    { id: 5,  logo: process.env.PUBLIC_URL + '/AH-ENVIRONMENTAL.png', row: 3, col: 4, name: 'AH Environmental', bgImage: process.env.PUBLIC_URL + '/ah-gif.gif', modalLogo: process.env.PUBLIC_URL + '/ah-white.png' },
+    { id: 3,  logo: process.env.PUBLIC_URL + '/cc.png', row: 3, col: 5, name: 'Central Care', bgImage: process.env.PUBLIC_URL + '/rk-gif.gif' },
     // Row 4: 4 squares - RK between Central Care and AMT (at left of AH Environmental)
-    { id: 7,  logo: '/dorrah.png', row: 4, col: 2, name: 'Al Dorrah', bgImage: '/dorrah-gif.gif' },
-    { id: 4,  logo: '/GTA.png', row: 4, col: 3, name: 'GTA', bgImage: '/GTA-bg4.png' },
-    { id: 8,  logo: '/AMT.png', row: 4, col: 4, name: 'AMT', bgImage: '/amt-bg.png', modalLogo: '/amt-internal.jpg' },
-    { id: 6,  logo: '/RK.png', row: 4, col: 5, name: 'RK', bgImage: '/rk1-gif.gif' },
+    { id: 7,  logo: process.env.PUBLIC_URL + '/dorrah.png', row: 4, col: 2, name: 'Al Dorrah', bgImage: process.env.PUBLIC_URL + '/dorrah-gif.gif' },
+    { id: 4,  logo: process.env.PUBLIC_URL + '/GTA.png', row: 4, col: 3, name: 'GTA', bgImage: process.env.PUBLIC_URL + '/GTA-bg4.png' },
+    { id: 8,  logo: process.env.PUBLIC_URL + '/AMT.png', row: 4, col: 4, name: 'AMT', bgImage: process.env.PUBLIC_URL + '/amt-bg.png', modalLogo: process.env.PUBLIC_URL + '/amt-internal.jpg' },
+    { id: 6,  logo: process.env.PUBLIC_URL + '/RK.png', row: 4, col: 5, name: 'RK', bgImage: process.env.PUBLIC_URL + '/rk1-gif.gif' },
   ];
 
 
@@ -2039,7 +2039,7 @@ export default function App() {
                 paddingLeft: 0
               }}>
                 <img
-                  src="/alikalogo-removebg-preview.png"
+                  src={process.env.PUBLIC_URL + "/alikalogo-removebg-preview.png"}
                   alt="Alika Logo"
                   style={{
                     maxWidth: '250px',
@@ -2243,7 +2243,7 @@ export default function App() {
                   marginLeft: 'clamp(60px, 7vw, 80px)'
                 }}>
                   <img
-                    src="/alikaqr.jpeg"
+                    src={process.env.PUBLIC_URL + "/alikaqr.jpeg"}
                     alt="Alika QR Code"
                     onClick={() => setShowAlikaQRModal(true)}
                     style={{
@@ -2303,7 +2303,7 @@ export default function App() {
           }}>
             {!showChairmanMessage ? (
               <img
-                src="/alika.png"
+                src={process.env.PUBLIC_URL + "/alika.png"}
                 alt="Alika Logo"
                 className="left-hero-item left-hero-item--alika"
                 style={{
@@ -2353,7 +2353,7 @@ export default function App() {
                     boxShadow: '0 8px 30px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1) inset'
                   }}>
                     <img 
-                      src="/chairman.png" 
+                      src={process.env.PUBLIC_URL + "/chairman.png"} 
                       alt="Eng. Ali Khudair Al Harbi"
                       style={{
                         width: '100%',
@@ -3213,7 +3213,7 @@ export default function App() {
                     }}
                   >
                     <img
-                      src="/amtqr.jpeg"
+                      src={process.env.PUBLIC_URL + "/amtqr.jpeg"}
                       alt="AMT QR Code"
                       onClick={() => setShowAMTQRModal(true)}
                       style={{
@@ -3571,7 +3571,7 @@ export default function App() {
                     }}
                   >
                     <img
-                      src="/idc-internal.jpg"
+                      src={process.env.PUBLIC_URL + "/idc-internal.jpg"}
                       alt="IDC Contracting"
                       style={{
                         width: '100%',
@@ -3807,7 +3807,7 @@ export default function App() {
                     }}
                   >
                     <img
-                      src="/idcqr.jpeg"
+                      src={process.env.PUBLIC_URL + "/idcqr.jpeg"}
                       alt="IDC QR Code"
                       onClick={() => setShowIDCQRModal(true)}
                       style={{
@@ -4305,7 +4305,7 @@ export default function App() {
                     }}
                   >
                     <img
-                      src="/ant-git.gif"
+                      src={process.env.PUBLIC_URL + "/ant-git.gif"}
                       alt="Antique internal"
                       style={{
                         width: '100%',
@@ -4527,7 +4527,7 @@ export default function App() {
                     }}
                   >
                     <img
-                      src="/antiqueqr.jpeg"
+                      src={process.env.PUBLIC_URL + "/antiqueqr.jpeg"}
                       alt="Antique QR Code"
                       onClick={() => setShowAntiqueQRModal(true)}
                       style={{
@@ -4832,7 +4832,7 @@ export default function App() {
               >
                 {/* Central Care Logo */}
                 <img
-                  src="/cc.png"
+                  src={process.env.PUBLIC_URL + "/cc.png"}
                   alt="Central Care Logo"
                   style={{
                     width: 'var(--central-logo-size, clamp(120px, 15vw, 200px))',
@@ -4985,7 +4985,7 @@ export default function App() {
                     }}
                   >
                     <img
-                      src="/rk-gif.gif"
+                      src={process.env.PUBLIC_URL + "/rk-gif.gif"}
                       alt="Central Medicalcare internal"
                       style={{
                         width: '100%',
@@ -5211,7 +5211,7 @@ export default function App() {
                     }}
                   >
                     <img
-                      src="/centralcareqr.jpeg"
+                      src={process.env.PUBLIC_URL + "/centralcareqr.jpeg"}
                       alt="Central Medicalcare QR Code"
                       onClick={() => setShowCentralMedicalcareQRModal(true)}
                       style={{
@@ -5709,7 +5709,7 @@ export default function App() {
                     }}
                   >
                     <img
-                      src="/GC-bg.jpeg"
+                      src={process.env.PUBLIC_URL + "/GC-bg.jpeg"}
                       alt="Gulf Consult internal"
                       style={{
                         width: '100%',
@@ -5934,7 +5934,7 @@ export default function App() {
                     }}
                   >
                     <img
-                      src="/gcqr.jpeg"
+                      src={process.env.PUBLIC_URL + "/gcqr.jpeg"}
                       alt="Gulf Consult QR Code"
                       onClick={() => setShowGulfConsultArchQRModal(true)}
                       style={{
@@ -6360,7 +6360,7 @@ export default function App() {
                     }}
                   >
                     <img
-                      src="/dorrah-gif.gif"
+                      src={process.env.PUBLIC_URL + "/dorrah-gif.gif"}
                       alt="Dorrah internal"
                       style={{
                         width: '100%',
@@ -6582,7 +6582,7 @@ export default function App() {
                     }}
                   >
                     <img
-                      src="/dorrahqr1.jpeg"
+                      src={process.env.PUBLIC_URL + "/dorrahqr1.jpeg"}
                       alt="Gulf Dorrah QR Code"
                       onClick={() => setShowGulfDorrahQRModal(true)}
                       style={{
@@ -7106,7 +7106,7 @@ export default function App() {
                       }}
                     >
                       <img
-                        src="/gtaqr.jpeg"
+                        src={process.env.PUBLIC_URL + "/gtaqr.jpeg"}
                         alt="GTA QR Code"
                         onClick={() => setShowGTAQRModal(true)}
                         style={{
@@ -7484,7 +7484,7 @@ export default function App() {
                       }}
                     >
                       <img
-                        src="/tlco-internal1.png"
+                        src={process.env.PUBLIC_URL + "/tlco-internal1.png"}
                         alt="TLCO Internal"
                         style={{
                           width: '100%',
@@ -7727,7 +7727,7 @@ export default function App() {
                     }}
                   >
                     <img
-                      src="/tlcoqr.jpeg"
+                      src={process.env.PUBLIC_URL + "/tlcoqr.jpeg"}
                       alt="ETLCO QR Code"
                       onClick={() => setShowTLCOQRModal(true)}
                       style={{
@@ -8276,7 +8276,7 @@ export default function App() {
                       }}
                     >
                       <img
-                        src="/gsg-internal.png"
+                        src={process.env.PUBLIC_URL + "/gsg-internal.png"}
                         alt="GSG Internal"
                         style={{
                           width: 'clamp(100px, 10vw, 130px)',
@@ -8290,7 +8290,7 @@ export default function App() {
                         }}
                       />
                       <img
-                        src="/gsgqr.jpeg"
+                        src={process.env.PUBLIC_URL + "/gsgqr.jpeg"}
                         alt="GSG QR Code"
                         onClick={() => setShowGSGQRModal(true)}
                         style={{
@@ -8838,7 +8838,7 @@ export default function App() {
                       }}
                     >
                       <img
-                        src="/rk-internal.png"
+                        src={process.env.PUBLIC_URL + "/rk-internal.png"}
                         alt="RK Internal"
                         style={{
                           width: 'auto',
@@ -8864,7 +8864,7 @@ export default function App() {
                         }}
                       >
                         <img
-                          src="/rkqr.jpeg"
+                          src={process.env.PUBLIC_URL + "/rkqr.jpeg"}
                           alt="RK QR Code"
                           onClick={() => setShowRKQRModal(true)}
                           style={{
@@ -9379,7 +9379,7 @@ export default function App() {
                     }}
                   >
                     <img
-                      src="/ahqr.jpeg"
+                      src={process.env.PUBLIC_URL + "/ahqr.jpeg"}
                       alt="AH Environmental QR Code"
                       onClick={() => setShowAHEnvironmentalQRModal(true)}
                       style={{
@@ -9870,7 +9870,7 @@ export default function App() {
                   >
                     <div style={{ position: 'relative' }}>
                       <img
-                        src="/gulfphoto.jpg"
+                        src={process.env.PUBLIC_URL + "/gulfphoto.jpg"}
                         alt="Gulf Consult"
                         style={{
                           width: '100%',
@@ -9992,7 +9992,7 @@ export default function App() {
                       }}
                     >
                       <img
-                        src="/gulfconsultrectangleqr.jpeg"
+                        src={process.env.PUBLIC_URL + "/gulfconsultrectangleqr.jpeg"}
                         alt="Gulf Consult QR Code"
                         onClick={() => setShowGulfConsultQRModal(true)}
                         style={{
@@ -10049,7 +10049,7 @@ export default function App() {
                   >
                     {/* Gulf Photo - Increased size for better visual impact */}
                     <img
-                      src="/gulfphoto.jpg"
+                      src={process.env.PUBLIC_URL + "/gulfphoto.jpg"}
                       alt="Gulf Consult"
                       style={{
                         maxWidth: 'clamp(600px, 55vw, 1600px)',
@@ -10325,7 +10325,7 @@ export default function App() {
             height: '100vh',
             maxWidth: '100vw',
             maxHeight: '100vh',
-            backgroundImage: 'url(/bg.png)',
+            backgroundImage: `url(${process.env.PUBLIC_URL}/bg.png)`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
@@ -10683,7 +10683,7 @@ export default function App() {
             height: '100vh',
             maxWidth: '100vw',
             maxHeight: '100vh',
-            backgroundImage: 'url(/bg.png)',
+            backgroundImage: `url(${process.env.PUBLIC_URL}/bg.png)`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
@@ -10757,7 +10757,7 @@ export default function App() {
               }}
               >
                 <img 
-                  src="/AH-ENVIRONMENTAL.png" 
+                  src={process.env.PUBLIC_URL + "/AH-ENVIRONMENTAL.png"} 
                   alt="AH Environmental" 
                   style={{
                     width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
@@ -10808,7 +10808,7 @@ export default function App() {
               }}
               >
                 <img 
-                  src="/GULF-CONSULT.png" 
+                  src={process.env.PUBLIC_URL + "/GULF-CONSULT.png"} 
                   alt="Gulf Consult" 
                   style={{
                     width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
@@ -10859,7 +10859,7 @@ export default function App() {
               }}
               >
                 <img 
-                  src="/antique.png" 
+                  src={process.env.PUBLIC_URL + "/antique.png"} 
                   alt="Antique" 
                   style={{
                     width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
@@ -10910,7 +10910,7 @@ export default function App() {
               }}
               >
                 <img 
-                  src="/AMT.png" 
+                  src={process.env.PUBLIC_URL + "/AMT.png"} 
                   alt="AMT" 
                   style={{
                     width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
@@ -10961,7 +10961,7 @@ export default function App() {
               }}
               >
                 <img 
-                  src="/cc.png" 
+                  src={process.env.PUBLIC_URL + "/cc.png"} 
                   alt="Central Care" 
                   style={{
                     width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
@@ -11012,7 +11012,7 @@ export default function App() {
               }}
               >
                 <img 
-                  src="/dorrah.png" 
+                  src={process.env.PUBLIC_URL + "/dorrah.png"} 
                   alt="Al Dorrah" 
                   style={{
                     width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
@@ -11063,7 +11063,7 @@ export default function App() {
               }}
               >
                 <img 
-                  src="/GTA.png" 
+                  src={process.env.PUBLIC_URL + "/GTA.png"} 
                   alt="GTA" 
                   style={{
                     width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
@@ -11114,7 +11114,7 @@ export default function App() {
               }}
               >
                 <img 
-                  src="/RK.png" 
+                  src={process.env.PUBLIC_URL + "/RK.png"} 
                   alt="RK" 
                   style={{
                     width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
@@ -11165,7 +11165,7 @@ export default function App() {
               }}
               >
                 <img 
-                  src="/IDC.png" 
+                  src={process.env.PUBLIC_URL + "/IDC.png"} 
                   alt="IDC" 
                   style={{
                     width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
@@ -11216,7 +11216,7 @@ export default function App() {
               }}
               >
                 <img 
-                  src="/gulf-logo.png" 
+                  src={process.env.PUBLIC_URL + "/gulf-logo.png"} 
                   alt="Gulf Logo" 
                   style={{
                     width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
@@ -11267,7 +11267,7 @@ export default function App() {
               }}
               >
                 <img 
-                  src="/tico.png" 
+                  src={process.env.PUBLIC_URL + "/tico.png"} 
                   alt="TLCO" 
                   style={{
                     width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
@@ -11318,7 +11318,7 @@ export default function App() {
               }}
               >
                 <img 
-                  src="/gsg.png" 
+                  src={process.env.PUBLIC_URL + "/gsg.png"} 
                   alt="GSG" 
                   style={{
                     width: viewportSize.width >= 1536 && viewportSize.height >= 864 ? '80px' : 'clamp(120px, 15vw, 180px)',
@@ -11399,7 +11399,7 @@ export default function App() {
           height: '100vh',
           maxWidth: '100vw',
           maxHeight: '100vh',
-          backgroundImage: 'url(/gc-engineer-learnmore-bg.jpeg)',
+          backgroundImage: `url(${process.env.PUBLIC_URL}/gc-engineer-learnmore-bg.jpeg)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -11758,7 +11758,7 @@ export default function App() {
                     flexWrap: 'wrap'
                   }}>
                     <img
-                      src="/gc-project1.png"
+                      src={process.env.PUBLIC_URL + "/gc-project1.png"}
                       alt="Project 1"
                       style={{
                         width: 'clamp(200px, 22vw, 320px)',
@@ -11770,7 +11770,7 @@ export default function App() {
                       }}
                     />
                     <img
-                      src="/gc-project2.png"
+                      src={process.env.PUBLIC_URL + "/gc-project2.png"}
                       alt="Project 2"
                       style={{
                         width: 'clamp(200px, 22vw, 320px)',
@@ -11782,7 +11782,7 @@ export default function App() {
                       }}
                     />
                     <img
-                      src="/gc-project3.png"
+                      src={process.env.PUBLIC_URL + "/gc-project3.png"}
                       alt="Project 3"
                       style={{
                         width: 'clamp(200px, 22vw, 320px)',
@@ -11803,7 +11803,7 @@ export default function App() {
                     flexWrap: 'wrap'
                   }}>
                     <img
-                      src="/gc-project4.png"
+                      src={process.env.PUBLIC_URL + "/gc-project4.png"}
                       alt="Project 4"
                       style={{
                         width: 'clamp(200px, 22vw, 320px)',
@@ -11815,7 +11815,7 @@ export default function App() {
                       }}
                     />
                     <img
-                      src="/gc-project5.png"
+                      src={process.env.PUBLIC_URL + "/gc-project5.png"}
                       alt="Project 5"
                       style={{
                         width: 'clamp(200px, 22vw, 320px)',
@@ -12042,7 +12042,7 @@ export default function App() {
           bottom: 0,
           width: '100vw',
           height: '100vh',
-          backgroundImage: 'url(/antiquelearnmore.jpeg)',
+          backgroundImage: `url(${process.env.PUBLIC_URL}/antiquelearnmore.jpeg)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -12348,7 +12348,7 @@ export default function App() {
           width: '100vw',
           height: '100vh',
           backgroundColor: 'transparent',
-          backgroundImage: 'url(/amt-bg.png)',
+          backgroundImage: `url(${process.env.PUBLIC_URL}/amt-bg.png)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -12685,7 +12685,7 @@ export default function App() {
                       boxShadow: '0 4px 15px rgba(255, 75, 75, 0.3)'
                     }}>
                       <img
-                        src="/mreyad.jpeg"
+                        src={process.env.PUBLIC_URL + "/mreyad.jpeg"}
                         alt="CEO"
                         style={{
                           width: '100%',
@@ -12738,7 +12738,7 @@ export default function App() {
                       boxShadow: '0 4px 15px rgba(255, 75, 75, 0.3)'
                     }}>
                       <img
-                        src="/mohammadsalesmanager.jpeg"
+                        src={process.env.PUBLIC_URL + "/mohammadsalesmanager.jpeg"}
                         alt="Sales Manager"
                         style={{
                           width: '100%',
@@ -12791,7 +12791,7 @@ export default function App() {
                       boxShadow: '0 4px 15px rgba(255, 75, 75, 0.3)'
                     }}>
                       <img
-                        src="/financemanager.jpeg"
+                        src={process.env.PUBLIC_URL + "/financemanager.jpeg"}
                         alt="Finance Manager"
                         style={{
                           width: '100%',
@@ -12844,7 +12844,7 @@ export default function App() {
                       boxShadow: '0 4px 15px rgba(255, 75, 75, 0.3)'
                     }}>
                       <img
-                        src="/Implementationmanager.jpeg"
+                        src={process.env.PUBLIC_URL + "/Implementationmanager.jpeg"}
                         alt="Implementation Manager"
                         style={{
                           width: '100%',
@@ -12897,7 +12897,7 @@ export default function App() {
                       boxShadow: '0 4px 15px rgba(255, 75, 75, 0.3)'
                     }}>
                       <img
-                        src="/engineeringmanager.jpeg"
+                        src={process.env.PUBLIC_URL + "/engineeringmanager.jpeg"}
                         alt="Engineering Manager"
                         style={{
                           width: '100%',
@@ -12950,7 +12950,7 @@ export default function App() {
                       boxShadow: '0 4px 15px rgba(255, 75, 75, 0.3)'
                     }}>
                       <img
-                        src="/itmanager.jpeg"
+                        src={process.env.PUBLIC_URL + "/itmanager.jpeg"}
                         alt="IT Manager"
                         style={{
                           width: '100%',
@@ -13003,7 +13003,7 @@ export default function App() {
                       boxShadow: '0 4px 15px rgba(255, 75, 75, 0.3)'
                     }}>
                       <img
-                        src="/storemanager.jpeg"
+                        src={process.env.PUBLIC_URL + "/storemanager.jpeg"}
                         alt="Store Manager"
                         style={{
                           width: '100%',
@@ -13104,7 +13104,7 @@ export default function App() {
                   }}
                   >
                     <img
-                      src="/Group 82.png"
+                      src={process.env.PUBLIC_URL + "/Group 82.png"}
                       alt="Kingdom of Saudi Arabia"
                       style={{
                         width: 'clamp(150px, 15vw, 200px)',
@@ -13131,7 +13131,7 @@ export default function App() {
                   }}
                   >
                     <img
-                      src="/Group 83.png"
+                      src={process.env.PUBLIC_URL + "/Group 83.png"}
                       alt="Imam Abdulrahman Bin Faisal University"
                       style={{
                         width: 'clamp(150px, 15vw, 200px)',
@@ -13158,7 +13158,7 @@ export default function App() {
                   }}
                   >
                     <img
-                      src="/Group 84.png"
+                      src={process.env.PUBLIC_URL + "/Group 84.png"}
                       alt="Ma'aden"
                       style={{
                         width: 'clamp(150px, 15vw, 200px)',
@@ -13185,7 +13185,7 @@ export default function App() {
                   }}
                   >
                     <img
-                      src="/Group 85.png"
+                      src={process.env.PUBLIC_URL + "/Group 85.png"}
                       alt="King Faisal University"
                       style={{
                         width: 'clamp(150px, 15vw, 200px)',
@@ -13212,7 +13212,7 @@ export default function App() {
                   }}
                   >
                     <img
-                      src="/Group 86.png"
+                      src={process.env.PUBLIC_URL + "/Group 86.png"}
                       alt="Marafiq"
                       style={{
                         width: 'clamp(150px, 15vw, 200px)',
@@ -13250,7 +13250,7 @@ export default function App() {
                   }}
                   >
                     <img
-                      src="/Group 87.png"
+                      src={process.env.PUBLIC_URL + "/Group 87.png"}
                       alt="Saudi Arabia"
                       style={{
                         width: 'clamp(150px, 15vw, 200px)',
@@ -13277,7 +13277,7 @@ export default function App() {
                   }}
                   >
                     <img
-                      src="/Group 90.png"
+                      src={process.env.PUBLIC_URL + "/Group 90.png"}
                       alt="Ministry of Health"
                       style={{
                         width: 'clamp(150px, 15vw, 200px)',
@@ -13304,7 +13304,7 @@ export default function App() {
                   }}
                   >
                     <img
-                      src="/Group 91.png"
+                      src={process.env.PUBLIC_URL + "/Group 91.png"}
                       alt="Ministry of Finance"
                       style={{
                         width: 'clamp(150px, 15vw, 200px)',
@@ -13331,7 +13331,7 @@ export default function App() {
                   }}
                   >
                     <img
-                      src="/Group 92.png"
+                      src={process.env.PUBLIC_URL + "/Group 92.png"}
                       alt="King Saud University"
                       style={{
                         width: 'clamp(150px, 15vw, 200px)',
@@ -13358,7 +13358,7 @@ export default function App() {
                   }}
                   >
                     <img
-                      src="/Group 95.png"
+                      src={process.env.PUBLIC_URL + "/Group 95.png"}
                       alt="Aramco"
                       style={{
                         width: 'clamp(150px, 15vw, 200px)',
@@ -14524,7 +14524,7 @@ export default function App() {
           bottom: 0,
           width: '100vw',
           height: '100vh',
-          backgroundImage: 'url(/gulfconsultbg.png)',
+          backgroundImage: `url(${process.env.PUBLIC_URL}/gulfconsultbg.png)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -14699,7 +14699,7 @@ export default function App() {
                   justifyContent: 'center'
                 }}>
                   <img
-                    src="/image 65.png"
+                    src={process.env.PUBLIC_URL + "/image 65.png"}
                     alt="Our Projects - Geotechnical Investigation"
                     style={{
                       width: '100%',
@@ -15283,7 +15283,7 @@ export default function App() {
           width: '100vw',
           height: '100vh',
           backgroundColor: '#e0f7fa',
-          backgroundImage: 'url(/gsg-ourpartnersbg.jpeg)',
+          backgroundImage: `url(${process.env.PUBLIC_URL}/gsg-ourpartnersbg.jpeg)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -15458,7 +15458,7 @@ export default function App() {
                   marginBottom: '40px'
                 }}>
                   <img
-                    src="/gcgpartner3 (3).png"
+                    src={process.env.PUBLIC_URL + "/gcgpartner3 (3).png"}
                     alt="GCG Partner"
                     style={{
                       width: 'clamp(200px, 20vw, 280px)',
@@ -15469,7 +15469,7 @@ export default function App() {
                     }}
                   />
                   <img
-                    src="/gcgpartner3 (2).png"
+                    src={process.env.PUBLIC_URL + "/gcgpartner3 (2).png"}
                     alt="GeoPRO Partner"
                     style={{
                       width: 'clamp(200px, 20vw, 280px)',
@@ -15480,7 +15480,7 @@ export default function App() {
                     }}
                   />
                   <img
-                    src="/gcgpartner3 (1).png"
+                    src={process.env.PUBLIC_URL + "/gcgpartner3 (1).png"}
                     alt="DMT Partner"
                     style={{
                       width: 'clamp(200px, 20vw, 280px)',
@@ -15620,7 +15620,7 @@ export default function App() {
           width: '100vw',
           height: '100vh',
           backgroundColor: '#061826',
-          backgroundImage: 'url(/dorrah-gif.gif)',
+          backgroundImage: `url(${process.env.PUBLIC_URL}/dorrah-gif.gif)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -15955,7 +15955,7 @@ export default function App() {
             width: '100vw',
             height: '100vh',
             backgroundColor: '#bfa874',
-            backgroundImage: 'url(/bg.png)',
+            backgroundImage: `url(${process.env.PUBLIC_URL}/bg.png)`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
@@ -16293,7 +16293,7 @@ export default function App() {
           width: '100vw',
           height: '100vh',
           backgroundColor: '#f5f5f5',
-          backgroundImage: 'url(/rk1-gif.gif)',
+          backgroundImage: `url(${process.env.PUBLIC_URL}/rk1-gif.gif)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -16484,7 +16484,7 @@ export default function App() {
           margin: 0,
           padding: 0,
           backgroundColor: ahEnvironmentalActiveTab === 'tab2' ? '#ffffff' : '#283152',
-          backgroundImage: ahEnvironmentalActiveTab === 'tab2' ? 'none' : (ahEnvironmentalActiveTab === 'tab4' ? 'url(/bgourproject.png)' : 'url(/bgforah.png)'),
+          backgroundImage: ahEnvironmentalActiveTab === 'tab2' ? 'none' : (ahEnvironmentalActiveTab === 'tab4' ? `url(${process.env.PUBLIC_URL}/bgourproject.png)` : `url(${process.env.PUBLIC_URL}/bgforah.png)`),
           backgroundSize: '100% 100%',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -16877,7 +16877,7 @@ export default function App() {
                     justifyContent: 'center'
                   }}>
                     <img
-                      src="/photo66.png"
+                      src={process.env.PUBLIC_URL + "/photo66.png"}
                       alt="Projects Chart"
                       style={{
                         width: '100%',
@@ -16935,7 +16935,7 @@ export default function App() {
           width: '100vw',
           height: '100vh',
           backgroundColor: '#f5f5f5',
-          backgroundImage: 'url(/idcbg.png)',
+          backgroundImage: `url(${process.env.PUBLIC_URL}/idcbg.png)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -17286,7 +17286,7 @@ export default function App() {
           width: '100vw',
           height: '100vh',
           backgroundColor: '#ffffff',
-          backgroundImage: 'url(/GTA-bg4.png)',
+          backgroundImage: `url(${process.env.PUBLIC_URL}/GTA-bg4.png)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
