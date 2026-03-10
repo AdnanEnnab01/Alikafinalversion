@@ -2830,20 +2830,31 @@ export default function App() {
               >
                 <h1
                   style={{
-                    fontSize: 'var(--amt-title-size, clamp(32px, 4.2vw, 58px))',
-                    fontWeight: '900',
-                    marginBottom: 'clamp(16px, 2.5vh, 28px)',
-                    letterSpacing: '2.2px',
-                    background: 'linear-gradient(135deg, #ff4b4b 0%, #ff6b6b 50%, #ff4b4b 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
+                    // تصغير حجم عنوان AMT أكثر ليكون خفيفاً ومتناسقاً
+                    fontSize: 'var(--amt-title-size, clamp(18px, 2.2vw, 28px))',
+                    fontWeight: '800',
+                    marginBottom: 'clamp(8px, 1.2vh, 14px)',
+                    letterSpacing: '1.2px',
                     textTransform: 'uppercase',
-                    textShadow: '0 0 30px rgba(255, 75, 75, 0.4), 0 4px 20px rgba(255, 75, 75, 0.3)',
                     animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both',
+                    // تصميم جديد لعنوان AMT مشابه لـ IDC لكن باللون الأحمر
+                    color: '#ff4b4b',
+                    backgroundColor: 'rgba(255, 255, 255, 0.98)',
+                    padding: 'clamp(4px, 0.6vh, 8px) clamp(10px, 1.2vw, 16px)',
+                    borderRadius: '999px',
+                    border: '2px solid rgba(255, 75, 75, 0.85)',
+                    boxShadow: '0 6px 18px rgba(0, 0, 0, 0.18)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    whiteSpace: 'normal',
+                    textAlign: 'center',
+                    userSelect: 'none',
+                    WebkitUserSelect: 'none',
+                    MozUserSelect: 'none',
+                    msUserSelect: 'none',
                     position: 'relative',
-                    display: 'inline-block',
-                    filter: 'drop-shadow(0 2px 8px rgba(255, 75, 75, 0.5))'
+                    zIndex: 30
                   }}
                 >
                   ADVANCED MICRO TECHNOLOGIES (AMT)
@@ -3428,23 +3439,26 @@ export default function App() {
                 <h1 style={{
                   fontSize: 'var(--idc-title-size, clamp(30px, 3.8vw, 46px))',
                   fontWeight: '900',
-                  marginBottom: 'clamp(16px, 2.5vh, 28px)',
+                  marginBottom: 'clamp(16px, 2.5vh, 24px)',
                   letterSpacing: '2.2px',
-                  background: 'linear-gradient(135deg, #0b6fbf 0%, #0d7fd4 50%, #0b6fbf 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
                   textTransform: 'uppercase',
                   animation: 'fadeInUp 0.8s ease-out 0.2s both',
-                  whiteSpace: 'nowrap',
-                  textShadow: '0 0 30px rgba(11, 111, 191, 0.4), 0 4px 20px rgba(11, 111, 191, 0.3)',
-                  position: 'relative',
+                  // تصميم جديد: شريط عنوان داخل مستطيل أبيض مع حدود زرقاء
+                  color: '#0b6fbf',
+                  backgroundColor: 'rgba(255, 255, 255, 0.98)',
+                  padding: 'clamp(8px, 1vh, 12px) clamp(18px, 2vw, 26px)',
+                  borderRadius: '999px',
+                  border: '2px solid rgba(11, 111, 191, 0.85)',
+                  boxShadow: '0 6px 18px rgba(0, 0, 0, 0.18)',
                   display: 'inline-block',
-                  filter: 'drop-shadow(0 2px 8px rgba(11, 111, 191, 0.5))',
+                  whiteSpace: 'nowrap',
                   userSelect: 'none',
                   WebkitUserSelect: 'none',
                   MozUserSelect: 'none',
-                  msUserSelect: 'none'
+                  msUserSelect: 'none',
+                  // Make sure the IDC title itself is always the topmost text layer
+                  position: 'relative',
+                  zIndex: 30
                 }}>
                   IDC CONTRACTING COMPANY
                 </h1>
@@ -5598,7 +5612,10 @@ export default function App() {
                     letterSpacing: '1.6px',
                     color: '#16348a',
                     textTransform: 'uppercase',
-                    animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both'
+                    animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both',
+                    // Ensure the company title is always above any overlapping layers (QR, backgrounds, etc.)
+                    position: 'relative',
+                    zIndex: 30
                   }}
                 >
                   GULF CONSULT
@@ -7287,11 +7304,13 @@ export default function App() {
                 className="tlco-content-container"
                 style={{
                   position: 'fixed',
-                  top: '48%',
+                  // تعديل الموضع ليكون أكثر في المنتصف - responsive حسب حجم الشاشة
+                  top: 'clamp(50%, 52vh, 55%)',
                   right: 'clamp(40px, 6vw, 120px)',
                   transform: 'translateY(-50%)',
                   maxWidth: 'var(--tlco-content-max-width, clamp(520px, 46vw, 760px))',
-                  zIndex: 12,
+                  // Keep ETLCO text content above surrounding graphics/QR elements
+                  zIndex: 20,
                   color: '#0b3b25',
                   direction: 'ltr',
                   textAlign: 'left'
@@ -7320,20 +7339,30 @@ export default function App() {
 
                 <h1
                   style={{
-                    fontSize: 'var(--tlco-title-size, clamp(30px, 4vw, 50px))',
-                    fontWeight: '900',
-                    marginBottom: 'clamp(16px, 2.5vh, 28px)',
-                    letterSpacing: '2.2px',
-                    background: 'linear-gradient(135deg, #008c4a 0%, #00a055 50%, #008c4a 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
+                    // تصميم جديد لعنوان ETLCO مشابه لـ IDC و AMT لكن باللون الأخضر
+                    fontSize: 'var(--tlco-title-size, clamp(18px, 2.2vw, 28px))',
+                    fontWeight: '800',
+                    marginBottom: 'clamp(8px, 1.2vh, 14px)',
+                    letterSpacing: '1.2px',
                     textTransform: 'uppercase',
                     animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both',
-                    textShadow: '0 0 30px rgba(0, 140, 74, 0.4), 0 4px 20px rgba(0, 140, 74, 0.3)',
+                    color: '#008c4a',
+                    backgroundColor: 'rgba(255, 255, 255, 0.98)',
+                    padding: 'clamp(4px, 0.6vh, 8px) clamp(10px, 1.2vw, 16px)',
+                    borderRadius: '999px',
+                    border: '2px solid rgba(0, 140, 74, 0.85)',
+                    boxShadow: '0 6px 18px rgba(0, 0, 0, 0.18)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    whiteSpace: 'normal',
+                    textAlign: 'center',
+                    userSelect: 'none',
+                    WebkitUserSelect: 'none',
+                    MozUserSelect: 'none',
+                    msUserSelect: 'none',
                     position: 'relative',
-                    display: 'inline-block',
-                    filter: 'drop-shadow(0 2px 8px rgba(0, 140, 74, 0.5))'
+                    zIndex: 30
                   }}
                 >
                   ENVIRONMENTAL TESTING AND LABORATORIES
@@ -16960,7 +16989,10 @@ export default function App() {
               marginBottom: 'clamp(20px, 2vh, 30px)',
               color: '#0b6fbf',
               textTransform: 'uppercase',
-              letterSpacing: '2px'
+              letterSpacing: '2px',
+              // Ensure IDC Learn More title stays above any overlapping UI elements
+              position: 'relative',
+              zIndex: 30
             }}>
               IDC CONTRACTING COMPANY
             </h1>

@@ -4331,6 +4331,10 @@ div[style*="gc-engineer-learnmore-bg"] > * {
 /* ETLCO (TLCO) responsive content spacing */
 /* 16:9 specific adjustments for ETLCO */
 @media (min-width: 1920px) and (min-height: 1080px) {
+  .tlco-content-container {
+    top: 52% !important;
+  }
+  
   :root {
     --tlco-logo-width: 300px;
     --tlco-logo-height: 180px;
@@ -4347,6 +4351,10 @@ div[style*="gc-engineer-learnmore-bg"] > * {
 }
 
 @media (min-width: 2560px) and (min-height: 1440px) {
+  .tlco-content-container {
+    top: 52% !important;
+  }
+  
   :root {
     --tlco-logo-width: 380px;
     --tlco-logo-height: 230px;
@@ -4363,6 +4371,10 @@ div[style*="gc-engineer-learnmore-bg"] > * {
 }
 
 @media (min-width: 3840px) and (min-height: 2160px) {
+  .tlco-content-container {
+    top: 52% !important;
+  }
+  
   :root {
     --tlco-logo-width: 500px;
     --tlco-logo-height: 300px;
@@ -4379,6 +4391,10 @@ div[style*="gc-engineer-learnmore-bg"] > * {
 }
 
 @media (min-width: 1366px) and (max-width: 1919px) and (min-height: 768px) and (max-height: 1079px) {
+  .tlco-content-container {
+    top: 52% !important;
+  }
+  
   :root {
     --tlco-logo-width: 260px;
     --tlco-logo-height: 150px;
@@ -4398,7 +4414,8 @@ div[style*="gc-engineer-learnmore-bg"] > * {
 @media (min-width: 1520px) and (max-width: 1550px) and (min-height: 850px) and (max-height: 870px) {
   /* Apply optimized styling to ensure all content is visible - same style as 1286×864 */
   .tlco-content-container {
-    top: 48% !important;
+    /* تعديل الموضع ليكون أكثر في المنتصف */
+    top: 52% !important;
     right: clamp(40px, 6vw, 120px) !important;
     transform: translateY(-50%) !important;
     max-width: clamp(520px, 46vw, 760px) !important;
@@ -4493,7 +4510,8 @@ div[style*="gc-engineer-learnmore-bg"] > * {
 @media (min-width: 1270px) and (max-width: 1300px) and (min-height: 850px) and (max-height: 870px) {
   /* Apply optimized styling to ensure all content is visible */
   .tlco-content-container {
-    top: 48% !important;
+    /* تعديل الموضع ليكون أكثر في المنتصف */
+    top: 52% !important;
     right: clamp(40px, 6vw, 120px) !important;
     transform: translateY(-50%) !important;
     max-width: clamp(520px, 46vw, 760px) !important;
@@ -4581,6 +4599,24 @@ div[style*="gc-engineer-learnmore-bg"] > * {
     --tlco-button-font: clamp(14px, 1.6vw, 20px);
     --tlco-qr-size: clamp(100px, 14vw, 170px);
     --tlco-content-max-width: clamp(520px, 46vw, 760px);
+  }
+}
+
+/* ETLCO responsive adjustments for smaller screens */
+@media (max-height: 800px) {
+  .tlco-content-container {
+    top: 50% !important;
+    max-width: clamp(480px, 42vw, 680px) !important;
+  }
+  
+  .tlco-content-container h1 {
+    font-size: clamp(16px, 2vw, 24px) !important;
+    margin-bottom: clamp(6px, 1vh, 10px) !important;
+  }
+  
+  .tlco-content-container p {
+    font-size: clamp(11px, 1.2vw, 16px) !important;
+    margin-bottom: clamp(12px, 2vh, 20px) !important;
   }
 }
 
@@ -5132,7 +5168,8 @@ div[style*="gc-engineer-learnmore-bg"] > * {
   left: auto;
   transform: translateY(-50%);
   max-width: var(--idc-content-max-width, 720px);
-  z-index: 12;
+  /* Keep IDC text content above surrounding graphics/QR elements */
+  z-index: 20;
   color: #0b2239;
   direction: ltr;
   text-align: left;
