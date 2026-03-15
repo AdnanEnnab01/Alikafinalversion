@@ -1,0 +1,218 @@
+.company-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 50px 40px;
+  width: 100%;
+  height: 100%;
+  align-content: flex-start;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.grid-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 25px;
+  width: 100%;
+  flex-wrap: nowrap;
+}
+
+/* المسافة تُحسب ديناميكياً في JavaScript بناءً على عدد اللوغوهات */
+
+.company-grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.company-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.company-grid::-webkit-scrollbar-thumb {
+  background: rgba(245, 245, 250, 0.3);
+  border-radius: 3px;
+}
+
+.company-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 245, 250, 0.5);
+}
+
+.diamond-panel {
+  width: 170px;
+  height: 170px;
+  position: relative;
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, rgba(30, 30, 45, 0.95), rgba(50, 50, 70, 0.9));
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  box-shadow: 
+    0 0 20px rgba(245, 245, 250, 0.2),
+    0 4px 15px rgba(0, 0, 0, 0.6),
+    inset 0 0 30px rgba(245, 245, 250, 0.1),
+    inset 0 0 60px rgba(100, 150, 255, 0.05);
+  overflow: visible;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  cursor: pointer;
+  margin: 5px;
+  animation: fadeInUp 0.8s ease-out forwards, creativeGlow 3s ease-in-out infinite;
+}
+
+.diamond-panel::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, rgba(245, 245, 250, 0.3), rgba(150, 200, 255, 0.2));
+  border-radius: 2px;
+  z-index: -1;
+  filter: blur(12px);
+  opacity: 0.6;
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.diamond-panel::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(245, 245, 250, 0.3), transparent);
+  transform: translate(-50%, -50%) rotate(-45deg);
+  transition: all 0.4s ease;
+  border-radius: 50%;
+}
+
+.diamond-panel:hover {
+  box-shadow: 
+    0 0 40px rgba(245, 245, 250, 0.4),
+    0 0 60px rgba(150, 200, 255, 0.3),
+    0 6px 25px rgba(0, 0, 0, 0.7),
+    inset 0 0 40px rgba(245, 245, 250, 0.2),
+    inset 0 0 80px rgba(100, 150, 255, 0.1);
+  transform: rotate(45deg) scale(1.15) translateY(-5px);
+  background: linear-gradient(135deg, rgba(40, 40, 55, 0.98), rgba(60, 60, 80, 0.95));
+  border-color: rgba(245, 245, 250, 0.6);
+}
+
+.diamond-panel:hover::after {
+  width: 200px;
+  height: 200px;
+  opacity: 0.4;
+}
+
+.diamond-panel:active {
+  transform: rotate(45deg) scale(1.1);
+  transition: all 0.15s ease;
+}
+
+.diamond-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-45deg);
+  padding: 15px;
+  position: relative;
+  z-index: 1;
+  background: transparent;
+}
+
+.company-logo {
+  max-width: 85%;
+  max-height: 85%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: none;
+  transition: all 0.3s ease;
+}
+
+.diamond-panel:hover .company-logo {
+  transform: scale(1.1) rotate(-2deg);
+  filter: brightness(1.2) drop-shadow(0 0 10px rgba(245, 245, 250, 0.5));
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: rotate(45deg) translateY(30px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(45deg) translateY(0) scale(1);
+  }
+}
+
+@keyframes creativeGlow {
+  0%, 100% {
+    box-shadow: 
+      0 0 20px rgba(245, 245, 250, 0.2),
+      0 4px 15px rgba(0, 0, 0, 0.6),
+      inset 0 0 30px rgba(245, 245, 250, 0.1),
+      inset 0 0 60px rgba(100, 150, 255, 0.05);
+  }
+  50% {
+    box-shadow: 
+      0 0 30px rgba(245, 245, 250, 0.3),
+      0 0 40px rgba(150, 200, 255, 0.2),
+      0 4px 15px rgba(0, 0, 0, 0.6),
+      inset 0 0 40px rgba(245, 245, 250, 0.15),
+      inset 0 0 80px rgba(100, 150, 255, 0.1);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1920px) {
+  .diamond-panel {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .company-grid {
+    gap: 22px;
+    padding: 45px 35px;
+  }
+  
+  .grid-row {
+    gap: 22px;
+  }
+}
+
+@media (max-width: 1366px) {
+  .diamond-panel {
+    width: 130px;
+    height: 130px;
+  }
+  
+  .company-grid {
+    gap: 18px;
+    padding: 40px 30px;
+  }
+  
+  .grid-row {
+    gap: 18px;
+  }
+  
+  .diamond-content {
+    padding: 12px;
+  }
+}
