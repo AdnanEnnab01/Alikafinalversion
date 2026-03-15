@@ -300,115 +300,15 @@ export default function GulfDorrah({ isOpen, onClose, viewportSize }) {
               }}>
                 GALLERY
               </h2>
-              {/* Play Video Button */}
-              <button
-                type="button"
-                onClick={async (e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  console.log('Play Video button clicked');
-                  console.log('videoContainerRef.current:', videoContainerRef.current);
-                  
-                  if (!videoContainerRef.current) {
-                    console.error('videoContainerRef.current is null!');
-                    alert('Video container not found. Please refresh the page.');
-                    return;
-                  }
-                  
-                  try {
-                    // Set state first
-                    setVideoFullscreen(true);
-                    setVideoPlaying(true);
-                    
-                    console.log('State set, requesting fullscreen...');
-                    
-                    // Wait a tiny bit for React to update DOM
-                    await new Promise(resolve => setTimeout(resolve, 100));
-                    
-                    // Ensure container is visible before requesting fullscreen
-                    if (videoContainerRef.current) {
-                      videoContainerRef.current.style.width = '100vw';
-                      videoContainerRef.current.style.height = '100vh';
-                      videoContainerRef.current.style.right = '0';
-                      videoContainerRef.current.style.top = '0';
-                      videoContainerRef.current.style.zIndex = '10000';
-                    }
-
-                    let fullscreenPromise;
-                    if (videoContainerRef.current?.requestFullscreen) {
-                      fullscreenPromise = videoContainerRef.current.requestFullscreen();
-                    } else if (videoContainerRef.current?.webkitRequestFullscreen) {
-                      fullscreenPromise = videoContainerRef.current.webkitRequestFullscreen();
-                    } else if (videoContainerRef.current?.msRequestFullscreen) {
-                      fullscreenPromise = videoContainerRef.current.msRequestFullscreen();
-                    }
-
-                    if (fullscreenPromise) {
-                      await fullscreenPromise;
-                      console.log('Fullscreen granted');
-                    } else {
-                      console.log('Fullscreen API not available, video should still show');
-                    }
-                  } catch (error) {
-                    console.error('Error opening Dorrah video from button:', error);
-                    // Video should still show even if fullscreen fails
-                    setVideoFullscreen(true);
-                    setVideoPlaying(true);
-                  }
-                }}
-                style={{
-                  padding: 'clamp(16px, 1.8vw, 24px) clamp(36px, 3.5vw, 48px)',
-                  fontSize: 'clamp(16px, 1.8vw, 22px)',
-                  fontWeight: '700',
-                  color: '#33d18f',
-                  background: 'rgba(0, 0, 0, 0.65)',
-                  border: '2px solid #33d18f',
-                  borderRadius: '999px',
-                  cursor: 'pointer',
-                  boxShadow: '0 8px 25px rgba(0, 0, 0, 0.6)',
-                  transition: 'all 0.3s ease',
-                  letterSpacing: '0.5px',
-                  textTransform: 'uppercase',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  backdropFilter: 'blur(6px)',
-                  marginTop: '20px'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 10px 30px rgba(51, 209, 143, 0.8)';
-                  e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.6)';
-                  e.currentTarget.style.background = 'rgba(0, 0, 0, 0.65)';
-                }}
-              >
-                <span>Play Video</span>
-                <span
-                  style={{
-                    width: '26px',
-                    height: '26px',
-                    borderRadius: '50%',
-                    background: '#33d18f',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}
-                >
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="white"
-                    style={{ marginLeft: '2px' }}
-                  >
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </span>
-              </button>
+              <p style={{
+                fontSize: 'clamp(16px, 1.5vw, 20px)',
+                lineHeight: '1.8',
+                color: '#ffffff',
+                textAlign: 'center',
+                textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
+              }}>
+                Gallery content will be displayed here.
+              </p>
             </div>
           )}
 
