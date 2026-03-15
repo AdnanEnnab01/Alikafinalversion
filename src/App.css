@@ -3042,6 +3042,11 @@ div[style*="gc-engineer-learnmore-bg"] > * {
   overflow: visible;
 }
 
+/* Prevent Back to Alika button from covering AMT content */
+.amt-content h1 {
+  margin-top: clamp(50px, 7vh, 90px) !important;
+}
+
 /* 16:9 specific adjustments for AMT */
 @media (min-width: 1920px) and (min-height: 1080px) {
   .amt-content {

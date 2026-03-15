@@ -8,7 +8,7 @@ export default function BackToAlikaButton({ onClick, selectedCompanyId }) {
       onClick={onClick}
       style={{
         position: 'fixed',
-        top: 'clamp(20px, 2.5vw, 60px)',
+        top: isAMT ? 'clamp(10px, 1.5vw, 30px)' : 'clamp(20px, 2.5vw, 60px)',
         right: 'clamp(20px, 2.5vw, 60px)',
         background: isAMT ? 'rgba(0, 0, 0, 0.75)' : 'rgba(0, 0, 0, 0.35)',
         border: '1px solid rgba(255, 255, 255, 0.28)',
