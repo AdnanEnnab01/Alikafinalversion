@@ -17,7 +17,7 @@ const GulfConsultLearnMoreModal = ({ isOpen, onClose }) => {
       height: '100vh',
       maxWidth: '100vw',
       maxHeight: '100vh',
-      backgroundImage: `url(${getPublicUrl}/gc-engineer-learnmore-bg.jpeg)`,
+      backgroundImage: `url(${getPublicUrl('gc-engineer-learnmore-bg.jpeg')})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
@@ -229,40 +229,40 @@ const GulfConsultLearnMoreModal = ({ isOpen, onClose }) => {
             }}>
               {(() => {
                 const logos = [
-                  getPublicUrl + '/gcpartner4.png',
-                  getPublicUrl + '/gcpartner3.png',
-                  getPublicUrl + '/gcpartner2.png',
-                  getPublicUrl + '/gcpartner1.png',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 092851.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 092924.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 092942.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 092959.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093016.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093029.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093053.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093107.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093123.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093137.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093151.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093204.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093219.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093233.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093250.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093303.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093332.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093343.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093356.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093411.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093424.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093436.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093447.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093501.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093522.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093533.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093548.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093600.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093614.jpg',
-                  getPublicUrl + '/gcmajorclients/Screenshot 2026-02-28 093626.jpg'
+                  getPublicUrl('gcpartner4.png'),
+                  getPublicUrl('gcpartner3.png'),
+                  getPublicUrl('gcpartner2.png'),
+                  getPublicUrl('gcpartner1.png'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 092851.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 092924.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 092942.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 092959.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093016.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093029.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093053.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093107.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093123.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093137.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093151.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093204.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093219.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093233.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093250.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093303.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093332.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093343.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093356.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093411.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093424.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093436.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093447.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093501.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093522.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093533.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093548.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093600.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093614.jpg'),
+                  getPublicUrl('gcmajorclients/Screenshot 2026-02-28 093626.jpg')
                 ];
                 return logos.map((logoPath, index) => (
                 <div
@@ -288,7 +288,7 @@ const GulfConsultLearnMoreModal = ({ isOpen, onClose }) => {
                     src={logoPath}
                     alt={`Client ${index + 1}`}
                     onError={(e) => {
-                      e.target.src = getPublicUrl + '/elco-gif.gif';
+                      e.target.src = getPublicUrl('elco-gif.gif');
                     }}
                     style={{
                       width: '100%',
@@ -376,7 +376,7 @@ const GulfConsultLearnMoreModal = ({ isOpen, onClose }) => {
                 flexWrap: 'wrap'
               }}>
                 <img
-                  src={getPublicUrl + "/gc-project1.png"}
+                  src={getPublicUrl("gc-project1.png")}
                   alt="Project 1"
                   style={{
                     width: 'clamp(200px, 22vw, 320px)',
@@ -388,7 +388,7 @@ const GulfConsultLearnMoreModal = ({ isOpen, onClose }) => {
                   }}
                 />
                 <img
-                  src={getPublicUrl + "/gc-project2.png"}
+                  src={getPublicUrl("gc-project2.png")}
                   alt="Project 2"
                   style={{
                     width: 'clamp(200px, 22vw, 320px)',
@@ -400,7 +400,7 @@ const GulfConsultLearnMoreModal = ({ isOpen, onClose }) => {
                   }}
                 />
                 <img
-                  src={getPublicUrl + "/gc-project3.png"}
+                  src={getPublicUrl("gc-project3.png")}
                   alt="Project 3"
                   style={{
                     width: 'clamp(200px, 22vw, 320px)',
@@ -421,7 +421,7 @@ const GulfConsultLearnMoreModal = ({ isOpen, onClose }) => {
                 flexWrap: 'wrap'
               }}>
                 <img
-                  src={getPublicUrl + "/gc-project4.png"}
+                  src={getPublicUrl("gc-project4.png")}
                   alt="Project 4"
                   style={{
                     width: 'clamp(200px, 22vw, 320px)',
@@ -433,7 +433,7 @@ const GulfConsultLearnMoreModal = ({ isOpen, onClose }) => {
                   }}
                 />
                 <img
-                  src={getPublicUrl + "/gc-project5.png"}
+                  src={getPublicUrl("gc-project5.png")}
                   alt="Project 5"
                   style={{
                     width: 'clamp(200px, 22vw, 320px)',
