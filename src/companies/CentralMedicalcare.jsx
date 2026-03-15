@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function CentralMedicalcare({ isOpen, onClose }) {
   const [activeTab, setActiveTab] = useState('tab1'); // 'tab1' = Partners, 'tab2' = Major Clients, 'tab3' = Team, 'tab4' = Gallery
@@ -19,7 +20,7 @@ export default function CentralMedicalcare({ isOpen, onClose }) {
           width: '100vw',
           height: '100vh',
           backgroundColor: '#bfa874',
-          backgroundImage: `url(${process.env.PUBLIC_URL}/bg.png)`,
+          backgroundImage: `url(${getPublicUrl('bg.png')})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',

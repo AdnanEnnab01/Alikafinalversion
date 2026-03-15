@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function AntiqueDetailView({ selectedCompany, companies, setSelectedCompany, setShowAntiqueLearnMore, setShowAntiqueQRModal, viewportSize }) {
   const [antiqueVideoFullscreen, setAntiqueVideoFullscreen] = useState(false);
@@ -339,7 +340,7 @@ export default function AntiqueDetailView({ selectedCompany, companies, setSelec
             }}
           >
             <img
-              src={process.env.PUBLIC_URL + "/ant-git.gif"}
+              src={getPublicUrl("ant-git.gif")}
               alt="Antique internal"
               style={{
                 width: '100%',
@@ -561,7 +562,7 @@ export default function AntiqueDetailView({ selectedCompany, companies, setSelec
             }}
           >
             <img
-              src={process.env.PUBLIC_URL + "/antiqueqr.jpeg"}
+              src={getPublicUrl("antiqueqr.jpeg")}
               alt="Antique QR Code"
               onClick={() => setShowAntiqueQRModal(true)}
               style={{

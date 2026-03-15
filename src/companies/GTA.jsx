@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function GTA({ isOpen, onClose }) {
   const [activeTab, setActiveTab] = useState('tab1'); // 'tab1' = Gallery, 'tab2' = Major Clients, 'tab3' = Our Team, 'tab4' = Our Partners
@@ -163,7 +164,7 @@ export default function GTA({ isOpen, onClose }) {
           width: '100vw',
           height: '100vh',
           backgroundColor: '#ffffff',
-          backgroundImage: `url(${process.env.PUBLIC_URL}/GTA-bg4.png)`,
+          backgroundImage: `url(${getPublicUrl('GTA-bg4.png')})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -430,7 +431,7 @@ export default function GTA({ isOpen, onClose }) {
                     }}
                   >
                     <img
-                      src={`${process.env.PUBLIC_URL}/gtamajorclients/${logoName}`}
+                      src={getPublicUrl(`gtamajorclients/${logoName}`)}
                       alt={`GTA major client ${index + 1}`}
                       style={{
                         width: '100%',

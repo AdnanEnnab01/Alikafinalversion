@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { closeVideo as closeVideoUtil } from '../utils/videoUtils';
+import { getPublicUrl } from '../utils/pathUtils';
 
 const AMTLearnMoreModal = ({ isOpen, onClose }) => {
   const [activeTab, setActiveTab] = useState('tab1'); // 'tab1' = Projects, 'tab2' = Team, 'tab3' = Partners, 'tab4' = Gallery
@@ -82,7 +83,7 @@ const AMTLearnMoreModal = ({ isOpen, onClose }) => {
       width: '100vw',
       height: '100vh',
       backgroundColor: 'transparent',
-      backgroundImage: `url(${process.env.PUBLIC_URL}/amt-bg.png)`,
+      backgroundImage: `url(${getPublicUrl('amt-bg.png')})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
@@ -329,7 +330,7 @@ const AMTLearnMoreModal = ({ isOpen, onClose }) => {
                   }}
                 >
                   <img
-                    src={`${process.env.PUBLIC_URL}/amtpartners/${logoName}.png`}
+                    src={getPublicUrl(`amtpartners/${logoName}.png`)}
                     alt={logoName}
                     style={{
                       width: '100%',
@@ -412,7 +413,7 @@ const AMTLearnMoreModal = ({ isOpen, onClose }) => {
                     boxShadow: '0 4px 15px rgba(255, 75, 75, 0.3)'
                   }}>
                     <img
-                      src={process.env.PUBLIC_URL + member.image}
+                      src={getPublicUrl(member.image.startsWith('/') ? member.image.slice(1) : member.image)}
                       alt={member.role}
                       style={{
                         width: '100%',
@@ -521,7 +522,7 @@ const AMTLearnMoreModal = ({ isOpen, onClose }) => {
                     }}
                   >
                     <img
-                      src={process.env.PUBLIC_URL + client.image}
+                      src={getPublicUrl(client.image.startsWith('/') ? client.image.slice(1) : client.image)}
                       alt={client.alt}
                       style={{
                         width: 'clamp(150px, 15vw, 200px)',
@@ -563,7 +564,7 @@ const AMTLearnMoreModal = ({ isOpen, onClose }) => {
                     }}
                   >
                     <img
-                      src={process.env.PUBLIC_URL + client.image}
+                      src={getPublicUrl(client.image.startsWith('/') ? client.image.slice(1) : client.image)}
                       alt={client.alt}
                       style={{
                         width: 'clamp(150px, 15vw, 200px)',

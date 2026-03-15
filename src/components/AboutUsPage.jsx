@@ -1,4 +1,5 @@
 import React from 'react';
+import { getPublicUrl } from '../utils/pathUtils';
 
 const AboutUsPage = ({ 
   companies, 
@@ -193,7 +194,7 @@ const AboutUsPage = ({
             paddingLeft: 0
           }}>
             <img
-              src={process.env.PUBLIC_URL + "/alikalogo-removebg-preview.png"}
+              src={getPublicUrl("alikalogo-removebg-preview.png")}
               alt="Alika Logo"
               style={{
                 maxWidth: '250px',
@@ -395,7 +396,7 @@ const AboutUsPage = ({
               marginLeft: 'clamp(60px, 7vw, 80px)'
             }}>
               <img
-                src={process.env.PUBLIC_URL + "/alikaqr.jpeg"}
+                src={getPublicUrl("alikaqr.jpeg")}
                 alt="Alika QR Code"
                 onClick={onQRCodeClick}
                 style={{

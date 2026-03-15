@@ -1,19 +1,20 @@
 import React from 'react';
 import './CompanyGrid.css';
+import { getPublicUrl } from '../utils/pathUtils';
 
 const CompanyGrid = () => {
   const companies = [
-    { name: 'AMT', logo: process.env.PUBLIC_URL + '/AMT.jpg' },
-    { name: 'AL-DORRAH', logo: process.env.PUBLIC_URL + '/AL-DORRAH.jpg' },
-    { name: 'CentralCare', logo: process.env.PUBLIC_URL + '/centralcare.png' },
-    { name: 'IDC', logo: process.env.PUBLIC_URL + '/IDC.jpg' },
-    { name: 'GC', logo: process.env.PUBLIC_URL + '/GC.png' },
-    { name: 'RK', logo: process.env.PUBLIC_URL + '/RK.jpg' },
-    { name: 'GTA', logo: process.env.PUBLIC_URL + '/GTA.png' },
-    { name: 'Antique', logo: process.env.PUBLIC_URL + '/antique.png' },
-    { name: 'Environmental', logo: process.env.PUBLIC_URL + '/ENVIRONMENTAL.jpg' },
-    { name: 'Gulf Consult', logo: process.env.PUBLIC_URL + '/GULF-CONSULT.jpg' },
-    { name: 'AH Environmental', logo: process.env.PUBLIC_URL + '/AH-ENVIRONMENTAL.jpg' },
+    { name: 'AMT', logo: getPublicUrl('AMT.jpg') },
+    { name: 'AL-DORRAH', logo: getPublicUrl('AL-DORRAH.jpg') },
+    { name: 'CentralCare', logo: getPublicUrl('centralcare.png') },
+    { name: 'IDC', logo: getPublicUrl('IDC.jpg') },
+    { name: 'GC', logo: getPublicUrl('GC.png') },
+    { name: 'RK', logo: getPublicUrl('RK.jpg') },
+    { name: 'GTA', logo: getPublicUrl('GTA.png') },
+    { name: 'Antique', logo: getPublicUrl('antique.png') },
+    { name: 'Environmental', logo: getPublicUrl('ENVIRONMENTAL.jpg') },
+    { name: 'Gulf Consult', logo: getPublicUrl('GULF-CONSULT.jpg') },
+    { name: 'AH Environmental', logo: getPublicUrl('AH-ENVIRONMENTAL.jpg') },
   ];
 
   // ترتيب هرمي مقلوب متناسق - يبدأ من 1 في الأعلى ويزيد تدريجياً

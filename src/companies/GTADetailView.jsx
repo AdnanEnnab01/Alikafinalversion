@@ -1,4 +1,5 @@
 import React from 'react';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function GTADetailView({ 
   selectedCompany, 
@@ -502,7 +503,7 @@ export default function GTADetailView({
               }}
             >
               <img
-                src={process.env.PUBLIC_URL + "/gtaqr.jpeg"}
+                src={getPublicUrl("gtaqr.jpeg")}
                 alt="GTA QR Code"
                 onClick={() => setShowGTAQRModal(true)}
                 style={{

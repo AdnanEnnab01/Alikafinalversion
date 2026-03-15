@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
+import { getPublicUrl } from './utils/pathUtils';
 import GTA from './companies/GTA';
 import GSG from './companies/GSG';
 import IDC from './companies/IDC';
@@ -158,21 +159,21 @@ export default function App() {
   const companies = [
     // Right side - pattern (1-2-2-1) moving southeast
     // Row 1: 2 squares - Gulf Logo between IDC and GSG (at top of TLCO)
-    { id: 1, logo: process.env.PUBLIC_URL + '/IDC.png', row: 1, col: 4, name: 'IDC', bgImage: process.env.PUBLIC_URL + '/idcbg.png' },
-    { id: 12, logo: process.env.PUBLIC_URL + '/gulf-logo.png', row: 1, col: 5, name: 'Gulf Logo', bgImage: process.env.PUBLIC_URL + '/gulfconsultbg.png', modalLogo: process.env.PUBLIC_URL + '/Gulf-white.png' },
+    { id: 1, logo: getPublicUrl('IDC.png'), row: 1, col: 4, name: 'IDC', bgImage: getPublicUrl('idcbg.png') },
+    { id: 12, logo: getPublicUrl('gulf-logo.png'), row: 1, col: 5, name: 'Gulf Logo', bgImage: getPublicUrl('gulfconsultbg.png'), modalLogo: getPublicUrl('Gulf-white.png') },
     // Row 2: 2 squares
-    { id: 10, logo: process.env.PUBLIC_URL + '/tico.png', row: 2, col: 4, name: 'TLCO', bgImage: process.env.PUBLIC_URL + '/elco-gif.gif' },
-    { id: 11, logo: process.env.PUBLIC_URL + '/gsg.png', row: 2, col: 5, name: 'GSG', bgImage: process.env.PUBLIC_URL + '/gcg-gif.gif' },
+    { id: 10, logo: getPublicUrl('tico.png'), row: 2, col: 4, name: 'TLCO', bgImage: getPublicUrl('elco-gif.gif') },
+    { id: 11, logo: getPublicUrl('gsg.png'), row: 2, col: 5, name: 'GSG', bgImage: getPublicUrl('gcg-gif.gif') },
     // Row 3: 4 squares - Gulf Consult next to Antique
-    { id: 9,  logo: process.env.PUBLIC_URL + '/GULF-CONSULT.png', row: 3, col: 2, name: 'Gulf Consult', bgImage: process.env.PUBLIC_URL + '/GC-bg.jpeg', modalLogo: process.env.PUBLIC_URL + '/GULF-CONSULT.png' },
-    { id: 2, logo: process.env.PUBLIC_URL + '/antique.png', row: 3, col: 3, name: 'Antique', bgImage: process.env.PUBLIC_URL + '/ant-git.gif', modalLogo: process.env.PUBLIC_URL + '/antiqqe.png' },
-    { id: 5,  logo: process.env.PUBLIC_URL + '/AH-ENVIRONMENTAL.png', row: 3, col: 4, name: 'AH Environmental', bgImage: process.env.PUBLIC_URL + '/ah-gif.gif', modalLogo: process.env.PUBLIC_URL + '/ah-white.png' },
-    { id: 3,  logo: process.env.PUBLIC_URL + '/cc.png', row: 3, col: 5, name: 'Central Care', bgImage: process.env.PUBLIC_URL + '/rk-gif.gif' },
+    { id: 9,  logo: getPublicUrl('GULF-CONSULT.png'), row: 3, col: 2, name: 'Gulf Consult', bgImage: getPublicUrl('GC-bg.jpeg'), modalLogo: getPublicUrl('GULF-CONSULT.png') },
+    { id: 2, logo: getPublicUrl('antique.png'), row: 3, col: 3, name: 'Antique', bgImage: getPublicUrl('ant-git.gif'), modalLogo: getPublicUrl('antiqqe.png') },
+    { id: 5,  logo: getPublicUrl('AH-ENVIRONMENTAL.png'), row: 3, col: 4, name: 'AH Environmental', bgImage: getPublicUrl('ah-gif.gif'), modalLogo: getPublicUrl('ah-white.png') },
+    { id: 3,  logo: getPublicUrl('cc.png'), row: 3, col: 5, name: 'Central Care', bgImage: getPublicUrl('rk-gif.gif') },
     // Row 4: 4 squares - RK between Central Care and AMT (at left of AH Environmental)
-    { id: 7,  logo: process.env.PUBLIC_URL + '/dorrah.png', row: 4, col: 2, name: 'Al Dorrah', bgImage: process.env.PUBLIC_URL + '/dorrah-gif.gif' },
-    { id: 4,  logo: process.env.PUBLIC_URL + '/GTA.png', row: 4, col: 3, name: 'GTA', bgImage: process.env.PUBLIC_URL + '/GTA-bg4.png' },
-    { id: 8,  logo: process.env.PUBLIC_URL + '/AMT.png', row: 4, col: 4, name: 'AMT', bgImage: process.env.PUBLIC_URL + '/amt-bg.png', modalLogo: process.env.PUBLIC_URL + '/amt-internal.jpg' },
-    { id: 6,  logo: process.env.PUBLIC_URL + '/RK.png', row: 4, col: 5, name: 'RK', bgImage: process.env.PUBLIC_URL + '/rk1-gif.gif' },
+    { id: 7,  logo: getPublicUrl('dorrah.png'), row: 4, col: 2, name: 'Al Dorrah', bgImage: getPublicUrl('dorrah-gif.gif') },
+    { id: 4,  logo: getPublicUrl('GTA.png'), row: 4, col: 3, name: 'GTA', bgImage: getPublicUrl('GTA-bg4.png') },
+    { id: 8,  logo: getPublicUrl('AMT.png'), row: 4, col: 4, name: 'AMT', bgImage: getPublicUrl('amt-bg.png'), modalLogo: getPublicUrl('amt-internal.jpg') },
+    { id: 6,  logo: getPublicUrl('RK.png'), row: 4, col: 5, name: 'RK', bgImage: getPublicUrl('rk1-gif.gif') },
   ];
 
 
@@ -281,7 +282,7 @@ export default function App() {
           }}>
             {!showChairmanMessage ? (
               <img
-                src={process.env.PUBLIC_URL + "/alika.png"}
+                src={getPublicUrl("alika.png")}
                 alt="Alika Logo"
                 className="left-hero-item left-hero-item--alika"
                 style={{

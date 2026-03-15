@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { useVideoFullscreen } from '../hooks/useVideoFullscreen';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function TLCODetailView({ 
   selectedCompany, 
@@ -462,7 +463,7 @@ export default function TLCODetailView({
               }}
             >
               <img
-                src={process.env.PUBLIC_URL + "/tlco-internal1.png"}
+                src={getPublicUrl("tlco-internal1.png")}
                 alt="TLCO Internal"
                 style={{
                   width: '100%',
@@ -705,7 +706,7 @@ export default function TLCODetailView({
             }}
           >
             <img
-              src={process.env.PUBLIC_URL + "/tlcoqr.jpeg"}
+              src={getPublicUrl("tlcoqr.jpeg")}
               alt="ETLCO QR Code"
               onClick={() => setShowTLCOQRModal(true)}
               style={{

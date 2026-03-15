@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { useVideoFullscreen } from '../hooks/useVideoFullscreen';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function GulfLogoDetailView({ 
   selectedCompany, 
@@ -477,7 +478,7 @@ export default function GulfLogoDetailView({
           >
             <div style={{ position: 'relative' }}>
               <img
-                src={process.env.PUBLIC_URL + "/gulfphoto.jpg"}
+                src={getPublicUrl("gulfphoto.jpg")}
                 alt="Gulf Consult"
                 style={{
                   width: '100%',
@@ -599,7 +600,7 @@ export default function GulfLogoDetailView({
               }}
             >
               <img
-                src={process.env.PUBLIC_URL + "/gulfconsultrectangleqr.jpeg"}
+                src={getPublicUrl("gulfconsultrectangleqr.jpeg")}
                 alt="Gulf Consult QR Code"
                 onClick={() => setShowGulfConsultQRModal(true)}
                 style={{

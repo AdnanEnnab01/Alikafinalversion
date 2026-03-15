@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function GulfConsult2LearnMoreModal({ isOpen, onClose }) {
   const [activeTab, setActiveTab] = useState('tab1'); // 'tab1' = Projects, 'tab2' = Team, 'tab3' = Partners, 'tab4' = Gallery
@@ -16,7 +17,7 @@ export default function GulfConsult2LearnMoreModal({ isOpen, onClose }) {
         bottom: 0,
         width: '100vw',
         height: '100vh',
-        backgroundImage: `url(${process.env.PUBLIC_URL}/gulfconsultbg.png)`,
+        backgroundImage: `url(${getPublicUrl('gulfconsultbg.png')})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -191,7 +192,7 @@ export default function GulfConsult2LearnMoreModal({ isOpen, onClose }) {
                 justifyContent: 'center'
               }}>
                 <img
-                  src={process.env.PUBLIC_URL + "/image 65.png"}
+                  src={getPublicUrl("image 65.png")}
                   alt="Our Projects - Geotechnical Investigation"
                   style={{
                     width: '100%',
@@ -364,7 +365,7 @@ export default function GulfConsult2LearnMoreModal({ isOpen, onClose }) {
                     }}
                   >
                     <img
-                      src={`${process.env.PUBLIC_URL}/gulfconsultmajerclients/${logoName}`}
+                      src={getPublicUrl(`gulfconsultmajerclients/${logoName}`)}
                       alt={`Major client ${index + 1}`}
                       style={{
                         width: '100%',

@@ -1,4 +1,5 @@
 import React from 'react';
+import { getPublicUrl } from '../utils/pathUtils';
 
 const ChairmanMessage = ({ onClose }) => {
   return (
@@ -76,7 +77,7 @@ const ChairmanMessage = ({ onClose }) => {
           boxShadow: '0 8px 30px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1) inset'
         }}>
           <img 
-            src={process.env.PUBLIC_URL + "/chairman.png"} 
+            src={getPublicUrl("chairman.png")} 
             alt="Eng. Ali Khudair Al Harbi"
             style={{
               width: '100%',

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { useVideoFullscreen } from '../hooks/useVideoFullscreen';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function GulfConsultDetailView({ 
   selectedCompany, 
@@ -416,7 +417,7 @@ export default function GulfConsultDetailView({
             }}
           >
             <img
-              src={process.env.PUBLIC_URL + "/GC-bg.jpeg"}
+              src={getPublicUrl("GC-bg.jpeg")}
               alt="Gulf Consult internal"
               style={{
                 width: '100%',
@@ -641,7 +642,7 @@ export default function GulfConsultDetailView({
             }}
           >
             <img
-              src={process.env.PUBLIC_URL + "/gcqr.jpeg"}
+              src={getPublicUrl("gcqr.jpeg")}
               alt="Gulf Consult QR Code"
               onClick={() => setShowGulfConsultArchQRModal(true)}
               style={{

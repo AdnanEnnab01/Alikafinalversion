@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function RK({ isOpen, onClose }) {
   const [activeTab, setActiveTab] = useState('tab1'); // 'tab1' = Gallery, 'tab2' = Major Clients, 'tab3' = Our Team, 'tab4' = Our Partners
@@ -17,7 +18,7 @@ export default function RK({ isOpen, onClose }) {
         width: '100vw',
         height: '100vh',
         backgroundColor: '#f5f5f5',
-        backgroundImage: `url(${process.env.PUBLIC_URL}/rk1-gif.gif)`,
+        backgroundImage: `url(${getPublicUrl('rk1-gif.gif')})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

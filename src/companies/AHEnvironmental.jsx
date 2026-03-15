@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function AHEnvironmental({ isOpen, onClose }) {
   const [activeTab, setActiveTab] = useState('tab1'); // 'tab1' = Partners, 'tab2' = Team, 'tab3' = Projects, 'tab4' = Gallery
@@ -18,7 +19,7 @@ export default function AHEnvironmental({ isOpen, onClose }) {
         height: '100vh',
         padding: 0,
         backgroundColor: activeTab === 'tab2' ? '#ffffff' : '#283152',
-        backgroundImage: activeTab === 'tab2' ? 'none' : (activeTab === 'tab4' ? `url(${process.env.PUBLIC_URL}/bgourproject.png)` : `url(${process.env.PUBLIC_URL}/bgforah.png)`),
+        backgroundImage: activeTab === 'tab2' ? 'none' : (activeTab === 'tab4' ? `url(${getPublicUrl('bgourproject.png')})` : `url(${getPublicUrl('bgforah.png')})`),
         backgroundSize: '100% 100%',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -269,7 +270,7 @@ export default function AHEnvironmental({ isOpen, onClose }) {
                   }}
                   >
                     <img
-                      src={`${process.env.PUBLIC_URL}/Group ${num}.png`}
+                      src={getPublicUrl(`Group ${num}.png`)}
                       alt={`Partner ${num}`}
                       style={{
                         width: 'clamp(100px, 12vw, 150px)',
@@ -308,7 +309,7 @@ export default function AHEnvironmental({ isOpen, onClose }) {
                   }}
                   >
                     <img
-                      src={`${process.env.PUBLIC_URL}/Group ${num}.png`}
+                      src={getPublicUrl(`Group ${num}.png`)}
                       alt={`Partner ${num}`}
                       style={{
                         width: 'clamp(100px, 12vw, 150px)',
@@ -414,7 +415,7 @@ export default function AHEnvironmental({ isOpen, onClose }) {
                   justifyContent: 'center'
                 }}>
                   <img
-                    src={process.env.PUBLIC_URL + "/photo66.png"}
+                    src={getPublicUrl("photo66.png")}
                     alt="Projects Chart"
                     style={{
                       width: '100%',

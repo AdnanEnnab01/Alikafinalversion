@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useVideoFullscreen } from '../hooks/useVideoFullscreen';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function Antique({ isOpen, onClose }) {
   const [activeTab, setActiveTab] = useState('tab1'); // 'tab1' = Gallery, 'tab2' = Major Clients, 'tab3' = Our Team, 'tab4' = Our Partners
@@ -122,7 +123,7 @@ export default function Antique({ isOpen, onClose }) {
         bottom: 0,
         width: '100vw',
         height: '100vh',
-        backgroundImage: `url(${process.env.PUBLIC_URL}/antiquelearnmore.jpeg)`,
+        backgroundImage: `url(${getPublicUrl('antiquelearnmore.jpeg')})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

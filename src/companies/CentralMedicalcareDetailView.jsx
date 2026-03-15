@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useVideoFullscreen } from '../hooks/useVideoFullscreen';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function CentralMedicalcareDetailView({ 
   selectedCompany, 
@@ -315,7 +316,7 @@ export default function CentralMedicalcareDetailView({
       >
         {/* Central Care Logo */}
         <img
-          src={process.env.PUBLIC_URL + "/cc.png"}
+          src={getPublicUrl("cc.png")}
           alt="Central Care Logo"
           style={{
             width: 'var(--central-logo-size, clamp(120px, 15vw, 200px))',
@@ -459,7 +460,7 @@ export default function CentralMedicalcareDetailView({
             }}
           >
             <img
-              src={process.env.PUBLIC_URL + "/rk-gif.gif"}
+              src={getPublicUrl("rk-gif.gif")}
               alt="Central Medicalcare internal"
               style={{
                 width: '100%',
@@ -684,7 +685,7 @@ export default function CentralMedicalcareDetailView({
             }}
           >
             <img
-              src={process.env.PUBLIC_URL + "/centralcareqr.jpeg"}
+              src={getPublicUrl("centralcareqr.jpeg")}
               alt="Central Medicalcare QR Code"
               onClick={() => setShowCentralMedicalcareQRModal(true)}
               style={{

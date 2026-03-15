@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './AlikaHeader.css';
 import CompanyGrid from './CompanyGrid';
+import { getPublicUrl } from '../utils/pathUtils';
 
 const AlikaHeader = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -15,7 +16,7 @@ const AlikaHeader = () => {
       <div className="left-section">
         <div className="alika-logo-container">
           <div className="alika-logo">
-            <img src={process.env.PUBLIC_URL + "/alika.png"} alt="Alika Logo" className="logo-image" />
+            <img src={getPublicUrl("alika.png")} alt="Alika Logo" className="logo-image" />
           </div>
           <div className="company-name-english">
             Ali Khudair Al harbi Holding Group

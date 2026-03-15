@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function GSG({ isOpen, onClose }) {
   const [activeTab, setActiveTab] = useState('tab1'); // 'tab1' = Projects, 'tab2' = Team, 'tab3' = Partners
@@ -17,7 +18,7 @@ export default function GSG({ isOpen, onClose }) {
         width: '100vw',
         height: '100vh',
         backgroundColor: '#e0f7fa',
-        backgroundImage: `url(${process.env.PUBLIC_URL}/gsg-ourpartnersbg.jpeg)`,
+        backgroundImage: `url(${getPublicUrl('gsg-ourpartnersbg.jpeg')})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -192,7 +193,7 @@ export default function GSG({ isOpen, onClose }) {
                 marginBottom: '40px'
               }}>
                 <img
-                  src={process.env.PUBLIC_URL + "/gcgpartner3 (3).png"}
+                  src={getPublicUrl("gcgpartner3 (3).png")}
                   alt="GCG Partner"
                   style={{
                     width: 'clamp(200px, 20vw, 280px)',
@@ -203,7 +204,7 @@ export default function GSG({ isOpen, onClose }) {
                   }}
                 />
                 <img
-                  src={process.env.PUBLIC_URL + "/gcgpartner3 (2).png"}
+                  src={getPublicUrl("gcgpartner3 (2).png")}
                   alt="GeoPRO Partner"
                   style={{
                     width: 'clamp(200px, 20vw, 280px)',
@@ -214,7 +215,7 @@ export default function GSG({ isOpen, onClose }) {
                   }}
                 />
                 <img
-                  src={process.env.PUBLIC_URL + "/gcgpartner3 (1).png"}
+                  src={getPublicUrl("gcgpartner3 (1).png")}
                   alt="DMT Partner"
                   style={{
                     width: 'clamp(200px, 20vw, 280px)',

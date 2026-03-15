@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useVideoFullscreen } from '../hooks/useVideoFullscreen';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function GulfDorrah({ isOpen, onClose, viewportSize }) {
   const [activeTab, setActiveTab] = useState('tab1'); // 'tab1' = Gallery, 'tab2' = Major Clients, 'tab3' = Our Team, 'tab4' = Our Partners
@@ -122,7 +123,7 @@ export default function GulfDorrah({ isOpen, onClose, viewportSize }) {
         width: '100vw',
         height: '100vh',
         backgroundColor: '#061826',
-        backgroundImage: `url(${process.env.PUBLIC_URL}/dorrah-gif.gif)`,
+        backgroundImage: `url(${getPublicUrl('dorrah-gif.gif')})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

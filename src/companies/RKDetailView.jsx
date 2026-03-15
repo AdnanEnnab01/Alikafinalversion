@@ -1,4 +1,5 @@
 import React from 'react';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function RKDetailView({ 
   selectedCompany, 
@@ -525,7 +526,7 @@ export default function RKDetailView({
               }}
             >
               <img
-                src={process.env.PUBLIC_URL + "/rk-internal.png"}
+                src={getPublicUrl("rk-internal.png")}
                 alt="RK Internal"
                 style={{
                   width: 'auto',
@@ -551,7 +552,7 @@ export default function RKDetailView({
                 }}
               >
                 <img
-                  src={process.env.PUBLIC_URL + "/rkqr.jpeg"}
+                  src={getPublicUrl("rkqr.jpeg")}
                   alt="RK QR Code"
                   onClick={() => setShowRKQRModal(true)}
                   style={{

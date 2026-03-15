@@ -1,4 +1,5 @@
 import React from 'react';
+import { getPublicUrl } from '../utils/pathUtils';
 
 const PartnersModal = ({ isOpen, onClose, activeTab, setActiveTab }) => {
   if (!isOpen) return null;
@@ -16,7 +17,7 @@ const PartnersModal = ({ isOpen, onClose, activeTab, setActiveTab }) => {
         height: '100vh',
         maxWidth: '100vw',
         maxHeight: '100vh',
-        backgroundImage: `url(${process.env.PUBLIC_URL}/bg.png)`,
+        backgroundImage: `url(${getPublicUrl('bg.png')})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -279,7 +280,7 @@ const PartnersModal = ({ isOpen, onClose, activeTab, setActiveTab }) => {
                   }}
                 >
                   <img
-                    src={`${process.env.PUBLIC_URL}/tlcomajorclients/${logoName}`}
+                    src={getPublicUrl(`tlcomajorclients/${logoName}`)}
                     alt={`TLCO major client ${index + 1}`}
                     style={{
                       width: '100%',

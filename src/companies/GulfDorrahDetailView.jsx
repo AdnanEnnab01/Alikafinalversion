@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { useVideoFullscreen } from '../hooks/useVideoFullscreen';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function GulfDorrahDetailView({ 
   selectedCompany, 
@@ -428,7 +429,7 @@ export default function GulfDorrahDetailView({
             }}
           >
             <img
-              src={process.env.PUBLIC_URL + "/dorrah-gif.gif"}
+              src={getPublicUrl("dorrah-gif.gif")}
               alt="Dorrah internal"
               style={{
                 width: '100%',
@@ -650,7 +651,7 @@ export default function GulfDorrahDetailView({
             }}
           >
             <img
-              src={process.env.PUBLIC_URL + "/dorrahqr1.jpeg"}
+              src={getPublicUrl("dorrahqr1.jpeg")}
               alt="Gulf Dorrah QR Code"
               onClick={() => setShowGulfDorrahQRModal(true)}
               style={{

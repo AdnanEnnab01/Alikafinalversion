@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function AMTDetailView({ selectedCompany, companies, setSelectedCompany, setShowAMTLearnMore, setShowAMTQRModal }) {
   const [amtVideoFullscreen, setAmtVideoFullscreen] = useState(false);
@@ -703,7 +704,7 @@ export default function AMTDetailView({ selectedCompany, companies, setSelectedC
             }}
           >
             <img
-              src={process.env.PUBLIC_URL + "/amtqr.jpeg"}
+              src={getPublicUrl("amtqr.jpeg")}
               alt="AMT QR Code"
               onClick={() => setShowAMTQRModal(true)}
               style={{

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function IDCDetailView({ selectedCompany, companies, setSelectedCompany, setShowIDCLearnMore, setShowIDCQRModal }) {
   const [idcVideoFullscreen, setIdcVideoFullscreen] = useState(false);
@@ -371,7 +372,7 @@ export default function IDCDetailView({ selectedCompany, companies, setSelectedC
             }}
           >
             <img
-              src={process.env.PUBLIC_URL + "/idc-internal.jpg"}
+              src={getPublicUrl("idc-internal.jpg")}
               alt="IDC Contracting"
               style={{
                 width: '100%',
@@ -604,7 +605,7 @@ export default function IDCDetailView({ selectedCompany, companies, setSelectedC
             }}
           >
             <img
-              src={process.env.PUBLIC_URL + "/idcqr.jpeg"}
+              src={getPublicUrl("idcqr.jpeg")}
               alt="IDC QR Code"
               onClick={() => setShowIDCQRModal(true)}
               style={{

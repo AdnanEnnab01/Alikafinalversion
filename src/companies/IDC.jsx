@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function IDC({ isOpen, onClose }) {
   const [activeTab, setActiveTab] = useState('tab1'); // 'tab1', 'tab2', 'tab3', 'tab4'
@@ -17,7 +18,7 @@ export default function IDC({ isOpen, onClose }) {
         width: '100vw',
         height: '100vh',
         backgroundColor: '#f5f5f5',
-        backgroundImage: `url(${process.env.PUBLIC_URL}/idcbg.png)`,
+        backgroundImage: `url(${getPublicUrl('idcbg.png')})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

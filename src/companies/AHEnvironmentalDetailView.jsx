@@ -1,4 +1,5 @@
 import React from 'react';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function AHEnvironmentalDetailView({ 
   selectedCompany, 
@@ -496,7 +497,7 @@ export default function AHEnvironmentalDetailView({
             }}
           >
             <img
-              src={process.env.PUBLIC_URL + "/ahqr.jpeg"}
+              src={getPublicUrl("ahqr.jpeg")}
               alt="AH Environmental QR Code"
               onClick={() => setShowAHEnvironmentalQRModal(true)}
               style={{

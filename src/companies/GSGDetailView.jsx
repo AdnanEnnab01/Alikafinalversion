@@ -1,4 +1,5 @@
 import React from 'react';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function GSGDetailView({ 
   selectedCompany, 
@@ -440,7 +441,7 @@ export default function GSGDetailView({
               }}
             >
               <img
-                src={process.env.PUBLIC_URL + "/gsg-internal.png"}
+                src={getPublicUrl("gsg-internal.png")}
                 alt="GSG Internal"
                 style={{
                   width: 'clamp(100px, 10vw, 130px)',
@@ -454,7 +455,7 @@ export default function GSGDetailView({
                 }}
               />
               <img
-                src={process.env.PUBLIC_URL + "/gsgqr.jpeg"}
+                src={getPublicUrl("gsgqr.jpeg")}
                 alt="GSG QR Code"
                 onClick={() => setShowGSGQRModal(true)}
                 style={{

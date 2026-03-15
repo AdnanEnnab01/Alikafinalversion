@@ -1,4 +1,5 @@
 import React from 'react';
+import { getPublicUrl } from '../utils/pathUtils';
 
 const SubsidiariesModal = ({ isOpen, onClose, viewportSize }) => {
   if (!isOpen) return null;
@@ -117,7 +118,7 @@ const SubsidiariesModal = ({ isOpen, onClose, viewportSize }) => {
         height: '100vh',
         maxWidth: '100vw',
         maxHeight: '100vh',
-        backgroundImage: `url(${process.env.PUBLIC_URL}/bg.png)`,
+        backgroundImage: `url(${getPublicUrl('bg.png')})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
@@ -193,7 +194,7 @@ const SubsidiariesModal = ({ isOpen, onClose, viewportSize }) => {
               }}
             >
               <img 
-                src={process.env.PUBLIC_URL + subsidiary.logo} 
+                src={getPublicUrl(subsidiary.logo.startsWith('/') ? subsidiary.logo.slice(1) : subsidiary.logo)} 
                 alt={subsidiary.name} 
                 style={{
                   width: isSmallViewport ? '80px' : 'clamp(120px, 15vw, 180px)',
