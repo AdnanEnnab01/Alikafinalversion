@@ -2894,9 +2894,9 @@ div[style*="gc-engineer-learnmore-bg"] > * {
 
 /* Gulf Consult specific styling for 1536×864 viewport */
 @media (min-width: 1520px) and (max-width: 1550px) and (min-height: 850px) and (max-height: 870px) {
-  /* Move QR code rectangle down */
+  /* Move QR code rectangle down - positioned below video image */
   .gulf-consult-qr-container {
-    top: calc(50% + clamp(100px, 12vh, 140px) + clamp(110px, 9vh, 120px)) !important;
+    top: calc(clamp(38%, 38vh, 42%) + clamp(160px, 20vh, 240px) + clamp(20px, 3vh, 40px)) !important;
   }
   
   /* Move Learn More button container down - increase spacing from text above */
@@ -2930,9 +2930,9 @@ div[style*="gc-engineer-learnmore-bg"] > * {
     padding-right: 0;
   }
   
-  /* Move QR code rectangle down */
+  /* Move QR code rectangle down - positioned below video image */
   .gulf-consult-qr-container {
-    top: calc(50% + clamp(100px, 12vh, 140px) + clamp(110px, 9vh, 120px)) !important;
+    top: calc(clamp(38%, 38vh, 42%) + clamp(160px, 20vh, 240px) + clamp(20px, 3vh, 40px)) !important;
   }
   
   /* Move Learn More button container down - increase spacing from text above */
@@ -2968,11 +2968,19 @@ div[style*="gc-engineer-learnmore-bg"] > * {
   }
 }
 
+/* Specific adjustments for 1436×864 resolution */
+@media (min-width: 1420px) and (max-width: 1450px) and (min-height: 850px) and (max-height: 870px) {
+  /* Move QR code rectangle down more - positioned below video image with extra spacing */
+  .gulf-consult-qr-container {
+    top: calc(clamp(38%, 38vh, 42%) + clamp(160px, 20vh, 240px) + clamp(60px, 7vh, 90px)) !important;
+  }
+}
+
 /* Specific adjustments for 1786×864 resolution */
 @media (min-width: 1770px) and (max-width: 1800px) and (min-height: 850px) and (max-height: 870px) {
-  /* Move QR code rectangle down more to avoid video */
+  /* Move QR code rectangle down more to avoid video - positioned below video image */
   .gulf-consult-qr-container {
-    top: calc(50% + clamp(140px, 15vh, 180px) + clamp(130px, 11vh, 150px)) !important;
+    top: calc(clamp(38%, 38vh, 42%) + clamp(160px, 20vh, 240px) + clamp(20px, 3vh, 40px)) !important;
   }
   
   /* Move Learn More button container down - increase spacing from text above */

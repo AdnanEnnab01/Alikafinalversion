@@ -580,7 +580,7 @@ export default function GulfLogoDetailView({
             style={{
               position: 'fixed',
               right: 'clamp(16px, 2.5vw, 32px)',
-              top: 'calc(38% + clamp(100px, 12vh, 140px))',
+              top: 'calc(clamp(38%, 38vh, 42%) + clamp(160px, 20vh, 240px) + clamp(20px, 3vh, 40px))',
               zIndex: 11,
               display: 'flex',
               justifyContent: 'flex-end',

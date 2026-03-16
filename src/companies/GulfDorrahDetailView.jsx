@@ -647,7 +647,8 @@ export default function GulfDorrahDetailView({
               flexShrink: 0,
               alignSelf: 'flex-start',
               marginTop: viewportSize.width === 1536 && viewportSize.height === 864 ? '0px' : 'clamp(8px, 1.6vh, 16px)',
-              marginLeft: viewportSize.width === 1536 && viewportSize.height === 864 ? 'auto' : '0px'
+              marginLeft: viewportSize.width === 1536 && viewportSize.height === 864 ? 'auto' : 
+                          (viewportSize.width === 1436 && viewportSize.height === 864 ? 'clamp(160px, 20vw, 280px)' : '0px')
             }}
           >
             <img
