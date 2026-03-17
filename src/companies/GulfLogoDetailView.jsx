@@ -13,6 +13,7 @@ export default function GulfLogoDetailView({
   const [gulfLogoVideoPlaying, setGulfLogoVideoPlaying] = useState(false);
   const [gulfLogoVideoFullscreen, setGulfLogoVideoFullscreen] = useState(false);
   const gulfLogoVideoContainerRef = useRef(null);
+  const gulfVideoCardTop = 'clamp(48%, 48vh, 52%)';
 
   // Handle fullscreen change
   useVideoFullscreen(setGulfLogoVideoPlaying, setGulfLogoVideoFullscreen);
@@ -470,7 +471,7 @@ export default function GulfLogoDetailView({
             style={{
               position: 'fixed',
               right: 'clamp(16px, 2.5vw, 32px)',
-              top: 'clamp(38%, 38vh, 42%)',
+              top: gulfVideoCardTop,
               transform: 'translateY(-50%)',
               zIndex: 11,
               width: 'var(--gulf-video-width, clamp(220px, 22vw, 320px))',
@@ -581,7 +582,7 @@ export default function GulfLogoDetailView({
             style={{
               position: 'fixed',
               right: 'clamp(16px, 2.5vw, 32px)',
-              top: 'calc(clamp(38%, 38vh, 42%) + clamp(160px, 20vh, 240px) + clamp(20px, 3vh, 40px))',
+              top: `calc(${gulfVideoCardTop} + var(--gulf-video-height, clamp(160px, 20vh, 240px)) + clamp(20px, 3vh, 40px))`,
               zIndex: 11,
               display: 'flex',
               justifyContent: 'flex-end',
