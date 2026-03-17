@@ -257,7 +257,7 @@ export default function App() {
       {/* Exit chairman message (button is rendered inside the chairman card for better proximity) */}
 
       {/* Foreground UI (logos / Alika / grid) */}
-      <div className="home-foreground" style={{ display: 'flex', width: '100%', height: '100%', opacity: selectedCompany ? 0 : 1, pointerEvents: selectedCompany ? 'none' : 'auto', transition: 'opacity 0.15s ease' }}>
+      <div className="home-foreground" style={{ display: 'flex', width: '100%', height: '100%' }}>
         {/* Left side - Company info */}
         <div className="home-left" style={{
           flex: '0 0 var(--left-panel-width, 35%)',

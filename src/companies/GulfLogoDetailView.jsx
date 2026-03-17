@@ -194,13 +194,14 @@ export default function GulfLogoDetailView({
       <div className="gulf-consult-content" style={{
         position: 'fixed',
         top: '50%',
-        right: 'clamp(40px, 4vw, 80px)',
+        // Leave space for the fixed video card on the far right
+        right: 'calc(clamp(16px, 2.5vw, 32px) + var(--gulf-video-width, clamp(220px, 22vw, 320px)) + clamp(24px, 3vw, 48px))',
         transform: 'translateY(-50%)',
         maxWidth: 'var(--gulf-content-max-width, clamp(600px, 50vw, 900px))',
         color: '#ffffff',
         direction: 'ltr',
         textAlign: 'left',
-        zIndex: 11
+        zIndex: 12
       }}>
         <h1 style={{
           fontSize: 'var(--gulf-title-size, clamp(36px, 4.5vw, 62px))',
@@ -472,7 +473,7 @@ export default function GulfLogoDetailView({
               top: 'clamp(38%, 38vh, 42%)',
               transform: 'translateY(-50%)',
               zIndex: 11,
-              width: 'clamp(220px, 22vw, 320px)',
+              width: 'var(--gulf-video-width, clamp(220px, 22vw, 320px))',
               animation: 'fadeInUp 0.8s ease-out 0.5s both'
             }}
           >
@@ -482,7 +483,7 @@ export default function GulfLogoDetailView({
                 alt="Gulf Consult"
                 style={{
                   width: '100%',
-                  height: 'clamp(160px, 20vh, 240px)',
+                  height: 'var(--gulf-video-height, clamp(160px, 20vh, 240px))',
                   objectFit: 'cover',
                   display: 'block',
                   borderRadius: '16px',
