@@ -405,7 +405,7 @@ export default function GulfDorrahDetailView({
                   textOverflow: 'ellipsis'
                 }}
               >
-                adel@gulfdorrah.com
+                fadel@gulfdorrah.com
               </span>
             </div>
             <div

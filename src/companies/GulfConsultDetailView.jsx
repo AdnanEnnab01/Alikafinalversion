@@ -373,7 +373,15 @@ export default function GulfConsultDetailView({
               }}
             >
               <strong style={{ minWidth: '110px', fontWeight: 800 }}>Managers:</strong>
-              <span>Eng. Abdullah Maqboul.</span>
+              <span
+                style={{
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis'
+                }}
+              >
+                Eng. Abdullah Maqboul.
+              </span>
             </div>
             <div
               style={{
