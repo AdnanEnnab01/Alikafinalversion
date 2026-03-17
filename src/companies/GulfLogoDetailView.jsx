@@ -13,7 +13,7 @@ export default function GulfLogoDetailView({
   const [gulfLogoVideoPlaying, setGulfLogoVideoPlaying] = useState(false);
   const [gulfLogoVideoFullscreen, setGulfLogoVideoFullscreen] = useState(false);
   const gulfLogoVideoContainerRef = useRef(null);
-  const gulfVideoCardTop = 'clamp(48%, 48vh, 52%)';
+  const gulfVideoCardTop = 'clamp(44%, 44vh, 48%)';
 
   // Handle fullscreen change
   useVideoFullscreen(setGulfLogoVideoPlaying, setGulfLogoVideoFullscreen);
