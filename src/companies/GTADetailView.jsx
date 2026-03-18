@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { getPublicUrl } from '../utils/pathUtils';
+import { useVideoFullscreen } from '../hooks/useVideoFullscreen';
 
 export default function GTADetailView({ 
   selectedCompany, 
   companies, 
   setSelectedCompany, 
   setShowGTALearnMore,
-  setShowGTAQRModal
+  setShowGTAQRModal,
+  closeVideo
 }) {
+  const [gtaVideoPlaying, setGtaVideoPlaying] = useState(false);
+  const [gtaVideoFullscreen, setGtaVideoFullscreen] = useState(false);
+  const gtaVideoContainerRef = useRef(null);
+
+  // Handle fullscreen change for GTA video
+  useVideoFullscreen(setGtaVideoPlaying, setGtaVideoFullscreen);
+
   return (
     <>
       {/* Company Logos Grid - Left Side (same 12-company shape, highlighting GTA) */}
@@ -282,80 +291,207 @@ export default function GTADetailView({
             <div
               style={{
                 display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                marginBottom: 'clamp(4px, 0.6vh, 8px)',
-                paddingBottom: 'clamp(4px, 0.6vh, 8px)',
-                borderBottom: '1px solid rgba(220, 38, 38, 0.15)'
+                alignItems: 'stretch',
+                justifyContent: 'space-between',
+                gap: 'clamp(12px, 2vw, 20px)',
+                flexWrap: 'wrap'
               }}
             >
-              <strong style={{ 
-                minWidth: 'auto', 
-                fontWeight: 800, 
-                color: '#dc2626',
-                fontSize: 'clamp(14px, 1.5vw, 21px)',
-                letterSpacing: '0.5px',
-                textShadow: '0 1px 2px rgba(220, 38, 38, 0.2)'
-              }}>Managers:</strong>
-              <span style={{ 
-                fontWeight: 600,
-                color: '#2d2d2d',
-                letterSpacing: '0.2px'
-              }}>Mr. Tamam Hussain.</span>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                marginBottom: 'clamp(4px, 0.6vh, 8px)',
-                paddingBottom: 'clamp(4px, 0.6vh, 8px)',
-                borderBottom: '1px solid rgba(220, 38, 38, 0.15)'
-              }}
-            >
-              <strong style={{ 
-                minWidth: 'auto', 
-                fontWeight: 800, 
-                color: '#dc2626',
-                fontSize: 'clamp(14px, 1.5vw, 21px)',
-                letterSpacing: '0.5px',
-                textShadow: '0 1px 2px rgba(220, 38, 38, 0.2)'
-              }}>Mobile:</strong>
-              <span style={{ 
-                fontWeight: 600,
-                color: '#2d2d2d',
-                letterSpacing: '0.2px',
-                fontFamily: 'monospace'
-              }}>053 240 4666</span>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                marginBottom: '0'
-              }}
-            >
-              <strong style={{ 
-                minWidth: 'auto', 
-                fontWeight: 800, 
-                color: '#dc2626',
-                fontSize: 'clamp(14px, 1.5vw, 21px)',
-                letterSpacing: '0.5px',
-                textShadow: '0 1px 2px rgba(220, 38, 38, 0.2)'
-              }}>Email:</strong>
-              <span
-                style={{
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  fontWeight: 600,
-                  color: '#2d2d2d',
-                  letterSpacing: '0.2px'
-                }}
-              >
-                tammam.hussein@yahoo.com
-              </span>
+              <div style={{ flex: '1 1 320px', minWidth: 'min(320px, 100%)' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    marginBottom: 'clamp(4px, 0.6vh, 8px)',
+                    paddingBottom: 'clamp(4px, 0.6vh, 8px)',
+                    borderBottom: '1px solid rgba(220, 38, 38, 0.15)'
+                  }}
+                >
+                  <strong style={{ 
+                    minWidth: 'auto', 
+                    fontWeight: 800, 
+                    color: '#dc2626',
+                    fontSize: 'clamp(14px, 1.5vw, 21px)',
+                    letterSpacing: '0.5px',
+                    textShadow: '0 1px 2px rgba(220, 38, 38, 0.2)'
+                  }}>Managers:</strong>
+                  <span style={{ 
+                    fontWeight: 600,
+                    color: '#2d2d2d',
+                    letterSpacing: '0.2px'
+                  }}>Mr. Tamam Hussain.</span>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    marginBottom: 'clamp(4px, 0.6vh, 8px)',
+                    paddingBottom: 'clamp(4px, 0.6vh, 8px)',
+                    borderBottom: '1px solid rgba(220, 38, 38, 0.15)'
+                  }}
+                >
+                  <strong style={{ 
+                    minWidth: 'auto', 
+                    fontWeight: 800, 
+                    color: '#dc2626',
+                    fontSize: 'clamp(14px, 1.5vw, 21px)',
+                    letterSpacing: '0.5px',
+                    textShadow: '0 1px 2px rgba(220, 38, 38, 0.2)'
+                  }}>Mobile:</strong>
+                  <span style={{ 
+                    fontWeight: 600,
+                    color: '#2d2d2d',
+                    letterSpacing: '0.2px',
+                    fontFamily: 'monospace'
+                  }}>053 240 4666</span>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    marginBottom: '0'
+                  }}
+                >
+                  <strong style={{ 
+                    minWidth: 'auto', 
+                    fontWeight: 800, 
+                    color: '#dc2626',
+                    fontSize: 'clamp(14px, 1.5vw, 21px)',
+                    letterSpacing: '0.5px',
+                    textShadow: '0 1px 2px rgba(220, 38, 38, 0.2)'
+                  }}>Email:</strong>
+                  <span
+                    style={{
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      fontWeight: 600,
+                      color: '#2d2d2d',
+                      letterSpacing: '0.2px'
+                    }}
+                  >
+                    tammam.hussein@yahoo.com
+                  </span>
+                </div>
+              </div>
+
+              {/* GTA Video Card - placed beside contact info */}
+              {!gtaVideoFullscreen && (
+                <div
+                  style={{
+                    position: 'relative',
+                    flex: '0 0 auto',
+                    width: 'clamp(200px, 18vw, 260px)',
+                    alignSelf: 'stretch',
+                    marginLeft: 'auto'
+                  }}
+                >
+                  <img
+                    src={getPublicUrl('gta-thmbnail.jpg')}
+                    alt="GTA video thumbnail"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      minHeight: 'clamp(92px, 10vh, 120px)',
+                      objectFit: 'cover',
+                      display: 'block',
+                      borderRadius: '14px',
+                      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
+                      border: '1px solid rgba(220, 38, 38, 0.25)'
+                    }}
+                  />
+
+                  <button
+                    className="gta-video-play-button"
+                    onClick={async () => {
+                      if (gtaVideoPlaying) return;
+                      if (!gtaVideoContainerRef.current) return;
+                      try {
+                        setGtaVideoFullscreen(true);
+                        setGtaVideoPlaying(true);
+
+                        let fullscreenPromise;
+                        if (gtaVideoContainerRef.current.requestFullscreen) {
+                          fullscreenPromise = gtaVideoContainerRef.current.requestFullscreen();
+                        } else if (gtaVideoContainerRef.current.webkitRequestFullscreen) {
+                          fullscreenPromise = gtaVideoContainerRef.current.webkitRequestFullscreen();
+                        } else if (gtaVideoContainerRef.current.msRequestFullscreen) {
+                          fullscreenPromise = gtaVideoContainerRef.current.msRequestFullscreen();
+                        }
+
+                        if (fullscreenPromise) {
+                          await fullscreenPromise;
+                        }
+                      } catch (error) {
+                        setGtaVideoFullscreen(true);
+                        setGtaVideoPlaying(true);
+                      }
+                    }}
+                    disabled={gtaVideoPlaying}
+                    style={{
+                      position: 'absolute',
+                      left: '50%',
+                      top: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      padding: '4px 8px',
+                      fontSize: '9px',
+                      fontWeight: 800,
+                      color: '#dc2626',
+                      background: 'rgba(0, 0, 0, 0.65)',
+                      border: '2px solid #dc2626',
+                      borderRadius: '999px',
+                      cursor: 'pointer',
+                      boxShadow: '0 10px 26px rgba(0, 0, 0, 0.45)',
+                      transition: 'all 0.25s ease',
+                      letterSpacing: '0.45px',
+                      textTransform: 'uppercase',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      backdropFilter: 'blur(6px)',
+                      opacity: gtaVideoPlaying ? 0.7 : 1,
+                      pointerEvents: gtaVideoPlaying ? 'none' : 'auto',
+                      lineHeight: 1.1
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translate(-50%, -52%)';
+                      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)';
+                      e.currentTarget.style.boxShadow = '0 14px 34px rgba(0, 0, 0, 0.65)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translate(-50%, -50%)';
+                      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.65)';
+                      e.currentTarget.style.boxShadow = '0 10px 26px rgba(0, 0, 0, 0.45)';
+                    }}
+                  >
+                    <span>Play Video</span>
+                    <span
+                      style={{
+                        width: '12px',
+                        height: '12px',
+                        borderRadius: '50%',
+                        background: '#dc2626',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
+                    >
+                      <svg
+                        width="6"
+                        height="6"
+                        viewBox="0 0 24 24"
+                        fill="white"
+                        style={{ marginLeft: '2px' }}
+                      >
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
@@ -526,6 +662,88 @@ export default function GTADetailView({
             </div>
           </div>
         </div>
+      </div>
+
+      {/* GTA Video - Fullscreen container */}
+      <div
+        ref={gtaVideoContainerRef}
+        style={{
+          position: 'fixed',
+          right: gtaVideoFullscreen ? '0' : '-9999px',
+          top: gtaVideoFullscreen ? '0' : '-9999px',
+          width: gtaVideoFullscreen ? '100vw' : '0',
+          height: gtaVideoFullscreen ? '100vh' : '0',
+          zIndex: gtaVideoFullscreen ? 9999 : -1,
+          backgroundColor: '#000000',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        {gtaVideoFullscreen && (
+          <video
+            key={`gta-video-${gtaVideoFullscreen}`}
+            src="https://res.cloudinary.com/dl2rqs0lo/video/upload/757210379_uvjzv7.mp4"
+            autoPlay
+            controls
+            style={{
+              height: '100%',
+              width: '100%',
+              maxHeight: '100vh',
+              maxWidth: '100vw',
+              objectFit: 'contain'
+            }}
+            onEnded={() => {
+              if (closeVideo) {
+                closeVideo(setGtaVideoFullscreen, setGtaVideoPlaying);
+              } else {
+                setGtaVideoFullscreen(false);
+                setGtaVideoPlaying(false);
+              }
+            }}
+          />
+        )}
+
+        {gtaVideoFullscreen && (
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              if (closeVideo) {
+                closeVideo(setGtaVideoFullscreen, setGtaVideoPlaying);
+              } else {
+                setGtaVideoFullscreen(false);
+                setGtaVideoPlaying(false);
+              }
+            }}
+            style={{
+              position: 'absolute',
+              top: '20px',
+              right: '20px',
+              width: '50px',
+              height: '50px',
+              borderRadius: '50%',
+              background: 'rgba(0, 0, 0, 0.7)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              zIndex: 10000
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(0, 0, 0, 0.9)';
+              e.currentTarget.style.transform = 'scale(1.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(0, 0, 0, 0.7)';
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
+          >
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+            </svg>
+          </div>
+        )}
       </div>
     </>
   );

@@ -104,6 +104,7 @@ export default function CompanyDetailRouter({
         setSelectedCompany={setters.setSelectedCompany}
         setShowGTALearnMore={setters.setShowGTALearnMore}
         setShowGTAQRModal={qrModalSetters.setShowGTAQRModal}
+        closeVideo={closeVideo}
       />
     );
   }

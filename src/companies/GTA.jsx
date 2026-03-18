@@ -353,6 +353,7 @@ export default function GTA({ isOpen, onClose }) {
               >
                 GALLERY
               </h2>
+
               <p
                 style={{
                   fontSize: 'clamp(16px, 1.5vw, 20px)',

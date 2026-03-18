@@ -5671,6 +5671,15 @@ div[style*="gc-engineer-learnmore-bg"] > * {
   }
 }
 
+/* GTA video overlay play button should not inherit wide CTA sizing */
+.gta-video-play-button {
+  width: auto !important;
+  min-width: 0 !important;
+  padding: 4px 8px !important;
+  font-size: 9px !important;
+  gap: 4px !important;
+}
+
 /* For 3480x2160 (Kiosk Display) - Custom */
 @media (min-width: 3480px) and (min-height: 2160px) {
   :root {
