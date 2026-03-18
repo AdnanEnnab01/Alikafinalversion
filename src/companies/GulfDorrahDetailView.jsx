@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useVideoFullscreen } from '../hooks/useVideoFullscreen';
 import { getPublicUrl } from '../utils/pathUtils';
 
@@ -12,6 +12,7 @@ export default function GulfDorrahDetailView({
 }) {
   const [, setDorrahVideoPlaying] = useState(false);
   const [dorrahVideoFullscreen, setDorrahVideoFullscreen] = useState(false);
+  const [enableIntroAnimation, setEnableIntroAnimation] = useState(true);
   const dorrahVideoContainerRef = useRef(null);
 
   // Helper function to close video and exit fullscreen
@@ -31,6 +32,12 @@ export default function GulfDorrahDetailView({
 
   // Handle fullscreen change
   useVideoFullscreen(setDorrahVideoPlaying, setDorrahVideoFullscreen);
+
+  // Run intro animations only once to avoid "blinking" on re-renders
+  useEffect(() => {
+    const t = setTimeout(() => setEnableIntroAnimation(false), 2000);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <>
@@ -89,7 +96,7 @@ export default function GulfDorrahDetailView({
           left: 'clamp(80px, 7vw, 140px)',
           transform: 'translateY(-50%)',
           zIndex: 11,
-          animation: 'fadeIn 0.8s ease-in-out 0.4s both',
+          animation: enableIntroAnimation ? 'fadeIn 0.8s ease-in-out 0.4s both' : 'none',
           opacity: 0.9
         }}
       >
@@ -340,7 +347,7 @@ export default function GulfDorrahDetailView({
             letterSpacing: '1.6px',
             color: '#33d18f',
             textTransform: 'uppercase',
-            animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both'
+            animation: enableIntroAnimation ? 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both' : 'none'
           }}
         >
           GULF DORRAH REAL
@@ -353,7 +360,7 @@ export default function GulfDorrahDetailView({
             letterSpacing: '1.6px',
             color: '#29a4ff',
             textTransform: 'uppercase',
-            animation: 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 180ms both'
+            animation: enableIntroAnimation ? 'textReveal 900ms cubic-bezier(0.2, 0.9, 0.2, 1) 180ms both' : 'none'
           }}
         >
           ESTATE DEVELOPMENT
@@ -365,7 +372,7 @@ export default function GulfDorrahDetailView({
             lineHeight: '1.75',
             marginBottom: 'clamp(20px, 3vh, 32px)',
             color: '#e5f8ff',
-            animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both',
+            animation: enableIntroAnimation ? 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 260ms both' : 'none',
             padding: 'clamp(12px, 1.5vh, 18px) clamp(16px, 2vw, 24px)',
             background: 'rgba(0, 0, 0, 0.45)',
             borderRadius: '12px',
@@ -382,7 +389,7 @@ export default function GulfDorrahDetailView({
             display: 'flex',
             gap: 'clamp(26px, 4.2vw, 60px)',
             alignItems: 'center',
-            animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 420ms both',
+            animation: enableIntroAnimation ? 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 420ms both' : 'none',
             marginBottom: 'clamp(10px, 1.8vh, 18px)'
           }}
         >
@@ -559,7 +566,7 @@ export default function GulfDorrahDetailView({
             alignItems: 'flex-start',
             gap: 'clamp(20px, 2.5vw, 40px)',
             marginTop: 'clamp(8px, 1.6vh, 16px)',
-            animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 500ms both',
+            animation: enableIntroAnimation ? 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 500ms both' : 'none',
             flexWrap: 'wrap'
           }}
         >
@@ -672,7 +679,7 @@ export default function GulfDorrahDetailView({
           {/* QR Code - Same level as buttons */}
           <div
             style={{
-              animation: 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 580ms both',
+              animation: enableIntroAnimation ? 'textReveal 1000ms cubic-bezier(0.2, 0.9, 0.2, 1) 580ms both' : 'none',
               flexShrink: 0,
               alignSelf: 'flex-start',
               marginTop: viewportSize.width === 1536 && viewportSize.height === 864 ? '0px' : 'clamp(8px, 1.6vh, 16px)',
