@@ -10,20 +10,46 @@ export default function RKDetailView({
 }) {
   return (
     <>
-      {/* RK Background Image */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundImage: `url(${selectedCompany.bgImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        opacity: 1,
-        zIndex: 1
-      }} />
+      {/* RK Background (fallback image + Cloudinary video) */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: `url(${selectedCompany.bgImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          opacity: 1,
+          zIndex: 1
+        }}
+      />
+
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          opacity: 0.95,
+          zIndex: 2,
+          pointerEvents: 'none'
+        }}
+      >
+        <source
+          src="https://res.cloudinary.com/dl2rqs0lo/video/upload/rk1-gif-ezgif.com-gif-to-mp4-converter_dvmfjg.mp4"
+          type="video/mp4"
+        />
+      </video>
       
       {/* Company Logos Grid - Left Side */}
       <div
