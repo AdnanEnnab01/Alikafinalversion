@@ -12,7 +12,6 @@ export default function GulfDorrahDetailView({
 }) {
   const [, setDorrahVideoPlaying] = useState(false);
   const [dorrahVideoFullscreen, setDorrahVideoFullscreen] = useState(false);
-  const [bgVideoFailed, setBgVideoFailed] = useState(false);
   const dorrahVideoContainerRef = useRef(null);
 
   // Helper function to close video and exit fullscreen
@@ -35,7 +34,7 @@ export default function GulfDorrahDetailView({
 
   return (
     <>
-      {/* Al Dorrah Background (Video preferred, Image fallback) */}
+      {/* Al Dorrah Background (Cloudinary video) */}
       <div
         style={{
           position: 'fixed',
@@ -47,36 +46,31 @@ export default function GulfDorrahDetailView({
           pointerEvents: 'none',
           overflow: 'hidden',
           backgroundColor: '#0b1220',
-          backgroundImage: `url(${selectedCompany.bgImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
         }}
       >
-        {!bgVideoFailed && (
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="metadata"
-            poster={selectedCompany.bgImage}
-            onError={() => setBgVideoFailed(true)}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              opacity: 0.35,
-              transform: 'translateZ(0)'
-            }}
-          >
-            <source src={getPublicUrl('dorrah-bg.webm')} type="video/webm" />
-            <source src={getPublicUrl('dorrah-bg.mp4')} type="video/mp4" />
-          </video>
-        )}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          poster={selectedCompany.bgImage}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            opacity: 0.35,
+            transform: 'translateZ(0)'
+          }}
+        >
+          <source
+            src="https://res.cloudinary.com/dl2rqs0lo/video/upload/dorrah-gif-ezgif.com-gif-to-mp4-converter_inb3qq.mp4"
+            type="video/mp4"
+          />
+        </video>
         {/* Dark overlay to keep text readable */}
         <div
           style={{
@@ -448,7 +442,7 @@ export default function GulfDorrahDetailView({
             </div>
           </div>
 
-          {/* Dorrah Internal Image with Play Video overlay */}
+          {/* Dorrah Internal Video Poster with Play overlay */}
           <div
             style={{
               position: 'relative',
@@ -458,11 +452,13 @@ export default function GulfDorrahDetailView({
             }}
           >
             <img
-              src={getPublicUrl("dorrah-gif.gif")}
+              src={getPublicUrl('dorrah-thmb.jpeg')}
               alt="Dorrah internal"
               onError={(e) => {
-                e.currentTarget.onerror = null;
-                e.currentTarget.src = selectedCompany?.bgImage || '';
+                const fallback = selectedCompany?.bgImage;
+                if (fallback && e.currentTarget.src !== fallback) {
+                  e.currentTarget.src = fallback;
+                }
               }}
               style={{
                 width: '100%',
