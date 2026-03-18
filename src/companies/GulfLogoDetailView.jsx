@@ -18,8 +18,8 @@ export default function GulfLogoDetailView({
   const innerW = window.innerWidth;
   const innerH = window.innerHeight;
   const isSmallScreen = (screenW <= 1920 && screenH <= 1080) || (innerW <= 1600 && innerH <= 900);
-  const gulfVideoCardTop = isSmallScreen ? '56%' : 'clamp(42%, 42vh, 48%)';
-  const qrMarginTop = isSmallScreen ? '32px' : 'clamp(24px, 3.5vh, 40px)';
+  const gulfVideoCardTop = isSmallScreen ? '48%' : 'clamp(42%, 42vh, 48%)';
+  const qrMarginTop = isSmallScreen ? '48px' : 'clamp(24px, 3.5vh, 40px)';
 
   // Handle fullscreen change
   useVideoFullscreen(setGulfLogoVideoPlaying, setGulfLogoVideoFullscreen);
@@ -471,24 +471,22 @@ export default function GulfLogoDetailView({
           </button>
         </div>
 
-        {/* Right Rail (Video + QR) - Stable positioning across screens */}
+        {/* Right Rail (Video + QR) - Single container */}
         {!gulfLogoVideoFullscreen && (
           <div
             style={{
               position: 'fixed',
               right: 'clamp(16px, 2.5vw, 32px)',
-              top: 'auto',
-              bottom: isSmallScreen ? '40px' : 'clamp(40px, 4vh, 72px)',
-              transform: 'none',
+              top: gulfVideoCardTop,
+              transform: 'translateY(-50%)',
               zIndex: 11,
               width: 'var(--gulf-video-width, clamp(220px, 22vw, 320px))',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'flex-end',
-              gap: 'clamp(14px, 2vh, 22px)',
+              gap: '0px',
               animation: 'fadeInUp 0.8s ease-out 0.5s both',
-              pointerEvents: 'auto',
-              maxHeight: 'calc(100vh - 120px)'
+              pointerEvents: 'auto'
             }}
           >
             {/* Video card */}
@@ -498,7 +496,7 @@ export default function GulfLogoDetailView({
                 alt="Gulf Consult"
                 style={{
                   width: '100%',
-                  height: 'clamp(105px, 14vh, 150px)',
+                  height: isSmallScreen ? '130px' : 'var(--gulf-video-height, clamp(160px, 22vh, 260px))',
                   objectFit: 'cover',
                   display: 'block',
                   borderRadius: '16px',
@@ -511,7 +509,6 @@ export default function GulfLogoDetailView({
                     try {
                       setGulfLogoVideoFullscreen(true);
                       setGulfLogoVideoPlaying(true);
-
                       let fullscreenPromise;
                       if (gulfLogoVideoContainerRef.current.requestFullscreen) {
                         fullscreenPromise = gulfLogoVideoContainerRef.current.requestFullscreen();
@@ -520,10 +517,7 @@ export default function GulfLogoDetailView({
                       } else if (gulfLogoVideoContainerRef.current.msRequestFullscreen) {
                         fullscreenPromise = gulfLogoVideoContainerRef.current.msRequestFullscreen();
                       }
-
-                      if (fullscreenPromise) {
-                        await fullscreenPromise;
-                      }
+                      if (fullscreenPromise) await fullscreenPromise;
                     } catch (error) {
                       console.error('Error opening Gulf video from button:', error);
                     }
@@ -563,31 +557,19 @@ export default function GulfLogoDetailView({
                 }}
               >
                 <span>Play Video</span>
-                <span
-                  style={{
-                    width: '24px',
-                    height: '24px',
-                    borderRadius: '50%',
-                    background: '#16348a',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}
-                >
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="white"
-                    style={{ marginLeft: '2px' }}
-                  >
+                <span style={{
+                  width: '24px', height: '24px', borderRadius: '50%',
+                  background: '#16348a', display: 'flex',
+                  alignItems: 'center', justifyContent: 'center'
+                }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="white" style={{ marginLeft: '2px' }}>
                     <path d="M8 5v14l11-7z" />
                   </svg>
                 </span>
               </button>
             </div>
 
-            {/* QR code (always stacked under video) */}
+            {/* QR code */}
             <div
               className="gulf-consult-qr-container"
               style={{
@@ -598,31 +580,23 @@ export default function GulfLogoDetailView({
                 marginTop: qrMarginTop
               }}
             >
-              <div
-                style={{
-                  flexShrink: 0,
-                  zIndex: 13,
-                  position: 'relative',
-                  minWidth: 'clamp(80px, 10vw, 120px)',
-                  maxWidth: 'clamp(80px, 10vw, 120px)'
-                }}
-              >
+              <div style={{
+                flexShrink: 0, zIndex: 13, position: 'relative',
+                minWidth: 'clamp(80px, 10vw, 120px)',
+                maxWidth: 'clamp(80px, 10vw, 120px)'
+              }}>
                 <img
                   src={getPublicUrl("gulfconsultrectangleqr.jpeg")}
                   alt="Gulf Consult QR Code"
                   onClick={() => setShowGulfConsultQRModal(true)}
                   style={{
-                    width: '100%',
-                    height: 'auto',
+                    width: '100%', height: 'auto',
                     maxWidth: 'clamp(80px, 10vw, 120px)',
                     maxHeight: 'clamp(80px, 10vw, 120px)',
-                    objectFit: 'contain',
-                    borderRadius: '8px',
+                    objectFit: 'contain', borderRadius: '8px',
                     boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
-                    backgroundColor: '#ffffff',
-                    padding: '6px',
-                    cursor: 'pointer',
-                    display: 'block',
+                    backgroundColor: '#ffffff', padding: '6px',
+                    cursor: 'pointer', display: 'block',
                     transition: 'transform 0.2s ease, boxShadow 0.2s ease'
                   }}
                   onMouseEnter={(e) => {
