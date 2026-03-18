@@ -478,7 +478,7 @@ export default function GulfLogoDetailView({
               position: 'fixed',
               right: 'clamp(16px, 2.5vw, 32px)',
               top: 'auto',
-              bottom: isSmallScreen ? '40px' : 'clamp(40px, 4vh, 72px)',
+              bottom: isSmallScreen ? '24px' : 'clamp(24px, 3vh, 48px)',
               transform: 'none',
               zIndex: 11,
               width: 'var(--gulf-video-width, clamp(220px, 22vw, 320px))',
