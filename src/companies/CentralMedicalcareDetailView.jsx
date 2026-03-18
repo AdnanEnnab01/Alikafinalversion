@@ -44,20 +44,46 @@ export default function CentralMedicalcareDetailView({
 
   return (
     <>
-      {/* Central Medicalcare Background Image */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundImage: `url(${selectedCompany.bgImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        opacity: 0.3,
-        zIndex: 1
-      }} />
+      {/* Central Medicalcare Background (fallback image + Cloudinary video) */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: `url(${selectedCompany.bgImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          opacity: 1,
+          zIndex: 1
+        }}
+      />
+
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          opacity: 0.95,
+          zIndex: 2,
+          pointerEvents: 'none'
+        }}
+      >
+        <source
+          src="https://res.cloudinary.com/dl2rqs0lo/video/upload/rk-gif-ezgif.com-gif-to-mp4-converter_rtyfac.mp4"
+          type="video/mp4"
+        />
+      </video>
       
       {/* Company Logos Grid - Left Side */}
       <div
@@ -228,6 +254,7 @@ export default function CentralMedicalcareDetailView({
           <video
             key={`central-video-${centralMedicalcareVideoFullscreen}`}
             src="https://res.cloudinary.com/dl2rqs0lo/video/upload/WhatsApp_Video_2026-02-03_at_4.02.50_PM_wo8g32.mp4"
+            poster={getPublicUrl('central-thmb.jpg')}
             autoPlay
             controls
             style={{
@@ -460,8 +487,14 @@ export default function CentralMedicalcareDetailView({
             }}
           >
             <img
-              src={getPublicUrl("rk-gif.gif")}
+              src={getPublicUrl('central-thmb.jpg')}
               alt="Central Medicalcare internal"
+              onError={(e) => {
+                const fallback = selectedCompany?.bgImage;
+                if (fallback && e.currentTarget.src !== fallback) {
+                  e.currentTarget.src = fallback;
+                }
+              }}
               style={{
                 width: '100%',
                 height: 'auto',
