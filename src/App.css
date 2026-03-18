@@ -2898,6 +2898,11 @@ div[style*="gc-engineer-learnmore-bg"] > * {
   .gulf-consult-qr-container {
     top: calc(clamp(38%, 38vh, 42%) + clamp(160px, 20vh, 240px) + clamp(20px, 3vh, 40px)) !important;
   }
+
+  :root {
+    --gulf-video-height: clamp(140px, 16vh, 200px);
+    --gulf-video-width: clamp(200px, 20vw, 280px);
+  }
   
   /* Move Learn More button container down - increase spacing from text above */
   .gulf-consult-learn-more-container {
