@@ -13,10 +13,12 @@ export default function GulfLogoDetailView({
   const [gulfLogoVideoPlaying, setGulfLogoVideoPlaying] = useState(false);
   const [gulfLogoVideoFullscreen, setGulfLogoVideoFullscreen] = useState(false);
   const gulfLogoVideoContainerRef = useRef(null);
-  const screenW = window.innerWidth;
-  const screenH = window.innerHeight;
-  const isSmallScreen = screenW <= 1600 && screenH <= 900;
-  const gulfVideoCardTop = isSmallScreen ? '54%' : 'clamp(42%, 42vh, 48%)';
+  const screenW = window.screen.width;
+  const screenH = window.screen.height;
+  const innerW = window.innerWidth;
+  const innerH = window.innerHeight;
+  const isSmallScreen = (screenW <= 1920 && screenH <= 1080) || (innerW <= 1600 && innerH <= 900);
+  const gulfVideoCardTop = isSmallScreen ? '56%' : 'clamp(42%, 42vh, 48%)';
   const qrMarginTop = isSmallScreen ? '32px' : 'clamp(24px, 3.5vh, 40px)';
 
   // Handle fullscreen change
@@ -494,7 +496,7 @@ export default function GulfLogoDetailView({
                 alt="Gulf Consult"
                 style={{
                   width: '100%',
-                  height: isSmallScreen ? '140px' : 'var(--gulf-video-height, clamp(160px, 22vh, 260px))',
+                  height: isSmallScreen ? '130px' : 'var(--gulf-video-height, clamp(160px, 22vh, 260px))',
                   objectFit: 'cover',
                   display: 'block',
                   borderRadius: '16px',
