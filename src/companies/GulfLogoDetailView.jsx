@@ -465,7 +465,7 @@ export default function GulfLogoDetailView({
           </button>
         </div>
 
-        {/* Gulf Video Image with Play Video overlay - Far Right */}
+        {/* Right Rail (Video + QR) - Stable positioning across screens */}
         {!gulfLogoVideoFullscreen && (
           <div
             style={{
@@ -475,10 +475,16 @@ export default function GulfLogoDetailView({
               transform: 'translateY(-50%)',
               zIndex: 11,
               width: 'var(--gulf-video-width, clamp(220px, 22vw, 320px))',
-              animation: 'fadeInUp 0.8s ease-out 0.5s both'
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-end',
+              gap: 'clamp(14px, 2vh, 22px)',
+              animation: 'fadeInUp 0.8s ease-out 0.5s both',
+              pointerEvents: 'auto'
             }}
           >
-            <div style={{ position: 'relative' }}>
+            {/* Video card */}
+            <div style={{ position: 'relative', width: '100%' }}>
               <img
                 src={getPublicUrl("gulfphoto.jpg")}
                 alt="Gulf Consult"
@@ -572,62 +578,54 @@ export default function GulfLogoDetailView({
                 </span>
               </button>
             </div>
-          </div>
-        )}
 
-        {/* QR Code - Below Video */}
-        {!gulfLogoVideoFullscreen && (
-          <div
-            className="gulf-consult-qr-container"
-            style={{
-              position: 'fixed',
-              right: 'clamp(16px, 2.5vw, 32px)',
-              top: `calc(${gulfVideoCardTop} + var(--gulf-video-height, clamp(160px, 20vh, 240px)) + clamp(20px, 3vh, 40px))`,
-              zIndex: 11,
-              display: 'flex',
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-              animation: 'fadeInUp 0.8s ease-out 0.7s both',
-              width: 'clamp(220px, 22vw, 320px)'
-            }}
-          >
-            {/* QR Code - Smaller size */}
+            {/* QR code (always stacked under video) */}
             <div
+              className="gulf-consult-qr-container"
               style={{
-                flexShrink: 0,
-                zIndex: 13,
-                position: 'relative',
-                minWidth: 'clamp(80px, 10vw, 120px)',
-                maxWidth: 'clamp(80px, 10vw, 120px)'
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'center'
               }}
             >
-              <img
-                src={getPublicUrl("gulfconsultrectangleqr.jpeg")}
-                alt="Gulf Consult QR Code"
-                onClick={() => setShowGulfConsultQRModal(true)}
+              <div
                 style={{
-                  width: '100%',
-                  height: 'auto',
-                  maxWidth: 'clamp(80px, 10vw, 120px)',
-                  maxHeight: 'clamp(80px, 10vw, 120px)',
-                  objectFit: 'contain',
-                  borderRadius: '8px',
-                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
-                  backgroundColor: '#ffffff',
-                  padding: '6px',
-                  cursor: 'pointer',
-                  display: 'block',
-                  transition: 'transform 0.2s ease, boxShadow 0.2s ease'
+                  flexShrink: 0,
+                  zIndex: 13,
+                  position: 'relative',
+                  minWidth: 'clamp(80px, 10vw, 120px)',
+                  maxWidth: 'clamp(80px, 10vw, 120px)'
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.05)';
-                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.4)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
-                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';
-                }}
-              />
+              >
+                <img
+                  src={getPublicUrl("gulfconsultrectangleqr.jpeg")}
+                  alt="Gulf Consult QR Code"
+                  onClick={() => setShowGulfConsultQRModal(true)}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    maxWidth: 'clamp(80px, 10vw, 120px)',
+                    maxHeight: 'clamp(80px, 10vw, 120px)',
+                    objectFit: 'contain',
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
+                    backgroundColor: '#ffffff',
+                    padding: '6px',
+                    cursor: 'pointer',
+                    display: 'block',
+                    transition: 'transform 0.2s ease, boxShadow 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.4)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';
+                  }}
+                />
+              </div>
             </div>
           </div>
         )}

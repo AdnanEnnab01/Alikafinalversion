@@ -1,6 +1,73 @@
 import React from 'react';
 import { getPublicUrl } from '../utils/pathUtils';
 
+function EmailPill({ email }) {
+  return (
+    <a
+      href={`mailto:${email}`}
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '8px',
+        padding: '6px 12px',
+        borderRadius: '999px',
+        background: 'rgba(0, 188, 212, 0.12)',
+        border: '1px solid rgba(0, 188, 212, 0.35)',
+        color: '#07373c',
+        textDecoration: 'none',
+        fontWeight: 800,
+        fontSize: 'clamp(12px, 1.15vw, 15px)',
+        lineHeight: '1.2',
+        boxShadow: '0 6px 18px rgba(0, 0, 0, 0.08)',
+        maxWidth: '100%'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = 'translateY(-1px)';
+        e.currentTarget.style.background = 'rgba(0, 188, 212, 0.18)';
+        e.currentTarget.style.borderColor = 'rgba(0, 188, 212, 0.55)';
+        e.currentTarget.style.boxShadow = '0 10px 24px rgba(0, 0, 0, 0.12)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.background = 'rgba(0, 188, 212, 0.12)';
+        e.currentTarget.style.borderColor = 'rgba(0, 188, 212, 0.35)';
+        e.currentTarget.style.boxShadow = '0 6px 18px rgba(0, 0, 0, 0.08)';
+      }}
+    >
+      <span
+        aria-hidden="true"
+        style={{
+          width: '26px',
+          height: '26px',
+          borderRadius: '999px',
+          background: '#00bcd4',
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 6px 14px rgba(0, 188, 212, 0.35)',
+          flexShrink: 0
+        }}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
+          <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" />
+        </svg>
+      </span>
+      <span
+        style={{
+          fontFamily:
+            'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap'
+        }}
+        title={email}
+      >
+        {email}
+      </span>
+    </a>
+  );
+}
+
 export default function GSGDetailView({ 
   selectedCompany, 
   companies, 
@@ -288,19 +355,20 @@ export default function GSGDetailView({
                 display: 'flex', 
                 alignItems: 'flex-start',
                 flexWrap: 'wrap',
-                gap: '4px'
+                gap: '8px'
               }}>
                 <strong style={{ fontWeight: '800', flexShrink: 0 }}>Email:</strong>
-                <span>faisal@gulfconsult.com</span>
-              </div>
-              <div style={{ 
-                display: 'flex', 
-                alignItems: 'flex-start',
-                flexWrap: 'wrap',
-                gap: '4px',
-                marginLeft: 'clamp(85px, 8.5vw, 110px)'
-              }}>
-                <span>rabah@gulfconsult.com</span>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '8px',
+                    minWidth: 'min(320px, 100%)'
+                  }}
+                >
+                  <EmailPill email="faisal@gulfconsult.com" />
+                  <EmailPill email="rabah@gulfconsult.com" />
+                </div>
               </div>
             </div>
             {/* Buttons Container - Visit Website, Our Services, and Learn More */}
