@@ -340,14 +340,21 @@ export default function AntiqueDetailView({ selectedCompany, companies, setSelec
             }}
           >
             <img
-              src={getPublicUrl("ant-git.gif")}
+              src={getPublicUrl('ant-thmb.jpg')}
               alt="Antique internal"
+              onError={(e) => {
+                const fallback = selectedCompany?.bgImage;
+                if (fallback && e.currentTarget.src !== fallback) {
+                  e.currentTarget.src = fallback;
+                }
+              }}
               style={{
                 width: '100%',
                 height: 'auto',
                 display: 'block',
                 borderRadius: '16px',
-                boxShadow: '0 10px 35px rgba(0, 0, 0, 0.55)'
+                boxShadow: '0 10px 35px rgba(0, 0, 0, 0.55)',
+                objectFit: 'cover'
               }}
             />
             {/* Play Video Button on top of image */}
@@ -611,6 +618,7 @@ export default function AntiqueDetailView({ selectedCompany, companies, setSelec
           <video
             key={`antique-video-${antiqueVideoFullscreen}`}
             src="https://res.cloudinary.com/dl2rqs0lo/video/upload/WhatsApp_Video_2026-02-04_at_11.38.28_AM_mhpll7.mp4"
+            poster={getPublicUrl('ant-thmb.jpg')}
             autoPlay
             controls
             style={{
