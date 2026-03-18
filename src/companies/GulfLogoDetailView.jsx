@@ -477,8 +477,9 @@ export default function GulfLogoDetailView({
             style={{
               position: 'fixed',
               right: 'clamp(16px, 2.5vw, 32px)',
-              top: gulfVideoCardTop,
-              transform: 'translateY(-50%)',
+              top: 'auto',
+              bottom: isSmallScreen ? '24px' : 'clamp(24px, 3vh, 48px)',
+              transform: 'none',
               zIndex: 11,
               width: 'var(--gulf-video-width, clamp(220px, 22vw, 320px))',
               display: 'flex',
@@ -486,7 +487,8 @@ export default function GulfLogoDetailView({
               alignItems: 'flex-end',
               gap: 'clamp(14px, 2vh, 22px)',
               animation: 'fadeInUp 0.8s ease-out 0.5s both',
-              pointerEvents: 'auto'
+              pointerEvents: 'auto',
+              maxHeight: 'calc(100vh - 120px)'
             }}
           >
             {/* Video card */}
