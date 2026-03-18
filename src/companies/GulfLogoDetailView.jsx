@@ -498,7 +498,7 @@ export default function GulfLogoDetailView({
                 alt="Gulf Consult"
                 style={{
                   width: '100%',
-                  height: isSmallScreen ? '130px' : 'var(--gulf-video-height, clamp(160px, 22vh, 260px))',
+                  height: isSmallScreen ? '115px' : 'var(--gulf-video-height, clamp(160px, 22vh, 260px))',
                   objectFit: 'cover',
                   display: 'block',
                   borderRadius: '16px',
