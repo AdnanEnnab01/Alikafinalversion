@@ -74,7 +74,7 @@ export default function GulfDorrahDetailView({
           }}
         >
           <source
-            src="https://res.cloudinary.com/dl2rqs0lo/video/upload/dorrah-gif-ezgif.com-gif-to-mp4-converter_inb3qq.mp4"
+            src={getPublicUrl('gifbackgrounds/dorrah-gif-ezgif.com-gif-to-mp4-converter_inb3qq.mp4')}
             type="video/mp4"
           />
         </video>
@@ -256,7 +256,7 @@ export default function GulfDorrahDetailView({
         {dorrahVideoFullscreen && (
           <video
             key={`dorrah-video-${dorrahVideoFullscreen}`}
-            src="https://res.cloudinary.com/dl2rqs0lo/video/upload/dorrah_ei9ijx.mp4"
+            src={getPublicUrl("videosinthemainpages/dorrah_ei9ijx.mp4")}
             autoPlay
             controls
             style={{

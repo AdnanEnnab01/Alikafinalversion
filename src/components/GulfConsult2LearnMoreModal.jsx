@@ -432,7 +432,7 @@ export default function GulfConsult2LearnMoreModal({ isOpen, onClose }) {
                 }}
               >
                 <video
-                  src="https://res.cloudinary.com/dl2rqs0lo/video/upload/q_auto,f_auto/Gulf_Consult_luuscu.mp4"
+                  src={getPublicUrl("gulfconsultgalleryvideos/Gulf_Consult_luuscu.webm")}
                   style={{
                     width: '100%',
                     height: '100%',
@@ -492,7 +492,7 @@ export default function GulfConsult2LearnMoreModal({ isOpen, onClose }) {
             }}
           >
             <video
-              src="https://res.cloudinary.com/dl2rqs0lo/video/upload/q_auto,f_auto/Gulf_Consult_luuscu.mp4"
+              src={getPublicUrl("gulfconsultgalleryvideos/Gulf_Consult_luuscu.webm")}
               autoPlay
               controls
               style={{

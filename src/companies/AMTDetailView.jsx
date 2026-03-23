@@ -227,7 +227,7 @@ export default function AMTDetailView({ selectedCompany, companies, setSelectedC
         {amtVideoFullscreen && (
           <video
             key={`amt-video-${amtVideoFullscreen}`}
-            src="https://res.cloudinary.com/dl2rqs0lo/video/upload/v1/AMT_Company_Profile_Transformation___From_Static_PDF_to_CEO_Video_by_Zuccess_zykzgl.mp4"
+            src={getPublicUrl("videosinthemainpages/AMT_Company_Profile_Transformation___From_Static_PDF_to_CEO_Video_by_Zuccess_zykzgl.mp4")}
             autoPlay
             controls
             style={{
@@ -474,7 +474,7 @@ export default function AMTDetailView({ selectedCompany, companies, setSelectedC
             }}
           >
             <video
-              src="https://res.cloudinary.com/dl2rqs0lo/video/upload/amt_ecx4u7.mp4"
+              src={getPublicUrl("videosinthemainpages/AMT_Company_Profile_Transformation___From_Static_PDF_to_CEO_Video_by_Zuccess_zykzgl.mp4")}
               style={{
                 width: '100%',
                 height: 'auto',

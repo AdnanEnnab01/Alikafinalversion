@@ -1,4 +1,5 @@
 import React from 'react';
+import { getPublicUrl } from '../utils/pathUtils';
 
 export default function BackgroundVideo({ homeSoundEnabled }) {
   return (
@@ -11,13 +12,15 @@ export default function BackgroundVideo({ homeSoundEnabled }) {
         overflow: 'hidden'
       }}
     >
-      <iframe
+      <video
         key={homeSoundEnabled ? 'bg-sound-on' : 'bg-sound-off'}
-        src={`https://player.cloudinary.com/embed/?cloud_name=dl2rqs0lo&public_id=alika_final_2_pttcrz&profile=cld-default&autoplay=true&muted=${homeSoundEnabled ? 'false' : 'true'}&loop=true&controls=false&playsinline=true`}
+        src={getPublicUrl('alika_final_2_pttcrz.mp4')}
         title="Alika Background Video"
-        allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-        allowFullScreen
-        frameBorder="0"
+        autoPlay
+        loop
+        muted={!homeSoundEnabled}
+        playsInline
+        preload="auto"
         style={{
           position: 'absolute',
           top: '50%',
@@ -26,7 +29,6 @@ export default function BackgroundVideo({ homeSoundEnabled }) {
           height: '100%',
           transform: 'translate(-50%, -50%) scale(1.2)',
           transformOrigin: 'center',
-          border: 0,
           pointerEvents: 'none'
         }}
       />

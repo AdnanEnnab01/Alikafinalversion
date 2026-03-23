@@ -80,7 +80,7 @@ export default function CentralMedicalcareDetailView({
         }}
       >
         <source
-          src="https://res.cloudinary.com/dl2rqs0lo/video/upload/rk-gif-ezgif.com-gif-to-mp4-converter_rtyfac.mp4"
+          src={getPublicUrl('gifbackgrounds/rk-gif-ezgif.com-gif-to-mp4-converter_rtyfac.mp4')}
           type="video/mp4"
         />
       </video>
@@ -253,7 +253,7 @@ export default function CentralMedicalcareDetailView({
         {centralMedicalcareVideoFullscreen && (
           <video
             key={`central-video-${centralMedicalcareVideoFullscreen}`}
-            src="https://res.cloudinary.com/dl2rqs0lo/video/upload/WhatsApp_Video_2026-02-03_at_4.02.50_PM_wo8g32.mp4"
+            src={getPublicUrl("videosinthemainpages/WhatsApp_Video_2026-02-03_at_4.02.50_PM_wo8g32.mp4")}
             poster={getPublicUrl('central-thmb.jpg')}
             autoPlay
             controls

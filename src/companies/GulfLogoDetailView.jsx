@@ -659,7 +659,7 @@ export default function GulfLogoDetailView({
         {gulfLogoVideoFullscreen && (
           <video
             key={`gulf-logo-video-${gulfLogoVideoFullscreen}`}
-            src="https://res.cloudinary.com/dl2rqs0lo/video/upload/gulfconsult_pjinhc.mp4"
+            src={getPublicUrl("videosinthemainpages/gulfconsult_pjinhc.mp4")}
             autoPlay
             controls
             style={{

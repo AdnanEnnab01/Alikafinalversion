@@ -683,7 +683,7 @@ export default function GTADetailView({
         {gtaVideoFullscreen && (
           <video
             key={`gta-video-${gtaVideoFullscreen}`}
-            src="https://res.cloudinary.com/dl2rqs0lo/video/upload/757210379_uvjzv7.mp4"
+            src={getPublicUrl("videosinthemainpages/757210379_uvjzv7.mp4")}
             autoPlay
             controls
             style={{

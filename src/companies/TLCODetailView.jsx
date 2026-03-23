@@ -187,7 +187,7 @@ export default function TLCODetailView({
         {tlcoVideoFullscreen && (
           <video
             key={`tlco-video-${tlcoVideoFullscreen}`}
-            src="https://res.cloudinary.com/dl2rqs0lo/video/upload/tlco_onczo4.mp4"
+            src={getPublicUrl("videosinthemainpages/tlco_onczo4.mp4")}
             autoPlay
             controls
             style={{

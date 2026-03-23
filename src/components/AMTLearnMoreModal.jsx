@@ -25,15 +25,15 @@ const AMTLearnMoreModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   const galleryVideos = [
-    'https://res.cloudinary.com/dl2rqs0lo/video/upload/amt_ecx4u7.mp4',
-    'https://res.cloudinary.com/dl2rqs0lo/video/upload/v1/Meet_Karim_Alma___AMT_Brand_Ambassadors_by_Zuccess_qhlkb7.mp4',
-    'https://res.cloudinary.com/dl2rqs0lo/video/upload/v1/YTDown.com_YouTube_AMT-Professional-Video-Showcasing-Innova_Media_xjcmXF3MkWQ_001_1080p_wjihjd.mp4',
-    'https://res.cloudinary.com/dl2rqs0lo/video/upload/AMT_1_ydbfwn.mp4',
-    'https://res.cloudinary.com/dl2rqs0lo/video/upload/AMT_2_hsdy7c.mp4',
-    'https://res.cloudinary.com/dl2rqs0lo/video/upload/AMT_3_ythysq.mp4',
-    'https://res.cloudinary.com/dl2rqs0lo/video/upload/amt_access_control_frnjfd.mp4',
-    'https://res.cloudinary.com/dl2rqs0lo/video/upload/amt_ictv_s6njml.mp4',
-    'https://res.cloudinary.com/dl2rqs0lo/video/upload/amt_fire_alarm_2_fmcgfm.mp4'
+    getPublicUrl('amtgalleryvideos/amt_ecx4u7.mp4'),
+    getPublicUrl('amtgalleryvideos/Meet_Karim_Alma___AMT_Brand_Ambassadors_by_Zuccess_qhlkb7.mp4'),
+    getPublicUrl('amtgalleryvideos/YTDown.com_YouTube_AMT-Professional-Video-Showcasing-Innova_Media_xjcmXF3MkWQ_001_1080p_wjihjd.mp4'),
+    getPublicUrl('amtgalleryvideos/AMT_1_ydbfwn.mp4'),
+    getPublicUrl('amtgalleryvideos/AMT_2_hsdy7c.mp4'),
+    getPublicUrl('amtgalleryvideos/AMT_3_ythysq.mp4'),
+    getPublicUrl('amtgalleryvideos/amt_access_control_frnjfd.mp4'),
+    getPublicUrl('amtgalleryvideos/amt_ictv_s6njml.mp4'),
+    getPublicUrl('amtgalleryvideos/amt_fire_alarm_2_fmcgfm.mp4')
   ];
 
   // Initialize refs array if needed

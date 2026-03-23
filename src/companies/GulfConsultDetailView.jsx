@@ -216,7 +216,7 @@ export default function GulfConsultDetailView({
         {gulfConsultArchVideoFullscreen && (
           <video
             key={`gulf-arch-video-${gulfConsultArchVideoFullscreen}`}
-            src="https://res.cloudinary.com/dl2rqs0lo/video/upload/WhatsApp_Video_2026-02-03_at_4.03.03_PM_h59upq.mp4"
+            src={getPublicUrl("videosinthemainpages/WhatsApp_Video_2026-02-03_at_4.03.03_PM_h59upq.mp4")}
             autoPlay
             controls
             style={{

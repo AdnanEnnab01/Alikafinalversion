@@ -624,7 +624,7 @@ export default function AntiqueDetailView({ selectedCompany, companies, setSelec
         {antiqueVideoFullscreen && (
           <video
             key={`antique-video-${antiqueVideoFullscreen}`}
-            src="https://res.cloudinary.com/dl2rqs0lo/video/upload/WhatsApp_Video_2026-02-04_at_11.38.28_AM_mhpll7.mp4"
+            src={getPublicUrl("videosinthemainpages/WhatsApp_Video_2026-02-04_at_11.38.28_AM_mhpll7.mp4")}
             poster={getPublicUrl('ant-thmb.jpg')}
             autoPlay
             controls
