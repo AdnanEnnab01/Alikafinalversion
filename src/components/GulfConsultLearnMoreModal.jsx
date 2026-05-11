@@ -6,6 +6,63 @@ const GulfConsultLearnMoreModal = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
 
+  const teamMembers = [
+    {
+      key: 'ceo',
+      name: 'Faisal Al-Harbi',
+      role: 'CEO',
+      image: getPublicUrl('gulfteam/gulfCeo.jpg'),
+    },
+    {
+      key: 'gm',
+      name: 'Rabah Yehya',
+      role: 'General Manager',
+      image: getPublicUrl('gulfteam/generalmanageer.jpg'),
+    },
+    {
+      key: 'geotech',
+      name: 'Roshan N. S.',
+      role: 'Geotechnical Division Manager',
+      image: getPublicUrl('gulfteam/geotechmanager.jpg'),
+    },
+    {
+      key: 'survey',
+      name: 'Dave Pongasi',
+      role: 'Survey Division Manager',
+      image: getPublicUrl('gulfteam/surveymanager.jpg'),
+    },
+    {
+      key: 'contracts',
+      name: 'Furqan Siddiqui',
+      role: 'Contracts Manager',
+      image: getPublicUrl('gulfteam/contactsmanager.jpg'),
+    },
+    {
+      key: 'riyadh',
+      name: 'Jiju John',
+      role: 'Riyadh Branch Manager',
+      image: getPublicUrl('gulfteam/riyadbranchmanager.jpg'),
+    },
+    {
+      key: 'finance',
+      name: 'Salem Moribot',
+      role: 'Finance Manager',
+      image: getPublicUrl('gulfteam/financemanager.jpg'),
+    },
+    {
+      key: 'quality',
+      name: 'Erick Serioza',
+      role: 'Quality Manager',
+      image: getPublicUrl('gulfteam/qualitymanager.jpg'),
+    },
+    {
+      key: 'material',
+      name: 'Peter Calmerin',
+      role: 'Material Testing Division Manager',
+      image: getPublicUrl('gulfteam/materialtesting.jpg'),
+    },
+  ];
+
   return (
     <div style={{
       position: 'fixed',
@@ -311,25 +368,117 @@ const GulfConsultLearnMoreModal = ({ isOpen, onClose }) => {
             maxWidth: '1200px',
             textAlign: 'center',
             color: '#6a1b9a',
-            padding: '20px'
+            padding: '20px',
+            overflow: 'hidden',
+            flex: 1,
+            minHeight: 0
           }}>
             <h1 style={{
               fontSize: 'clamp(24px, 2.5vw, 36px)',
               fontWeight: '900',
               color: '#6a1b9a',
-              marginBottom: '30px',
+              marginBottom: '18px',
               letterSpacing: '1.5px',
               textTransform: 'uppercase'
             }}>
               Our TEAM
             </h1>
-            <p style={{
-              fontSize: 'clamp(16px, 1.5vw, 20px)',
-              lineHeight: '1.8',
-              color: '#6a1b9a'
-            }}>
-              Our dedicated team of professionals is committed to delivering excellence.
-            </p>
+
+            <div
+              style={{
+                width: 'min(94vw, 1200px)',
+                margin: '0 auto',
+                maxHeight: 'calc(100vh - 260px)',
+                overflowY: 'auto',
+                padding: 'clamp(8px, 1.2vw, 14px)',
+                boxSizing: 'border-box'
+              }}
+            >
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                  gap: 'clamp(12px, 1.4vw, 18px)',
+                  alignItems: 'stretch',
+                  direction: 'ltr'
+                }}
+              >
+                {teamMembers.map((m) => (
+                  <div
+                    key={m.key}
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.82)',
+                      border: '1px solid rgba(106, 27, 154, 0.18)',
+                      borderRadius: '14px',
+                      padding: '14px',
+                      boxShadow: '0 10px 28px rgba(0, 0, 0, 0.12)',
+                      backdropFilter: 'blur(6px)',
+                      WebkitBackdropFilter: 'blur(6px)',
+                      transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-4px)';
+                      e.currentTarget.style.boxShadow = '0 14px 34px rgba(0, 0, 0, 0.18)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 10px 28px rgba(0, 0, 0, 0.12)';
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '100%',
+                        aspectRatio: '4 / 3',
+                        borderRadius: '12px',
+                        overflow: 'hidden',
+                        background: 'rgba(106, 27, 154, 0.06)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
+                    >
+                      <img
+                        src={m.image}
+                        alt={`${m.name} - ${m.role}`}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: m.key === 'finance' ? 'contain' : 'cover',
+                          objectPosition: m.key === 'finance' ? 'center top' : 'center',
+                          display: 'block'
+                        }}
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                    <div style={{ marginTop: '12px', textAlign: 'left' }}>
+                      <div
+                        style={{
+                          fontSize: '16px',
+                          fontWeight: 900,
+                          color: '#4a148c',
+                          letterSpacing: '0.2px'
+                        }}
+                      >
+                        {m.name}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: '13px',
+                          fontWeight: 700,
+                          color: '#6a1b9a',
+                          marginTop: '4px',
+                          opacity: 0.9
+                        }}
+                      >
+                        {m.role}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
 

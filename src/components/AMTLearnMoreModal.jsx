@@ -56,8 +56,7 @@ const AMTLearnMoreModal = ({ isOpen, onClose }) => {
     { name: 'Amr Abu Hashem', role: 'Finance Manager', image: '/financemanager.jpeg' },
     { name: 'IMRAN KHAN YAR', role: 'Implementation Manager', image: '/Implementationmanager.jpeg' },
     { name: 'Mike Campbell', role: 'Engineering Manager', image: '/engineeringmanager.jpeg', fallback: 'MC' },
-    { name: 'Shadi Jayousi', role: 'IT Manager', image: '/itmanager.jpeg', fallback: 'SJ' },
-    { name: 'Mohammad Al Dossary', role: 'Store Manager', image: '/storemanager.jpeg' }
+    { name: 'Shadi Suleiman', role: 'Technical Director', image: '/technichaldirector.jpeg', fallback: 'SS' }
   ];
 
   const majorClients = [

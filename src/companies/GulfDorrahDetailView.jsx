@@ -426,7 +426,7 @@ export default function GulfDorrahDetailView({
               }}
             >
               <strong style={{ minWidth: '110px', fontWeight: 800 }}>Mobile:</strong>
-              <span>050 084 0440</span>
+              <span>+966 55 811 4444</span>
             </div>
             <div
               style={{

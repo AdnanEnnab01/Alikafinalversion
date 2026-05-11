@@ -8,6 +8,7 @@ const SubsidiariesModal = ({ isOpen, onClose, viewportSize }) => {
     {
       name: 'AH Environmental',
       logo: '/AH-ENVIRONMENTAL.png',
+      website: 'https://ahenviro.com/',
       description: [
         'AH Environmental is committed to protecting and preserving our natural environment through sustainable practices.',
         'We provide comprehensive environmental solutions and consulting services to ensure a greener future.'
@@ -16,6 +17,7 @@ const SubsidiariesModal = ({ isOpen, onClose, viewportSize }) => {
     {
       name: 'Gulf Consult',
       logo: '/GULF-CONSULT.png',
+      website: 'https://www.gc-eng.com',
       description: [
         'Gulf Consult is a premier consulting firm offering strategic advisory and professional services.',
         'We deliver expert guidance and innovative solutions to help businesses achieve their strategic objectives.'
@@ -24,6 +26,7 @@ const SubsidiariesModal = ({ isOpen, onClose, viewportSize }) => {
     {
       name: 'Antique',
       logo: '/antique.png',
+      website: 'https://acwm-sa.com',
       description: [
         'Antique is a distinguished company known for its excellence in heritage preservation and cultural services.',
         'We combine traditional craftsmanship with modern expertise to deliver exceptional quality and timeless value.'
@@ -32,6 +35,7 @@ const SubsidiariesModal = ({ isOpen, onClose, viewportSize }) => {
     {
       name: 'AMT',
       logo: '/AMT.png',
+      website: 'https://amt-arabia.net/en',
       description: [
         'AMT is a leading company specializing in advanced technology solutions and innovative services.',
         'We provide cutting-edge technological expertise to drive business growth and digital transformation.'
@@ -40,6 +44,7 @@ const SubsidiariesModal = ({ isOpen, onClose, viewportSize }) => {
     {
       name: 'Central Care',
       logo: '/cc.png',
+      website: 'https://www.centralmedicalcare.com/',
       description: [
         'Central Care is a leading healthcare provider dedicated to delivering exceptional medical services.',
         'We offer comprehensive healthcare solutions with a focus on patient care, innovation, and medical excellence.'
@@ -48,6 +53,7 @@ const SubsidiariesModal = ({ isOpen, onClose, viewportSize }) => {
     {
       name: 'Al Dorrah',
       logo: '/dorrah.png',
+      website: 'https://dorrah.topacademy.website/#',
       description: [
         'Al Dorrah is a prominent company specializing in premium services and innovative business solutions.',
         'We excel in delivering high-quality services that meet the diverse needs of our clients and partners.'
@@ -56,6 +62,7 @@ const SubsidiariesModal = ({ isOpen, onClose, viewportSize }) => {
     {
       name: 'GTA',
       logo: '/GTA.png',
+      website: 'https://gtaksa.com/',
       description: [
         'GTA is a dynamic company focused on providing advanced technology and automation solutions.',
         'We leverage cutting-edge technology to optimize operations and drive efficiency across various industries.'
@@ -64,6 +71,7 @@ const SubsidiariesModal = ({ isOpen, onClose, viewportSize }) => {
     {
       name: 'RK',
       logo: '/RK.png',
+      website: 'https://www.rk-arabia.com/',
       description: [
         'RK is a trusted company delivering reliable services and innovative solutions across multiple sectors.',
         'We are committed to excellence and building long-term partnerships with our clients and stakeholders.'
@@ -72,6 +80,7 @@ const SubsidiariesModal = ({ isOpen, onClose, viewportSize }) => {
     {
       name: 'IDC',
       logo: '/IDC.png',
+      website: 'https://idc-arabia.com/ar/',
       description: [
         'IDC is a leading company in infrastructure development and construction management services.',
         'We deliver world-class infrastructure projects with a focus on quality, safety, and sustainable development.'
@@ -80,6 +89,7 @@ const SubsidiariesModal = ({ isOpen, onClose, viewportSize }) => {
     {
       name: 'Gulf Logo',
       logo: '/gulf-logo.png',
+      website: 'https://www.gulfconsult.com',
       description: [
         'Gulf Logo represents our commitment to excellence and innovation in the Gulf region.',
         'We provide strategic services and solutions that contribute to regional growth and development.'
@@ -88,6 +98,7 @@ const SubsidiariesModal = ({ isOpen, onClose, viewportSize }) => {
     {
       name: 'TLCO',
       logo: '/tico.png',
+      website: 'https://etlco.com.sa/',
       description: [
         'TLCO is a specialized company offering comprehensive solutions in transportation and logistics.',
         'We provide efficient and reliable transportation services to support business operations and connectivity.'
@@ -96,6 +107,7 @@ const SubsidiariesModal = ({ isOpen, onClose, viewportSize }) => {
     {
       name: 'GSG',
       logo: '/gsg.png',
+      website: 'https://gs-geo.com/',
       description: [
         'GSG is a forward-thinking company dedicated to providing innovative solutions and strategic services.',
         'We combine expertise and innovation to deliver exceptional value and drive sustainable business growth.'
@@ -182,7 +194,8 @@ const SubsidiariesModal = ({ isOpen, onClose, viewportSize }) => {
                 transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                 minHeight: isSmallViewport ? 'auto' : '280px',
                 justifyContent: 'flex-start',
-                height: isSmallViewport ? '100%' : 'auto'
+                height: isSmallViewport ? '100%' : 'auto',
+                cursor: subsidiary.website ? 'pointer' : 'default'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-5px)';
@@ -191,6 +204,21 @@ const SubsidiariesModal = ({ isOpen, onClose, viewportSize }) => {
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = '0 8px 24px rgba(45, 134, 89, 0.15)';
+              }}
+              onClick={() => {
+                if (subsidiary.website) {
+                  window.open(subsidiary.website, '_blank', 'noopener,noreferrer');
+                }
+              }}
+              role={subsidiary.website ? 'link' : undefined}
+              tabIndex={subsidiary.website ? 0 : undefined}
+              aria-label={subsidiary.website ? `Open ${subsidiary.name} website` : undefined}
+              onKeyDown={(e) => {
+                if (!subsidiary.website) return;
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  window.open(subsidiary.website, '_blank', 'noopener,noreferrer');
+                }
               }}
             >
               <img 

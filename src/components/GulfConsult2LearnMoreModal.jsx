@@ -7,6 +7,124 @@ export default function GulfConsult2LearnMoreModal({ isOpen, onClose }) {
 
   if (!isOpen) return null;
 
+  const gulfConsultClients = [
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM.jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (1).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (2).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (3).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (4).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (5).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (6).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (7).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (8).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (9).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (10).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (11).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (12).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (13).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (14).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (15).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (16).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (17).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (18).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (19).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (20).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (21).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (22).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (23).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (24).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (25).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (26).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (27).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (28).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (29).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (30).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (31).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (32).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (33).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (34).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (35).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (36).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (37).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (38).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (39).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (40).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (41).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (42).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (43).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (44).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (45).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (46).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (47).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (48).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (49).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (50).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (51).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (52).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (53).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (54).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (55).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (56).jpeg',
+    'WhatsApp Image 2026-04-13 at 11.40.03 AM (57).jpeg',
+  ];
+
+  const teamMembers = [
+    {
+      key: 'ceo',
+      name: 'Faisal Al-Harbi',
+      role: 'CEO',
+      image: getPublicUrl('gulfteam/gulfCeo.jpg'),
+    },
+    {
+      key: 'gm',
+      name: 'Rabah Yehya',
+      role: 'General Manager',
+      image: getPublicUrl('gulfteam/generalmanageer.jpg'),
+    },
+    {
+      key: 'geotech',
+      name: 'Roshan N. S.',
+      role: 'Geotechnical Division Manager',
+      image: getPublicUrl('gulfteam/geotechmanager.jpg'),
+    },
+    {
+      key: 'survey',
+      name: 'Dave Pongasi',
+      role: 'Survey Division Manager',
+      image: getPublicUrl('gulfteam/surveymanager.jpg'),
+    },
+    {
+      key: 'contracts',
+      name: 'Furqan Siddiqui',
+      role: 'Contracts Manager',
+      image: getPublicUrl('gulfteam/contactsmanager.jpg'),
+    },
+    {
+      key: 'riyadh',
+      name: 'Jiju John',
+      role: 'Riyadh Branch Manager',
+      image: getPublicUrl('gulfteam/riyadbranchmanager.jpg'),
+    },
+    {
+      key: 'finance',
+      name: 'Salem Moribot',
+      role: 'Finance Manager',
+      image: getPublicUrl('gulfteam/financemanager.jpg'),
+    },
+    {
+      key: 'quality',
+      name: 'Erick Serioza',
+      role: 'Quality Manager',
+      image: getPublicUrl('gulfteam/qualitymanager.jpg'),
+    },
+    {
+      key: 'material',
+      name: 'Peter Calmerin',
+      role: 'Material Testing Division Manager',
+      image: getPublicUrl('gulfteam/materialtesting.jpg'),
+    },
+  ];
+
   return (
     <>
       <div style={{
@@ -257,7 +375,8 @@ export default function GulfConsult2LearnMoreModal({ isOpen, onClose }) {
               maxWidth: '1200px',
               textAlign: 'center',
               color: '#ffffff',
-              padding: '20px'
+              padding: '20px',
+              overflow: 'hidden'
             }}>
               <h1 style={{
                 fontSize: 'clamp(24px, 2.5vw, 36px)',
@@ -269,13 +388,102 @@ export default function GulfConsult2LearnMoreModal({ isOpen, onClose }) {
               }}>
                 Our TEAM
               </h1>
-              <p style={{
-                fontSize: 'clamp(16px, 1.5vw, 20px)',
-                lineHeight: '1.8',
-                color: '#ffffff'
-              }}>
-                Our dedicated team brings over 42 years of combined experience in providing high-quality engineering and environmental services.
-              </p>
+
+              <div
+                style={{
+                  marginTop: 'clamp(18px, 2.5vh, 28px)',
+                  width: 'min(94vw, 1200px)',
+                  maxHeight: 'calc(100vh - 260px)',
+                  overflowY: 'auto',
+                  padding: 'clamp(8px, 1.2vw, 14px)',
+                  boxSizing: 'border-box'
+                }}
+              >
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                    gap: 'clamp(12px, 1.4vw, 18px)',
+                    alignItems: 'stretch',
+                    direction: 'ltr'
+                  }}
+                >
+                  {teamMembers.map((m) => (
+                    <div
+                      key={m.key}
+                      style={{
+                        background: 'rgba(0, 0, 0, 0.18)',
+                        border: '1px solid rgba(255, 255, 255, 0.18)',
+                        borderRadius: '14px',
+                        padding: '14px',
+                        boxShadow: '0 10px 28px rgba(0, 0, 0, 0.28)',
+                        backdropFilter: 'blur(6px)',
+                        WebkitBackdropFilter: 'blur(6px)',
+                        transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-4px)';
+                        e.currentTarget.style.boxShadow = '0 14px 34px rgba(0, 0, 0, 0.36)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 10px 28px rgba(0, 0, 0, 0.28)';
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: '100%',
+                          aspectRatio: '4 / 3',
+                          borderRadius: '12px',
+                          overflow: 'hidden',
+                          background: 'rgba(255, 255, 255, 0.08)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}
+                      >
+                        <img
+                          src={m.image}
+                          alt={`${m.name} - ${m.role}`}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: m.key === 'finance' ? 'contain' : 'cover',
+                            objectPosition: m.key === 'finance' ? 'center top' : 'center',
+                            display: 'block'
+                          }}
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                      </div>
+                      <div style={{ marginTop: '12px' }}>
+                        <div
+                          style={{
+                            fontSize: '16px',
+                            fontWeight: 800,
+                            color: '#ffffff',
+                            letterSpacing: '0.2px'
+                          }}
+                        >
+                          {m.name}
+                        </div>
+                        <div
+                          style={{
+                            fontSize: '13px',
+                            fontWeight: 600,
+                            opacity: 0.92,
+                            color: 'rgba(255, 255, 255, 0.92)',
+                            marginTop: '4px'
+                          }}
+                        >
+                          {m.role}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
 
@@ -288,7 +496,10 @@ export default function GulfConsult2LearnMoreModal({ isOpen, onClose }) {
               alignItems: 'center',
               justifyContent: 'flex-start',
               padding: 'clamp(6px, 1.5vh, 12px)',
-              boxSizing: 'border-box'
+              boxSizing: 'border-box',
+              flex: 1,
+              minHeight: 0,
+              overflow: 'hidden'
             }}>
               <h1 style={{
                 fontSize: 'clamp(16px, 1.8vw, 24px)',
@@ -303,84 +514,72 @@ export default function GulfConsult2LearnMoreModal({ isOpen, onClose }) {
                 MAJOR CLIENTS
               </h1>
               
-              {/* Major Clients Grid */}
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))',
-                gap: 'clamp(12px, 1.2vw, 18px)',
-                width: 'min(94vw, 1380px)',
-                marginBottom: 'clamp(8px, 2vh, 16px)',
-                padding: 'clamp(8px, 1.2vw, 16px)',
-                justifyItems: 'center',
-                alignItems: 'center'
-              }}>
-                {[
-                  'client-logo-011677925020-removebg-preview.png',
-                  'client-logo-021677925040-removebg-preview.png',
-                  'client-logo-031677925052-removebg-preview.png',
-                  'client-logo-051677925080-removebg-preview.png',
-                  'client-logo-061677925092-removebg-preview.png',
-                  'client-logo-071677925107-removebg-preview.png',
-                  'client-logo-081677925121-removebg-preview.png',
-                  'client-logo-091677925161-removebg-preview.png',
-                  'client-logo-101677925175-removebg-preview.png',
-                  'client-logo-111677925191-removebg-preview.png',
-                  'client-logo-121677925204-removebg-preview.png',
-                  'client-logo-131677925217-removebg-preview.png',
-                  'client-logo-141677925235-removebg-preview.png',
-                  'client-logo-151677925253-removebg-preview.png',
-                  'client-logo-161677925271-removebg-preview.png',
-                  'client-logo-171677925301-removebg-preview.png',
-                  'client-logo-181677925314-removebg-preview.png',
-                  'client-logo-191677925326-removebg-preview.png',
-                  'client-logo-201677925344-removebg-preview.png',
-                  'client-logo-211677925363-removebg-preview.png',
-                  'client-logo-221677925375-removebg-preview.png',
-                  'client-logo-231677925395-removebg-preview.png',
-                  'client-logo-241677925410-removebg-preview.png',
-                  'client-logo-251677925424-removebg-preview.png',
-                  'client-logo-261677925437-removebg-preview.png',
-                  'client-logo-271677925451-removebg-preview.png'
-                ].map((logoName, index) => (
-                  <div
-                    key={logoName}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      padding: 'clamp(6px, 0.7vw, 10px)',
-                      background: 'rgba(0, 0, 0, 0.15)',
-                      borderRadius: '10px',
-                      transition: 'all 0.3s ease',
-                      cursor: 'pointer',
-                      minHeight: '120px'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.06)';
-                      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.25)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'scale(1)';
-                      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.15)';
-                    }}
-                  >
-                    <img
-                      src={getPublicUrl(`gulfconsultmajerclients/${logoName}`)}
-                      alt={`Major client ${index + 1}`}
+              {/* Major Clients Grid (fit all in viewport; no scroll) */}
+              <div
+                style={{
+                  width: 'min(96vw, 1420px)',
+                  padding: 'clamp(6px, 0.9vw, 12px)',
+                  marginBottom: 'clamp(6px, 1.2vh, 10px)',
+                  overflow: 'hidden',
+                  flex: 1,
+                  minHeight: 0,
+                  boxSizing: 'border-box'
+                }}
+              >
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(126px, 1fr))',
+                    gap: 'clamp(8px, 0.95vw, 12px)',
+                    width: '100%',
+                    height: '100%',
+                    justifyItems: 'center',
+                    alignItems: 'center',
+                    alignContent: 'center'
+                  }}
+                >
+                  {gulfConsultClients.map((fileName, index) => (
+                    <div
+                      key={fileName}
                       style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: 'clamp(6px, 0.7vw, 10px)',
+                        background: 'rgba(0, 0, 0, 0.15)',
+                        borderRadius: '10px',
+                        transition: 'all 0.3s ease',
+                        cursor: 'default',
                         width: '100%',
-                        height: '100%',
-                        maxWidth: '190px',
-                        maxHeight: '120px',
-                        objectFit: 'contain',
-                        filter: 'brightness(1.05) contrast(1.05)'
+                        height: 'clamp(62px, 8.2vh, 92px)',
+                        boxSizing: 'border-box'
                       }}
-                      onError={(e) => {
-                        e.target.style.display = 'none';
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.03)';
+                        e.currentTarget.style.background = 'rgba(0, 0, 0, 0.25)';
                       }}
-                    />
-                  </div>
-                ))}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.background = 'rgba(0, 0, 0, 0.15)';
+                      }}
+                    >
+                      <img
+                        src={getPublicUrl(`gulfconsultCients/${encodeURIComponent(fileName)}`)}
+                        alt={`Gulf Consult client ${index + 1}`}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'contain',
+                          filter: 'brightness(1.05) contrast(1.05)',
+                          display: 'block'
+                        }}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           )}
